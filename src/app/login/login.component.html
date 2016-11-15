@@ -1,0 +1,87 @@
+﻿
+<div class="focused-form sidebar-collapsed">
+    <div class="container" id="login-form">
+        <a href="#" class="login-logo">
+            <img alt="Skypanion-r" src="../../assets/SkyPanion-R-a66066aeb3bc2e1688077b1591872b91.png" width="400">
+        </a>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 data-ng-show="isLoginDisplay">Please Log In</h2>
+                        <h2 data-ng-hide="isLoginDisplay">Reset Password</h2>
+                    </div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" id="validate-form" method="post" data-ng-show="isLoginDisplay">
+                            <div style="margin: 0; padding: 0; display: inline">
+                                <input name="utf8" type="hidden" value="✓">
+                                <input name="authenticity_token" type="hidden" value="kSI7snvYIqjuddnhpq6HbXcGFTvyjo4uO6z6Q65lXzM=">
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-user"></i>
+                                        </span>
+                                        <input autofocus="autofocus" data-ng-model="loginData.userName" required class="form-control" data-parsley-minlength="6" id="user_username" name="user[username]" placeholder="Please enter your username." size="30" type="text" focus="userNameFocus">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-key"></i>
+                                        </span>
+                                        <input class="form-control" data-ng-model="loginData.password" required id="user_password" name="user[password]" placeholder="Please enter your password." size="30" type="password">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-footer">
+                                <div class="clearfix">
+                                    <div data-ng-hide="message == ''" class="alert alert-danger" style="margin-top: 10px;">
+                                        {{message}}
+                                    </div>
+                                    <input class="btn btn-primary pull-right" name="commit" type="submit" data-ng-click="login()" value="Login">
+                                    <a data-ng-click="forgotPassword()">Forgot your password?</a><br data-ng-show="isLoginDisplay">
+                                    <a href="#unblock/new">Unlock Account</a>
+                                </div>
+                            </div>
+                        </form>
+
+                        <form class="form-horizontal" data-ng-hide="isLoginDisplay" ng-submit="getResetLink()">
+                            <div style="margin: 0; padding: 0; display: inline">
+                                <input name="utf8" type="hidden" value="✓">
+                                <input name="authenticity_token" type="hidden" value="kSI7snvYIqjuddnhpq6HbXcGFTvyjo4uO6z6Q65lXzM=">
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-envelope-o"></i>
+                                        </span>
+                                        <input autofocus="autofocus" data-ng-model="email" required class="form-control" placeholder="Please enter your email." size="30" type="text" focus="emailFocus">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel-footer">
+                                <div class="clearfix">
+                                    <div data-ng-hide="message == ''" class="alert alert-danger" style="margin-top: 10px;">
+                                        {{message}}
+                                    </div>
+                                    <input class="btn btn-primary pull-right" type="submit" data-ng-click="getResetLink()" value="Send Reset Link">
+                                    <a data-ng-click="loginAccount()">Login your Account</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
