@@ -10,6 +10,7 @@
     "outDir": "../dist/out-tsc",
     "sourceMap": true,
     "target": "es5",
+    "typescript.tsdk": "node_modules/typescript/lib",
     "typeRoots": [
       "../node_modules/@types"
     ]

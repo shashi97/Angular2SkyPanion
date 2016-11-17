@@ -8,7 +8,7 @@ export class MasterService {
 
     }
 
-    private apiServiceBase: string = 'http://192.168.1.75:8010/';
+    private apiServiceBase: string = 'http://localhost:8009/';
 
     public getItemsPerPageList(reportPluginId) {
         var types = [25, 50, 100, 150];
@@ -17,7 +17,6 @@ export class MasterService {
             var item = { value: types[i], id: i + 1 };
             list.splice(1, 0, item);
         }
-
         return list;
     }
 
