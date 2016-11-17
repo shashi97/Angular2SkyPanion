@@ -12,7 +12,7 @@ createAuthorizationHeader(headers:Headers) {
       btoa('a20e6aca-ee83-44bc-8033-b41f3078c2b6:c199f9c8-0548-4be7-9655-7ef7d7bf9d20')); 
   }
   private apiServiceBase: string = 'http://localhost:5000/';
-  public getCompanies = function (sync, type, searchText, pageNumber, rowsPerPage) {
+  public getCompanies(sync, type, searchText, pageNumber, rowsPerPage) {
     return this.http
       .get(this.apiServiceBase + "api/company/" + sync + "/" + type + "/" + searchText + "/" + pageNumber + "/" + rowsPerPage)
       .map((res: Response) => res.json());

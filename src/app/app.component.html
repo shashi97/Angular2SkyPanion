@@ -1,2 +1,206 @@
-   <alert type="success">hello</alert>
-   <router-outlet></router-outlet>
+<div id="headerbar">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-6 col-sm-2">
+        <a href="#" class="shortcut-tiles tiles-brown">
+          <div class="tiles-body">
+            <div class="pull-left"><i class="fa fa-pencil"></i></div>
+          </div>
+          <div class="tiles-footer">
+            Create Post
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-2">
+        <a href="#" class="shortcut-tiles tiles-grape">
+          <div class="tiles-body">
+            <div class="pull-left"><i class="fa fa-group"></i></div>
+            <div class="pull-right"><span class="badge">2</span></div>
+          </div>
+          <div class="tiles-footer">
+            Contacts
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-2">
+        <a href="#" class="shortcut-tiles tiles-primary">
+          <div class="tiles-body">
+            <div class="pull-left"><i class="fa fa-envelope-o"></i></div>
+            <div class="pull-right"><span class="badge">10</span></div>
+          </div>
+          <div class="tiles-footer">
+            Messages
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-2">
+        <a href="#" class="shortcut-tiles tiles-inverse">
+          <div class="tiles-body">
+            <div class="pull-left"><i class="fa fa-camera"></i></div>
+            <div class="pull-right"><span class="badge">3</span></div>
+          </div>
+          <div class="tiles-footer">
+            Gallery
+          </div>
+        </a>
+      </div>
+
+      <div class="col-xs-6 col-sm-2">
+        <a href="#" class="shortcut-tiles tiles-midnightblue">
+          <div class="tiles-body">
+            <div class="pull-left"><i class="fa fa-cog"></i></div>
+          </div>
+          <div class="tiles-footer">
+            Settings
+          </div>
+        </a>
+      </div>
+      <div class="col-xs-6 col-sm-2">
+        <a href="#" class="shortcut-tiles tiles-orange">
+          <div class="tiles-body">
+            <div class="pull-left"><i class="fa fa-wrench"></i></div>
+          </div>
+          <div class="tiles-footer">
+            Plugins
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<header id="topnav" class="navbar navbar-default navbar-fixed-top clearfix" role="banner">
+
+  <a id="leftmenu-trigger" class="" data-toggle="tooltip" data-placement="right" title="Toggle Sidebar"></a>
+  <a href="#dashboard">
+    <img src="../../assets/img/SkyPanion-R.png" style="height: 45px; margin-top: 3px; float: left">
+  </a>
+
+  <!--<div class="yamm navbar-left navbar-collapse collapse in">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown ng-hide" data-ng-show="showLoading">
+                        <div class="loading">Loading…</div>
+                    </li>
+                </ul>
+            </div>-->
+
+
+
+  <ul class="nav navbar-nav toolbar pull-right">
+
+    <!--<li class="dropdown">
+                    <a href="#" class="dropdown-toggle username" data-toggle="dropdown">
+
+
+                        <span class="hidden-xs ng-binding">ron</span>
+
+                        <img class="img-circle" alt="Dangerfield" ng-src="http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/no-image.png" src="http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/http://192.168.1.60:5009/Images/Portal_User_Image/no-image.png">
+
+                    </a>
+                    <ul class="dropdown-menu userinfo">
+                        <li><a href="#user/7"><span class="pull-left">My Profile</span> <i class="pull-right fa fa-pencil"></i></a></li>
+                        <li><a data-ng-show="sessionDetails.IsSuperUser == true" href="#accounts/8" class=""><span class="pull-left">Account Settings</span> <i class="pull-right fa fa-cogs"></i></a></li>
+                        <li class="divider"></li>
+                        <li><a data-ng-click="logOut()"><span class="pull-left">Sign Out</span> <i class="pull-right fa fa-sign-out"></i></a></li>
+                    </ul>
+                </li>-->
+
+  </ul>
+
+</header>
+<div id="wrapper" style="height: 663px;overflow: auto;">
+  <div id="layout-static">
+    <div class="static-sidebar-wrapper sidebar-inverse">
+      <div class="static-sidebar">
+        <div class="sidebar">
+
+          <div class="widget stay-on-collapse">
+            <div class="widget-body welcome-box tabular">
+              <div class="tabular-row">
+                <div class="tabular-cell welcome-avatar">
+                  <a href="#dashboard">
+                    <img class="avatar" />
+                  </a>
+                </div>
+                <div class="tabular-cell welcome-options">
+                  <span class="welcome-text">Welcome,</span>
+
+                  <a href="#" class="name"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="widget stay-on-collapse" id="widget-sidebar">
+            <span class="widget-heading">QUICK LINKS</span>
+            <nav role="navigation" class="widget-body">
+              <ul class="acc-menu">
+                <li><a href="#dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
+
+                <li>
+                  <a href="javascript:;"><i class="fa fa-database"></i><span>Content</span></a>
+                  <ul class="acc-menu">
+
+                    <li><a href="companies">All Companies</a></li>
+                    <li><a href="vendor">All Vendors</a></li>
+                    <li><a href="job">All Jobs</a></li>
+                    <li><a href="purchaseOrder">Purchase Orders</a></li>
+                    <li><a href="invoices">Invoice History</a></li>
+                    <li><a href="ledgeraccounts">Ledger Accounts</a></li>
+                    <li><a href="achsetups">Ach Setups</a></li>
+                    <li><a href="approvals">Approval Criteria</a></li>
+
+                  </ul>
+                </li>
+
+                <li><a href="#attachments"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>
+
+                <li>
+                  <a href="javascript:;"><i class="fa fa-refresh"></i><span>Sync Center</span></a>
+                  <ul class="acc-menu">
+                    <li><a href="#syncbatches">Sync Batches</a></li>
+                    <li><a href="#syncbatcheNew/-1/0/new">New Sync Batch</a></li>
+                  </ul>
+                </li>
+
+                <li data-ng-if="sessionDetails.IsSuperUser"><a href="#iniSetup"><i class="fa fa-cogs"></i><span>Setup</span></a></li>
+
+                <li data-ng-if="sessionDetails.IsSuperUser">
+                  <a href="javascript:;"><i class="fa fa-random"></i><span>Administration</span></a>
+                  <ul class="acc-menu">
+                    <li><a href="#users">All Members</a></li>
+                    <li><a href="#user/0/new">Create Member</a></li>
+                    <li><a href="#roles">All Roles</a></li>
+                    <li><a href="#rolesAdd/0/new">New Role</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="static-content-wrapper">
+      <div class="static-content">
+        <div id="body">
+          <div>
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </div>
+      <footer role="contentinfo">
+        <div class="clearfix">
+          <ul class="list-unstyled list-inline pull-left">
+            <li>
+              <!-- <%=SessionManager.CurrentSession.CurrentYear %> -->
+              <h6 style="margin: 0;">&copy;Skypanion</h6>
+            </li>
+          </ul>
+          <button class="pull-right btn btn-link btn-xs hidden-print" id="back-to-top"><i class="fa fa-arrow-up"></i></button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+</div>

@@ -12,17 +12,22 @@ import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 
 /* sky-app components start */
-import { MasterService } from "./shared/services/master.service";
+import { MasterService } from './shared/services/master.service';
 import { AppComponent } from './app.component';
 import { OtherComponent } from './other/other.component';
 import { LoginComponent } from './login/login.component';
-import { CompanyComponent } from "./company/company.component";
-import { CompanyDetailComponent } from "./company/companyDetail.component";
-
+import { CompanyComponent } from './company/company.component';
+import { CompanyDetailComponent } from './company/companyDetail.component';
+import { CompaniesComponent } from './companies/companies.component';
+import { VendorComponent } from './vendor/vendor.component';
+import { JobComponent } from './job/job.component';
+import { PurchaseOrderComponent } from './purchaseOrder/purchaseOrder.component';
 /* sky-app components end */
 
+/* sky-app service start*/
+//  import { CompaniesService } from "./companies/shared/companies.service";
 
-
+/* sky-app service end*/
 
 @NgModule({
   declarations: [
@@ -30,7 +35,11 @@ import { CompanyDetailComponent } from "./company/companyDetail.component";
     OtherComponent,
     LoginComponent,
     CompanyComponent,
-    CompanyDetailComponent
+    CompanyDetailComponent,
+    CompaniesComponent,
+    VendorComponent,
+    JobComponent,
+    PurchaseOrderComponent
 
   ],
   imports: [
@@ -41,7 +50,10 @@ import { CompanyDetailComponent } from "./company/companyDetail.component";
     Angular2DataTableModule,
     AlertModule
   ],
-  providers: [MasterService],
+  providers: [
+    MasterService
+    // CompaniesService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

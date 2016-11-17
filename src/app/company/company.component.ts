@@ -194,7 +194,7 @@ export class CompanyComponent {
 
                     this.gridData.forEach((item) => {   
                         if (item.type == "Skypanion::Property") {
-                            //item.htmlBody = $sce.trustAsHtml("<b>Ledger Accounts:</b> " + item.LedgerAccountCount + "<br /><b>Invoices:</b> " + item.InvoiceCount + "<br /><b>Vendors:</b> " + item.VendorCount + "<br /><b>PDFs:</b> " + item.PDFCount + "<br /><b>Purchase Orders:</b> " + item.PurchaseOrderCount + "<br /><b>Approval Criteria:</b> " + item.ApprovalCriteriaCount + "<br />");
+                            // item.htmlBody = $sce.trustAsHtml("<b>Ledger Accounts:</b> " + item.LedgerAccountCount + "<br /><b>Invoices:</b> " + item.InvoiceCount + "<br /><b>Vendors:</b> " + item.VendorCount + "<br /><b>PDFs:</b> " + item.PDFCount + "<br /><b>Purchase Orders:</b> " + item.PurchaseOrderCount + "<br /><b>Approval Criteria:</b> " + item.ApprovalCriteriaCount + "<br />");
                         }
                         else {
                             // item.htmlBody = $sce.trustAsHtml("<b>Ledger Accounts:</b> " + item.LedgerAccountCount + "<br /><b>Invoices:</b> " + item.InvoiceCount + "<br /><b>Vendors:</b> " + item.VendorCount + "<br /><b>PDFs:</b> " + item.PDFCount + "<br /><b>Purchase Orders:</b> " + item.PurchaseOrderCount + "<br /><b>Approval Criteria:</b> " + item.ApprovalCriteriaCount + "<br /><b>Posts:</b> " + item.FundCount + "<br />");

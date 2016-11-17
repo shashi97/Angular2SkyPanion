@@ -1,0 +1,36 @@
+<div class="page-content">
+  <div class="page-heading">
+    <h1>All Jobs</h1>
+
+    <div class="options">
+      <div class="btn-toolbar form-inline">
+      </div>
+    </div>
+  </div>
+
+
+  <ol class="breadcrumb">
+    <li><a href="account/">abc</a></li>
+    <li class="active">Jobs</li>
+  </ol>
+  <div class="container-fluid">
+    <datatable class='material striped' [rows]='gridData' [options]='options'>
+
+
+      <datatable-column name="">
+        <template let-column="column">
+          <div class="ui-grid-cell-contents">
+            <a tooltip-append-to-body="true" tooltip-placement="top" uib-tooltip-html="">
+                            Details
+                            </a>
+          </div>
+        </template>
+        <!--<template let-value="value">
+						Hi: <strong>Shashank</strong>
+					</template>-->
+      </datatable-column>
+    </datatable>
+    <!--</div>-->
+
+  </div>
+</div>
