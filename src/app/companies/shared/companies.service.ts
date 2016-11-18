@@ -2,10 +2,10 @@ import { Http, Response, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'Rxjs/Rx';
 import { CompanyInfo } from './companies.model';
+import { ApiUrl } from '../../config.component';
 @Injectable()
 
-export class CompaniesService {
-   private apiServiceBase= 'http://192.168.1.60:5009/';
+export class CompaniesService  {
     constructor(private http: Http) {
 
     }
@@ -17,7 +17,7 @@ export class CompaniesService {
      rowsPerPage: number ): Promise<CompanyInfo[]> {
             return this
             .http
-            .get(this.apiServiceBase + 'api/company/' + sync + '/' + type + '/' + searchText + '/' + pageNumber + '/' + rowsPerPage)
+            .get(ApiUrl.baseUrl + 'api/company/' + sync + '/' + type + '/' + searchText + '/' + pageNumber + '/' + rowsPerPage)
             .toPromise()
             .then(response => response.json() as CompanyInfo[])
             .catch(this.handleError);

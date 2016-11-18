@@ -2,8 +2,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { routing } from "./app.routing";
+import { routing } from './app.routing';
 import { Angular2DataTableModule } from 'angular2-data-table';
+
+
+import { Http, RequestOptions } from '@angular/http';
+import { Router } from '@angular/router';
+import { HttpInterceptor } from './shared/httpInterceptor';
+import { XHRBackend } from '@angular/http';
+
+
+
+import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 /* bootstrap components start */
 
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
@@ -12,7 +22,12 @@ import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 
 /* sky-app components start */
-import { MasterService } from './shared/services/master.service';
+
+
+
+import { MasterService } from './shared/services/master/master.service';
+import { UserService } from './shared/services/user/user.service';
+import { AuthService } from './shared/services/otherServices/auth.service';
 import { AppComponent } from './app.component';
 import { OtherComponent } from './other/other.component';
 import { LoginComponent } from './login/login.component';
@@ -22,12 +37,19 @@ import { CompaniesComponent } from './companies/companies.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { JobComponent } from './job/job.component';
 import { PurchaseOrderComponent } from './purchaseOrder/purchaseOrder.component';
-/* sky-app components end */
+
+
 
 /* sky-app service start*/
 //  import { CompaniesService } from "./companies/shared/companies.service";
 
 /* sky-app service end*/
+
+let localStorageServiceConfig = {
+  prefix: 'my-app',
+  storageType: 'localStorage'
+};
+
 
 @NgModule({
   declarations: [
@@ -35,11 +57,11 @@ import { PurchaseOrderComponent } from './purchaseOrder/purchaseOrder.component'
     OtherComponent,
     LoginComponent,
     CompanyComponent,
-    CompanyDetailComponent,
     CompaniesComponent,
     VendorComponent,
     JobComponent,
-    PurchaseOrderComponent
+    PurchaseOrderComponent,
+    CompanyDetailComponent
 
   ],
   imports: [
@@ -51,8 +73,29 @@ import { PurchaseOrderComponent } from './purchaseOrder/purchaseOrder.component'
     AlertModule
   ],
   providers: [
-    MasterService
+
+
     // CompaniesService
+
+    MasterService,
+    UserService,
+    LocalStorageService,
+    AuthService,
+    {
+      provide: Http,
+      useFactory: (xhrBackend: XHRBackend,
+        requestOptions: RequestOptions,
+        router: Router,
+        localStorageService: LocalStorageService) => new HttpInterceptor(xhrBackend,
+          requestOptions,
+          router,
+          localStorageService),
+
+      deps: [XHRBackend, RequestOptions, Router, LocalStorageService],
+    },
+    {
+      provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig
+    }
   ],
   bootstrap: [AppComponent]
 })

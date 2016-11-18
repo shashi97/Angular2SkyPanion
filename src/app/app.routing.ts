@@ -9,6 +9,7 @@ import { JobComponent } from './job/job.component';
 import { PurchaseOrderComponent } from './purchaseOrder/purchaseOrder.component';
 
 const APP_ROUTES: Routes = [
+{ path: '', redirectTo: '/login', pathMatch: 'full' },
 { path: 'login', component: LoginComponent },
 { path: 'company', component: CompanyComponent },
 { path: 'company/:searchParameters/:companyID', component: CompanyDetailComponent },
