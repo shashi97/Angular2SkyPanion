@@ -28,6 +28,12 @@ import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { MasterService } from './shared/services/master/master.service';
 import { UserService } from './shared/services/user/user.service';
 import { AuthService } from './shared/services/otherServices/auth.service';
+import { CompaniesService } from './companies/shared/companies.service';
+import { AccountService } from './account/shared/account.service';
+import { VendorService } from './vendor/shared/vendor.service';
+
+
+
 import { AppComponent } from './app.component';
 import { OtherComponent } from './other/other.component';
 import { LoginComponent } from './login/login.component';
@@ -73,10 +79,9 @@ let localStorageServiceConfig = {
     AlertModule
   ],
   providers: [
-
-
-    // CompaniesService
-
+    VendorService,
+    AccountService,
+    CompaniesService,
     MasterService,
     UserService,
     LocalStorageService,

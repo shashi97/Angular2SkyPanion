@@ -5,28 +5,34 @@ import { CompanyInfo } from './companies.model';
 import { ApiUrl } from '../../config.component';
 @Injectable()
 
-export class CompaniesService  {
+export class CompaniesService {
     constructor(private http: Http) {
 
     }
 
     public getCompanies(sync: string,
-     type: string,
-     searchText: string,
-     pageNumber: number,
-     rowsPerPage: number ): Promise<CompanyInfo[]> {
-            return this
+        type: string,
+        searchText: string,
+        pageNumber: number,
+        rowsPerPage: number): Promise<CompanyInfo[]> {
+        return this
             .http
             .get(ApiUrl.baseUrl + 'api/company/' + sync + '/' + type + '/' + searchText + '/' + pageNumber + '/' + rowsPerPage)
             .toPromise()
             .then(response => response.json() as CompanyInfo[])
             .catch(this.handleError);
 
-        }
+    }
+
+    public getCompanyDDOs() {
+        return this.http.get(ApiUrl.baseUrl + "api/company").toPromise()
+            .then(response => response.json() as CompanyInfo[])
+            .catch(this.handleError);
+    }
 
     public handleError(error: any): Promise<any> {
-           console.error('An error occurred', error);
-           return Promise.reject(error.message || error);
-  }
+        console.error('An error occurred', error);
+        return Promise.reject(error.message || error);
+    }
 
 }

@@ -1,14 +1,11 @@
 export class VendorModel {
-
-  vendorsDetail: Array<VendorInfo> = [];
+  vendorGridArray: Array<VendorDetail> = [];
   constructor() {
-    this.vendorsDetail = new Array<VendorInfo>();
-
+    this.vendorGridArray = new Array<VendorDetail>();
   }
 }
 
-export class VendorInfo {
-
+export class VendorDetail {
   AccountNumber: string;
   CompanyName: string;
   LedgerAccountId: number = null;
@@ -20,8 +17,4 @@ export class VendorInfo {
   VendorsCount: number;
   account_id: number;
   company_id: number;
-
-  constructor() {
-
-  }
 }

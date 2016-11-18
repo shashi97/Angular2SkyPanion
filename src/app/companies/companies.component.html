@@ -48,21 +48,21 @@
 		</div>
 	</div>
 	<div>
-		<datatable class='material striped' [rows]='companiesModel.companiesDetail' [options]='options'>
+	<datatable class='material striped' [rows]='companiesModel.companiesDetail' [options]='options'>
 
 
-			<datatable-column name="">
-				<template let-column="column">
-					<div class="ui-grid-cell-contents">
-						<a tooltip-append-to-body="true" tooltip-placement="top" uib-tooltip-html="">
+		<datatable-column name="">
+			<template let-column="column">
+				<div class="ui-grid-cell-contents">
+					<a tooltip-append-to-body="true" tooltip-placement="top" uib-tooltip-html="">
                             Details
                             </a>
-					</div>
-				</template>
-				<!--<template let-value="value">
+				</div>
+			</template>
+			<!--<template let-value="value">
 						Hi: <strong>Shashank</strong>
 					</template>-->
-			</datatable-column>
-		</datatable>
+		</datatable-column>
+	</datatable>
 	<!--</div>-->
 </div>

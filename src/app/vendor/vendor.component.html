@@ -1,45 +1,41 @@
 <div id="slider" class="page-content">
 	<div class="page-heading">
-		<h1>{{title}}</h1>
+		<h1>All Vendor</h1>
 		<div class="options">
 			<div class="btn-toolbar form-inline">
 
-				<div class="filter_field_wrap form-group">
-					<input class="form-control" id="search_filter_param" name="searchstr" placeholder="Enter text to search for." type="text"
-					>
-				</div>
+				<!--<div class="filter_field_wrap form-group">
+					<input class="form-control" id="search_filter_param" name="searchstr" placeholder="Enter text to search for." type="text">
+				</div>-->
 
 				<div class="filter_field_wrap form-group">
 					<div class="btn-group">
-						<a class="btn btn-default" href="#companies">{{syncName}}</a>
+						<a class="btn btn-default" href="#companies">NoneNoneNone</a>
 						<a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
 							<span class="caret"></span>
 						</a>
 						<ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-							<li><a role="menuitem" >mysing<!--{{sync.Name}}--></a></li>
+							<li *ngFor="let company of companies">
+								<a role="menuitem">{{company.CompanyName}}</a>
+							</li>
 						</ul>
 					</div>
 				</div>
 
 				<div class="filter_field_wrap form-group">
-					<div class="btn-group">
-						<a class="btn btn-default" href="#companies">{{companyType}}</a>
-						<a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
-							<span class="caret"></span>
-						</a>
-						<ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-							<li><a role="menuitem">companyName<!--{{cmpType.Name}}--></a></li>
-						</ul>
-					</div>
+					<input class="form-control" id="name" name="name" placeholder="Vendor Name" type="text" [(ngModel)]="vendorName">
+				</div>
+				<div class="filter_field_wrap form-group">
+					<input class="form-control" id="vendor_key" name="vendor_key" placeholder="Vendor Key" type="text" [(ngModel)]="vendorKey">
 				</div>
 
 				<div class="filter_field_wrap form-group">
-					<button class="btn btn-primary" name="commit" type="button" >
+					<button class="btn btn-primary" name="commit" type="button" (click)="searchURL()">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         Filter
                     </button>
 
-					<button class="btn btn-warning" >
+					<button class="btn btn-warning" (click)="searchURLReset()">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                         Reset
                     </button>
@@ -47,22 +43,51 @@
 			</div>
 		</div>
 	</div>
-	<div>
-		<datatable class='material striped' [rows]='vendorModel.vendorsDetail' [options]='options'>
+	<ol class="breadcrumb" *ngIf="account">
+		<li><a href="#accounts/{{account.AccountID}}">{{account.AccountName}}</a></li>
+		<li class="active">Vendors</li>
+	</ol>
+
+	<span data-ng-if="totalItems > pageSize && totalItems!=0">
+            Displaying {{pageName}}
+            <b>
+                {{currentPage*pageSize-pageSize+1}} &nbsp;-&nbsp;
+                <span *ngIf="currentPage*pageSize < totalItems">{{currentPage*pageSize}}</span>
+	<span *ngIf="currentPage*pageSize >= totalItems">{{totalItems}}</span>
+	</b> of <b>{{totalItems}}</b> in total
+	</span>
+	<br>
+	<br>
 
 
-			<datatable-column name="">
-				<template let-column="column">
-					<div class="ui-grid-cell-contents">
-						<a tooltip-append-to-body="true" tooltip-placement="top" uib-tooltip-html="">
+
+	<datatable class='material striped' [rows]='vendorModel.vendorGridArray' [options]='options'>
+		<datatable-column name="">
+			<template let-column="column">
+				<div class="ui-grid-cell-contents">
+					<a tooltip-append-to-body="true" tooltip-placement="top" uib-tooltip-html="">
                             Details
                             </a>
-					</div>
-				</template>
-				<!--<template let-value="value">
-						Hi: <strong>Shashank</strong>
-					</template>-->
-			</datatable-column>
-		</datatable>
-	<!--</div>-->
-</div>
+				</div>
+			</template>
+		</datatable-column>
+	</datatable>
+
+
+	<div class="field form-group" style="padding-left:10px;margin-top:-5px">
+		<label class="control-label" for="invoice_PayUsingAch">Items Per Page:</label>
+	</div>
+
+	<div class="field form-group" style="padding-left:1px;margin-top:-5px">
+		<div class="col-md-8 dropup">
+			<button class="btn btn-default dropdown-toggle " type="button" id="menu1" data-toggle="dropdown">
+                            <span class="text-primary">   {{ pageSizeFilter}}</span>
+                            <span class="caret text-primary"></span>
+                        </button>
+			<ul id="dropperItem" role="menu" class="dropdown-menu" style="min-width:70px">
+				<li>
+					<a role="menuitem" class="dropdown-item " *ngFor="let page of itemsPerPageList" (click)="getDataAsPerPerPageRequired(page.value)">{{page.value}}</a>
+				</li>
+			</ul>
+		</div>
+	</div>

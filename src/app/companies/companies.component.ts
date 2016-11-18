@@ -39,7 +39,6 @@ export class CompaniesComponent {
     private companiesModel: CompaniesModel= new CompaniesModel();
     private totalItems: number;
     constructor(private companiesService : CompaniesService) {
-
           this.companiesService
             .getCompanies(this.syncId,
             this.syncTypeId,

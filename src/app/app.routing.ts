@@ -15,6 +15,7 @@ const APP_ROUTES: Routes = [
 { path: 'company/:searchParameters/:companyID', component: CompanyDetailComponent },
 { path: 'companies', component: CompaniesComponent },
 { path: 'vendor', component: VendorComponent },
+{ path: 'vendor/:searchParameters', component: VendorComponent },
 { path: 'job', component: JobComponent },
 { path: 'purchaseOrder', component: PurchaseOrderComponent}
 
