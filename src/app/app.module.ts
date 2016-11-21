@@ -4,36 +4,28 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { routing } from './app.routing';
 import { Angular2DataTableModule } from 'angular2-data-table';
-
-
 import { Http, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { HttpInterceptor } from './shared/httpInterceptor';
 import { XHRBackend } from '@angular/http';
-
-
-
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 /* bootstrap components start */
-
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
-
 /* bootstrap components end */
 
 
-/* sky-app components start */
-
-
-
+/*sp-app services*/
 import { MasterService } from './shared/services/master/master.service';
-import { UserService } from './shared/services/user/user.service';
+import { UserService } from './user/shared/user.service';
 import { AuthService } from './shared/services/otherServices/auth.service';
 import { CompaniesService } from './companies/shared/companies.service';
 import { AccountService } from './account/shared/account.service';
 import { VendorService } from './vendor/shared/vendor.service';
+import { DashboardService } from './dashboard/shared/dashboard.service';
+import { LedgerAccountService } from './ledger-account/shared/ledger-account.service';
+import { ApprovalCriteriaService } from './approval-criteria/shared/approval-criteria.service';
 
-
-
+/* sp-app components */
 import { AppComponent } from './app.component';
 import { OtherComponent } from './other/other.component';
 import { LoginComponent } from './login/login.component';
@@ -41,15 +33,13 @@ import { CompanyComponent } from './company/company.component';
 import { CompanyDetailComponent } from './company/companyDetail.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { VendorComponent } from './vendor/vendor.component';
+import { VendorDetailComponent } from './vendor/vendor-detail.component';
+import { LedgerAccountComponent } from './ledger-account/ledger-account.component';
+import { LedgerAccountDetailComponent } from './ledger-account/ledger-account-detail.component';
+import { ApprovalCriteriaComponent } from './approval-criteria/approval-criteria.component';
 import { JobComponent } from './job/job.component';
 import { PurchaseOrderComponent } from './purchaseOrder/purchaseOrder.component';
 
-
-
-/* sky-app service start*/
-//  import { CompaniesService } from "./companies/shared/companies.service";
-
-/* sky-app service end*/
 
 let localStorageServiceConfig = {
   prefix: 'my-app',
@@ -65,6 +55,10 @@ let localStorageServiceConfig = {
     CompanyComponent,
     CompaniesComponent,
     VendorComponent,
+    VendorDetailComponent,
+    LedgerAccountComponent,
+    LedgerAccountDetailComponent,
+    ApprovalCriteriaComponent,
     JobComponent,
     PurchaseOrderComponent,
     CompanyDetailComponent
@@ -79,6 +73,9 @@ let localStorageServiceConfig = {
     AlertModule
   ],
   providers: [
+    ApprovalCriteriaService,
+    LedgerAccountService,
+    DashboardService,
     VendorService,
     AccountService,
     CompaniesService,

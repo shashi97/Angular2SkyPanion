@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { VendorService } from './shared/vendor.service';
 import { VendorModel } from './shared/vendor.model';
-import { CompaniesService } from '../companies/shared/companies.service'
-import { MasterService } from '../shared/services/master/master.service'
-import { AccountService } from '../account/shared/account.service'
+import { CompaniesService } from '../companies/shared/companies.service';
+import { MasterService } from '../shared/services/master/master.service';
+import { AccountService } from '../account/shared/account.service';
 import { BaseComponent } from '../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -17,9 +17,8 @@ import {
 } from 'angular2-data-table';
 
 @Component({
-  selector: 'skp-companies',
+  selector: 'sp-vendorDetail',
   templateUrl: './vendor.component.html',
-  providers: [VendorService]
 })
 
 export class VendorComponent extends BaseComponent implements OnInit {
@@ -34,7 +33,7 @@ export class VendorComponent extends BaseComponent implements OnInit {
   private pageSizeFilter: number = 25;
   private vendorKey: string = null;
   private totalItems: number = 0;
-  private itemsPerPageList: any;
+  private itemsPerPageList: Array<any>;
   private pageName: string = 'venders';
 
   private vendorModel: VendorModel;
@@ -148,15 +147,15 @@ export class VendorComponent extends BaseComponent implements OnInit {
   }
 
   private searchURL(): void {
-    if (this.vendorKey == "" || this.vendorKey == "null") {
+    if (this.vendorKey == '' || this.vendorKey == 'null') {
       this.vendorKey = null;
     }
-    if (this.vendorName == "" || this.vendorName == "null") {
+    if (this.vendorName == '' || this.vendorName == 'null') {
       this.vendorName = null;
     }
-    let link = ['/vendor', this.companyId + "," + this.vendorKey + ',' + this.vendorName];
+    let link = ['/vendor', this.companyId + ',' + this.vendorKey + ',' + this.vendorName];
     this.router.navigate(link);
-    // $location.path('/vendors/' + this.companyId + "," + this.vendorKey + ',' + this.vendorName);
+    // $location.path('/vendors/' + this.companyId + ',' + this.vendorKey + ',' + this.vendorName);
   }
 
   private searchURLReset(): void {
@@ -167,7 +166,6 @@ export class VendorComponent extends BaseComponent implements OnInit {
     this.companyId = 0;
     this.searchURL();
   }
-
 
 }
 

@@ -14,7 +14,7 @@ import {
 
 
 @Component({
-    selector: 'skp-companyDetail',
+    selector: 'sp-companyDetail',
     templateUrl: './companyDetail.component.html',
     providers: [MasterService, CompanyService, AccountService, RoleService, SettingService]
 

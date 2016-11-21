@@ -10,7 +10,7 @@ import {
 } from 'angular2-data-table';
 
 @Component({
-    selector: 'skp-companies',
+    selector: 'sp-companies',
     templateUrl: './companies.component.html',
     providers: [CompaniesService]
 })

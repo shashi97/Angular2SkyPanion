@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-another',
+  selector: 'sp-another',
   template: `
     <p>
       another Works!

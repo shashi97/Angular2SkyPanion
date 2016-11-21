@@ -10,7 +10,7 @@ import {
 } from 'angular2-data-table';
 
 @Component({
-    selector: 'skp-job',
+    selector: 'sp-job',
     templateUrl: './job.component.html',
     providers: [JobService]
 })

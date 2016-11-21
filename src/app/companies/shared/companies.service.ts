@@ -30,6 +30,15 @@ export class CompaniesService {
             .catch(this.handleError);
     }
 
+    getCompanyName(companyId) {
+        return this.http.get(ApiUrl.baseUrl
+            + "api/company/name/"
+            + companyId)
+            .toPromise()
+            .then(response => response.json() as CompanyInfo[])
+            .catch(this.handleError);
+    }
+
     public handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);

@@ -9,7 +9,7 @@ import {
 } from 'angular2-data-table';
 
 @Component({
-    selector: 'skp-purchaseOrder',
+    selector: 'sp-purchaseOrder',
     templateUrl: './purchaseOrder.component.html',
     providers: [PurchaseOrderSevice]
 })

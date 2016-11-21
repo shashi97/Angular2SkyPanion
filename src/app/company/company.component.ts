@@ -12,7 +12,7 @@ import {
 
 
 @Component({
-    selector: 'skp-company',
+    selector: 'sp-company',
     templateUrl: './company.component.html',
     providers: [MasterService, CompanyService, AccountService],
 

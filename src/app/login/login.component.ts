@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginModel } from './shared/login.model';
-import { UserService } from '../shared/services/user/user.service';
+import { UserService } from '../user/shared/user.service';
 import { AuthService } from '../shared/services/otherServices/auth.service';
 import { BaseComponent } from '../base.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 
 @Component({
-  selector: 'fa-login',
+  selector: 'sp-login',
   templateUrl: './login.component.html'
 })
 
