@@ -4,9 +4,9 @@
         <div class="options">
             <div class="btn-toolbar form-inline">
                 <div class="btn-group">
-                    <a (click)="getApprovalCriteria('all')" class="btn btn-default" ng-class="{active: type=='all'}">All</a>
-                    <a (click)="getApprovalCriteria('RangeApproval')" class="btn btn-default" ng-class="{active: type=='RangeApproval'}">Range Approvals</a>
-                    <a (click)="getApprovalCriteria('LedgerAccountApproval')" class="btn btn-default" ng-class="{active: type=='LedgerAccountApproval'}">Ledger Account Approvals</a>
+                    <a (click)="getApprovalCriteria('all')" class="btn btn-default" [ngClass]="{active: type=='all'}">All</a>
+                    <a (click)="getApprovalCriteria('RangeApproval')" class="btn btn-default" [ngClass]="{active: type=='RangeApproval'}">Range Approvals</a>
+                    <a (click)="getApprovalCriteria('LedgerAccountApproval')" class="btn btn-default" [ngClass]="{active: type=='LedgerAccountApproval'}">Ledger Account Approvals</a>
                 </div>
                 <div class="btn-group" [hidden]="!companyId!=0">
                     <!--<a class="btn btn-primary" href="#company/{{CompanyId}}/approvals">
@@ -73,7 +73,7 @@
                                             <i class="fa fa-edit" [hidden]="!app.LedgerAccountID!=null"></i> Edit
                                         </a>
                                         <a (click)="deleteApprovalCriteria(app.ApprovalCriteriaID)">
-                                            <i ng-class="{'fa fa-remove': app.LedgerAccountID!=null}"></i> Delete
+                                            <i [ngClass]="{'fa fa-remove': app.LedgerAccountID!=null}"></i> Delete
                                         </a>
                                     </td>
                                 </tr>

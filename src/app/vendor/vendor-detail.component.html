@@ -66,28 +66,28 @@
                                     <dl class="dl-horizontal">
 
                                         <dt>Address</dt>
-                                        <dd><span style="color: gray;" ng-class="{'italic-font': vendorDetail.Address=='Unknown'}">{{vendorDetail.Address}}</span></dd>
+                                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.Address=='Unknown'}">{{vendorDetail.Address}}</span></dd>
 
                                         <dt>Phone #</dt>
-                                        <dd><span style="color: gray;" ng-class="{'italic-font': vendorDetail.PhoneNumber=='Unknown'}">{{vendorDetail.PhoneNumber}}</span></dd>
+                                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.PhoneNumber=='Unknown'}">{{vendorDetail.PhoneNumber}}</span></dd>
 
                                         <dt>Account #</dt>
-                                        <dd><span style="color: gray;" ng-class="{'italic-font': vendorDetail.AccountNumber=='Unknown'}">{{vendorDetail.AccountNumber}}</span></dd>
+                                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.AccountNumber=='Unknown'}">{{vendorDetail.AccountNumber}}</span></dd>
 
                                         <dt>Tax Id</dt>
-                                        <dd><span style="color: gray;" ng-class="{'italic-font': vendorDetail.TaxId=='Unknown'}">{{vendorDetail.TaxId}}</span></dd>
+                                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.TaxId=='Unknown'}">{{vendorDetail.TaxId}}</span></dd>
 
                                         <dt>Legal Name</dt>
-                                        <dd><span style="color: gray;" ng-class="{'italic-font': vendorDetail.LegalName=='Unknown'}">{{vendorDetail.LegalName}}</span></dd>
+                                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.LegalName=='Unknown'}">{{vendorDetail.LegalName}}</span></dd>
 
                                         <dt>Web Site</dt>
-                                        <dd><span style="color: gray;" ng-class="{'italic-font': vendorDetail.WebSite=='Unknown'}">{{vendorDetail.WebSite}}</span></dd>
+                                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.WebSite=='Unknown'}">{{vendorDetail.WebSite}}</span></dd>
 
                                         <dt>Memo</dt>
-                                        <dd><span style="color: gray;" ng-class="{'italic-font': vendorDetail.Memo=='Unknown'}">{{vendorDetail.Memo}}</span></dd>
+                                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.Memo=='Unknown'}">{{vendorDetail.Memo}}</span></dd>
 
                                         <!--<dt>GL Acc.</dt>
-                                        <dd><span style="color: gray;" ng-class="{'italic-font': vendorDetail.glAccount.AccountTitle=='Unknown'}">{{vendorDetail.glAccount.AccountTitle}}</span></dd>-->
+                                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.glAccount.AccountTitle=='Unknown'}">{{vendorDetail.glAccount.AccountTitle}}</span></dd>-->
 
                                     </dl>
                                 </div>
@@ -97,10 +97,10 @@
                 </div>
                 <div class="col-md-8">
                     <h4 class="left_align">Invoice History</h4>
-                    <span data-ng-show="totalItems==0" class="right_align">No invoices found</span>
-                    <span data-ng-hide="totalItems >= pageSize || totalItems==0" class="right_align">Displaying <b>{{totalItems}}</b> invoice</span>
-                    <span data-ng-show="totalItems >= pageSize" class="right_align">Displaying invoice <b>{{currentPage*pageSize-pageSize+1}}&nbsp;-&nbsp; <span data-ng-if="currentPage*pageSize < totalItems">{{currentPage*pageSize}}</span>
-                    <span data-ng-if="currentPage*pageSize > totalItems">{{totalItems}}</span>
+                    <span [hidden]="!totalItems==0" class="right_align">No invoices found</span>
+                    <span [hidden]="totalItems >= pageSize || totalItems==0" class="right_align">Displaying <b>{{totalItems}}</b> invoice</span>
+                    <span [hidden]="!totalItems >= pageSize" class="right_align">Displaying invoice <b>{{currentPage*pageSize-pageSize+1}}&nbsp;-&nbsp; <span *ngIf="currentPage*pageSize < totalItems">{{currentPage*pageSize}}</span>
+                    <span *ngIf="currentPage*pageSize > totalItems">{{totalItems}}</span>
                     </b> of <b>{{totalItems}}</b> in total</span>
                     <br class="clear_both">
                     <table id="vendor_invoices_table" class="table table-striped table-bordered table-hover">

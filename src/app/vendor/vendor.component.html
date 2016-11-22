@@ -48,7 +48,7 @@
 		<li class="active">Vendors</li>
 	</ol>
 
-	<span data-ng-if="totalItems > pageSize && totalItems!=0">
+	<span *ngIf="totalItems > pageSize && totalItems!=0">
             Displaying {{pageName}}
             <b>
                 {{currentPage*pageSize-pageSize+1}} &nbsp;-&nbsp;
