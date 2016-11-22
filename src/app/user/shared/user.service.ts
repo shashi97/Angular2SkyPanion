@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, URLSearchParams } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
-import { ApiUrl } from '../../../config.component';
+import { ApiUrl } from '../../config.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 
 
@@ -32,8 +32,8 @@ export class UserService {
         return this.http
             .get(ApiUrl.baseUrl + 'api/resetpassword/sendmail/', { search: params })
             .toPromise()
-            .then(response =>
-                response.json());
+            .then(response => response.json())
+            .catch(this.handleError);
     }
 
     public getSessionDetails(): Object {
@@ -47,7 +47,21 @@ export class UserService {
         return this.http
             .post(ApiUrl.baseUrl + 'api/users/updatelogin/' + userName, {})
             .toPromise()
-            .then(response =>
-                response);
+            .then(response => response.json())
+            .catch(this.handleError);
+    }
+
+    public getApproverUserDDOs(companyId) {
+        return this.http.get(ApiUrl.baseUrl
+            + "api/users/companyApproverList/"
+            + companyId)
+            .toPromise()
+            .then(response => response.json())
+            .catch(this.handleError);
+    }
+
+    public handleError(error: any): Promise<any> {
+        console.error('An error occurred', error);
+        return Promise.reject(error.message || error);
     }
 }  

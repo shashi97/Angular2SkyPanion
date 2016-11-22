@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { CompaniesService } from './shared/companies.service';
 import { CompaniesModel } from './shared/companies.model';
-import { UserService } from '../shared/services/user/user.service';
+import { UserService } from '../user/shared/user.service';
 import { BaseComponent } from '../base.component';
 import { ConfirmService } from '../shared/services/otherServices/confirmService';
 
