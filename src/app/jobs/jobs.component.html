@@ -10,11 +10,11 @@
 
 
   <ol class="breadcrumb">
-    <li><a href="account/">abc</a></li>
+    <li><a href="account/{{accountModel.AccountName}}">{{accountModel.AccountName}}</a></li>
     <li class="active">Jobs</li>
   </ol>
   <div class="container-fluid">
-    <datatable class='material striped' [rows]='gridData' [options]='options'>
+    <datatable class='material striped' [rows]='jobsModel.jobsDetail' [options]='options'>
 
 
       <datatable-column name="">
@@ -25,12 +25,7 @@
                             </a>
           </div>
         </template>
-        <!--<template let-value="value">
-						Hi: <strong>Shashank</strong>
-					</template>-->
       </datatable-column>
     </datatable>
-    <!--</div>-->
-
   </div>
 </div>

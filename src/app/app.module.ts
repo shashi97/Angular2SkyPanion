@@ -5,15 +5,13 @@ import { HttpModule } from '@angular/http';
 import { routing } from './app.routing';
 import { Angular2DataTableModule } from 'angular2-data-table';
 
-
 import { Http, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { HttpInterceptor } from './shared/httpInterceptor';
 import { XHRBackend } from '@angular/http';
 
-
-
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
+import { ConfirmService } from './shared/services/otherServices/confirmService';
 /* bootstrap components start */
 
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
@@ -23,8 +21,6 @@ import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 /* sky-app components start */
 
-
-
 import { MasterService } from './shared/services/master/master.service';
 import { UserService } from './shared/services/user/user.service';
 import { AuthService } from './shared/services/otherServices/auth.service';
@@ -32,10 +28,12 @@ import { AppComponent } from './app.component';
 import { OtherComponent } from './other/other.component';
 import { LoginComponent } from './login/login.component';
 import { CompanyComponent } from './company/company.component';
-import { CompanyDetailComponent } from './company/companyDetail.component';
+import { CompanyDetailsComponent } from './companies/companyDetails.component';
 import { CompaniesComponent } from './companies/companies.component';
 import { VendorComponent } from './vendor/vendor.component';
-import { JobComponent } from './job/job.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { JobDetailsComponent } from './jobs/jobDetails.component';
+import { JobCategoryComponent } from './jobs/jobCategories.component';
 import { PurchaseOrderComponent } from './purchaseOrder/purchaseOrder.component';
 
 
@@ -59,9 +57,11 @@ let localStorageServiceConfig = {
     CompanyComponent,
     CompaniesComponent,
     VendorComponent,
-    JobComponent,
+    JobsComponent,
     PurchaseOrderComponent,
-    CompanyDetailComponent
+    CompanyDetailsComponent,
+    JobDetailsComponent,
+    JobCategoryComponent
 
   ],
   imports: [
@@ -81,6 +81,7 @@ let localStorageServiceConfig = {
     UserService,
     LocalStorageService,
     AuthService,
+    ConfirmService,
     {
       provide: Http,
       useFactory: (xhrBackend: XHRBackend,

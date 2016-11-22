@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { MasterService } from "../shared/services/master/master.service";
 import { CompanyService } from "./company.service";
-import { AccountService } from "../account/account.service";
+import { AccountService } from "../account/shared/account.service";
 
 import {
     TableOptions,

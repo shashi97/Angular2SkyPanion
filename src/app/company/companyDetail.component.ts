@@ -3,7 +3,7 @@ import { Angular2DataTableModule } from 'angular2-data-table';
 import { MasterService } from "../shared/services/master/master.service";
 import { CompanyService } from "./company.service";
 import { AccountService } from "../account/account.service";
-import { RoleService } from "../role/role.service";
+import { RoleService } from "../role/shared/role.service";
 import { SettingService } from "../setting/setting.service";
 
 import {

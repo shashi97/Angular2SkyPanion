@@ -6,7 +6,7 @@
 
 				<div class="filter_field_wrap form-group">
 					<input class="form-control" id="search_filter_param" name="searchstr" placeholder="Enter text to search for." type="text"
-						ng-model="searchText">
+						[(ngModel)]="searchText">
 				</div>
 
 				<div class="filter_field_wrap form-group">
@@ -52,16 +52,14 @@
 
 
 			<datatable-column name="">
-				<template let-column="column">
+				<template let-row="row">
 					<div class="ui-grid-cell-contents">
-						<a tooltip-append-to-body="true" tooltip-placement="top" uib-tooltip-html="">
+            
+						<a tooltip-append-to-body="true" tooltip-placement="top" uib-tooltip-html="" href="companyDetails//">
                             Details
                             </a>
 					</div>
 				</template>
-				<!--<template let-value="value">
-						Hi: <strong>Shashank</strong>
-					</template>-->
 			</datatable-column>
 		</datatable>
 	<!--</div>-->

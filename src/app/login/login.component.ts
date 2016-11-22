@@ -86,8 +86,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
           let link = ['/resetpassword'];
           this.router.navigate(link);
           // $location.path('resetpassword');
-        }
-        else {
+        } else {
           this.userService.updateUserDetail(this.loginModel.userName).then((result) => {
             // messageService.hidePleaseWait();
             let link = ['/company'];
