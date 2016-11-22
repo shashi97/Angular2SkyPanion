@@ -6,7 +6,7 @@ import { AccountService } from '../account/shared/account.service';
 import { AccountModel} from '../account/shared/account.model';
 import { JobsService } from './shared/jobs.service';
 import { JobsModel } from './shared/jobs.model';
-import { UserService } from '../shared/services/user/user.service';
+import { UserService } from '../user/shared/user.service';
 import { BaseComponent } from '../base.component';
 
 import {

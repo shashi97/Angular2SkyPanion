@@ -7,7 +7,7 @@ import { CompanyDetails } from './shared/companies.model';
 import { RoleService } from '../role/shared/role.service';
 import { ActivatedRoute } from '@angular/router';
 import { RoleModel, RoleInfo } from '../role/shared/role.model';
-import { UserService } from '../shared/services/user/user.service';
+import { UserService } from '../user/shared/user.service';
 import { BaseComponent } from '../base.component';
 
 @Component({

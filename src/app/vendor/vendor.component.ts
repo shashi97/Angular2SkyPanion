@@ -102,13 +102,9 @@ export class VendorComponent extends BaseComponent implements OnInit {
   }
 
   private getAccountName(): void {
-    this.accountService.getAccountName().then((result) => {
-      if (result.status == 404 || result.status == 500) {
-      }
-      else {
+    this.accountService.getAccountName().then((result) => {     
         this.account = result;
-        this.getVendors();
-      }
+        this.getVendors();      
     });
   }
 

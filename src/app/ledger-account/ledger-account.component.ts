@@ -97,12 +97,10 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
 
     private getAccountName(): void {
         this.accountService.getAccountName().then((result) => {
-            if (result.status == 404 || result.status == 500) {
-            }
-            else {
+           
                 this.account = result;
                 this.getLedgerAccounts();
-            }
+          
         });
     }
 
