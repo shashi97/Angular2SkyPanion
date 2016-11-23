@@ -1,0 +1,55 @@
+    <div class="options" style="padding-top:20px">
+      <div class="form-inline text-center">
+        <div class="field form-group">
+          <ng-pagination 
+             
+             [totalItems]="_dataSource" 
+             [(ngModel)]="currentPageNo" 
+             [maxSize]="maxPageNo" 
+             [boundaryLinks]="true" 
+             (pageChanged)="pageChangeHandler()"
+             previous-text="&lsaquo;" 
+             next-text="&rsaquo;" 
+             first-text="First" 
+             last-text="Last">
+        </ng-pagination>
+        </div>
+        <div 
+             class="field form-group" 
+             style="padding-left:10px;margin-top:-5px">
+        <label 
+            class="control-label" 
+            for="invoice_PayUsingAch">Items Per Page:</label>
+        </div>
+
+      <div class="field form-group" 
+           style="padding-left:1px;margin-top:-5px">
+          <div class="col-md-8 dropup">
+            <button 
+                  class="btn btn-default dropdown-toggle " 
+                  type="button" 
+                  id="menu1" 
+                  data-toggle="dropdown">
+                            <span class="text-primary">   {{pageSizeFilter}}</span>
+                            <span class="caret text-primary"></span>
+                        </button>
+            <ul id="dropperItem" 
+                role="menu" 
+                class="dropdown-menu" 
+                style="min-width:70px">
+              <li><a role="menuitem" 
+                     class="dropdown-item "
+                     *ngFor="let page of itemsPerPageList" 
+                     (click)="getDataAsPerPerPageRequired(page.value)">{{page.value}}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+<!--    
+
+      <ul>
+      <li *ngFor="let item of _dataSource | paginate: { itemsPerPage: 10, currentPage: p }"> name</li>
+    </ul>
+
+    <pagination-controls (pageChange)="p = $event"></pagination-controls></div>-->

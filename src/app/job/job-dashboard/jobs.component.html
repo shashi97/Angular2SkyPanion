@@ -1,0 +1,67 @@
+<div class="page-content">
+  <div class="page-heading">
+    <h1>All Jobs</h1>
+
+    <div class="options">
+      <div class="btn-toolbar form-inline">
+      </div>
+    </div>
+  </div>
+
+
+  <ol class="breadcrumb">
+    <li><a href="account/{{accountModel.AccountName}}">{{accountModel.AccountName}}</a></li>
+    <li class="active">Jobs</li>
+  </ol>
+  <div class="container-fluid">
+    <!--<datatable class='material striped' [rows]='jobsModel.jobsDetail' [options]='options'>
+
+
+      <datatable-column name="">
+        <template let-column="column">
+          <div class="ui-grid-cell-contents">
+            <a tooltip-append-to-body="true" tooltip-placement="top" uib-tooltip-html="">
+                            Details
+                            </a>
+          </div>
+        </template>
+      </datatable-column>
+    </datatable>-->
+    <!--<ng-pagination [totalItems]="totalItems" [ngModel]="currentPage" [maxSize]="maxSize" [boundaryLinks]="true" (pageChanged)="pageChanged($event)"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="First" last-text="Last"></ng-pagination>-->
+
+    <table id="account_distributions_table" class="table table-striped table-bordered table-hover" [mfData]=" jobsModel.jobsDetail"
+      #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+      <thead>
+        <tr>
+          <th style="width: 20%">Number</th>
+          <th style="width: 20%">Company</th>
+          <th style="width: 30%">Description</th>
+          <th style="width: 20%">Talent Id</th>
+          <th style="width: 10%"></th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of jobsModel.jobsDetail">
+          <td>{{item.Number}}</td>
+          <td>{{item.CompanyName}}</td>
+          <td>{{item.Description}}</td>
+          <td>{{item.TenantId}}</td>
+          <td><a href="ledgerAccountDetail/{{item.id}}">Details</a></td>
+          <!--<td>{{item.AccountNumber}}</td>
+                <td>{{item.AccountTitle}}</td>
+                <td>{{item.invCount}}</td>
+                <td><a href="ledgerAccountDetail/{{item.id}}">Details</a></td>
+            </tr>-->
+      </tbody>
+
+    </table>
+    <sp-pagination
+     [dataSource]='jobsModel.jobsDetail' 
+     [currentPageChanged]='onCurrentPageChanged'
+     [pageSizeFilterChanged]='onPageSizeFilterChanged' ></sp-pagination>
+
+
+  </div>
+</div>

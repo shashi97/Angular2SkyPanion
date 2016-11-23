@@ -28,7 +28,7 @@ const APP_ROUTES: Routes = [
     { path: 'ledgerAccount/:searchParameters', component: LedgerAccountComponent },
     { path: 'ledgerAccountDetail/:id', component: LedgerAccountDetailComponent },
     { path: 'approvals', component: ApprovalCriteriaComponent },
-    { path: 'purchaseOrder', component: PurchaseOrderComponent }
+    { path: 'client', component: PurchaseOrderComponent }
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

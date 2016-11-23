@@ -8,6 +8,8 @@ import { Http, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { HttpInterceptor } from './shared/httpInterceptor';
 import { XHRBackend } from '@angular/http';
+import { DataTableModule } from "angular2-datatable";
+import { PaginationDirective } from '../../node_modules/angular2-bootstrap-pagination/directives/pagination.directive';
 
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { ConfirmService } from './shared/services/otherServices/confirmService';
@@ -15,7 +17,7 @@ import { ConfirmService } from './shared/services/otherServices/confirmService';
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 /* bootstrap components end */
 
-
+import {Ng2PaginationModule} from 'ng2-pagination';
 /*sp-app services*/
 
 import { MasterService } from './shared/services/master/master.service';
@@ -46,7 +48,7 @@ import { LedgerAccountComponent } from './ledger-account/ledger-account.componen
 import { LedgerAccountDetailComponent } from './ledger-account/ledger-account-detail.component';
 import { ApprovalCriteriaComponent } from './approval-criteria/approval-criteria.component';
 import { PurchaseOrderComponent } from './purchaseOrder/purchaseOrder.component';
-
+import { PaginationComponent } from './pagination/pagination.component';
 
 let localStorageServiceConfig = {
   prefix: 'my-app',
@@ -70,8 +72,10 @@ let localStorageServiceConfig = {
     PurchaseOrderComponent,
     CompanyDetailsComponent,
     JobDetailsComponent,
-    JobCategoryComponent
-
+    JobCategoryComponent,
+    PaginationDirective,
+    PaginationComponent,
+    PaginationDirective
   ],
   imports: [
     BrowserModule,
@@ -79,7 +83,9 @@ let localStorageServiceConfig = {
     HttpModule,
     routing,
     Angular2DataTableModule,
-    AlertModule
+    AlertModule,
+    DataTableModule,
+    Ng2PaginationModule
   ],
   providers: [
     ApprovalCriteriaService,
