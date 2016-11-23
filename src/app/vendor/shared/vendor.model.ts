@@ -1,25 +1,7 @@
+
 export class VendorModel {
-  vendorGridArray: Array<VendorRow> = [];
-  constructor() {
-    this.vendorGridArray = new Array<VendorRow>();
-  }
-}
-
-export class VendorRow {
-  AccountNumber: string;
-  CompanyName: string;
-  LedgerAccountId: number = null;
-  PhoneNumber: string;
   RowNumber: number;
-  VendorID: number;
-  VendorKey: string;
-  VendorName: string;
-  VendorsCount: number;
-  account_id: number;
-  company_id: number;
-}
-
-export class VendorDetail {
+  LedgerAccountId: number = null;
   AccountNumber: string = '';
   Address: string = '';
   CompanyID: number = 0;
@@ -34,4 +16,7 @@ export class VendorDetail {
   WebSite: string = '';
   account_id: number = 0;
   glAccount: any;
+  company_id: number;
+  CompanyName: string;
+  VendorsCount: number;
 }

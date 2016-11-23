@@ -1,0 +1,32 @@
+<div id="slider" class="page-content" *ngIf="ledgerAccountDetail">
+
+    <sp-ledger-filter-bar [ledgerAccountDetail]="ledgerAccountDetail"></sp-ledger-filter-bar>
+
+    <ol class="breadcrumb" [hidden]="!companyId != 0">
+        <li>
+            <a href="#companies">Companies</a>
+        </li>
+        <li>
+            <a href="#company/{{companyID}}">{{companyName}}</a>
+        </li>
+        <li>
+            <a href="#company/{{searchParameters}}/{{companyID}}/ledgeraccounts">Ledger Accounts</a>
+        </li>
+        <li class="active">{{ledgerAccountDetail.LedgerAccountName}} {{ledgerAccountDetail.AccountTitle}}</li>
+    </ol>
+    <ol class="breadcrumb" [hidden]="!companyId == 0">
+        <li>
+            <a href="#ledgeraccounts/{{searchParameters}}">Ledger Accounts</a>
+        </li>
+        <li class="active">{{ledgerAccountDetail.LedgerAccountName}} {{ledgerAccountDetail.AccountTitle}} </li>
+    </ol>
+    <div class="container-fluid">
+        <div id="panel-advancedoptions">
+            <div class="row">
+                <sp-ledger-attribute [ledgerAccountDetail]="ledgerAccountDetail"></sp-ledger-attribute>
+                <sp-ledger-account-distribution *ngIf="ledgerAccounts" [ledgerAccounts]="ledgerAccounts"></sp-ledger-account-distribution>
+            </div>
+        </div>
+    </div>
+
+</div>

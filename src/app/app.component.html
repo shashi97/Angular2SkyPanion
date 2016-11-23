@@ -72,7 +72,7 @@
 <header id="topnav" class="navbar navbar-default navbar-fixed-top clearfix" role="banner">
 
   <a id="leftmenu-trigger" class="" data-toggle="tooltip" data-placement="right" title="Toggle Sidebar"></a>
-  <a href="#dashboard">
+  <a routerLink="dashboard">
     <img src="../../assets/img/SkyPanion-R.png" style="height: 45px; margin-top: 3px; float: left">
   </a>
 
@@ -118,7 +118,7 @@
             <div class="widget-body welcome-box tabular">
               <div class="tabular-row">
                 <div class="tabular-cell welcome-avatar">
-                  <a href="#dashboard">
+                  <a routerLink="#dashboard">
                     <img class="avatar" />
                   </a>
                 </div>
@@ -136,43 +136,43 @@
             <span class="widget-heading">QUICK LINKS</span>
             <nav role="navigation" class="widget-body">
               <ul class="acc-menu">
-                <li><a href="#dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
+                <li><a routerLink="dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
 
                 <li>
                   <a href="javascript:;"><i class="fa fa-database"></i><span>Content</span></a>
                   <ul class="acc-menu">
 
-                    <li><a href="companies">All Companies</a></li>
-                    <li><a href="vendor">All Vendors</a></li>
-                    <li><a href="jobs">All Jobs</a></li>
-                    <li><a href="purchaseOrder">Purchase Orders</a></li>
-                    <li><a href="invoices">Invoice History</a></li>
-                    <li><a href="ledgerAccount">Ledger Accounts</a></li>
-                    <li><a href="achsetups">Ach Setups</a></li>
-                    <li><a href="approvals">Approval Criteria</a></li>
+                    <li><a routerLink="companies">All Companies</a></li>
+                    <li><a routerLink="vendor">All Vendors</a></li>
+                    <li><a routerLink="jobs">All Jobs</a></li>
+                    <li><a routerLink="purchaseOrder">Purchase Orders</a></li>
+                    <li><a routerLink="invoices">Invoice History</a></li>
+                    <li><a routerLink="ledgerAccount">Ledger Accounts</a></li>
+                    <li><a routerLink="achsetups">Ach Setups</a></li>
+                    <li><a routerLink="approvals">Approval Criteria</a></li>
 
                   </ul>
                 </li>
 
-                <li><a href="#attachments"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>
+                <li><a routerLink="attachments"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>
 
                 <li>
                   <a href="javascript:;"><i class="fa fa-refresh"></i><span>Sync Center</span></a>
                   <ul class="acc-menu">
-                    <li><a href="#syncbatches">Sync Batches</a></li>
-                    <li><a href="#syncbatcheNew/-1/0/new">New Sync Batch</a></li>
+                    <li><a routerLink="syncbatches">Sync Batches</a></li>
+                    <li><a routerLink="syncbatcheNew/-1/0/new">New Sync Batch</a></li>
                   </ul>
                 </li>
 
-                <li data-ng-if="sessionDetails.IsSuperUser"><a href="#iniSetup"><i class="fa fa-cogs"></i><span>Setup</span></a></li>
+                <li data-ng-if="sessionDetails.IsSuperUser"><a routerLink="iniSetup"><i class="fa fa-cogs"></i><span>Setup</span></a></li>
 
                 <li data-ng-if="sessionDetails.IsSuperUser">
                   <a href="javascript:;"><i class="fa fa-random"></i><span>Administration</span></a>
                   <ul class="acc-menu">
-                    <li><a href="#users">All Members</a></li>
-                    <li><a href="#user/0/new">Create Member</a></li>
-                    <li><a href="#roles">All Roles</a></li>
-                    <li><a href="#rolesAdd/0/new">New Role</a></li>
+                    <li><a routerLink="users">All Members</a></li>
+                    <li><a routerLink="user/0/new">Create Member</a></li>
+                    <li><a routerLink="roles">All Roles</a></li>
+                    <li><a routerLink="rolesAdd/0/new">New Role</a></li>
                   </ul>
                 </li>
               </ul>

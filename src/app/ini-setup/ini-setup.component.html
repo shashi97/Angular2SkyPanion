@@ -1,0 +1,221 @@
+<div id="slider" class="page-content">
+
+    <style type="text/css">
+        tr td:hover {
+            cursor: pointer;
+            background-color: #f7de79;
+        }
+    </style>
+
+    <div class="page-heading">
+        <h1>Ini Setup</h1>
+        <div class="options">
+            <div class="form-inline" id="invoices_index_filters_form">
+                <div class="form-group">
+                    <button class="btn btn-primary" id="btnGetDrivespopup" type="button" data-toggle="modal" data-target="#dgDrivesAndFileList"
+                        data-ng-click="getDirectories(null , 14)">Select InI file</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ol class="breadcrumb" *ngIf="account">
+        <li><a href="#accounts/{{account.AccountID}}">{{account.AccountName}}</a></li>
+        <li class="active">Ini Setup</li>
+    </ol>
+
+
+    <div class="container-fluid">
+        <div id="panel-advancedoptions">
+            <div class="row">
+
+                <div id="property_attributes" class="col-md-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#tab-1-1">Ini Values</a>
+                                    </li>
+                                    <li class="">
+
+                                        <a data-toggle="tab" href="#tab-1-2">Global Permissions</a>
+                                    </li>
+                                </ul>
+                            </h2>
+                        </div>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div id="tab-1-1" class="tab-pane active">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body" *ngIf="iniSetupModel ">
+                                            <dl class="dl-horizontal">
+                                                <dt>Licensee</dt>
+                                                <dd>{{iniSetupModel.Licensee}}</dd>
+
+                                                <dt>Registration Code</dt>
+                                                <dd>{{iniSetupModel.RegistrationCode}}</dd>
+
+                                                <dt>Serial Number</dt>
+                                                <dd>{{iniSetupModel.SerialNumber}}</dd>
+
+                                                <dt>Default Skyline</dt>
+                                                <dd>{{iniSetupModel.DEFAULT_SKYLINE}}</dd>
+
+                                                <dt>Default Data</dt>
+                                                <dd>{{iniSetupModel.DEFAULT_DATA}}</dd>
+
+                                                <dt>Default Ifs</dt>
+                                                <dd>{{iniSetupModel.DEFAULT_IFS}}</dd>
+
+                                                <dt>Default Apps</dt>
+                                                <dd>{{iniSetupModel.DEFAULT_APPS}}</dd>
+
+                                                <dt>Default Select</dt>
+                                                <dd>{{iniSetupModel.DEFAULT_SELECT}}</dd>
+
+                                                <dt>Default Company</dt>
+                                                <dd>{{iniSetupModel.DEFAULT_COMPANY}}</dd>
+
+                                                <dt>Default Reports</dt>
+                                                <dd>{{iniSetupModel.DEFAULT_REPORTS}}</dd>
+
+                                                <dt>Default FMData</dt>
+                                                <dd>{{iniSetupModel.DEFAULT_FMDATA}}</dd>
+
+                                                <dt>Apvend</dt>
+                                                <dd>{{iniSetupModel.APVEND}}</dd>
+
+                                                <dt>Upload Interval</dt>
+                                                <dd>
+                                                    <input class="form-control" type="number" nks-only-number decimal-upto="2" data-ng-model="iniSetupModel.uploadInterval" style="width: 200px"
+                                                    />
+                                                </dd>
+
+                                                <dt>Download Interval</dt>
+                                                <dd>
+                                                    <input class="form-control col-md-4" type="number" nks-only-number decimal-upto="2" data-ng-model="iniSetupModel.downloadInterval"
+                                                        style="width: 200px" />
+                                                </dd>
+
+                                                <dt>PDF Store Location</dt>
+                                                <dd>
+                                                    <input class="form-control" type="text" data-ng-model="iniSetupModel.PdfStoreLocation" />
+                                                </dd>
+
+                                                <dt>PDF Process Location</dt>
+                                                <dd>
+                                                    <input class="form-control" type="text" data-ng-model="iniSetupModel.PdfProcessLocation" />
+                                                </dd>
+
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div id="iniSetupModel_required_approvals_wrap" class="invoice_relation_wrap" data-ng-show="iniSetupModel.Licensee == ''">
+                                        <div class="alert alert-warning">
+                                            <h4>No IniSetup File Available</h4>
+                                            <span>
+                                                If you believe that this messege is being displayed in error, contact the account admin:
+                                                <br>
+                                                <a href="#user/{{invApprovals.OwnerID}}">{{invApprovals.OwnerName}}</a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="tab-1-2" class="tab-pane">
+                                    <div class="panel panel-default">
+                                        <div class="panel-body">
+                                            <div class="col-md-4">
+                                                <dl class="dl-horizontal">
+                                                    <dt style="margin-top: 5px;">Process Scanned Pdfs</dt>
+                                                    <dd>
+                                                        <!--<ui-select ng-model="selectedProcessScannedRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedProcessScannedRole.selected.RoleID, 'process')">
+                                                            <ui-select-match>{{selectedProcessScannedRole.selected.Name}}</ui-select-match>
+                                                            <ui-select-choices repeat="role in roles| filter: $select.search">
+                                                                {{role.Name}}
+                                                            </ui-select-choices>
+                                                        </ui-select>-->
+                                                    </dd>
+                                                </dl>
+                                                <dl class="dl-horizontal">
+                                                    <dt style="margin-top: 5px;">Review Invoices</dt>
+                                                    <dd>
+                                                        <!--<ui-select ng-model="selectedReviewRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedReviewRole.selected.RoleID, 'review')">
+                                                            <ui-select-match>{{selectedReviewRole.selected.Name}}</ui-select-match>
+                                                            <ui-select-choices repeat="role in roles| filter: $select.search">
+                                                                {{role.Name}}
+                                                            </ui-select-choices>
+                                                        </ui-select>-->
+                                                    </dd>
+                                                </dl>
+                                                <dl class="dl-horizontal">
+                                                    <dt style="margin-top: 5px;">Approve Invoices</dt>
+                                                    <dd>
+                                                        <!--<ui-select ng-model="selectedApproveRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedApproveRole.selected.RoleID, 'approve')">
+                                                            <ui-select-match>{{selectedApproveRole.selected.Name}}</ui-select-match>
+                                                            <ui-select-choices repeat="role in roles| filter: $select.search">
+                                                                {{role.Name}}
+                                                            </ui-select-choices>
+                                                        </ui-select>-->
+                                                    </dd>
+                                                </dl>
+                                                <dl class="dl-horizontal">
+                                                    <dt style="margin-top: 5px;">Batch Invoices</dt>
+                                                    <dd>
+                                                        <!--<ui-select ng-model="selectedBatchRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedBatchRole.selected.RoleID, 'batch')">
+                                                            <ui-select-match>{{selectedBatchRole.selected.Name}}</ui-select-match>
+                                                            <ui-select-choices repeat="role in roles| filter: $select.search">
+                                                                {{role.Name}}
+                                                            </ui-select-choices>
+                                                        </ui-select>-->
+                                                    </dd>
+                                                </dl>
+                                                <dl class="dl-horizontal">
+                                                    <dt style="margin-top: 5px;">Delete Invoices</dt>
+                                                    <dd>
+                                                        <!--<ui-select ng-model="selectedDeleteRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedDeleteRole.selected.RoleID, 'delete')">-->
+                                                            <!--<ui-select-match>{{selectedDeleteRole.selected.Name}}</ui-select-match>
+                                                            <ui-select-choices repeat="role in roles| filter: $select.search">
+                                                                {{role.Name}}
+                                                            </ui-select-choices>
+                                                        </ui-select>-->
+                                                    </dd>
+                                                </dl>
+                                                <dl class="dl-horizontal">
+                                                    <dt style="margin-top: 5px;">Approver Override</dt>
+                                                    <dd>
+                                                        <!--<ui-select ng-model="selectedApproverOverrideRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedApproverOverrideRole.selected.RoleID, 'approver')">
+                                                            <ui-select-match>{{selectedApproverOverrideRole.selected.Name}}</ui-select-match>
+                                                            <ui-select-choices repeat="role in roles| filter: $select.search">
+                                                                {{role.Name}}
+                                                            </ui-select-choices>
+                                                        </ui-select>-->
+                                                    </dd>
+                                                </dl>
+
+                                                <dl class="dl-horizontal">
+                                                    <dt style="margin-top: 5px;">Sync Batches to Skyline</dt>
+                                                    <dd>
+                                                        <!--<ui-select ng-model="selectedSyncBatchestoSkylineRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedSyncBatchestoSkylineRole.selected.RoleID, 'approver')">
+                                                            <ui-select-match>{{selectedSyncBatchestoSkylineRole.selected.Name}}</ui-select-match>
+                                                            <ui-select-choices repeat="role in roles| filter: $select.search">
+                                                                {{role.Name}}
+                                                            </ui-select-choices>
+                                                        </ui-select>-->
+                                                    </dd>
+                                                </dl>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <input class="btn btn-primary" data-ng-click="saveIniSetupDetails()" value="Save" type="button" style="float: right">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

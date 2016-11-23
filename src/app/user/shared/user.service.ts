@@ -60,6 +60,13 @@ export class UserService {
             .catch(this.handleError);
     }
 
+    public getUserDDOs() {
+        return this.http.get(ApiUrl.baseUrl + "api/users/list")
+            .toPromise()
+            .then(response => response.json())
+            .catch(this.handleError);
+    }
+
     public handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
         return Promise.reject(error.message || error);
