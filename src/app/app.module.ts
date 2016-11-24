@@ -31,7 +31,7 @@ import { LedgerAccountService } from './ledger-account/shared/ledger-account.ser
 import { ApprovalCriteriaService } from './approval-criteria/shared/approval-criteria.service';
 import { IniSetupService } from './ini-setup/shared/ini-setup.service';
 import { RoleService } from './role/shared/role.service';
-
+import { AttachmentService } from './attachment/shared/attachment.service';
 /* sp-app components */
 import { AppComponent } from './app.component';
 import { OtherComponent } from './other/other.component';
@@ -65,7 +65,7 @@ import { ApprovalCriteriaComponent } from './approval-criteria/approval-criteria
 import { PurchaseOrderComponent } from './purchaseOrder/purchaseOrder.component';
 
 import { CompanyDropdownComponent } from './shared/dropdown/company/company-dropdown.component';
-
+import { AttachmentComponent } from './attachment/attachment.component';
 
 let localStorageServiceConfig = {
     prefix: 'my-app',
@@ -97,7 +97,8 @@ let localStorageServiceConfig = {
         JobDetailsComponent,
         JobCategoryComponent,
         IniSetupComponent,
-        CompanyDropdownComponent
+        CompanyDropdownComponent,
+        AttachmentComponent
     ],
     imports: [
         BrowserModule,
@@ -122,6 +123,7 @@ let localStorageServiceConfig = {
         LocalStorageService,
         AuthService,
         ConfirmService,
+        AttachmentService,
         {
             provide: Http,
             useFactory: (xhrBackend: XHRBackend,

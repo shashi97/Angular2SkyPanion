@@ -13,6 +13,7 @@ import { ApprovalCriteriaComponent } from './approval-criteria/approval-criteria
 import { JobsComponent } from './jobs/jobs.component';
 import { JobDetailsComponent } from './jobs/jobDetails.component';
 import { IniSetupComponent } from './ini-setup/ini-setup.component';
+import { AttachmentComponent } from './attachment/attachment.component';
 
 const APP_ROUTES: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -30,7 +31,8 @@ const APP_ROUTES: Routes = [
     { path: 'ledgerAccount/ledgerAccountDetail/:id', component: LedgerAccountDetailComponent },
     { path: 'approvals', component: ApprovalCriteriaComponent },
     { path: 'purchaseOrder', component: PurchaseOrderComponent },
-    { path: 'iniSetup', component: IniSetupComponent }
+    { path: 'iniSetup', component: IniSetupComponent },
+    { path: 'attachments', component: AttachmentComponent}
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);
