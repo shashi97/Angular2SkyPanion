@@ -1,6 +1,15 @@
-import { Component, OnChanges, Input, Output, ChangeDetectorRef } from '@angular/core';
+import { Component, OnChanges, Input, Output, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { MasterService } from '../shared/services/master/master.service';
 
+export class CurrentPageArguments {
+    pageNo: number = 1;
+    toPage: number = 0;
+    fromPage: number = 0;
+    pageSizeFilter: number = 25;
+    isShowPage: boolean = false;
+    validatePageSize: boolean = false;
+    validateTotalItems: boolean = false;
+}
 
 @Component({
     selector: 'sp-pagination',
@@ -10,14 +19,13 @@ export class PaginationComponent implements OnChanges {
 
 
     public pageSizeFilter: number;
-    private pageSize: number = 25;
-    private totalItems: number= 100;
-    private maxPage: number;
     private itemsPerPageList: Array<number> = [];
-    @Input()
-    public currentPageChanged: (pageNo) => void;
-    @Input()
-    public pageSizeFilterChanged: (pageSize, maxPageNo) => void;
+
+    @Output()
+    public currentPageChanged: EventEmitter<CurrentPageArguments> = new EventEmitter<CurrentPageArguments>();
+    @Input() currentPageFiltered: CurrentPageArguments = new CurrentPageArguments();
+    // @Input()
+    // public pageSizeFilterChanged: (pageSize) => void;
 
     //     @Output()
     //     public get currentPageNo() :(number) {
@@ -27,16 +35,41 @@ export class PaginationComponent implements OnChanges {
     //      this._currentPageNo=newValue;
     //   }
     private _dataSource: Array<any> = [];
-    private currentPageNo: number = 1;
+    private _totalItems: number;
     public maxPageNo: number;
+    public totalItem: number;
+
     @Input()
     public get dataSource(): Array<any> {
         return this._dataSource;
     }
     public set dataSource(newvalue: Array<any>) {
         this._dataSource = newvalue;
-        this.maxPageNo = this.dataSource.length / this.pageSizeFilter;
+        if (this._dataSource.length !== 0) {
+            // this.totalItem = this.dataSource[0].TotalCount;
+           // this.setMaxNo();
+            // this.maxPageNo = this.dataSource[0].TotalCount / this.pageSizeFilter;
+        }
         this.changeDetectorRef.markForCheck();
+    }
+    
+    @Input()
+    public get totalItems(): number {
+        return this._totalItems;
+    }
+    public set totalItems(newvalue: number) {
+        this._totalItems = newvalue;
+    }
+
+    public setMaxNo(): void {
+        if ((this.dataSource[0].TotalCount /
+            this.pageSizeFilter - Math.floor
+                (this.dataSource[0].TotalCount / this.pageSizeFilter)) === 0) {
+            this.maxPageNo = this.dataSource[0].TotalCount / this.pageSizeFilter;
+        } else {
+            this.maxPageNo = Math.floor(this.dataSource[0].TotalCount / this.pageSizeFilter) + 1;
+        }
+
     }
 
 
@@ -61,7 +94,8 @@ export class PaginationComponent implements OnChanges {
 
     private setItemsPerPageList(): void {
         this.itemsPerPageList = this.masterService.getItemsPerPageList();
-        this.pageSizeFilter = 25;
+        // this.currentPageFiltered.pageSizeFilter = 25;
+        this.setPageSumDisplay();
 
     }
 
@@ -71,13 +105,25 @@ export class PaginationComponent implements OnChanges {
     // };
     private getDataAsPerPerPageRequired(value: number): void {
         if (value !== undefined && value !== null) {
-            this.pageSizeFilter = value;
-            this.maxPageNo = this.dataSource.length / this.pageSizeFilter;
-            this.pageSizeFilterChanged(this.pageSizeFilter,  this.maxPageNo);
-          }
+            this.currentPageFiltered.pageSizeFilter = value;
+            this.currentPageFiltered.pageNo = 1;
+            this.pageChangeHandler();
+           // this.maxPageNo = this.dataSource.length / this.pageSizeFilter;
+            // this.pageSizeFilterChanged(this.pageSizeFilter);
+        }
     }
 
     private pageChangeHandler(): void {
-        this.currentPageChanged(this.currentPageNo);
+        // this.currentPageFiltered.pageNo = 1;
+        this.setPageSumDisplay();
+        this.currentPageChanged.emit(this.currentPageFiltered);
+    }
+
+    private setPageSumDisplay(): void {
+        this.currentPageFiltered.fromPage = this.currentPageFiltered.pageNo * this.currentPageFiltered.pageSizeFilter;
+        this.currentPageFiltered.toPage = this.currentPageFiltered.fromPage -
+            this.currentPageFiltered.pageSizeFilter + 1;
+
+
     }
 }

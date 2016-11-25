@@ -1,0 +1,36 @@
+<div class="page-heading">
+    <h1>
+        {{vendorDetail.VendorName}} - <span style="font-size:14px">{{vendorDetail.VendorKey}}</span></h1>
+    <div class="options">
+        <div class="form-inline" id="invoices_index_filters_form">
+
+            <!--<div class="filter_field_wrap  form-group">
+                <div class="btn-group">
+                    <a class="btn btn-default" href="#companies">NoneNoneNone</a>
+                    <a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
+                        <span class="caret"></span>
+                    </a>
+                    <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
+                        <li *ngFor="let company of companies">
+                            <a role="menuitem">{{company.CompanyName}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>-->
+            
+            <sp-company-dropdown></sp-company-dropdown>
+
+            <div class="filter_field_wrap form-group">
+                <button class="btn btn-primary" name="commit" type="button" (click)="searchByCompany()">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Filter
+                    </button>
+
+                <button class="btn btn-warning" (click)="resetSearch()">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                        Reset
+                    </button>
+            </div>
+        </div>
+    </div>
+</div>

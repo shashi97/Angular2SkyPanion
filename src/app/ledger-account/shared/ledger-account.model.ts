@@ -1,11 +1,6 @@
-export class LedgerAccountModel {
-    LedgerAccountGridArray: Array<LedgerAccountRow> = [];
-    constructor() {
-        this.LedgerAccountGridArray = new Array<LedgerAccountRow>();
-    }
-}
 
-export class LedgerAccountRow {
+
+export class LedgerAccountModel {
     AccountCategory: number = 0;
     AccountLevel: number = 0;
     AccountNumber: number = 0;
@@ -32,16 +27,16 @@ export class LedgerAccountRow {
     id: number = 0;
     invCount: string = '';
     updated_at: string = '';
-    updated_by_id: null
-
-    constructor(serverResponse) {
-        if (serverResponse) {
-            Object.assign(this, serverResponse);
-        }
-    }
-}
-
-
-export class LedgerAccountDetail {
-    ledgerAccountDistributions: Array<any> = [];
+    updated_by_id: null;
+    Amount: number = 0;
+    Amount_cents: number = 0;
+    Amount_currency: string = '';
+    Comment: string = '';
+    InvoiceDate: string = '';
+    InvoiceNumber: string = '';
+    Name: string = '';
+    VendorKey: string = '';
+    invoice_id: number = 0;
+    ledger_account_id: number = 0;
+    vendor_id: number = 0;
 }

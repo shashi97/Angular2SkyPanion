@@ -2,10 +2,10 @@
       <div class="form-inline text-center">
         <div class="field form-group">
           <ng-pagination 
-             
-             [totalItems]="_dataSource" 
-             [(ngModel)]="currentPageNo" 
-             [maxSize]="maxPageNo" 
+            *ngIf="totalItems > currentPageFiltered.pageSizeFilter"
+             [totalItems]="totalItems" 
+             [(ngModel)]="currentPageFiltered.pageNo" 
+             [maxSize]=" currentPageFiltered.pageSizeFilter" 
              [boundaryLinks]="true" 
              (pageChanged)="pageChangeHandler()"
              previous-text="&lsaquo;" 
@@ -30,7 +30,7 @@
                   type="button" 
                   id="menu1" 
                   data-toggle="dropdown">
-                            <span class="text-primary">   {{pageSizeFilter}}</span>
+                            <span class="text-primary">   {{currentPageFiltered.pageSizeFilter}}</span>
                             <span class="caret text-primary"></span>
                         </button>
             <ul id="dropperItem" 
@@ -39,7 +39,7 @@
                 style="min-width:70px">
               <li><a role="menuitem" 
                      class="dropdown-item "
-                     *ngFor="let page of itemsPerPageList" 
+                     *ngFor="let page of itemsPerPageList | orderby" 
                      (click)="getDataAsPerPerPageRequired(page.value)">{{page.value}}</a></li>
             </ul>
           </div>

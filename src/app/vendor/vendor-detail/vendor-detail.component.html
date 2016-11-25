@@ -1,0 +1,25 @@
+<div id="slider" class="page-content" *ngIf="vendorDetail">
+
+    <sp-vendor-filter-bar *ngIf="vendorDetail"
+      [vendorDetail]="vendorDetail" 
+      [filtered]="onFiltered"
+      [filteredValue]="filteredValue"
+      >
+     </sp-vendor-filter-bar>
+
+    <ol class="breadcrumb">
+        <li>
+            <a href="#vendors/{{searchParameters}}">Vendors</a>
+        </li>
+        <li class="active">{{vendorDetail.VendorName}}</li>
+    </ol>
+
+    <div class="container-fluid">
+        <div id="panel-advancedoptions">
+            <div class="row">
+                <sp-vendor-attribute [vendorDetail]="vendorDetail"></sp-vendor-attribute>
+                <sp-vendor-invoice [vendorDetail]="vendorDetail"></sp-vendor-invoice>
+            </div>
+        </div>
+    </div>
+</div>

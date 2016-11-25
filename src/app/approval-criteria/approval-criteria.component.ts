@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 
 import { ApprovalCriteriaService } from './shared/approval-criteria.service'
 import { UserService } from '../user/shared/user.service';
-import { CompaniesService } from '../companies/shared/companies.service';
+import { CompanyService } from '../companies/shared/company.service';
 import { AccountService } from '../account/shared/account.service';
 import { LedgerAccountService } from '../ledger-account/shared/ledger-account.service';
 
@@ -34,7 +34,7 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
         router: Router,
         private activatedRoute: ActivatedRoute,
         private userService: UserService,
-        private companiesService: CompaniesService,
+        private companiesService: CompanyService,
         private accountService: AccountService,
         private ledgerAccountService: LedgerAccountService,
         private approvalCriteriaService: ApprovalCriteriaService

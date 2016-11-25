@@ -1,0 +1,47 @@
+  <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Job Attributes</h2>
+                        </div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt>Job Number</dt>
+                                <dd>{{jobDetail.Number}}</dd>
+
+                                <dt>Tenant Id</dt>
+                                <dd>{{jobDetail.TenantId}}</dd>
+
+                                <dt>Closed Date</dt>
+                                <dd>
+                                    <span ng-class="{'text-success': jobDetail.ClosedDate=='Job Open'}">{{jobDetail.ClosedDate}}</span>
+                                </dd>
+
+                                <dt>Unit Ref Number</dt>
+                                <dd>{{jobDetail.UnitRefNumber}}</dd>
+
+                                <dt>Est. Square Footage</dt>
+                                <dd>{{jobDetail.SquareFootage}}</dd>
+
+                                <dt>Current Cost</dt>
+                                <dd>{{jobDetail.CurrCost_currency}}{{jobDetail.CurrCost_cents }}</dd>
+
+                                <dt>Original Budget</dt>
+                                <dd>{{jobDetail.OrigBudget_currency}}{{jobDetail.OrigBudget_cents }}</dd>
+
+                                <dt>Est. Begin Date</dt>
+                                <dd><span style="color: gray; font-style: italic">{{jobDetail.EstBeginDate}}</span></dd>
+
+                                <dt>Est. End Date</dt>
+                                <dd>
+                                    <span style="color: gray; font-style: italic">{{jobDetail.EstEndDate}}</span>
+                                </dd>
+
+                                <dt>Act. Begin Date</dt>
+                                <dd><span style="color: gray; font-style: italic">{{jobDetail.ActBeginDate}}</span></dd>
+
+                                <dt>Act. End Date</dt>
+                                <dd>
+                                    <span style="color: gray; font-style: italic">{{jobDetail.ActEndDate}}</span>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>

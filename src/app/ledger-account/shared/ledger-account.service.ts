@@ -11,13 +11,24 @@ export class LedgerAccountService {
     }
 
     getLedgerAccounts(accountNumberSearch, accountTitleSearch, companyID, pageNumber, rowsPerPage) {
-        return this.http.get(ApiUrl.baseUrl
+
+        if (accountNumberSearch == '') {
+            accountNumberSearch = null;
+        }
+        if (accountTitleSearch == '') {
+            accountTitleSearch = null;
+        }
+
+        let urlString = ApiUrl.baseUrl
             + "api/ledgerAccounts/"
             + accountNumberSearch
             + "/" + accountTitleSearch
             + "/" + companyID + "/"
             + pageNumber
-            + "/" + rowsPerPage)
+            + "/" + rowsPerPage;
+
+        return this.http
+            .get(urlString)
             .toPromise()
             .then(response =>
                 response.json())
@@ -25,9 +36,13 @@ export class LedgerAccountService {
     }
 
     getledgerAccountsDetail(id, companyID) {
-        return this.http.get(ApiUrl.baseUrl
+
+        let urlString = ApiUrl.baseUrl
             + "api/ledgerAccounts/"
-            + id + "/" + companyID)
+            + id + "/" + companyID;
+
+        return this.http
+            .get(urlString)
             .toPromise()
             .then(response =>
                 response.json())
@@ -35,26 +50,34 @@ export class LedgerAccountService {
     }
 
     getledgerAccountDistribution(id, pageNumber, rowsPerPage) {
-        return this.http.get(ApiUrl.baseUrl
+
+        let urslString = ApiUrl.baseUrl
             + "api/ledgerAccounts/ledgerAccountDistribution/"
             + id
             + "/" + pageNumber
-            + "/" + rowsPerPage)
+            + "/" + rowsPerPage;
+
+        return this.http
+            .get(urslString)
             .toPromise()
             .then(response =>
                 response.json())
             .catch(this.handleError);
     }
 
-    getLedgerAccountDDOsAccountTypeWise (companyId) {
-        return this.http.get(ApiUrl.baseUrl
+    getLedgerAccountDDOsAccountTypeWise(companyId) {
+
+        let urslString = ApiUrl.baseUrl
             + "api/ledgerAccounts/ledgerAccountDDOsAccountTypeWise/"
-            + companyId)
-             .toPromise()
+            + companyId;
+
+        return this.http
+            .get(urslString)
+            .toPromise()
             .then(response =>
                 response.json())
             .catch(this.handleError);
-        }
+    }
 
     public handleError(error: any): Promise<any> {
         console.error('An error occurred', error);

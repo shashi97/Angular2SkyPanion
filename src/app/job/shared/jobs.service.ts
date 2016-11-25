@@ -1,6 +1,6 @@
 import { Http, Response, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { JobRowInfo, JobDetails } from '../shared/jobs.model';
+import { JobModel } from '../shared/job.model';
 import 'Rxjs/Rx';
 
 import { ApiUrl } from '../../config.component';
@@ -10,7 +10,7 @@ export class JobsService {
   constructor(private http: Http) {
 
   }
-  public getJobs(pageNumber: number, rowsPerPage: number): Promise<JobRowInfo[]> {
+  public getJobs(pageNumber: number, rowsPerPage: number): Promise<JobModel[]> {
    return this
       .http
       .get(ApiUrl.baseUrl
@@ -20,7 +20,7 @@ export class JobsService {
       + rowsPerPage
       )
       .toPromise()
-      .then(response => response.json() as JobRowInfo[])
+      .then(response => response.json() as JobModel[])
       .catch(this.handleError);
   }
 
@@ -29,7 +29,7 @@ export class JobsService {
     return Promise.reject(error.message || error);
   }
 
-  public getJobById(jobId: number, currentPage: number, pageSize: number): Promise<JobDetails> {
+  public getJobById(jobId: number, currentPage: number, pageSize: number): Promise<JobModel> {
    return this
       .http
       .get(ApiUrl.baseUrl
@@ -41,7 +41,7 @@ export class JobsService {
       + pageSize
       )
       .toPromise()
-      .then(response => response.json() as JobDetails)
+      .then(response => response.json() as JobModel)
       .catch(this.handleError);
 
   }

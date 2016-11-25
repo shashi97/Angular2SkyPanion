@@ -1,7 +1,7 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'Rxjs/Rx';
-import { VendorRow, VendorDetail } from './vendor.model';
+import { VendorModel } from './vendor.model';
 import { ApiUrl } from '../../config.component';
 @Injectable()
 
@@ -16,7 +16,14 @@ export class VendorService {
     vendorKey: string,
     currentPage: number,
     pageSize: number
-  ): Promise<VendorRow[]> {
+  ): Promise<VendorModel[]> {
+
+    if (vendorName == '') {
+      vendorName = null;
+    }
+    if (vendorKey == '') {
+      vendorKey = null;
+    }
     return this
       .http
       .get(ApiUrl.baseUrl +
@@ -29,21 +36,24 @@ export class VendorService {
       '/' + pageSize)
       .toPromise()
       .then(response =>
-        response.json() as VendorRow[])
+        response.json() as VendorModel[])
       .catch(this.handleError);
 
   }
 
-  getVendorDetail(vendorId, companyId, pageNumber, rowsPerPage): Promise<VendorDetail> {
-    return this.http.get(ApiUrl.baseUrl
+  getVendorDetail(vendorId, companyId, pageNumber, rowsPerPage): Promise<VendorModel> {
+    let getUrl = ApiUrl.baseUrl
       + "api/vendor/detail/"
-      + vendorId
-      + "/" + companyId
-      + "/" + pageNumber
-      + "/" + rowsPerPage)
+      + vendorId + "/"
+      + companyId + "/"
+      + pageNumber + "/"
+      + rowsPerPage;
+
+    return this.http
+      .get(getUrl)
       .toPromise()
       .then(response =>
-        response.json() as VendorDetail)
+        response.json() as VendorModel)
       .catch(this.handleError);
   }
 
