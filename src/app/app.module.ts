@@ -32,7 +32,7 @@ import { IniSetupService } from './ini-setup/shared/ini-setup.service';
 import { RoleService } from './role/shared/role.service';
 import { AchSetupService } from './ach-setups/shared/ach-setup.service';
 import { InvoiceService } from './invoice/shared/invoice.service';
-
+import { AttachmentService } from './attachment/shared/attachment.service';
 
 /* sp-app components */
 import { AppComponent } from './app.component';
@@ -74,6 +74,7 @@ import { AchSetupAttributeComponent } from './ach-setups/ach-setup-detail/attrib
 import { AchSetupFilterBarComponent } from './ach-setups/ach-setup-detail/filter-bar.component';
 
 import { CompanyDropdownComponent } from './shared/dropdown/company/company-dropdown.component';
+
 import { VendorDropdownComponent } from './shared/dropdown/vendor/vendor-dropdown.component';
 import { UserDropdownComponent } from './shared/dropdown/user/user-dropdown.component';
 import { CrumbBarComponent } from './shared/others/crumb-bar/crumb-bar.component';
@@ -86,6 +87,8 @@ import { InvoiceDetailAttributeComponent } from './invoice/invoice-detail/attrib
 import { InvoiceDetailDistributeComponent } from './invoice/invoice-detail/distribution.component';
 import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.component';
 
+import { AttachmentComponent } from './attachment/attachment.component';
+
 
 let localStorageServiceConfig = {
   prefix: 'my-app',
@@ -94,6 +97,7 @@ let localStorageServiceConfig = {
 
 
 @NgModule({
+
   declarations: [
     AppComponent,
     OtherComponent,

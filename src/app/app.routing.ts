@@ -18,6 +18,8 @@ import { AchSetupDetailComponent } from './ach-setups/ach-setup-detail/ach-setup
 import { InvoiceComponent } from './invoice/invoice-dashboard/invoice.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
 
+import { AttachmentComponent } from './attachment/attachment.component';
+
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -36,16 +38,19 @@ const APP_ROUTES: Routes = [
   { path: 'ledgerAccount', component: LedgerAccountComponent },
   { path: 'ledgerAccount/:searchParameters', component: LedgerAccountComponent },
   { path: 'ledgerAccount/ledgerAccountDetail/:id', component: LedgerAccountDetailComponent },
-  
+
   { path: 'achSetups', component: AchSetupComponent },
   { path: 'achSetups/achSetupDetail/:id', component: AchSetupDetailComponent },
 
   { path: 'invoices', component: InvoiceComponent },
   { path: 'invoices/invoiceDetail/:id', component: InvoiceDetailComponent },
-  
+
   { path: 'purchaseOrder', component: PurchaseOrderComponent },
   { path: 'iniSetup', component: IniSetupComponent },
-  { path: 'approvals', component: ApprovalCriteriaComponent }
+  { path: 'approvals', component: ApprovalCriteriaComponent },
+  
+  { path: 'attachments', component: AttachmentComponent }
+
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);
