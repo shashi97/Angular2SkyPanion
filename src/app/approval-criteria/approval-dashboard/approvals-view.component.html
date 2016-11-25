@@ -1,0 +1,28 @@
+<table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th [hidden]="!CompanyId==0">Company</th>
+      <th>Approver</th>
+      <th>Type</th>
+      <th>Criteria</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+
+  <tbody ui-sortable="sortableOptions">
+    <tr *ngFor="let approval of approvals" current-page="currentPage" total-items="totalItems" class="Skypanion::Property_row">
+      <td [hidden]="!CompanyId==0"><a href="#company/{{approval.CompanyId}}">{{approval.CompanyName}}</a></td>
+      <td><a href="user/{{approval.UserID}}">{{approval.UserName}}</a></td>
+      <td>{{approval.ApprovalType}}</td>
+      <td><span [hidden]="!approval.LedgerAccountID!=null"><b>Account</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{approval.ApprovalCriteria}}</td>
+      <td>
+        <a data-toggle="modal" data-target="#appCriteriaModel" (click)="showApprovalCriteria(approval, '' ,0)">
+          <i class="fa fa-edit" [hidden]="!approval.LedgerAccountID!=null"></i> Edit
+        </a>
+        <a (click)="deleteApprovalCriteria(approval.ApprovalCriteriaID)">
+          <i [ngClass]="{'fa fa-remove': approval.LedgerAccountID!=null}"></i> Delete
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>

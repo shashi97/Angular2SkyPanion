@@ -1,0 +1,44 @@
+<div class="page-content">
+  <div class="page-heading">
+    <h1>Ach Setups</h1>
+    <div class="options">
+    </div>
+  </div>
+
+  <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+
+  <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th style="width: 15%">Account</th>
+        <th style="width: 15%">Ach Key</th>
+        <th style="width: 15%">ImmedorigName</th>
+        <th style="width: 15%">ImmedorigNum</th>
+        <th style="width: 15%">ImmeddestName</th>
+        <th style="width: 15%">ImmeddestNum</th>
+        <th style="width: 15%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of achSetups">
+        <td>{{item.Description}}</td>
+        <td>{{item.AchKey}}</td>
+        <td>{{item.ImmedDestName}}</td>
+        <td>{{item.ImmedDestNum}}</td>
+        <td>{{item.ImmedOrigName}}</td>
+        <td>{{item.ImmedOrigNum}}</td>
+        <td><a routerLink="achSetupDetail/{{item.id}}">Details</a></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4">
+          <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>-->
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <!-- .container-fluid -->
+</div>
+<!-- #page-content -->

@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BaseComponent } from '../base.component';
+import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
-import { LedgerAccountModel } from './shared/ledger-account.model';
-import { MasterService } from '../shared/services/master/master.service';
-import { UserService } from '../user/shared/user.service';
-import { AccountService } from '../account/shared/account.service';
-import { LedgerAccountService } from './shared/ledger-account.service';
+import { LedgerAccountModel } from '../shared/ledger-account.model';
+import { MasterService } from '../../shared/services/master/master.service';
+import { UserService } from '../../user/shared/user.service';
+import { AccountService } from '../../account/shared/account.service';
+import { LedgerAccountService } from '../shared/ledger-account.service';
 
+import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
 
 @Component({
     selector: 'sp-ledger-account',

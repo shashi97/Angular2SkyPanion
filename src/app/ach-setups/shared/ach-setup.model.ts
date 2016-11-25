@@ -1,0 +1,37 @@
+export class AchSetupModel {
+  AccountID: number = 0;
+  AchKey: string = '';
+  AchPmtNum: string=null;
+  CanBatchUnique: string=null;
+  CanCompName: string=null;
+  CanFileNum: string=null;
+  CanOrigId: string=null;
+  CanSundryInfo: string=null;
+  Description: string = '';
+  DfltApEntryData: string=null;
+  DfltArEntryData: string=null;
+  DfltCompId: string=null;
+  DfltCompLimit_cents: number = 0;
+  DfltCompLimit_currency: string = '';
+  DfltCompName: string=null;
+  DfltOdfiId: string=null;
+  DfltOffDfiAcct: string=null;
+  DfltOffIndivId: string=null;
+  DfltOffOdfiId: string=null;
+  DfltOffRdfiId: string=null;
+  DfltPropLimit: string=null;
+  DfltTenantLimit: string=null;
+  DfltVendorLimit_cents: number = 0;
+  DfltVendorLimit_currency: string = '';
+  Extra: string=null;
+  ImmedDestName: string=null;
+  ImmedDestNum: string=null;
+  ImmedOrigName: string=null;
+  ImmedOrigNum: string=null;
+  PortalAccName: string = '';
+  RowNumber: number = 0;
+  TotalCount: number = 0;
+  created_at: string = '';
+  id: number = 0;
+  updated_at: string = '';
+}

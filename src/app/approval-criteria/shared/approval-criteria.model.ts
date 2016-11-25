@@ -1,16 +1,6 @@
 
 
 export class ApprovalCriteriaModel {
-    approvalCriteriaGridArray: Array<ApprovalCriteriaRow> = [];
-    constructor() {
-        this.approvalCriteriaGridArray = new Array<ApprovalCriteriaRow>();
-    }
-}
-
-
-
-
-export class ApprovalCriteriaRow {
     AccountID: number = 0;
     AccountNumber: number = 0;
     AccountTitle: number = 0;

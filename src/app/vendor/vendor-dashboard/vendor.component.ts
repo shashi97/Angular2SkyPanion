@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { BaseComponent } from '../base.component';
+import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
-import { VendorModel } from './shared/vendor.model';
+import { VendorModel } from '../shared/vendor.model';
 
+import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
+import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-dropdown.component';
 
-import { VendorService } from './shared/vendor.service';
-
-import { MasterService } from '../shared/services/master/master.service';
-import { AccountService } from '../account/shared/account.service';
+import { VendorService } from '../shared/vendor.service';
+import { MasterService } from '../../shared/services/master/master.service';
+import { AccountService } from '../../account/shared/account.service';
 
 
 @Component({

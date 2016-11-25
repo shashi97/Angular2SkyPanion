@@ -19,7 +19,6 @@ import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 
 
 /*sp-app services*/
-
 import { MasterService } from './shared/services/master/master.service';
 import { UserService } from './user/shared/user.service';
 import { AuthService } from './shared/services/otherServices/auth.service';
@@ -31,6 +30,9 @@ import { LedgerAccountService } from './ledger-account/shared/ledger-account.ser
 import { ApprovalCriteriaService } from './approval-criteria/shared/approval-criteria.service';
 import { IniSetupService } from './ini-setup/shared/ini-setup.service';
 import { RoleService } from './role/shared/role.service';
+import { AchSetupService } from './ach-setups/shared/ach-setup.service';
+import { InvoiceService } from './invoice/shared/invoice.service';
+
 
 /* sp-app components */
 import { AppComponent } from './app.component';
@@ -41,19 +43,17 @@ import { CompanyComponent } from './company/company.component';
 import { CompanyDetailsComponent } from './companies/companyDetails.component';
 import { CompaniesComponent } from './companies/companies.component';
 
-import { VendorComponent } from './vendor/vendor.component';
+import { VendorComponent } from './vendor/vendor-dashboard/vendor.component';
 import { VendorDetailComponent } from './vendor/vendor-detail/vendor-detail.component';
 import { VendorFilterComponent } from './vendor/vendor-detail/filter-bar.component';
 import { VendorAttributeComponent } from './vendor/vendor-detail/attribute.component';
 import { VendorInvoiceComponent } from './vendor/vendor-detail/invoice.component';
 
-
-import { LedgerAccountComponent } from './ledger-account/ledger-account.component';
+import { LedgerAccountComponent } from './ledger-account/ledger-dashboard/ledger-account.component';
 import { LedgerAccountDetailComponent } from './ledger-account/ledger-account-detail/ledger-account-detail.component';
 import { LedgerFilterComponent } from './ledger-account/ledger-account-detail/filter-bar.component';
 import { LedgerAttributeComponent } from './ledger-account/ledger-account-detail/attribute.component';
 import { LedgerAccountDistributionComponent } from './ledger-account/ledger-account-detail/account-distribution.component';
-
 
 import { IniSetupComponent } from './ini-setup/ini-setup.component';
 
@@ -61,84 +61,123 @@ import { JobsComponent } from './jobs/jobs.component';
 import { JobDetailsComponent } from './jobs/jobDetails.component';
 import { JobCategoryComponent } from './jobs/jobCategories.component';
 
-import { ApprovalCriteriaComponent } from './approval-criteria/approval-criteria.component';
-import { PurchaseOrderComponent } from './purchaseOrder/purchaseOrder.component';
+import { ApprovalCriteriaComponent } from './approval-criteria/approval-dashboard/approval-criteria.component';
+import { ApprovalsViewComponent } from './approval-criteria/approval-dashboard/approvals-view.component';
+import { ApprovalFilterComponent } from './approval-criteria/approval-dashboard/filter-bar.component';
+
+import { PurchaseOrderComponent } from './purchase-order/purchase-order-dashboard/purchase-order.component';
+import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
+
+import { AchSetupComponent } from './ach-setups/ach-setup-dashboard/ach-setup.component';
+import { AchSetupDetailComponent } from './ach-setups/ach-setup-detail/ach-setup-detail.component';
+import { AchSetupAttributeComponent } from './ach-setups/ach-setup-detail/attribute.component';
+import { AchSetupFilterBarComponent } from './ach-setups/ach-setup-detail/filter-bar.component';
 
 import { CompanyDropdownComponent } from './shared/dropdown/company/company-dropdown.component';
+import { VendorDropdownComponent } from './shared/dropdown/vendor/vendor-dropdown.component';
+import { UserDropdownComponent } from './shared/dropdown/user/user-dropdown.component';
+import { CrumbBarComponent } from './shared/others/crumb-bar/crumb-bar.component';
+
+import { InvoiceComponent } from './invoice/invoice-dashboard/invoice.component';
+import { InvoiceFilterComponent } from './invoice/invoice-dashboard/filter-bar.component';
+import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
+import { InvoiceDetailFilterComponent } from './invoice/invoice-detail/filter-bar.component';
+import { InvoiceDetailAttributeComponent } from './invoice/invoice-detail/attribute.component';
+import { InvoiceDetailDistributeComponent } from './invoice/invoice-detail/distribution.component';
+import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.component';
 
 
 let localStorageServiceConfig = {
-    prefix: 'my-app',
-    storageType: 'localStorage'
+  prefix: 'my-app',
+  storageType: 'localStorage'
 };
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        OtherComponent,
-        LoginComponent,
-        CompanyComponent,
-        CompaniesComponent,
-        VendorComponent,
-        VendorDetailComponent,
-        VendorFilterComponent,
-        VendorInvoiceComponent,
-        VendorAttributeComponent,
-        JobsComponent,
-        LedgerAccountComponent,
-        LedgerAccountDetailComponent,
-        LedgerFilterComponent,
-        LedgerAttributeComponent,
-        LedgerAccountDistributionComponent,
-        ApprovalCriteriaComponent,
-        PurchaseOrderComponent,
-        CompanyDetailsComponent,
-        JobDetailsComponent,
-        JobCategoryComponent,
-        IniSetupComponent,
-        CompanyDropdownComponent
-    ],
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpModule,
-        routing,
-        Angular2DataTableModule,
-        AlertModule
-    ],
-    providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy},
-        RoleService,
-        IniSetupService,
-        ApprovalCriteriaService,
-        LedgerAccountService,
-        DashboardService,
-        VendorService,
-        AccountService,
-        CompaniesService,
-        MasterService,
-        UserService,
-        LocalStorageService,
-        AuthService,
-        ConfirmService,
-        {
-            provide: Http,
-            useFactory: (xhrBackend: XHRBackend,
-                requestOptions: RequestOptions,
-                router: Router,
-                localStorageService: LocalStorageService) => new HttpInterceptor(xhrBackend,
-                    requestOptions,
-                    router,
-                    localStorageService),
+  declarations: [
+    AppComponent,
+    OtherComponent,
+    LoginComponent,
+    CompanyComponent,
+    CompaniesComponent,
+    VendorComponent,
+    VendorDetailComponent,
+    VendorFilterComponent,
+    VendorInvoiceComponent,
+    VendorAttributeComponent,
+    JobsComponent,
+    LedgerAccountComponent,
+    LedgerAccountDetailComponent,
+    LedgerFilterComponent,
+    LedgerAttributeComponent,
+    LedgerAccountDistributionComponent,
+    ApprovalCriteriaComponent,
+    ApprovalsViewComponent,
+    ApprovalFilterComponent,
+    AchSetupComponent,
+    AchSetupFilterBarComponent,
+    AchSetupAttributeComponent,
+    AchSetupDetailComponent,
+    InvoiceComponent,
+    InvoiceFilterComponent,
+    InvoiceDetailComponent,
+    InvoiceDetailFilterComponent,
+    InvoiceDetailAttributeComponent,
+    InvoiceDetailDistributeComponent,
+    InvoiceDetailInvoiceComponent,
+    PurchaseOrderComponent,
+    PurchaseOrderDetailComponent,
+    CompanyDetailsComponent,
+    JobDetailsComponent,
+    JobCategoryComponent,
+    IniSetupComponent,
+    CompanyDropdownComponent,
+    VendorDropdownComponent,
+    UserDropdownComponent,
+    CrumbBarComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    routing,
+    Angular2DataTableModule,
+    AlertModule
+  ],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    RoleService,
+    IniSetupService,
+    ApprovalCriteriaService,
+    LedgerAccountService,
+    DashboardService,
+    VendorService,
+    InvoiceService,
+    AccountService,
+    CompaniesService,
+    MasterService,
+    UserService,
+    LocalStorageService,
+    AuthService,
+    ConfirmService,
+    AchSetupService,
+    {
+      provide: Http,
+      useFactory: (xhrBackend: XHRBackend,
+        requestOptions: RequestOptions,
+        router: Router,
+        localStorageService: LocalStorageService) => new HttpInterceptor(xhrBackend,
+          requestOptions,
+          router,
+          localStorageService),
 
-            deps: [XHRBackend, RequestOptions, Router, LocalStorageService],
-        },
-        {
-            provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig
-        }
-    ],
-    bootstrap: [AppComponent]
+      deps: [XHRBackend, RequestOptions, Router, LocalStorageService],
+    },
+    {
+      provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig
+    }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 

@@ -2,17 +2,12 @@
 
     <sp-vendor-filter-bar *ngIf="vendorDetail"
       [vendorDetail]="vendorDetail" 
-      [filtered]="onFiltered"
-      [filteredValue]="filteredValue"
+      (filtered)="onFiltered($event)" [filteredValue]="filteredValue"
       >
      </sp-vendor-filter-bar>
 
-    <ol class="breadcrumb">
-        <li>
-            <a href="#vendors/{{searchParameters}}">Vendors</a>
-        </li>
-        <li class="active">{{vendorDetail.VendorName}}</li>
-    </ol>
+
+    <sp-crumb-bar *ngIf="vendorDetail" [pageDetail]="vendorDetail"></sp-crumb-bar>
 
     <div class="container-fluid">
         <div id="panel-advancedoptions">

@@ -28,11 +28,7 @@
 
     </div>
 
-
-    <ol class="breadcrumb" *ngIf="account">
-        <li><a href="#accounts/{{account.AccountID}}">{{account.AccountName}}</a></li>
-        <li class="active">Ledger Accounts</li>
-    </ol>
+    <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
 
     <div>
         <span *ngIf="totalItems==0">No {{pageName}} found</span>

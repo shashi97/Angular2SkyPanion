@@ -5,9 +5,8 @@ import 'Rxjs/Rx';
 
 export class SettingService {
     constructor(private http: Http) {
-
-    }
-
+  }
+  
     private apiServiceBase: string = 'http://localhost:5000/';
 
     public getRoles() {

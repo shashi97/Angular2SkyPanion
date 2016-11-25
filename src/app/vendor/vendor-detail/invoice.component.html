@@ -1,37 +1,38 @@
 <div class="col-md-8">
-    <h4 class="left_align">Invoice History</h4>
-    <span [hidden]="!totalItems==0" class="right_align">No invoices found</span>
-    <span [hidden]="totalItems >= pageSize || totalItems==0" class="right_align">Displaying <b>{{totalItems}}</b> invoice</span>
-    <span [hidden]="totalItems <= pageSize" class="right_align">Displaying invoice 
-                        <b>{{currentPage*pageSize-pageSize+1}}&nbsp;-&nbsp; 
-                    <span *ngIf="currentPage*pageSize < totalItems">{{currentPage*pageSize}}</span>
-    <span *ngIf="currentPage*pageSize > totalItems">{{totalItems}}</span>
-    </b>
-    </span>
-    <br class="clear_both">
-    <table id="vendor_invoices_table" class="table table-striped table-bordered table-hover">
-        <thead>
-            <tr>
-                <th>Invoice #</th>
-                <th>Voucher #</th>
-                <th>Company</th>
-                <th>Amount</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let vDetail of vendorDetail.VendorInvoices" current-page="currentPage" total-items="totalItems">
-                <td><a href="#invoicesDetails/{{vDetail.InvoiceID}}">{{vDetail.InvoiceNumber}}</a></td>
-                <td>{{vDetail.VoucherNumber}}</td>
-                <td><a href="#company/{{vDetail.CompanyID}}">{{vDetail.CompanyName}}</a></td>
-                <td>${{vDetail.Amount}}</td>
-                <td>
-                    <a href="invoicesDetails/{{vDetail.InvoiceID}}?vendor_id={{vDetail.VendorID}}"><i class="icon icon-search"></i>Details</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!--<div class="text-center">
+  <h4 class="left_align">Invoice History</h4>
+  <span [hidden]="totalItems==0" class="right_align">No invoices found</span>
+  <span [hidden]="totalItems >= pageSize || totalItems==0" class="right_align">Displaying <b>{{totalItems}}</b> invoice</span>
+  <span [hidden]="totalItems <= pageSize" class="right_align">Displaying 
+      <b>{{currentPage*pageSize-pageSize+1}}&nbsp;-&nbsp; 
+          <span *ngIf="currentPage*pageSize < totalItems">{{currentPage*pageSize}}</span>
+          <span *ngIf="currentPage*pageSize > totalItems">{{totalItems}}</span>
+      </b>
+  </span>
+
+  <br class="clear_both">
+  <table id="vendor_invoices_table" class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Invoice #</th>
+        <th>Voucher #</th>
+        <th>Company</th>
+        <th>Amount</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vDetail of vendorDetail.VendorInvoices" current-page="currentPage" total-items="totalItems">
+        <td><a routerLink="invoicesDetails/{{vDetail.InvoiceID}}">{{vDetail.InvoiceNumber}}</a></td>
+        <td>{{vDetail.VoucherNumber}}</td>
+        <td><a routerLink="company/{{vDetail.CompanyID}}">{{vDetail.CompanyName}}</a></td>
+        <td>${{vDetail.Amount}}</td>
+        <td>
+          <a routerLink="invoicesDetails/{{vDetail.InvoiceID}}?vendor_id={{vDetail.VendorID}}"><i class="icon icon-search"></i>Details</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!--<div class="text-center">
                         <dir-pagination-controls max-size="8" on-page-change="pageChangeHandler(newPageNumber)" direction-links="true" boundary-links="true" template-url="../../Scripts/Pagination/dirPagination.tpl.html"></dir-pagination-controls>
                     </div>-->
 </div>

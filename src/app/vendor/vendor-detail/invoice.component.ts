@@ -6,19 +6,25 @@ import { Router } from '@angular/router';
 import { VendorModel } from '../shared/vendor.model';
 
 @Component({
-    selector: 'sp-vendor-invoice',
-    templateUrl: './invoice.component.html',
+  selector: 'sp-vendor-invoice',
+  templateUrl: './invoice.component.html',
 })
 
 export class VendorInvoiceComponent extends BaseComponent implements OnInit {
-    @Input() vendorDetail:VendorModel;
-    constructor(
-        localStorageService: LocalStorageService,
-        router: Router,
-    ) {
-        super(localStorageService, router);
-    }
+  @Input() vendorDetail: VendorModel;
+  private totalItems: number = 0;
+  constructor(
+    localStorageService: LocalStorageService,
+    router: Router,
+  ) {
+    super(localStorageService, router);
+    // this.test();
+  }
 
-    ngOnInit() {
-    }
+  ngOnInit() {
+  }
+
+  // private test() {
+  //   this.totalItems = this.vendorDetail.VendorInvoices[0].TotalCount;
+  // }
 }

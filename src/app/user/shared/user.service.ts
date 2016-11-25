@@ -47,7 +47,8 @@ export class UserService {
         return this.http
             .post(ApiUrl.baseUrl + 'api/users/updatelogin/' + userName, {})
             .toPromise()
-            .then(response => response.json())
+          .then(response =>
+            response.json())
             .catch(this.handleError);
     }
 

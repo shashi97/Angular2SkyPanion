@@ -4,24 +4,6 @@
     <div class="options">
       <div class="btn-toolbar form-inline">
 
-        <!--<div class="filter_field_wrap form-group">
-					<input class="form-control" id="search_filter_param" name="searchstr" placeholder="Enter text to search for." type="text">
-				</div>-->
-
-        <!--<div class="filter_field_wrap form-group">
-					<div class="btn-group">
-						<a class="btn btn-default" href="#companies">NoneNoneNone</a>
-						<a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
-							<span class="caret"></span>
-						</a>
-						<ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-							<li *ngFor="let company of companies">
-								<a role="menuitem">{{company.CompanyName}}</a>
-							</li>
-						</ul>
-					</div>
-				</div>-->
-
         <sp-company-dropdown></sp-company-dropdown>
 
         <div class="filter_field_wrap form-group">
@@ -33,25 +15,20 @@
 
         <div class="filter_field_wrap form-group">
           <button class="btn btn-primary" name="commit" type="button" (click)="searchURL()">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                        Filter
-                    </button>
-
+            <i class="fa fa-search" aria-hidden="true"></i>Filter
+          </button>
           <button class="btn btn-warning" (click)="searchURLReset()">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                        Reset
-                    </button>
+            <i class="fa fa-refresh" aria-hidden="true"></i>Reset
+          </button>
         </div>
       </div>
     </div>
   </div>
-  <ol class="breadcrumb" *ngIf="account">
-    <li><a href="#accounts/{{account.AccountID}}">{{account.AccountName}}</a></li>
-    <li class="active">Vendors</li>
-  </ol>
+
+  <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+
   <div>
-    <span *ngIf="totalItems > pageSize && totalItems!=0">
-            Displaying {{pageName}}
+    <span *ngIf="totalItems > pageSize && totalItems!=0">Displaying {{pageName}}
             <b>
                 {{currentPage*pageSize-pageSize+1}} &nbsp;-&nbsp;
                 <span *ngIf="currentPage*pageSize < totalItems">{{currentPage*pageSize}}</span>
@@ -59,9 +36,9 @@
     </b> of <b>{{totalItems}}</b> in total
     </span>
   </div>
+  
   <br>
   <br>
-
 
   <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>

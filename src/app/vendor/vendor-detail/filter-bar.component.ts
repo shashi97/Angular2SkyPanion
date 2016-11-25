@@ -8,38 +8,39 @@ import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-
 import { VendorModel } from '../shared/vendor.model';
 
 export class VendorFilterArguments {
-  companyId:number
+  companyId: number = 0;
 }
 
 @Component({
-    selector: 'sp-vendor-filter-bar',
-    templateUrl: './filter-bar.component.html',
+  selector: 'sp-vendor-filter-bar',
+  templateUrl: './filter-bar.component.html',
 })
 
 export class VendorFilterComponent extends BaseComponent implements OnInit {
 
-    @Input() vendorDetail: VendorModel;
-    @Input() filtered: (filteredValue:VendorFilterArguments) => void;
+  @Input() vendorDetail: VendorModel;
+  @Output() filtered: EventEmitter<VendorFilterArguments> = new EventEmitter<VendorFilterArguments>();
+  @Input() filteredValue: VendorFilterArguments = new VendorFilterArguments();
+  constructor(
+    localStorageService: LocalStorageService,
+    router: Router,
+  ) {
+    super(localStorageService, router);
+    console.log(this.vendorDetail);
 
-    @Input() filteredValue: VendorFilterArguments = new VendorFilterArguments();   
-    constructor(
-        localStorageService: LocalStorageService,
-        router: Router,
-    ) {
-        super(localStorageService, router);
-        console.log(this.vendorDetail);
-    }
+  }
 
-    ngOnInit() {
+  ngOnInit() {
 
-    }
+  }
 
-    private searchByCompany(): void {
-      this.filteredValue.companyId = 1;
-      this.filtered(this.filteredValue);
-    }
+  private searchByCompany(): void {
+    this.filteredValue.companyId = 1;
+    this.filtered.emit(this.filteredValue);
+  }
 
-    private resetSearch(): void {
-        this.filteredValue.companyId = 0;
-    }
+  private resetSearch(): void {
+    this.filteredValue.companyId = 0;
+    this.filtered.emit(this.filteredValue);
+  }
 }
