@@ -1,0 +1,25 @@
+<div class="page-heading">
+  <h1>All Vendor</h1>
+  <div class="options">
+    <div class="btn-toolbar form-inline">
+
+      <sp-company-dropdown></sp-company-dropdown>
+
+      <div class="filter_field_wrap form-group">
+        <input class="form-control" id="name" name="name" placeholder="Vendor Name" type="text" [(ngModel)]="filteredValue.vendorName">
+      </div>
+      <div class="filter_field_wrap form-group">
+        <input class="form-control" id="vendor_key" name="vendor_key" placeholder="Vendor Key" type="text" [(ngModel)]="filteredValue.vendorKey">
+      </div>
+
+      <div class="filter_field_wrap form-group">
+        <button class="btn btn-primary" name="commit" type="button" (click)="searchUrl()">
+            <i class="fa fa-search" aria-hidden="true"></i>Filter
+          </button>
+        <button class="btn btn-warning" (click)="searchUrlReset()">
+            <i class="fa fa-refresh" aria-hidden="true"></i>Reset
+          </button>
+      </div>
+    </div>
+  </div>
+</div>
