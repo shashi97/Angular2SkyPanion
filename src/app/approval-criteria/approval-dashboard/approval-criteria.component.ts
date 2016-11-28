@@ -16,6 +16,8 @@ import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.compo
 
 import { ApprovalFilterArguments } from './filter-bar.component';
 
+import {CurrentPageArguments} from '../../pagination/pagination.component';
+
 
 @Component({
   selector: 'sp-approval-criteria',
@@ -27,10 +29,9 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   private companyId: number = 0;
   private totalItems: number = 0;
   private account: Object;
-  private pageSize: number = 25;
-  private currentPage: number = 1;
   private approvals: Array<ApprovalCriteriaModel>;
   private ledgerAccounts: Array<any> = [];
+  private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private _filteredValue: ApprovalFilterArguments = new ApprovalFilterArguments;
 
   constructor(
@@ -52,6 +53,13 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   }
 
 
+  private get currentPageFiltered(): CurrentPageArguments {
+    return this._currentPage;
+  }
+  private set currentPageFiltered(newValue: CurrentPageArguments) {
+    this._currentPage = newValue;
+    this.getApprovalCriteria('all');
+  }
   private get filteredValue(): ApprovalFilterArguments {
     return this._filteredValue;
   }
@@ -64,8 +72,8 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
     this.user = this.userService.getSessionDetails();
 
     if (this.user.userId != null) {
-      if (this.user.IsSuperUser == true) {
-        if (this.companyId == 0) {
+      if (this.user.IsSuperUser === true) {
+        if (this.companyId === 0) {
           this.getAccountName();
         }
         else {
@@ -119,8 +127,8 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
     this.approvalCriteriaService.getApprovalCriteria(
       approvalType,
       this.companyId,
-      this.currentPage,
-      this.pageSize)
+      this.currentPageFiltered.pageNo,
+      this.currentPageFiltered.pageSizeFilter)
       .then((result) => {
         this.approvals = result;
         this.totalItems = this.approvals[0].ApprovalCount;

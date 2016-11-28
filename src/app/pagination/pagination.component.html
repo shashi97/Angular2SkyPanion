@@ -12,7 +12,7 @@
             [boundaryLinks]="true" 
             [totalItems]="totalItems" 
             [itemsPerPage]="currentPageFiltered.pageSizeFilter"
-            [(ngModel)]="currentPage" 
+            (pageChanged)="onPageChanged($event)"
             (click)="pageChangeHandler()"
             [maxSize]="8"
             [rotate]=false

@@ -6,7 +6,7 @@
   </div>
 
   <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
-
+ <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
   <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
       <tr>
@@ -30,15 +30,9 @@
         <td><a routerLink="achSetupDetail/{{item.id}}">Details</a></td>
       </tr>
     </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="4">
-          <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>-->
-        </td>
-      </tr>
-    </tfoot>
+    
   </table>
-
+<sp-pagination [dataSource]='companies' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
   <!-- .container-fluid -->
 </div>
 <!-- #page-content -->

@@ -43,18 +43,12 @@
     <div id="panel-advancedoptions">
       <div id="vendors_index_table_wrap" class="row">
         <div class="col-md-12">
-          <span [hidden]="!totalItems==0">No approvals found</span>
-          <span [hidden]="!totalItems <= pageSize && totalItems!=0">Displaying <b>all {{totalItems}}</b> approvals </span>
-          <span [hidden]="!totalItems >= pageSize && totalItems!=0">Displaying approvals <b>{{currentPage*pageSize-pageSize+1}}&nbsp;-&nbsp; <span *ngIf="currentPage*pageSize <= totalItems">{{currentPage*pageSize}}</span>
-          <span *ngIf="currentPage*pageSize > totalItems">{{totalItems}}</span>
-          </b> of <b>{{totalItems}}</b> in total</span>
 
-          <br>
-          <br>
-
+          <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
           <sp-approvals-view *ngIf="approvals" [approvals]="approvals"></sp-approvals-view>
 
           <div class="text-center">
+            <sp-pagination [dataSource]='companies' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
             <!--<dir-pagination-controls max-size="8" on-page-change="pageChangeHandler(newPageNumber)" direction-links="true" boundary-links="true"
                                 template-url="../../Scripts/Pagination/dirPagination.tpl.html"></dir-pagination-controls>-->
           </div>

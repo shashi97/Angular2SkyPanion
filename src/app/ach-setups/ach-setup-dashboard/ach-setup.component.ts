@@ -9,6 +9,7 @@ import { CompanyService } from '../../companies/shared/company.service';
 import { AchSetupService } from '../shared/ach-setup.service';
 
 import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
+import {CurrentPageArguments} from '../../pagination/pagination.component';
 
 import { AchSetupModel } from '../shared/ach-setup.model';
 
@@ -21,10 +22,9 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
 
   private account: Object;
   private companyId: number = 0;
-  private currentPage: number = 1;
-  private pageSize: number = 25;
   private totalItems: number = 0;
   private achSetups: Array<AchSetupModel>;
+  private _currentPage: CurrentPageArguments = new CurrentPageArguments();
 
   constructor(
     localStorageService: LocalStorageService,
@@ -32,7 +32,7 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private accountService: AccountService,
     private companiesService: CompanyService,
-    private achSetupService:AchSetupService
+    private achSetupService: AchSetupService
   ) {
     super(localStorageService, router);
     this.achSetups = new Array<AchSetupModel>();
@@ -42,11 +42,22 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  public onCurrentPageChanged(newValue: CurrentPageArguments) {
+    this.currentPageFiltered = newValue;
+  }
+  private get currentPageFiltered(): CurrentPageArguments {
+    return this._currentPage;
+  }
+  private set currentPageFiltered(newValue: CurrentPageArguments) {
+    this._currentPage = newValue;
+    this.getAchSetups();
+  }
   private getSessionDetails(): void {
     this.user = this.userService.getSessionDetails();
 
-    if (this.user.userId != null && this.user.IsSuperUser == true) {
-      if (this.companyId == 0) {
+    if (this.user.userId != null && this.user.IsSuperUser === true) {
+      if (this.companyId === 0) {
         this.getAccountName();
       } else {
         this.getCompanyName();
@@ -72,7 +83,7 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
   }
 
   private getAchSetups(): void {
-    this.achSetupService.getAchSetups(this.currentPage, this.pageSize).then(result => {
+    this.achSetupService.getAchSetups( this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter).then(result => {
       this.achSetups = result;
       this.totalItems = this.achSetups[0].TotalCount;
     });

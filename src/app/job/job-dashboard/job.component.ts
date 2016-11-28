@@ -109,6 +109,7 @@ export class JobComponent extends BaseComponent implements OnInit {
       this.getJobs();
     });
   }
+  
   private getJobs(): void {
     this.jobsService
       .getJobs(this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)

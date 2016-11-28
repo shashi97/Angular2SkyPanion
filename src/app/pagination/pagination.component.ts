@@ -1,8 +1,8 @@
-import { Component, AfterViewChecked, Input, Output, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import { Component, OnChanges, Input, Output, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { MasterService } from '../shared/services/master/master.service';
 
 export class CurrentPageArguments {
-    pageNo: number = 1;
+    pageNo: number= 1;
     toPage: number = 0;
     fromPage: number = 0;
     pageSizeFilter: number = 25;
@@ -15,7 +15,7 @@ export class CurrentPageArguments {
     selector: 'sp-pagination',
     templateUrl: './pagination.component.html'
 })
-export class PaginationComponent implements AfterViewChecked {
+export class PaginationComponent implements OnChanges {
 
 
     public pageSizeFilter: number;
@@ -61,8 +61,9 @@ export class PaginationComponent implements AfterViewChecked {
 
     }
 
-    ngAfterViewChecked(): void {
+    ngOnChanges(): void {
         console.log(this.maxPageNo);
+
         this.setItemsPerPageList();
     }
 
@@ -77,7 +78,7 @@ export class PaginationComponent implements AfterViewChecked {
         if (value !== undefined && value !== null) {
             this.currentPageFiltered.pageSizeFilter = value;
            // this.currentPageFiltered = new CurrentPageArguments();
-           
+            //this.currentPageFiltered.pageNo = 1;
             this.pageChangeHandler();
         }
     }
@@ -85,9 +86,13 @@ export class PaginationComponent implements AfterViewChecked {
     private pageChangeHandler(): void {
         // this.currentPageFiltered.pageNo = 1;
         this.setPageSumDisplay();
-        this.currentPageChanged.emit(this.currentPageFiltered);
     }
 
+
+    private onPageChanged(pageSetting: any) : void {
+        this.currentPageFiltered.pageNo = pageSetting.page;
+        this.currentPageChanged.emit(this.currentPageFiltered);
+    }
     private setPageSumDisplay(): void {
         this.currentPageFiltered.fromPage = this.currentPageFiltered.pageNo * this.currentPageFiltered.pageSizeFilter;
         this.currentPageFiltered.toPage = this.currentPageFiltered.fromPage -

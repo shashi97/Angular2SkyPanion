@@ -10,6 +10,7 @@ import { AccountService } from '../../account/shared/account.service';
 import { LedgerAccountService } from '../shared/ledger-account.service';
 
 import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
+import {CurrentPageArguments} from '../../pagination/pagination.component';
 
 @Component({
     selector: 'sp-ledger-account',
@@ -19,13 +20,11 @@ import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.compo
 export class LedgerAccountComponent extends BaseComponent implements OnInit {
 
     private ledgerAccounts: Array<LedgerAccountModel>;
-    private pageSize: number = 25;
-    private pageSizeFilter: number = 25;
-    private currentPage: number = 1;
     private totalItems: number = 0;
     private account: Object;
     private companyId: number = 0;
     private pageName: string = 'Ledger Account';
+    private _currentPage: CurrentPageArguments = new CurrentPageArguments();
 
     private accountNumberSearch: string = '';
     private accountTitleSearch: string = '';
@@ -47,6 +46,19 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
     ngOnInit() {
     }
 
+    private get currentPageFiltered(): CurrentPageArguments {
+        return this._currentPage;
+    }
+    private set currentPageFiltered(newValue: CurrentPageArguments) {
+        this._currentPage = newValue;
+        this.getLedgerAccounts();
+    }
+
+    public onCurrentPageChanged(newValue: CurrentPageArguments) {
+        this.currentPageFiltered = newValue;
+
+    }
+
     private getParameterValues(): void {
         this.activatedRoute.params.subscribe(params => {
             let searchParameters = params['searchParameters'];
@@ -60,8 +72,8 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
     }
     private getItemsPerPageList(): void {
         // this.itemsPerPageList = this.masterService.getItemsPerPageList();
-        this.pageSize = 25;
-        this.pageSizeFilter = 25;
+        //this.pageSize = 25;
+        //this.pageSizeFilter = 25;
         this.getSessionDetails();
     }
 
@@ -87,9 +99,9 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
     }
 
     private getLedgerAccounts(): void {
-        if (this.pageSizeFilter != null) {
-            this.pageSize = this.pageSizeFilter;
-        }
+        // if (this.pageSizeFilter != null) {
+        //     this.pageSize = this.pageSizeFilter;
+        // }
 
         this.companyId = 0;
 
@@ -97,8 +109,8 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
             this.accountNumberSearch,
             this.accountTitleSearch,
             this.companyId,
-            this.currentPage,
-            this.pageSize)
+            this.currentPageFiltered.pageNo,
+            this.currentPageFiltered.pageSizeFilter)
             .then((result) => {
                 this.ledgerAccounts = result;
                 if (this.ledgerAccounts[0] !== undefined) {
@@ -117,8 +129,8 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
     }
 
     private searchUrlReset(): void {
-        this.currentPage = 1;
-        this.pageSize = 25;
+        this.currentPageFiltered.pageNo = 1;
+        this.currentPageFiltered.pageSizeFilter = 25;
         this.accountNumberSearch = '';
         this.accountTitleSearch = '';
         this.searchUrl();

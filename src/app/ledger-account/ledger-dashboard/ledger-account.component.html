@@ -30,7 +30,7 @@
 
     <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
 
-    <div>
+    <!--<div>
         <span *ngIf="totalItems==0">No {{pageName}} found</span>
         <span *ngIf="totalItems <= pageSize && totalItems!=0">Displaying <b>all {{totalItems}}</b> {{pageName}}</span>
         <span *ngIf="totalItems > pageSize && totalItems!=0">
@@ -41,8 +41,8 @@
         <span *ngIf="currentPage*pageSize >= totalItems">{{totalItems}}</span>
         </b> of <b>{{totalItems}}</b> in total
         </span>
-    </div>
-
+    </div>-->
+    <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
     <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -68,7 +68,7 @@
             </tr>
         </tfoot>
     </table>
-
+    <sp-pagination [dataSource]='companies' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
     <!--<div class="container-fluid">
         <div data-ng-include="'ui-grid-pagination.html'"></div>
     </div>-->

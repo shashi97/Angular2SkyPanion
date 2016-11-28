@@ -10,6 +10,7 @@ import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.compo
 import { InvoiceService } from '../shared/invoice.service';
 import { AccountService } from '../../account/shared/account.service';
 import { UserService } from '../../user/shared/user.service';
+import {CurrentPageArguments} from '../../pagination/pagination.component';
 
 @Component({
   selector: 'sp-invoice',
@@ -21,6 +22,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   private Invoices: Array<InvoiceModel> = [];
   private account: Object;
   private totalItems: number = 0;
+  private _currentPage: CurrentPageArguments = new CurrentPageArguments();
 
   constructor(
     localStorageService: LocalStorageService,
@@ -35,6 +37,15 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+
+  private get currentPageFiltered(): CurrentPageArguments {
+    return this._currentPage;
+  }
+  private set currentPageFiltered(newValue: CurrentPageArguments) {
+    this._currentPage = newValue;
+    this.getInvoices();
   }
 
   getSessionDetails() {
@@ -56,6 +67,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     });
   }
 
+  public onCurrentPageChanged(newValue: CurrentPageArguments) {
+    this.currentPageFiltered = newValue;
+
+  }
   getInvoices() {
 
     // this.vendors.forEach(function (item) {
@@ -117,6 +132,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     //   invToDate: this.invToDate,
     //   invoiceDesc: this.invoiceDesc,
     // };
+
+    
+
+
 
     let searchFields: any;
     this.invoiceService.getInvoices(searchFields).then(result => {
