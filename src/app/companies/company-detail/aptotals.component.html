@@ -1,0 +1,65 @@
+<div class="col-md-7">
+        <div class="panel panel-default">
+          <div id="property_stats_header" class="panel-heading">
+            <h2 style="display: inline">AP Totals
+            </h2>
+            <div class="panel-ctrls">
+              <div id="chart_tabs_wrap" class="btn-group">
+                <a (click)="getCompanyChartData('ap_totals')" class="btn btn-default " [ngClass]="{'active': apTotalsNoData==true} || {'active': apTotals==true}">AP Totals</a>
+
+                <a (click)="getCompanyChartData('disk_usage')" class="btn btn-default" [ngClass]="{'active': diskUsageNoData==true} || {'active': diskUsage==true}">Disk Usage</a>
+
+                <a (click)="getCompanyChartData('sync_info')" class="btn btn-default" [ngClass]="{'active': syncInfoNoData==true} || {'active': SyncInfo==true}">Sync Info</a>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div id="Div1" class="panel-body" *ngIf="apTotalsNoData">
+            <div class="alert alert-warning">
+              <h2>No Invoices</h2>
+              <p>
+                There are no invoices for this company.
+              </p>
+            </div>
+
+            <div>
+              <div class="jarviswidget" id="wid-id-53" data-widget-editbutton="false">
+                <div>
+                  <div class="jarviswidget-editbox"></div>
+                  <div class="widget-body no-padding">
+                    <div id="divInvoiceApTotalChart" class="col-lg-11"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div id="Div2" class="panel-body" *ngIf="DiskUsageNoData">
+            <div class="alert alert-warning">
+              <h2>No Disk Usage Data</h2>
+              <p>
+                There is no disk usage data available for this company. Most likely, this company has never been synced. If you would like
+                to sync data for this company, please ensure your SLSync Service configuration.
+              </p>
+            </div>
+          </div>
+
+          <div id="Div3" class="panel-body" *ngIf="SyncInfoNoData">
+            <div class="alert alert-warning">
+              <h3>Never synced</h3>
+              <p>
+                This company has never been synced with Skyline. Check the configuration of your SkyPanion Sync Client in order to enable
+                syncing
+              </p>
+            </div>
+
+          </div>
+          <div id="ap_totals_chart_wrap" class="panel-body" data-ng-show="APTotals">
+          </div>
+          <div id="disk_usage_chart_wrap" class="panel-body" data-ng-show="DiskUsage">
+          </div>
+          <div id="remote_syncs_chart_wrap" class="panel-body" data-ng-show="SyncInfo">
+          </div>
+        </div>
+      </div>

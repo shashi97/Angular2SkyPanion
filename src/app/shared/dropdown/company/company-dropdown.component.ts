@@ -16,7 +16,7 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit {
     constructor(
         localStorageService: LocalStorageService,
         router: Router,
-        private dashboardService:DashboardService
+        private dashboardService: DashboardService
     ) {
         super(localStorageService, router);
         this.getSkypanionsCompanies();

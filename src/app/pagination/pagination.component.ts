@@ -45,14 +45,8 @@ export class PaginationComponent implements OnChanges {
     }
     public set dataSource(newvalue: Array<any>) {
         this._dataSource = newvalue;
-        if (this._dataSource.length !== 0) {
-            // this.totalItem = this.dataSource[0].TotalCount;
-           // this.setMaxNo();
-            // this.maxPageNo = this.dataSource[0].TotalCount / this.pageSizeFilter;
-        }
         this.changeDetectorRef.markForCheck();
     }
-    
     @Input()
     public get totalItems(): number {
         return this._totalItems;
@@ -61,26 +55,6 @@ export class PaginationComponent implements OnChanges {
         this._totalItems = newvalue;
     }
 
-    public setMaxNo(): void {
-        if ((this.dataSource[0].TotalCount /
-            this.pageSizeFilter - Math.floor
-                (this.dataSource[0].TotalCount / this.pageSizeFilter)) === 0) {
-            this.maxPageNo = this.dataSource[0].TotalCount / this.pageSizeFilter;
-        } else {
-            this.maxPageNo = Math.floor(this.dataSource[0].TotalCount / this.pageSizeFilter) + 1;
-        }
-
-    }
-
-
-    // public get maxPageNo(): number {
-    //     return this._maxPageNo;//=return this.dataSource.length / 25;
-
-    // };
-    // public set maxPageNo(newValue):number {
-    //     this._maxPageNo= this.dataSource.length / 25;
-
-    // }
     constructor(
         private changeDetectorRef: ChangeDetectorRef,
         public masterService: MasterService) {
@@ -99,17 +73,11 @@ export class PaginationComponent implements OnChanges {
 
     }
 
-    // private pageChangeHandler(): void {
-
-    //     //  this.getJobs();
-    // };
     private getDataAsPerPerPageRequired(value: number): void {
         if (value !== undefined && value !== null) {
             this.currentPageFiltered.pageSizeFilter = value;
             this.currentPageFiltered.pageNo = 1;
             this.pageChangeHandler();
-           // this.maxPageNo = this.dataSource.length / this.pageSizeFilter;
-            // this.pageSizeFilterChanged(this.pageSizeFilter);
         }
     }
 
@@ -123,7 +91,5 @@ export class PaginationComponent implements OnChanges {
         this.currentPageFiltered.fromPage = this.currentPageFiltered.pageNo * this.currentPageFiltered.pageSizeFilter;
         this.currentPageFiltered.toPage = this.currentPageFiltered.fromPage -
             this.currentPageFiltered.pageSizeFilter + 1;
-
-
     }
 }

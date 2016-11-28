@@ -1,0 +1,58 @@
+<div class="page-heading">
+  <h1>Invoices</h1>
+  <div class="options">
+
+    <div class="form-inline" id="invoices_index_filters_form">
+
+      <div class="form-group">
+        <input class="form-control" id="invoice_FromDate" data-ng-model="invFromDate" date-picker placeholder="Invoice Date From"
+          size="12" type="text" value="" />
+      </div>
+
+      <div class="form-group">
+        <input class="form-control" id="invToDate" data-ng-model="invToDate" date-picker placeholder="Invoice Date To" size="12"
+          type="text" value="" />
+      </div>
+
+      <div class="form-group">
+        <input class="form-control" id="invoice_desc" name="invoice_desc" placeholder="Enter invoice description" type="text" data-ng-model="invoiceDesc"
+        />
+      </div>
+
+      <div class="form-group">
+        <input class="form-control" id="invoice_number" name="invoice_number" placeholder="Enter an invoice number" type="text" data-ng-model="invoiceNumber"
+        />
+      </div>
+
+      <sp-vendor-dropdown></sp-vendor-dropdown>
+
+      <sp-company-dropdown></sp-company-dropdown>
+
+      <div class="form-group">
+        <div class="btn-group">
+          <a class="btn btn-default" href="#invoices">{{statusName}}</a>
+          <a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
+            <span class="caret"></span>
+          </a>
+          <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
+            <li><a role="menuitem" *ngFor="let st of status" (click)="selectStatus(st.statusId)">{{st.statusName}}</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <sp-user-dropdown></sp-user-dropdown>
+
+      <div class="filter_field_wrap form-group">
+        <button class="btn btn-primary" name="commit" type="button" data-ng-click="searchURL()">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Filter
+                    </button>
+
+        <button class="btn btn-warning" data-ng-click="searchURLReset()">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                        Reset
+                    </button>
+      </div>
+    </div>
+  </div>
+</div>

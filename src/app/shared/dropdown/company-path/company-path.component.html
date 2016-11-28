@@ -1,0 +1,9 @@
+	<div class="btn-group">
+						<a class="btn btn-default" href="#companies">{{companyPathFiltered.companyType}}</a>
+						<a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
+							<span class="caret"></span>
+						</a>
+						<ul role="menu" class="dropdown-menu">
+							<li><a role="menuitem" *ngFor="let cmpType of skyPanionTypeList" (click)="selectCompanyType(cmpType.ID)">{{cmpType.Name}}</a></li>
+						</ul>
+					</div>

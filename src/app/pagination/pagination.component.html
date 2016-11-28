@@ -1,18 +1,22 @@
+   <style>
+    #dropperItem a:hover {
+        color: #3498db;
+    }
+</style>
     <div class="options" style="padding-top:20px">
       <div class="form-inline text-center">
         <div class="field form-group">
-          <ng-pagination 
+        <pagination 
             *ngIf="totalItems > currentPageFiltered.pageSizeFilter"
-             [totalItems]="totalItems" 
-             [(ngModel)]="currentPageFiltered.pageNo" 
-             [maxSize]=" currentPageFiltered.pageSizeFilter" 
-             [boundaryLinks]="true" 
-             (pageChanged)="pageChangeHandler()"
-             previous-text="&lsaquo;" 
-             next-text="&rsaquo;" 
-             first-text="First" 
-             last-text="Last">
-        </ng-pagination>
+            [(ngModel)]="currentPageFiltered.pageNo" 
+            [boundaryLinks]="true" 
+            [totalItems]="totalItems" 
+            [itemsPerPage]="currentPageFiltered.pageSizeFilter"
+            [(ngModel)]="currentPage" 
+            (click)="pageChangeHandler()"
+            [maxSize]="8"
+            [rotate]=false
+        ></pagination>
         </div>
         <div 
              class="field form-group" 

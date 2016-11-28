@@ -1,0 +1,68 @@
+
+    <div class="page-heading">
+        <h1>All Attachments</h1>
+        <div class="options">
+
+            <div class="form-inline" id="filter_form">
+                <div class="filter_field_wrap form-group">
+                    <!--<ui-select ng-model="selectedCompanyFilter.selected" theme="select2" style="width: 250px" data-ng-change="getCompanyID(selectedCompanyFilter.selected.CompanyID)">
+                        <ui-select-match placeholder="Select a Company">
+                            <span>{{selectedCompanyFilter.selected.CompanyName}}</span>
+                            <a class="btn btn-link pull-right"><i class="fa fa-remove transparent" data-ng-click="removeSelectedCompanyItem()"></i></a>
+                        </ui-select-match>
+                        <ui-select-choices repeat="company in companies| filter: $select.search">
+                            {{company.CompanyName}}
+                        </ui-select-choices>
+                    </ui-select>-->
+                </div>
+
+                <div class="form-group">
+                    <button class="btn btn-primary" name="commit" type="button" data-ng-click="searchURL()">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Filter
+                    </button>
+
+                    <button class="btn btn-warning" data-ng-click="searchURLReset()">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                        Reset
+                    </button>
+                </div>
+
+            </div>
+        </div>
+   
+
+
+   <table class="striped">
+    <thead>
+      <tr>
+        <th data-field="id">Info</th>
+        <th data-field="name">Found/Property</th>
+        <th data-field="price">Name</th>
+        <th data-field="price">Uploaded</th>
+        <th data-field="price">Locked By</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let attachmentObject of model">
+        <td>{{attachmentObject.Info}}</td>
+        <td>{{attachmentObject.CompanyName}}</td>
+        <td>{{attachmentObject.Filename}}</td>
+        <td>{{attachmentObject.Uploaded}}</td>
+        <td>{{attachmentObject.LockedBy}}</td>
+        <td>
+          <button class="btn-floating btn-Medium green" title="edit" (click)="editVendor(vendor.vendor_id)">
+            <i class="Medium material-icons">Edit</i>
+            </button>
+        </td>
+        <td>
+          <a class="btn-floating btn-Medium red" title="remove" (click)="removeVendor(vendor.vendor_id)">
+            <i class="Medium material-icons">delete</i>
+          </a>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+   </div>

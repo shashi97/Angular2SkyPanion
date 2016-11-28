@@ -99,7 +99,7 @@ export class CompanyComponent {
          }) 
     }
 
-    private getSyncList = function () {
+    private getSyncList () {
         var item = [{ ID: "all", Name: "All" }, { ID: "true", Name: "Sync Enabled" }, { ID: "false", Name: "Sync Disabled" }];
         for (var i = 0; i < 3; i++) {
             this.syncList.splice(i, 0, item[i]);

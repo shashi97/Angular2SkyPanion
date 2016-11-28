@@ -1,0 +1,30 @@
+<div class="page-heading">
+  <h1>Approval Criteria</h1>
+  <div class="options">
+    <div class="btn-toolbar form-inline">
+      <div class="btn-group">
+        <a (click)="getApprovalCriteria('all')" class="btn btn-default" [ngClass]="{active: type=='all'}">All</a>
+        <a (click)="getApprovalCriteria('RangeApproval')" class="btn btn-default" [ngClass]="{active: type=='RangeApproval'}">Range Approvals</a>
+        <a (click)="getApprovalCriteria('LedgerAccountApproval')" class="btn btn-default" [ngClass]="{active: type=='LedgerAccountApproval'}">Ledger Account Approvals</a>
+      </div>
+      <div class="btn-group" [hidden]="!companyId!=0">
+        <!--<a class="btn btn-primary" href="#company/{{CompanyId}}/approvals">
+                        <i class="fa fa-plus"></i> Create Approval
+                    </a>
+                    <a data-toggle="dropdown" class="btn btn-primary dropdown-toggle" href="#">
+                        <span class="caret"></span>
+                    </a>-->
+        <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
+          <li>
+            <a data-toggle="modal" data-target="#appCriteriaModel" (click)="showApprovalCriteria(null, 'range' ,1)" data-remote="true"
+              id="ra_app_link">Range Approval</a>
+          </li>
+          <li>
+            <a data-toggle="modal" data-target="#appCriteriaModel" (click)="showApprovalCriteria(null, 'ledger' , 1)" data-remote="true"
+              id="la_app_link">Ledger Account Approval</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

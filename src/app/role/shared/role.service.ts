@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import 'Rxjs/Rx';
 
 import { ApiUrl } from '../../config.component';
-import { RoleModel, RoleInfo } from './role.model';
+import { RoleModel } from './role.model';
 @Injectable()
 
 export class RoleService {
@@ -11,11 +11,11 @@ export class RoleService {
 
   }
 
-  public getRoles(): Promise<RoleInfo[]> {
+  public getRoles(): Promise<RoleModel[]> {
     return this.http
       .get(ApiUrl.baseUrl + 'api/roles')
       .toPromise()
-      .then(Response => Response.json() as RoleInfo[])
+      .then(Response => Response.json() as RoleModel[])
       .catch(this.handleError);
   }
 

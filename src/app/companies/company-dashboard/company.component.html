@@ -1,79 +1,52 @@
 <div id="slider" class="page-content">
 	<div class="page-heading">
-		<h1>{{title}}</h1>
+		<h1>{{pageName}}</h1>
 		<div class="options">
 			<div class="btn-toolbar form-inline">
-
-				<div class="filter_field_wrap form-group">
-					<input class="form-control" id="search_filter_param" name="searchstr" placeholder="Enter text to search for." type="text"
-						[(ngModel)]="searchText">
-				</div>
-
-				<div class="filter_field_wrap form-group">
-					<div class="btn-group">
-						<a class="btn btn-default" href="#companies">{{syncName}}</a>
-						<a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
-							<span class="caret"></span>
-						</a>
-						<ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-							<li><a role="menuitem" data-ng-repeat="sync in syncList" ng-click="selectSync(sync.ID)">mysing<!--{{sync.Name}}--></a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="filter_field_wrap form-group">
-					<div class="btn-group">
-						<a class="btn btn-default" href="#companies">{{companyType}}</a>
-						<a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
-							<span class="caret"></span>
-						</a>
-						<ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-							<li><a role="menuitem" data-ng-repeat="cmpType in skyPanionTypeList" ng-click="selectCompanyType(cmpType.ID)">companyName<!--{{cmpType.Name}}--></a></li>
-						</ul>
-					</div>
-				</div>
-
-				<div class="filter_field_wrap form-group">
-					<button class="btn btn-primary" name="commit" type="button" data-ng-click="searchURL()">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                        Filter
-                    </button>
-
-					<button class="btn btn-warning" data-ng-click="searchURLReset()">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                        Reset
-                    </button>
-				</div>
+				<sp-company-filter-bar></sp-company-filter-bar>
 			</div>
 		</div>
 	</div>
-	<div>
-		<span *ngIf="totalItems > currentPageFiltered.pageSizeFilter && totalItems!=0">
-            Displaying {{pageName}}
-            <b>
-                {{currentPageFiltered.toPage}} &nbsp;-&nbsp;
-                <span *ngIf="currentPageFiltered.fromPage < totalItems">{{currentPageFiltered.fromPage}}</span>
-		<span *ngIf="currentPageFiltered.fromPage >= totalItems">{{totalItems}}</span>
-		</b> of <b>{{totalItems}}</b> in total
-		</span>
-
-		<br>
-		<br>
-		<datatable class='material striped' [rows]='companiesModel.companiesDetail' [options]='options'>
-			<datatable-column name="">
-				<template let-column="column">
-					<div class="ui-grid-cell-contents">
-						<a tooltip-append-to-body="true" tooltip-placement="top" uib-tooltip-html="">
-                            Details
-                            </a>
-					</div>
-				</template>
-				<!--<template let-value="value">
-						Hi: <strong>Shashank</strong>
-					</template>-->
-			</datatable-column>
-		</datatable>
-
-		<sp-pagination [dataSource]='companiesModel.companiesDetail' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
+	<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+	<div class="container-fluid">
+		<div class="col-md-12">
+			<sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
+			<table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th style="width: 25%">Number</th>
+						<th style="width: 25%">Name</th>
+						<th style="width: 25%">Sync</th>
+						<th style="width: 25%"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of companies">
+						<td>
+							<a>
+								<i [ngClass]="{'fa fa-book':
+			item.type=='Skypanion::Fund',
+			 'fa fa-building':
+			 item.type=='Skypanion::Property'}">
+		   </i>
+							</a>{{item.Number}}</td>
+						<td>{{item.Name}}</td>
+						<td><a [ngClass]="{'text-success': item.ActivationLink=='Enable',
+				'text-danger': item.ActivationLink=='Disable'}" (click)="activateDeactiveCompany(item.Name,item.CompanyID,item.Active)">
+				{{item.ActivationLink}}</a>
+						</td>
+						<td><a routerLink="vendorDetail/{{item.VendorID}}">Details</a></td>
+					</tr>
+				</tbody>
+				<!--<tfoot>
+      <tr>
+        <td colspan="4">
+          <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+        </td>
+      </tr>
+    </tfoot>-->
+			</table>
+			<sp-pagination [dataSource]='companies' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
+		</div>
 	</div>
 </div>

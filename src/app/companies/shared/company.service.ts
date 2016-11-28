@@ -1,7 +1,7 @@
 import { Http, Response, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'Rxjs/Rx';
-import { CompanyInfo, CompanyDetails } from './company.model';
+import { CompanyModel } from './company.model';
 import { ApiUrl } from '../../config.component';
 @Injectable()
 
@@ -14,7 +14,7 @@ export class CompanyService {
         type: string,
         searchText: string,
         pageNumber: number,
-        rowsPerPage: number): Promise<CompanyInfo[]> {
+        rowsPerPage: number): Promise<any> {
         return this
             .http
             .get(ApiUrl.baseUrl + 'api/company/'
@@ -24,21 +24,21 @@ export class CompanyService {
             + pageNumber + '/'
             + rowsPerPage)
             .toPromise()
-            .then(response => response.json() as CompanyInfo[])
+            .then(response => response.json() as any)
             .catch(this.handleError);
 
     }
 
-    public getCompanyDetails(companyId: number): Promise<CompanyDetails> {
+    public getCompanyDetails(companyId: number): Promise<CompanyModel> {
         return this
             .http
             .get(ApiUrl.baseUrl + 'api/company/' + companyId)
             .toPromise()
-            .then(response => response.json() as CompanyDetails)
+            .then(response => response.json() as CompanyModel)
             .catch(this.handleError);
     }
 
-    public getCompanyChartData(status: string, companyId: number): Promise<CompanyDetails> {
+    public getCompanyChartData(status: string, companyId: number): Promise<CompanyModel> {
         return this
             .http
             .get(ApiUrl.baseUrl
@@ -46,19 +46,19 @@ export class CompanyService {
             + status + '/'
             + companyId)
             .toPromise()
-            .then(response => response.json() as CompanyDetails)
+            .then(response => response.json() as CompanyModel)
             .catch(this.handleError);
     }
 
-    public activateDeactiveCompany(companyId: number, isActive: boolean): Promise<string> {
-        return this
+    public activateDeactiveCompany(companyId: number, isActive: boolean): Promise<any> {
+         return this
             .http
             .get(ApiUrl.baseUrl
             + 'api/company/getactivateCompany/'
             + companyId + '/'
             + isActive)
             .toPromise()
-            .then(response => response.json() as string)
+            .then(response => response as any)
             .catch(this.handleError);
     }
 
@@ -78,23 +78,24 @@ export class CompanyService {
     }
 
     public getCompanyDDOs() {
-        return this.http.get(ApiUrl.baseUrl + "api/company").toPromise()
-            .then(response => response.json() as CompanyInfo[])
+        return this.http.get(ApiUrl.baseUrl
+            + 'api/company').toPromise()
+            .then(response => response.json() as CompanyModel[])
             .catch(this.handleError);
     }
 
-    getCompanyName(companyId) {
+    public getCompanyName(companyId) {
         return this.http.get(ApiUrl.baseUrl
-            + "api/company/name/"
+            + 'api/company/name/'
             + companyId)
             .toPromise()
-            .then(response => response.json() as CompanyInfo[])
+            .then(response => response.json() as CompanyModel[])
             .catch(this.handleError);
     }
 
     public handleError(error: any): Promise<any> {
         console.error('An error occurred', error);
-        return Promise.reject(error.message || error);
+        return error;
     }
 
 }

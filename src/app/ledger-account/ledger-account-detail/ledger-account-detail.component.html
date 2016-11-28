@@ -14,12 +14,10 @@
         </li>
         <li class="active">{{ledgerAccountDetail.LedgerAccountName}} {{ledgerAccountDetail.AccountTitle}}</li>
     </ol>
-    <ol class="breadcrumb" [hidden]="!companyId == 0">
-        <li>
-            <a href="#ledgeraccounts/{{searchParameters}}">Ledger Accounts</a>
-        </li>
-        <li class="active">{{ledgerAccountDetail.LedgerAccountName}} {{ledgerAccountDetail.AccountTitle}} </li>
-    </ol>
+  
+
+    <sp-crumb-bar *ngIf="ledgerAccountDetail" [pageDetail]="ledgerAccountDetail"></sp-crumb-bar>
+
     <div class="container-fluid">
         <div id="panel-advancedoptions">
             <div class="row">

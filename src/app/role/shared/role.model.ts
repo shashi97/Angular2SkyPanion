@@ -1,11 +1,5 @@
-export class  RoleModel {
-  public rolesDetail: Array<RoleInfo> = [];
-    constructor() {
-    this.rolesDetail = new Array<RoleInfo>();
-    }
-}
 
-export class RoleInfo {
+export class RoleModel {
   AccountID: number;
   CreatedAt ?: Date;
   Description: string;

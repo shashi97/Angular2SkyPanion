@@ -5,6 +5,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { LedgerAccountModel } from '../shared/ledger-account.model';
 
+import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
 
 import { UserService } from '../../user/shared/user.service';
 import { LedgerAccountService } from '../shared/ledger-account.service';

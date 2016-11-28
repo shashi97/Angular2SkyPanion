@@ -14,7 +14,7 @@ export class JobCategoryComponent extends BaseComponent implements OnInit {
     @Input() jobDetail:JobModel;
     constructor(
         localStorageService: LocalStorageService,
-        router: Router,
+        router: Router
     ) {
         super(localStorageService, router);
     }

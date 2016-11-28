@@ -1,0 +1,13 @@
+ <span *ngIf="totalItems==0">No {{pageName}} found</span>
+        <span *ngIf="totalItems <= currentPageFiltered.pageSizeFilter && totalItems!=0">Displaying <b>all {{totalItems}}</b> {{pageName}}</span>
+		<span *ngIf="totalItems > currentPageFiltered.pageSizeFilter && totalItems!=0">
+            Displaying {{pageName}}
+            <b>
+                {{currentPageFiltered.toPage}} &nbsp;-&nbsp;
+                <span *ngIf="currentPageFiltered.fromPage < totalItems">{{currentPageFiltered.fromPage}}</span>
+		<span *ngIf="currentPageFiltered.fromPage >= totalItems">{{totalItems}}</span>
+		</b> of <b>{{totalItems}}</b> in total
+		</span>
+
+		<br>
+		<br>
