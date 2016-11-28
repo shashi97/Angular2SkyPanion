@@ -6,19 +6,22 @@ import { Router } from '@angular/router';
 import { InvoiceModel } from '../shared/invoice.model';
 
 @Component({
-    selector: 'sp-invoice-detail-distribute',
-    templateUrl: './invoice.component.html',
+  selector: 'sp-invoice-detail-distribution',
+  templateUrl: './distribution.component.html',
 })
 
 export class InvoiceDetailDistributeComponent extends BaseComponent implements OnInit {
 
-    constructor(
-        localStorageService: LocalStorageService,
-        router: Router,
-    ) {
-        super(localStorageService, router);
-    }
+  @Input() invoiceDetail: InvoiceModel;
 
-    ngOnInit() {
-    }
+  constructor(
+    localStorageService: LocalStorageService,
+    router: Router,
+  ) {
+    super(localStorageService, router);
+  }
+
+  ngOnInit() {
+    console.log(this.invoiceDetail);
+  }
 }

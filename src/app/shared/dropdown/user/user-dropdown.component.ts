@@ -28,7 +28,7 @@ export class UserDropdownComponent extends BaseComponent implements OnInit {
 
   private getSkypanionsUsers() {
     this.userService.getUserDDOs().then(result => {
-      this.users = result.data;
+      this.users = result;
     });
   }
 

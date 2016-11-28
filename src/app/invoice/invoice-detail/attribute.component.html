@@ -1,0 +1,98 @@
+
+<div id="attributes_accordion" class="panel-group" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a data-toggle="collapse" data-parent="#attributes_accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <h2 class="panel-title">
+          Invoice Attributes
+        </h2>
+      </a>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+          <dt>Status</dt>
+          <dd>
+            <span ng-class="{'text-warning1': invoiceDetail.InvoiceStatusID==2, 'text-warning': invoiceDetail.InvoiceStatusID==4, 'text-danger': invoiceDetail.InvoiceStatusID==5, 'text-info': invoiceDetail.InvoiceStatusID==6}">{{invoiceDetail.InvoiceStatus}}</span>
+          </dd>
+          <hr>
+          <div [hidden]="invoiceDetail.InvoiceStatusID != 5">
+            <dt>Rejected At</dt>
+            <dd>{{invoiceDetail.RejectedAt}}</dd>
+
+            <dt>Rejected By</dt>
+            <dd>
+              <a href="#user/{{invoiceDetail.RejectedByID}}">{{invoiceDetail.RejectedBy}}</a>
+            </dd>
+
+            <dt>Rejection Comment</dt>
+            <dd>
+              <p>{{invoiceDetail.RejectionComment}}</p>
+            </dd>
+
+            <hr>
+          </div>
+          <div [hidden]="invoiceDetail.InvoiceStatusID == 0">
+            <dt>Processed by</dt>
+            <dd>
+              <span [hidden]="invoiceDetail.ProcessedBy != 'None'" class="text-warning italic-font">{{invoiceDetail.ProcessedBy}}</span>
+              <a href="#user/{{invoiceDetail.ProcessedByID}}" [hidden]="invoiceDetail.ProcessedBy == 'None'">{{invoiceDetail.ProcessedBy}}</a>
+            </dd>
+
+            <dt>Processed on</dt>
+            <dd ng-class="{'text-warning': invoiceDetail.ProcessedOn=='Not Applicable', 'italic-font': invoiceDetail.ProcessedOn=='Not Applicable'}">{{invoiceDetail.ProcessedOn}}</dd>
+
+            <hr>
+          </div>
+          <dt>Company</dt>
+          <dd><a href="#company/{{invoiceDetail.CompanyID}}">{{invoiceDetail.CompanyName}}</a></dd>
+
+          <dt>Invoice Number</dt>
+          <dd>{{invoiceDetail.InvoiceNumber}}</dd>
+
+          <dt>Purchase Order</dt>
+          <dd>
+            <span style="color: grey;" class="italic-font" ng-show="invoiceDetail.PurchaseOrder=='None'">{{invoiceDetail.PurchaseOrder}}</span>
+            <a href="#purchaseordersDetails/{{invoiceDetail.PurchaseOrderID}}" ng-show="invoiceDetail.PurchaseOrder!='None'">{{invoiceDetail.PurchaseOrder}}</a>
+          </dd>
+
+          <dt>Invoice Date</dt>
+          <dd>{{invoiceDetail.InvoiceDate}}</dd>
+
+          <dt>Vendor</dt>
+          <dd>
+            <a href="#vendorsDetails/{{invoiceDetail.VendorID}}">{{invoiceDetail.VendorName}}</a>
+          </dd>
+
+          <dt>Due Date</dt>
+          <dd>{{invoiceDetail.DueDate}}</dd>
+
+          <dt>Post To GL Date</dt>
+          <dd>{{invoiceDetail.DueDate}}</dd>
+
+          <dt>Cash Account</dt>
+          <dd>
+            <span ng-class="{'text-warning': invoiceDetail.CashAccount=='Unknown'}">{{invoiceDetail.CashAccount}}</span>
+          </dd>
+          <div [hidden]="invoiceDetail.InvoiceStatusID==0 || invoiceDetail.InvoiceStatusID==6">
+            <dt>Job</dt>
+            <dd><span ng-class="{'text-warning': invoiceDetail.JobNumber=='None', 'italic-font': invoiceDetail.JobNumber=='None'}">{{invoiceDetail.JobNumber}}</span></dd>
+
+            <dt>Job Category</dt>
+            <dd>
+              <span [hidden]="invoiceDetail.JobCategory != 'None'" class="text-warning italic-font">{{invoiceDetail.JobCategory}}</span>
+              <a href="#jobcategory/{{invoiceDetail.JobCategoryID}}" [hidden]="invoiceDetail.JobCategory == 'None'">{{invoiceDetail.JobCategory}}</a>
+            </dd>
+          </div>
+          <dt>Description</dt>
+          <dd>{{invoiceDetail.Description}}</dd>
+
+          <dt>Comment</dt>
+          <dd>
+            <span style="color: gray;" ng-class="{'italic-font': invoiceDetail.Comment=='None Supplied'}">{{invoiceDetail.Comment}}</span>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>

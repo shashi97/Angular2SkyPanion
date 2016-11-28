@@ -12,11 +12,11 @@ export class VendorFilterArguments {
 }
 
 @Component({
-  selector: 'sp-vendor-filter-bar',
+  selector: 'sp-vendor-detail-filter-bar',
   templateUrl: './filter-bar.component.html',
 })
 
-export class VendorFilterComponent extends BaseComponent implements OnInit {
+export class VendorDetailFilterComponent extends BaseComponent implements OnInit {
 
   @Input() vendorDetail: VendorModel;
   @Output() filtered: EventEmitter<VendorFilterArguments> = new EventEmitter<VendorFilterArguments>();

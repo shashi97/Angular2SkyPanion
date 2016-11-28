@@ -1,20 +1,21 @@
 <div id="slider" class="page-content" *ngIf="vendorDetail">
 
-    <sp-vendor-filter-bar *ngIf="vendorDetail"
-      [vendorDetail]="vendorDetail" 
-      (filtered)="onFiltered($event)" [filteredValue]="filteredValue"
-      >
-     </sp-vendor-filter-bar>
+  <sp-vendor-detail-filter-bar 
+  *ngIf="vendorDetail" 
+  [vendorDetail]="vendorDetail" 
+  (filtered)="onFiltered($event)" 
+  [filteredValue]="filteredValue">
+  </sp-vendor-detail-filter-bar>
 
 
-    <sp-crumb-bar *ngIf="vendorDetail" [pageDetail]="vendorDetail"></sp-crumb-bar>
+  <sp-crumb-bar *ngIf="vendorDetail" [pageDetail]="vendorDetail"></sp-crumb-bar>
 
-    <div class="container-fluid">
-        <div id="panel-advancedoptions">
-            <div class="row">
-                <sp-vendor-attribute [vendorDetail]="vendorDetail"></sp-vendor-attribute>
-                <sp-vendor-invoice [vendorDetail]="vendorDetail"></sp-vendor-invoice>
-            </div>
-        </div>
+  <div class="container-fluid">
+    <div id="panel-advancedoptions">
+      <div class="row">
+        <sp-vendor-detail-attribute [vendorDetail]="vendorDetail"></sp-vendor-detail-attribute>
+        <sp-vendor-detail-invoice [vendorDetail]="vendorDetail"></sp-vendor-detail-invoice>
+      </div>
     </div>
+  </div>
 </div>

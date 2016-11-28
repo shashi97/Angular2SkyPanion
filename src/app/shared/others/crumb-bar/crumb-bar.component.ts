@@ -30,12 +30,15 @@ export class CrumbBarComponent extends BaseComponent implements OnInit {
       this.pageUrl = 'account';
       this.pageName = this.pageDetail.AccountName;
       this.pageId = this.pageDetail.AccountID;
-    } else if(this.pageDetail.VendorName) {
+    } else if (this.pageDetail.VendorName) {
       this.pageUrl = 'vendor';
       this.pageName = this.pageDetail.VendorName;
     } else if (this.pageDetail.PortalAccName) {
-       this.pageUrl = 'achSetups';
+      this.pageUrl = 'achSetups';
       this.pageName = this.pageDetail.PortalAccName;
+    } else if (this.pageDetail.InvoiceNumber) {
+      this.pageUrl = 'invoices';
+      this.pageName = 'invoices';
     }
 
   }

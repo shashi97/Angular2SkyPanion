@@ -27,7 +27,7 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit {
 
     private getSkypanionsCompanies(): void {
         this.dashboardService.getSkypanionsCompanies().then((result) => {
-            this.companies = result;
+          this.companies = result;          
         });
     }
 }

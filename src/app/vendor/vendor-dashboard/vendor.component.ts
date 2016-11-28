@@ -6,6 +6,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
 import { VendorModel } from '../shared/vendor.model';
+import { VendorFilterArguments } from './filter-bar.component';
 
 import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
 import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-dropdown.component';
@@ -13,7 +14,6 @@ import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-
 import { VendorService } from '../shared/vendor.service';
 import { MasterService } from '../../shared/services/master/master.service';
 import { AccountService } from '../../account/shared/account.service';
-
 
 @Component({
   selector: 'sp-vendorDetail',
@@ -23,15 +23,15 @@ import { AccountService } from '../../account/shared/account.service';
 export class VendorComponent extends BaseComponent implements OnInit {
 
   private account: Object;
-
   /* Temporary variables */
   private currentPage: number = 1;
   private pageSize: number = 25;
   private totalItems: number = 0;
   private pageName: string = 'venders';
+  private ledgerAccountId: number = null;
 
   private vendors: Array<VendorModel>;
-  private vendor: VendorModel;
+  private _filteredValue: VendorFilterArguments = new VendorFilterArguments();
 
   constructor(
     private vendorSevice: VendorService,
@@ -43,11 +43,18 @@ export class VendorComponent extends BaseComponent implements OnInit {
   ) {
     super(localStorageService, router);
     this.vendors = new Array<VendorModel>();
-    this.vendor = new VendorModel();
     this.getParameterValues();
   }
 
   ngOnInit() {
+  }
+
+  private get filteredValue(): VendorFilterArguments {
+    return this._filteredValue;
+  }
+  private set filteredValue(newValue: VendorFilterArguments) {
+    this._filteredValue = newValue;
+    this.searchUrl();
   }
 
   private getParameterValues(): void {
@@ -55,9 +62,9 @@ export class VendorComponent extends BaseComponent implements OnInit {
       let searchParameters = params['searchParameters'];
       if (searchParameters) {
         let parameterArray: Array<string> = searchParameters.split(',');
-        this.vendor.CompanyID = parseInt(parameterArray[0]);
-        this.vendor.VendorKey = parameterArray[1];
-        this.vendor.VendorName = parameterArray[2];
+        this._filteredValue.companyId = parseInt(parameterArray[0]);
+        this._filteredValue.vendorKey = parameterArray[1];
+        this._filteredValue.vendorName = parameterArray[2];
       }
       this.getItemsPerPageList();
     });
@@ -89,17 +96,17 @@ export class VendorComponent extends BaseComponent implements OnInit {
 
     this.vendorSevice
       .getVendors(
-      this.vendor.LedgerAccountId,
-      this.vendor.CompanyID,
-      this.vendor.VendorName,
-      this.vendor.VendorKey,
+      this.ledgerAccountId,
+      this._filteredValue.companyId,
+      this._filteredValue.vendorName,
+      this._filteredValue.vendorKey,
       this.currentPage, this.pageSize)
       .then((result) => {
         if (result) {
           this.vendors = result;
           if (this.vendors && this.vendors.length > 0) {
             this.totalItems = this.vendors[0].VendorsCount;
-          }else {
+          } else {
             this.totalItems = 0;
           }
         }
@@ -108,18 +115,13 @@ export class VendorComponent extends BaseComponent implements OnInit {
       });
   }
 
-  private searchURL(): void {
-    let link = ['/vendor', this.vendor.CompanyID + ',' + this.vendor.VendorKey + ',' + this.vendor.VendorName];
+  private searchUrl(): void {
+    let link = ['/vendor', this._filteredValue.companyId + ',' + this._filteredValue.vendorKey + ',' + this._filteredValue.vendorName];
     this.router.navigate(link);
   }
 
-  private searchURLReset(): void {
-    this.currentPage = 1;
-    this.pageSize = 25;
-    this.vendor.VendorName = '';
-    this.vendor.VendorKey = '';
-    this.vendor.CompanyID = 0;
-    this.searchURL();
+  public onFiltered(filteredValue: VendorFilterArguments): void {
+    this.filteredValue = filteredValue;
   }
 
 }

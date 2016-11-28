@@ -4,9 +4,9 @@ import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
-import { VendorAttributeComponent } from '../vendor-detail/attribute.component';
-import { VendorFilterComponent, VendorFilterArguments } from '../vendor-detail/filter-bar.component';
-import { VendorInvoiceComponent } from '../vendor-detail/invoice.component';
+import { VendorDetailAttributeComponent } from '../vendor-detail/attribute.component';
+import { VendorDetailFilterComponent, VendorFilterArguments } from '../vendor-detail/filter-bar.component';
+import { VendorDetailInvoiceComponent } from '../vendor-detail/invoice.component';
 
 import { VendorModel } from '../shared/vendor.model';
 
@@ -32,6 +32,7 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
   private vendorId: number = 0;
   private companyId: number = 0;
   private _filteredValue: VendorFilterArguments = new VendorFilterArguments();
+  
   constructor(
     localStorageService: LocalStorageService,
     router: Router,

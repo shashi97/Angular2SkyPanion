@@ -24,4 +24,9 @@ export class InvoiceModel {
   VendorID: number = 0;
   VendorKey: string = '';
   VendorName: string = '';
+  DocumentLockingID: number = 0;
+  AttachmentID: number = 0;
+  InvoiceStatusID: number = 0;
+  docType: number = 0;
+  TotalDistributionAmount: number = 0;
 }

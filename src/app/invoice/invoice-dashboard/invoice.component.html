@@ -19,16 +19,17 @@
     <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
       <thead>
         <tr>
-          <th style="width: 3%">Status</th>
-          <th style="width: 8%">Company</th>
-          <th style="width: 5%">Inv. Number</th>
-          <th style="width: 8%">Vendor</th>
-          <th style="width: 12%">Distributions</th>
-          <th style="width: 16%">Invoice Amount</th>
+           <th style="width: 3%"></th>
+          <th style="width: 8%">Status</th>
+          <th style="width: 5%">Company</th>
+          <th style="width: 8%">Inv. Number</th>
+          <th style="width: 12%">Vendor</th>
+          <th style="width: 16%">Distributions</th>
+          <th style="width: 7%">Invoice Amount</th>
           <th style="width: 7%">Paid Status</th>
           <th style="width: 7%">Processed</th>
-          <th style="width: 7%">Description</th>
-          <th style="width: 8%">Locked By</th>
+          <th style="width: 8%">Description</th>
+          <th style="width: 5%">Locked By</th>
           <th style="width: 5%"></th>
           <th style="width: 5%"></th>
         </tr>
@@ -49,7 +50,14 @@
           <td>{{item.Processed}}</td>
           <td>{{item.InvoiceDescription}}</td>
           <td>{{item.LockedBy}}</td>
-          <td><a routerLink="invoiceDetail/{{item.Details}}">Details</a></td>
+          <td>
+            <div class="ui-grid-cell-contents" *ngIf="item.IsLocked || item.IsSuperUser">
+              <a (click) ="unlockInvoice(row)">
+                <i class="glyphicon"></i>unlock
+               </a>
+            </div>
+           </td>
+          <td><a routerLink="invoiceDetail/{{item.InvoiceID}}">Details</a></td>
         </tr>
       </tbody>
       <tfoot>
