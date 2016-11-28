@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  font-family: 'Source Sans Pro', 'Segoe UI', 'Droid Sans', Tahoma, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #5f7676;
+  background-color: #f2f5f7;
+}

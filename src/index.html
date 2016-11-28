@@ -1,135 +1,141 @@
 <!doctype html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <title>FirstApp</title>
-    <base href="/">
+  <meta charset="utf-8">
+  <title>FirstApp</title>
+  <base href="/">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-
-
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  
-    <link href="../../assets/plugins/jstree/dist/themes/avalon/style.min.css" type="text/css" rel="stylesheet" />
-    <!-- jsTree -->
-    <link href="../../assets/plugins/codeprettifier/prettify.css" type="text/css" rel="stylesheet" />
-    <!-- Code Prettifier -->
-    <link href="../../assets/plugins/iCheck/skins/minimal/blue.css" type="text/css" rel="stylesheet" />
-    <!-- iCheck -->
-
-    <link href="../../assets/plugins/datatables/dataTables.bootstrap.css" type="text/css" rel="stylesheet" />
-    <!-- Bootstrap Support for Datatables -->
-    <link href="../../assets/plugins/datatables/dataTables.fontAwesome.css" type="text/css" rel="stylesheet" />
-    <!-- FontAwesome Support for Datatables -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 
 
-    <link href="../../assets/plugins/form-daterangepicker/daterangepicker-bs3.css" type="text/css" rel="stylesheet" />
-    <!-- DateRangePicker -->
-    <link href="../../assets/plugins/switchery/switchery.css" type="text/css" rel="stylesheet" />
-    <!-- Switchery -->
-    <link href="../../assets/plugins/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />
-    <!-- FullCalendar -->
-    <link href="../../assets/plugins/form-xeditable/bootstrap3-editable/css/bootstrap-editable.css" type="text/css" rel="stylesheet" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    <link href="../../Content/themes/base/jquery-ui.css" rel="stylesheet" />
-    <link href="../../Content/themes/angularcss/select.css" rel="stylesheet" />
-    <link href="Content/ui-grid-unstable.css" rel="stylesheet" />
-    <link href="../../assets/plugins/slider/angular-slider.css" rel="stylesheet" />
+  <link href="../../assets/plugins/jstree/dist/themes/avalon/style.min.css" type="text/css" rel="stylesheet" />
+  <!-- jsTree -->
+  <link href="../../assets/plugins/codeprettifier/prettify.css" type="text/css" rel="stylesheet" />
+  <!-- Code Prettifier -->
+  <link href="../../assets/plugins/iCheck/skins/minimal/blue.css" type="text/css" rel="stylesheet" />
+  <!-- iCheck -->
 
-    <link href="../../Content/skypanionSelect.css" rel="stylesheet" />
-    <link href="../../assets/popover-list.css" rel="stylesheet" />
-
-    <link href="../../Content/messageBox.css" rel="stylesheet" />
-
-    <link href="../../Content/custom.css" rel="stylesheet" />
-    <link href="../../assets/css/skypanion-63b2a044a3cf73df54afb7803648bf8a.css" rel="stylesheet" />
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+  <link href="../../assets/plugins/datatables/dataTables.bootstrap.css" type="text/css" rel="stylesheet" />
+  <!-- Bootstrap Support for Datatables -->
+  <link href="../../assets/plugins/datatables/dataTables.fontAwesome.css" type="text/css" rel="stylesheet" />
+  <!-- FontAwesome Support for Datatables -->
 
 
- <link rel="stylesheet" type="text/css" href="https://unpkg.com/angular2-data-table/release/datatable.css" />
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/angular2-data-table/release/material.css" />
-    <link href="https://file.myfontastic.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" rel="stylesheet">
-    <link href="../../assets/fonts/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
-    <script src="../../Scripts/jquery-1.11.1.min.js"></script>
-    <script src="../../assets/js/jquery-1.10.2.min.js"></script>
-    <script src="Scripts/jquery.tablesorter.js"></script>
+  <link href="../../assets/plugins/form-daterangepicker/daterangepicker-bs3.css" type="text/css" rel="stylesheet" />
+  <!-- DateRangePicker -->
+  <link href="../../assets/plugins/switchery/switchery.css" type="text/css" rel="stylesheet" />
+  <!-- Switchery -->
+  <link href="../../assets/plugins/fullcalendar/fullcalendar.css" type="text/css" rel="stylesheet" />
+  <!-- FullCalendar -->
+  <link href="../../assets/plugins/form-xeditable/bootstrap3-editable/css/bootstrap-editable.css" type="text/css" rel="stylesheet"
+  />
 
-    <!-- Load jQueryUI -->
-    <script src="../../assets/js/bootstrap.min.js"></script>
-    <!-- Load Bootstrap -->
+  <link href="../../Content/themes/base/jquery-ui.css" rel="stylesheet" />
+  <link href="../../Content/themes/angularcss/select.css" rel="stylesheet" />
+  <link href="Content/ui-grid-unstable.css" rel="stylesheet" />
+  <link href="../../assets/plugins/slider/angular-slider.css" rel="stylesheet" />
 
-    <script src="../../assets/plugins/sparklines/jquery.sparklines.min.js"></script>
-    <!-- Sparkline -->
-    <script src="../../assets/plugins/jstree/dist/jstree.min.js"></script>
-    <!-- jsTree -->
+  <link href="../../Content/skypanionSelect.css" rel="stylesheet" />
+  <link href="../../assets/popover-list.css" rel="stylesheet" />
 
-    <script src="../../assets/plugins/codeprettifier/prettify.js"></script>
-    <!-- Code Prettifier  -->
-    <script src="../../assets/plugins/bootstrap-switch/bootstrap-switch.js"></script>
-    <!-- Swith/Toggle Button -->
+  <link href="../../Content/messageBox.css" rel="stylesheet" />
 
-    <script src="../../assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js"></script>
-    <!-- Bootstrap Tabdrop -->
+  <link href="../../Content/custom.css" rel="stylesheet" />
+  <link href="../../assets/css/skypanion-63b2a044a3cf73df54afb7803648bf8a.css" rel="stylesheet" />
+  <link href="../../assets/css/styles.css" rel="stylesheet" />
 
-    <script src="../../assets/plugins/iCheck/icheck.min.js"></script>
-    <!-- iCheck -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css"
+    rel="stylesheet" />
+    
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/angular2-data-table/release/datatable.css" />
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/angular2-data-table/release/material.css" />
+  <link href="https://file.myfontastic.com/Jnf54BZCm7mSjGCxNRbfp3/icons.css" rel="stylesheet">
+  <link href="../../assets/fonts/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+  <script src="../../Scripts/jquery-1.11.1.min.js"></script>
+  <script src="../../assets/js/jquery-1.10.2.min.js"></script>
+  <script src="Scripts/jquery.tablesorter.js"></script>
 
-    <script src="../../assets/js/enquire.min.js"></script>
-    <!-- Enquire for Responsiveness -->
+  <!-- Load jQueryUI -->
+  <script src="../../assets/js/bootstrap.min.js"></script>
+  <!-- Load Bootstrap -->
 
-    <script src="../../assets/plugins/bootbox/bootbox.js"></script>
-    <!-- Bootbox -->
-    <!--<script src="assets/plugins/simpleWeather/jquery.simpleWeather.js"></script>-->
+  <script src="../../assets/plugins/sparklines/jquery.sparklines.min.js"></script>
+  <!-- Sparkline -->
+  <script src="../../assets/plugins/jstree/dist/jstree.min.js"></script>
+  <!-- jsTree -->
+
+  <script src="../../assets/plugins/codeprettifier/prettify.js"></script>
+  <!-- Code Prettifier  -->
+  <script src="../../assets/plugins/bootstrap-switch/bootstrap-switch.js"></script>
+  <!-- Swith/Toggle Button -->
+
+  <script src="../../assets/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js"></script>
+  <!-- Bootstrap Tabdrop -->
+
+  <script src="../../assets/plugins/iCheck/icheck.min.js"></script>
+  <!-- iCheck -->
+
+  <script src="../../assets/js/enquire.min.js"></script>
+  <!-- Enquire for Responsiveness -->
+
+  <script src="../../assets/plugins/bootbox/bootbox.js"></script>
+  <!-- Bootbox -->
+  <!--<script src="assets/plugins/simpleWeather/jquery.simpleWeather.js"></script>-->
 
 
-    <script src="../../assets/js/application.js"></script>
-    <!--<script src="../../assets/demo/demo.js"></script>-->
-    <script src="../../assets/demo/demo-switcher.js"></script>
+  <script src="../../assets/js/application.js"></script>
+  <!--<script src="../../assets/demo/demo.js"></script>-->
+  <script src="../../assets/demo/demo-switcher.js"></script>
 
-    <!-- End loading site level scripts -->
-    <!-- Load page level scripts-->
+  <!-- End loading site level scripts -->
+  <!-- Load page level scripts-->
 
-    <script src="../../assets/plugins/form-daterangepicker/daterangepicker.js"></script>
-    <!-- Date Range Picker -->
-    <script src="../../assets/plugins/form-daterangepicker/moment.min.js"></script>
-    <!-- Moment.js for Date Range Picker -->
+  <script src="../../assets/plugins/form-daterangepicker/daterangepicker.js"></script>
+  <!-- Date Range Picker -->
+  <script src="../../assets/plugins/form-daterangepicker/moment.min.js"></script>
+  <!-- Moment.js for Date Range Picker -->
 
-    <script src="../../assets/plugins/easypiechart/jquery.easypiechart.js"></script>
-    <!-- EasyPieChart -->
-    <script src="../../assets/plugins/switchery/switchery.js"></script>
-    <!-- Switchery -->
+  <script src="../../assets/plugins/easypiechart/jquery.easypiechart.js"></script>
+  <!-- EasyPieChart -->
+  <script src="../../assets/plugins/switchery/switchery.js"></script>
+  <!-- Switchery -->
 
-    <script src="../../assets/plugins/fullcalendar/fullcalendar.min.js"></script>
+  <script src="../../assets/plugins/fullcalendar/fullcalendar.min.js"></script>
 
-    <script src="../../assets/plugins/jQuery-Mapael/js/raphael/raphael-min.js"></script>
-    <!-- Load Raphael as Dependency -->
-    <script src="../../assets/plugins/jQuery-Mapael/js/jquery.mapael.js"></script>
-    <!-- jQuery Mapael -->
-    <script src="../../assets/plugins/jQuery-Mapael/js/maps/world_countries.js"></script>
+  <script src="../../assets/plugins/jQuery-Mapael/js/raphael/raphael-min.js"></script>
+  <!-- Load Raphael as Dependency -->
+  <script src="../../assets/plugins/jQuery-Mapael/js/jquery.mapael.js"></script>
+  <!-- jQuery Mapael -->
+  <script src="../../assets/plugins/jQuery-Mapael/js/maps/world_countries.js"></script>
 
-    <script src="../../assets/plugins/charts-morrisjs/raphael.min.js"></script>
-    <script src="../../assets/plugins/charts-morrisjs/morris.min.js"></script>
+  <script src="../../assets/plugins/charts-morrisjs/raphael.min.js"></script>
+  <script src="../../assets/plugins/charts-morrisjs/morris.min.js"></script>
 
-    <!--<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+  <!--<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 
     <script src="../../assets/plugins/tinymce-editor/tinymce.js"></script>-->
 
-    <script src="../../Scripts/Other/SmartNotification.min.js"></script>
-    <script src="../../Scripts/Other/bootstrap-dialog.js"></script>
-    <script src="../../Scripts/ckeditor/ckeditor.js"></script>
-    <link href="Content/spinner.css" rel="stylesheet" />
+  <script src="../../Scripts/Other/SmartNotification.min.js"></script>
+  <script src="../../Scripts/Other/bootstrap-dialog.js"></script>
+  <script src="../../Scripts/ckeditor/ckeditor.js"></script>
+  <link href="Content/spinner.css" rel="stylesheet" />
 
-    <script src="Scripts/bootbox.js"></script>
-    <script src="Scripts/bootbox.min.js"></script>
-    <script src="Scripts/xml2json.js"></script>
-        <link rel="stylesheet" type="text/css" href="../../assets/theme.css" />
-    <link rel="stylesheet" type="text/css" href="../../assets/primeng.min.css" />
-      <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700' rel='stylesheet' type='text/css' />
-<link rel="stylesheet/less" type="text/css" href="../../assets/less/bootstrap/bootstrap.less" />
+  <script src="Scripts/bootbox.js"></script>
+  <script src="Scripts/bootbox.min.js"></script>
+  <script src="Scripts/xml2json.js"></script>
+  <link rel="stylesheet" type="text/css" href="../../assets/theme.css" />
+  <link rel="stylesheet" type="text/css" href="../../assets/primeng.min.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,700' rel='stylesheet' type='text/css'
+  />
+  <link rel="stylesheet/less" type="text/css" href="../../assets/less/bootstrap/bootstrap.less" />
 </head>
+
 <body>
-    <sp-app>loading...</sp-app>
+  <sp-app>loading...</sp-app>
 </body>
+
 </html>
