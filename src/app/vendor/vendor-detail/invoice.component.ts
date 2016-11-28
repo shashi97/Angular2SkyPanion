@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { VendorModel } from '../shared/vendor.model';
 
 @Component({
-  selector: 'sp-vendor-invoice',
+  selector: 'sp-vendor-detail-invoice',
   templateUrl: './invoice.component.html',
 })
 
-export class VendorInvoiceComponent extends BaseComponent implements OnInit {
+export class VendorDetailInvoiceComponent extends BaseComponent implements OnInit {
   @Input() vendorDetail: VendorModel;
   private totalItems: number = 0;
   constructor(

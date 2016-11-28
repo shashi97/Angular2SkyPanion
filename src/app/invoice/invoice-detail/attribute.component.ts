@@ -6,19 +6,21 @@ import { Router } from '@angular/router';
 import { InvoiceModel } from '../shared/invoice.model';
 
 @Component({
-    selector: 'sp-invoice-detail-attribute',
-    templateUrl: './invoice.component.html',
+  selector: 'sp-invoice-detail-attribute',
+  templateUrl: './attribute.component.html',
 })
 
 export class InvoiceDetailAttributeComponent extends BaseComponent implements OnInit {
 
-    constructor(
-        localStorageService: LocalStorageService,
-        router: Router,
-    ) {
-        super(localStorageService, router);
-    }
+  @Input() invoiceDetail: InvoiceModel;
 
-    ngOnInit() {
-    }
+  constructor(
+    localStorageService: LocalStorageService,
+    router: Router,
+  ) {
+    super(localStorageService, router);
+  }
+
+  ngOnInit() {
+  }
 }

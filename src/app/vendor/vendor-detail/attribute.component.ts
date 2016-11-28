@@ -6,11 +6,11 @@ import { Router } from '@angular/router';
 import { VendorModel } from '../shared/vendor.model';
 
 @Component({
-    selector: 'sp-vendor-attribute',
+    selector: 'sp-vendor-detail-attribute',
     templateUrl: './attribute.component.html',
 })
 
-export class VendorAttributeComponent extends BaseComponent implements OnInit {
+export class VendorDetailAttributeComponent extends BaseComponent implements OnInit {
 
     @Input() vendorDetail: VendorModel;
 

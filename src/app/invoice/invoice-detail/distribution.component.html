@@ -1,0 +1,54 @@
+<div id="distributions_accordion" class="panel-group" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <a data-toggle="collapse" data-parent="#distributions_accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <h2 class="panel-title">
+          Distributions
+        </h2>
+      </a>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body panel-no-padding">
+
+        <div class="alert alert-danger" [hidden]="invoiceDetail.InvoiceDistributions.length!=0">
+          <h3>No Distributions!</h3>
+          <p>There are no distributions for this invoice.....</p>
+        </div>
+        <table id="invoice_distributions_table" class="table table-striped table-bordered datatables dataTable no-footer" 
+        [hidden]="invoiceDetail.InvoiceDistributions.length == 0">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Ledger Account</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let invDistribution of invoiceDetail.InvoiceDistributions">
+              <td>
+                <!--<a class="comment_tooltip" uib-tooltip="{{invDistribution.DistributionComment}}" tooltip-placement="right" [hidden]="invDistribution.DistributionComment=='N/A'">
+                  <i class="fa fa-info-circle"></i> Comment
+                </a>
+                <a class="comment_tooltip text-warning" uib-tooltip="No comment available for this distribution" tooltip-placement="right"
+                  [hidden]="invDistribution.DistributionComment != 'N/A'">
+                  <i class="fa fa-exclamation-circle"></i> No Comment
+                </a>-->
+              </td>
+              <td>
+                <a href="#ledgeraccounts/{{invDistribution.LedgerAccountID}}">{{invDistribution.AccountDestribution}}</a>
+              </td>
+              <td>${{invDistribution.DistributionAmount | number: 2}}</td>
+            </tr>
+            <tr>
+              <td style="text-align: right" colspan="2">
+                <b>Total:</b>
+              </td>
+              <!--<td>${{invoiceDetail.TotalDistributionAmount | number: 2}}</td>-->
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>

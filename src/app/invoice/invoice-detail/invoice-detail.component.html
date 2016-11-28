@@ -1,0 +1,22 @@
+<div id="slider" class="page-content" style="overflow: -moz-scrollbars-vertical;overflow-y: scroll">
+
+  <sp-invoice-detail-filter-bar *ngIf="invoiceDetail" [invoiceDetail]="invoiceDetail"></sp-invoice-detail-filter-bar>
+
+  <sp-crumb-bar *ngIf="invoiceDetail" [pageDetail]="invoiceDetail"></sp-crumb-bar>
+
+  <div class="container-fluid">
+    <div id="panel-advancedoptions">
+      <div id="show_invoice_content" class="row">
+        <div class="col-md-4">
+          <sp-invoice-detail-distribution *ngIf="invoiceDetail" [invoiceDetail]="invoiceDetail"></sp-invoice-detail-distribution>
+          <sp-invoice-detail-check *ngIf="checkDetails" [checkDetails]="checkDetails"></sp-invoice-detail-check>
+          <sp-invoice-detail-attribute *ngIf="invoiceDetail" [invoiceDetail]="invoiceDetail"></sp-invoice-detail-attribute>
+        </div>
+        <div class="col-md-8">
+          <sp-invoice-detail-invoice *ngIf="invoiceDetail" [invoiceDetail]="invoiceDetail" [invoiceArgs]='invoiceArgs'></sp-invoice-detail-invoice>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
