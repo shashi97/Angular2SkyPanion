@@ -6,9 +6,9 @@ import { Router } from '@angular/router';
 
 import { InvoiceModel } from '../shared/invoice.model';
 import { UserModel } from '../../user/shared/user.model';
-import { CompanyModel } from '../../company/company.model';
+import { CompanyModel } from '../../companies/shared/company.model';
 
-import { CompaniesService } from '../../companies/shared/companies.service';
+import { CompanyService } from '../../companies/shared/company.service';
 
 import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-dropdown.component';
 
@@ -44,7 +44,7 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
-    private companiesService: CompaniesService,
+    private companiesService: CompanyService,
     private invoiceService: InvoiceService,
     private userService: UserService,
     private activatedRoute: ActivatedRoute) {

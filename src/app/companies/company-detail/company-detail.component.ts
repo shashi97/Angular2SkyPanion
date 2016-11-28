@@ -52,7 +52,7 @@ export class CompanyDetailComponent extends BaseComponent implements OnInit {
   }
 
   private getComapnyDetail(): void {
-    this.companyService.getCompanyDetails(this.companyId).then(result => {
+    this.companyService.getCompanyDetail(this.companyId).then(result => {
       this.company = result;
     });
   }

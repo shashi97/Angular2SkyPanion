@@ -25,7 +25,7 @@ export class VendorFilterComponent extends BaseComponent implements OnInit {
   @Input() filteredValue: VendorFilterArguments = new VendorFilterArguments();
   constructor(
     localStorageService: LocalStorageService,
-    router: Router,
+    router: Router
   ) {
     super(localStorageService, router);
     console.log(this.vendorDetail);

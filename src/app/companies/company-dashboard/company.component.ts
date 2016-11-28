@@ -36,8 +36,8 @@ export class CompanyComponent extends BaseComponent implements OnInit {
   });
 
   private account: Object;
-  private syncID: string ;
-  private syncTypeID: string ;
+  private syncID: string= '-1' ;
+  private syncTypeID: string= '-1' ;
   private searchText: any = null;
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private company: CompanyModel;

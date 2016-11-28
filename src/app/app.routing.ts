@@ -43,7 +43,7 @@ const APP_ROUTES: Routes = [
   { path: 'achSetups/achSetupDetail/:id', component: AchSetupDetailComponent },
 
   { path: 'invoices', component: InvoiceComponent },
-  { path: 'invoices/invoiceDetail/:id', component: InvoiceDetailComponent },
+  { path: 'invoices/invoiceDetail/:invoiceId', component: InvoiceDetailComponent },
 
   { path: 'purchaseOrder', component: PurchaseOrderComponent },
   { path: 'iniSetup', component: IniSetupComponent },

@@ -59,9 +59,9 @@ import { CompanyRoleComponent } from './companies/company-detail/company-role.co
 
 import { VendorComponent } from './vendor/vendor-dashboard/vendor.component';
 import { VendorDetailComponent } from './vendor/vendor-detail/vendor-detail.component';
-import { VendorFilterComponent } from './vendor/vendor-detail/filter-bar.component';
-import { VendorAttributeComponent } from './vendor/vendor-detail/attribute.component';
-import { VendorInvoiceComponent } from './vendor/vendor-detail/invoice.component';
+import { VendorDetailFilterComponent } from './vendor/vendor-detail/filter-bar.component';
+import { VendorDetailAttributeComponent } from './vendor/vendor-detail/attribute.component';
+import { VendorDetailInvoiceComponent } from './vendor/vendor-detail/invoice.component';
 
 import { LedgerAccountComponent } from './ledger-account/ledger-dashboard/ledger-account.component';
 import { LedgerAccountDetailComponent } from './ledger-account/ledger-account-detail/ledger-account-detail.component';
@@ -93,6 +93,7 @@ import { CompanyPathDropdownComponent } from './shared/dropdown/company-path/com
 import { SyncTypeDropdownComponent } from './shared/dropdown/sync-type/sync-type.component';
 
 import { VendorDropdownComponent } from './shared/dropdown/vendor/vendor-dropdown.component';
+import { VendorFilterComponent } from './vendor/vendor-dashboard/filter-bar.component';
 import { UserDropdownComponent } from './shared/dropdown/user/user-dropdown.component';
 import { CrumbBarComponent } from './shared/others/crumb-bar/crumb-bar.component';
 import { PagerComponent } from './shared/others/pager/pager.component';
@@ -104,6 +105,7 @@ import { InvoiceDetailFilterComponent } from './invoice/invoice-detail/filter-ba
 import { InvoiceDetailAttributeComponent } from './invoice/invoice-detail/attribute.component';
 import { InvoiceDetailDistributeComponent } from './invoice/invoice-detail/distribution.component';
 import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.component';
+import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
 
 import { AttachmentComponent } from './attachment/attachment.component';
 import {Pagination} from './pagination/directive/pagination.component';
@@ -127,9 +129,9 @@ let localStorageServiceConfig = {
     PaginationComponent,
     VendorComponent,
     VendorDetailComponent,
-    VendorFilterComponent,
-    VendorInvoiceComponent,
-    VendorAttributeComponent,
+    VendorDetailFilterComponent,
+    VendorDetailAttributeComponent,
+    VendorDetailInvoiceComponent,
     LedgerAccountComponent,
     LedgerAccountDetailComponent,
     LedgerFilterComponent,
@@ -168,7 +170,9 @@ let localStorageServiceConfig = {
     Pagination,
     PagerComponent,
     CompanyPathDropdownComponent,
-    SyncTypeDropdownComponent
+    SyncTypeDropdownComponent,
+    InvoiceCheckDetailComponent,
+    VendorFilterComponent
   ],
   imports: [
     BrowserModule,

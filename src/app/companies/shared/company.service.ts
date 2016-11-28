@@ -29,7 +29,7 @@ export class CompanyService {
 
     }
 
-    public getCompanyDetails(companyId: number): Promise<CompanyModel> {
+    public getCompanyDetail(companyId: number): Promise<CompanyModel> {
         return this
             .http
             .get(ApiUrl.baseUrl + 'api/company/' + companyId)

@@ -76,7 +76,8 @@ export class PaginationComponent implements OnChanges {
     private getDataAsPerPerPageRequired(value: number): void {
         if (value !== undefined && value !== null) {
             this.currentPageFiltered.pageSizeFilter = value;
-            this.currentPageFiltered.pageNo = 1;
+           // this.currentPageFiltered = new CurrentPageArguments();
+           
             this.pageChangeHandler();
         }
     }

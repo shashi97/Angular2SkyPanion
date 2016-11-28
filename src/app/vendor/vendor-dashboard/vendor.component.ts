@@ -14,6 +14,7 @@ import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-
 import { VendorService } from '../shared/vendor.service';
 import { MasterService } from '../../shared/services/master/master.service';
 import { AccountService } from '../../account/shared/account.service';
+import {CurrentPageArguments} from '../../pagination/pagination.component';
 
 @Component({
   selector: 'sp-vendorDetail',
@@ -29,6 +30,7 @@ export class VendorComponent extends BaseComponent implements OnInit {
   private totalItems: number = 0;
   private pageName: string = 'venders';
   private ledgerAccountId: number = null;
+  private _currentPage: CurrentPageArguments = new CurrentPageArguments();
 
   private vendors: Array<VendorModel>;
   private _filteredValue: VendorFilterArguments = new VendorFilterArguments();
@@ -48,13 +50,23 @@ export class VendorComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  private get currentPageFiltered(): CurrentPageArguments {
+    return this._currentPage;
+  }
+  private set currentPageFiltered(newValue: CurrentPageArguments) {
+    this._currentPage = newValue;
+    this.getVendors();
+  }
   private get filteredValue(): VendorFilterArguments {
     return this._filteredValue;
   }
   private set filteredValue(newValue: VendorFilterArguments) {
     this._filteredValue = newValue;
     this.searchUrl();
+  }
+
+  public onCurrentPageChanged(newValue: CurrentPageArguments) {
+    this.currentPageFiltered = newValue;
   }
 
   private getParameterValues(): void {
@@ -100,7 +112,8 @@ export class VendorComponent extends BaseComponent implements OnInit {
       this._filteredValue.companyId,
       this._filteredValue.vendorName,
       this._filteredValue.vendorKey,
-      this.currentPage, this.pageSize)
+      this.currentPageFiltered.pageNo,
+      this.currentPageFiltered.pageSizeFilter)
       .then((result) => {
         if (result) {
           this.vendors = result;
