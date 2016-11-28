@@ -1,4 +1,4 @@
-import { Component, OnChanges, Input, Output, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import { Component, AfterViewChecked, Input, Output, ChangeDetectorRef, EventEmitter } from '@angular/core';
 import { MasterService } from '../shared/services/master/master.service';
 
 export class CurrentPageArguments {
@@ -15,7 +15,7 @@ export class CurrentPageArguments {
     selector: 'sp-pagination',
     templateUrl: './pagination.component.html'
 })
-export class PaginationComponent implements OnChanges {
+export class PaginationComponent implements AfterViewChecked {
 
 
     public pageSizeFilter: number;
@@ -61,7 +61,7 @@ export class PaginationComponent implements OnChanges {
 
     }
 
-    ngOnChanges(): void {
+    ngAfterViewChecked(): void {
         console.log(this.maxPageNo);
         this.setItemsPerPageList();
     }
