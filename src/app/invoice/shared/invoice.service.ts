@@ -70,9 +70,24 @@ export class InvoiceService {
       .toPromise()
       .then(response => response.json())
       .catch(error => error);
-    
+
   }
 
+  public submitInvoiceExpedite(invoiceID) {
+    return this.http.get(ApiUrl.baseUrl
+      + "api/invoices/getInvoiceExpedite/" + invoiceID)
+      .toPromise()
+      .then(response => response.json())
+      .catch(error => error);
+  }
+
+
+  public submitInvoiceForApproval(invoiceID) {
+    return this.http.get(ApiUrl.baseUrl + "api/invoices/InvoiceForApproval/" + invoiceID)
+      .toPromise()
+      .then(response => response.json())
+      .catch(error => error);
+  }
 
   public handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

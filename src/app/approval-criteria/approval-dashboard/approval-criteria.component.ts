@@ -16,7 +16,7 @@ import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.compo
 
 import { ApprovalFilterArguments } from './filter-bar.component';
 
-import {CurrentPageArguments} from '../../pagination/pagination.component';
+import { CurrentPageArguments } from '../../pagination/pagination.component';
 
 
 @Component({
@@ -68,11 +68,11 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
     this.getApprovalCriteria(this._filteredValue.type);
   }
 
-  private getSessionDetails() {
+  private getSessionDetails(): void {
     this.user = this.userService.getSessionDetails();
 
-    if (this.user.userId != null) {
-      if (this.user.IsSuperUser === true) {
+    if (this.user.userId) {
+      if (this.user.IsSuperUser) {
         if (this.companyId === 0) {
           this.getAccountName();
         }
@@ -90,21 +90,21 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   }
 
   private getAccountName(): void {
-    this.accountService.getAccountName().then((result) => {
+    this.accountService.getAccountName().then(result => {
       this.account = result;
       this.getLedgerAccounts();
     });
   }
 
-  private getCompanyName() {
-    this.companiesService.getCompanyName(this.companyId).then((result) => {
+  private getCompanyName(): void {
+    this.companiesService.getCompanyName(this.companyId).then(result => {
       this.getApprovers();
       // this.cmpName = result.data.replace(/"/g, '');
     });
   }
 
-  getApprovers() {
-    this.userService.getApproverUserDDOs(this.companyId).then((result) => {
+  private getApprovers(): void {
+    this.userService.getApproverUserDDOs(this.companyId).then(result => {
       // this.approvers = result.data;
       // this.ApproversCount = this.approvers.length;
       // this.selectedApprover = [];
@@ -113,15 +113,15 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private getLedgerAccounts() {
-    this.ledgerAccountService.getLedgerAccountDDOsAccountTypeWise(this.companyId).then((result) => {
+  private getLedgerAccounts(): void {
+    this.ledgerAccountService.getLedgerAccountDDOsAccountTypeWise(this.companyId).then(result => {
       this.ledgerAccounts = result;
       // this.selectedLedgerAccount.selected = [];
       this.getApprovalCriteria('all');
     });
   }
 
-  private getApprovalCriteria(approvalType) {
+  private getApprovalCriteria(approvalType): void {
     this._filteredValue.type = approvalType;
     this.approvals = [];
     this.approvalCriteriaService.getApprovalCriteria(
@@ -129,13 +129,13 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
       this.companyId,
       this.currentPageFiltered.pageNo,
       this.currentPageFiltered.pageSizeFilter)
-      .then((result) => {
+      .then(result => {
         this.approvals = result;
         this.totalItems = this.approvals[0].ApprovalCount;
       });
   }
 
-  deleteApprovalCriteria(approvalCriteriaID) {
+  deleteApprovalCriteria(approvalCriteriaID): void {
     if (confirm("Are you sure you'd like to destroy this approval criteria?") == true) {
       this.approvalCriteriaService.deleteApprovalCriteria(approvalCriteriaID).then(result => {
         //alert("Approval criteria successfully destroyed.");

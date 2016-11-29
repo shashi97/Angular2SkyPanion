@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
- import { LocalStorageService } from 'angular2localstorage';
+ import { LocalStorageService } from 'angular-2-local-storage';
  import { Router } from '@angular/router';
  import { ActivatedRoute } from '@angular/router';
 
@@ -15,7 +15,7 @@ import { Component, OnInit } from '@angular/core';
    TableOptions,
    TableColumn,
    ColumnMode
- } from 'angular2datatable';
+ } from 'angular2-data-table';
 
  @Component({
    selector: 'spcompanies',

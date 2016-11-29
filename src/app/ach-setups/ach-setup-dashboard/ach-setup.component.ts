@@ -43,16 +43,19 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
   }
 
 
-  public onCurrentPageChanged(newValue: CurrentPageArguments) {
+  public onCurrentPageChanged(newValue: CurrentPageArguments):void {
     this.currentPageFiltered = newValue;
   }
+  
   private get currentPageFiltered(): CurrentPageArguments {
     return this._currentPage;
   }
+
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
     this.getAchSetups();
   }
+
   private getSessionDetails(): void {
     this.user = this.userService.getSessionDetails();
 
