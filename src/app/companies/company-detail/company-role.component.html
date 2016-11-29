@@ -73,11 +73,12 @@
   <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
 
 </select>-->
-                  <p-dropdown [options]="options" 
-                    [(ngModel)]="selectedCity" 
+                  <p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedViewInvoicesRole" 
                     [filter]="true"
                     [autoWidth]="true"
                     [style]="{'width':'150px'}"
+                    (click)="updateInvoiceRole(selectedViewInvoicesRole, 'view')"
                     ></p-dropdown>
                     
                                             <!--<ui-select
@@ -98,12 +99,19 @@
           <div class="property_attribute">
             <label class="left_align"><b>Process Scanned Pdfs</b></label>
             <span class="right_align">
-                            <select [ngModel]="selectedProcessRole.RoleID"
+                            <!--<select [ngModel]="selectedProcessRole.RoleID"
                              (change)="updateInvoiceRole($event.target.value,'process')"
                             >
   <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
 
-</select>
+</select>-->
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedProcessRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                    (click)="updateInvoiceRole(selectedProcessRole, 'view')"
+                    ></p-dropdown>
                                             <!--<ui-select
                                                 ng-model="selectedProcessRole.selected"
                                                 theme="select2"
@@ -122,12 +130,19 @@
           <div class="property_attribute">
             <label class="left_align"><b>Review Invoices</b></label>
             <span class="right_align">
-                         <select [ngModel]="selectedReviewRole.RoleID"
+                         <!--<select [ngModel]="selectedReviewRole.RoleID"
                           (change)="updateInvoiceRole($event.target.value,'review')"
                           >
   <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
 
-</select>
+</select>-->
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedReviewRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                    (click)="updateInvoiceRole(selectedReviewRole, 'view')"
+                    ></p-dropdown>
                                             <!--<ui-select
                                                 ng-model="selectedReviewRole.selected"
                                                 theme="select2"
@@ -145,11 +160,19 @@
           <div class="property_attribute">
             <label class="left_align"><b>Approve Invoices</b></label>
             <span class="right_align">
-                               <select [ngModel]="selectedApproveRole.RoleID"
+                               <!--<select [ngModel]="selectedApproveRole.RoleID"
                                 (change)="updateInvoiceRole($event.target.value,'approve')">
-  <option *ngFor="let role of roles"  [value]="role.RoleID">{{role.Name}}</option>
+  <option *ngFor="let role of roles"  [value]="role.RoleID">{{role.Name}}</option>-->
 
-</select>
+<!--</select>-->
+
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedApproveRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                    (click)="updateInvoiceRole(selectedApproveRole, 'view')"
+                    ></p-dropdown>
                                             <!--<ui-select
                                                 ng-model="selectedApproveRole.selected"
                                                 theme="select2"
@@ -167,11 +190,21 @@
           <div class="property_attribute">
             <label class="left_align"><b>Batch Invoices</b></label>
             <span class="right_align">
-                                 <select [ngModel]="selectedBatchRole.RoleID"
+                                 <!--<select [ngModel]="selectedBatchRole.RoleID"
                                   (change)="updateInvoiceRole($event.target.value,'batch')">
   <option *ngFor="let role of roles"  [value]="role.RoleID">{{role.Name}}</option>
 
-</select>
+</select>-->
+
+
+
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedBatchRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                    (click)="updateInvoiceRole(selectedBatchRole, 'view')"
+                    ></p-dropdown>
                                             <!--<ui-select
                                                 ng-model="selectedBatchRole.selected"
                                                 theme="select2"
@@ -189,11 +222,21 @@
           <div class="property_attribute">
             <label class="left_align"><b>Delete Invoices</b></label>
             <span class="right_align">
-                        <select [(ngModel)]="selectedDeleteRole.RoleID"
+                        <!--<select [(ngModel)]="selectedDeleteRole.RoleID"
                         (change)="updateInvoiceRole($event.target.value,'delete')">
   <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
 
-</select>
+
+</select>-->
+
+
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedDeleteRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                    (click)="updateInvoiceRole(selectedDeleteRole, 'view')"
+                    ></p-dropdown>
                     
                                             <!--<ui-select
                                                 ng-model="selectedDeleteRole.selected"
@@ -212,11 +255,19 @@
           <div class="property_attribute">
             <label class="left_align"><b>Approver Override</b></label>
             <span class="right_align">
-                               <select [(ngModel)]="selectedApproverRole.RoleID"
+                               <!--<select [(ngModel)]="selectedApproverRole.RoleID"
                                 (change)="updateInvoiceRole($event.target.value,'approver')">
   <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
 
-</select>
+</select>-->
+
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedApproverRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                    (click)="updateInvoiceRole(selectedApproverRole, 'view')"
+                    ></p-dropdown>
            
                                             <!--<ui-select
                                                 ng-model="selectedApproverRole.selected"

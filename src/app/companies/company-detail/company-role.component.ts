@@ -21,13 +21,14 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
   private selectedCity: any;
   private options: Array<any> = [];
   private roles: Array<any> = [];
-  private selectedViewInvoicesRole: RoleModel = new RoleModel();
-  private selectedProcessRole: RoleModel = new RoleModel();
-  private selectedReviewRole: RoleModel = new RoleModel();
-  private selectedApproveRole: RoleModel = new RoleModel();
-  private selectedBatchRole: RoleModel = new RoleModel();
-  private selectedDeleteRole: RoleModel = new RoleModel();
-  private selectedApproverRole: RoleModel = new RoleModel();
+  public selectedViewInvoicesRole: any;
+  public selectedProcessRole: any;
+  public selectedReviewRole: any;
+  public selectedApproveRole: any;
+  public selectedBatchRole: any;
+  public selectedDeleteRole: any;
+  public selectedApproverRole: any
+  ;
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -42,7 +43,7 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.getRoles();
   }
-  private getRoles(): void {
+   private getRoles(): void {
     this.roleService.getRoles().then(result => {
       //  if (result.status === 404) {
       //  } else if (result.status === 500) {
@@ -51,6 +52,14 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
       this.roles = result;
       let defaultRole = { RoleID: 0, AccountID: 0, Name: 'None', Description: 'None' };
       this.roles.splice(0, 0, defaultRole);
+
+      let temp =  this.roles;
+       this.roles = [];
+      temp.map((item: any) => {
+         this.roles.push(
+          { label: item.Name, value: item });
+      });
+
       this.getCompanyDetails();
       //  }
     }).catch(function (params: any) {
@@ -67,26 +76,26 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
     // this.companyService.getCompanyDetails(this.companyId).then(result => {
     //   this.company = result;
     this.roles.map((item) => {
-      if (item.RoleID === this.company.view_invoice_role_id) {
-        this.selectedViewInvoicesRole = item;
+      if (item.value.RoleID === this.company.view_invoice_role_id) {
+        this.selectedViewInvoicesRole = item.value;
       }
-      if (item.RoleID === this.company.create_invoice_role_id) {
-        this.selectedProcessRole = item;
+      if (item.value.RoleID === this.company.create_invoice_role_id) {
+        this.selectedProcessRole = item.value;
       }
-      if (item.RoleID === this.company.review_invoice_role_id) {
-        this.selectedReviewRole = item;
+      if (item.value.RoleID === this.company.review_invoice_role_id) {
+        this.selectedReviewRole = item.value;
       }
-      if (item.RoleID === this.company.approve_invoice_role_id) {
-        this.selectedApproveRole = item;
+      if (item.value.RoleID === this.company.approve_invoice_role_id) {
+        this.selectedApproveRole = item.value;
       }
-      if (item.RoleID === this.company.batch_invoice_role_id) {
-        this.selectedBatchRole = item;
+      if (item.value.RoleID === this.company.batch_invoice_role_id) {
+        this.selectedBatchRole = item.value;
       }
-      if (item.RoleID === this.company.delete_invoice_role_id) {
-        this.selectedDeleteRole = item;
+      if (item.value.RoleID === this.company.delete_invoice_role_id) {
+        this.selectedDeleteRole = item.value;
       }
-      if (item.RoleID === this.company.approver_override_role_id) {
-        this.selectedApproverRole = item;
+      if (item.value.RoleID === this.company.approver_override_role_id) {
+        this.selectedApproverRole = item.value;
       }
     });
     // this.getCompanyChartData('ap_totals');
@@ -100,8 +109,8 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
     // });
   }
 
-  public updateInvoiceRole(roleId: number, key: string): void {
-    this.companyService.updateCompanyInvoiceRole(roleId, key, this.companyId).then((result) => {
+  public updateInvoiceRole(selectedRole: RoleModel, key: string): void {
+    this.companyService.updateCompanyInvoiceRole(selectedRole.RoleID, key, this.companyId).then((result) => {
 
     });
 

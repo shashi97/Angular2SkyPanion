@@ -1,11 +1,11 @@
 <div id="slider" class="page-content">
 
-  <sp-company-title [company]="company"></sp-company-title>
+  <sp-company-title *ngIf="company" [company]="company"></sp-company-title>
   <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
   <div id="panel-advancedoptions">
     <div class="row">
-      <sp-apt-company [companyId]="companyId"></sp-apt-company>
-      <sp-company-role [company]="company"></sp-company-role>
+      <sp-apt-company *ngIf="company" [companyId]="companyId"></sp-apt-company>
+      <sp-company-role *ngIf="company" [company]="company"  [companyId]="companyId"></sp-company-role>
 
     </div>
   </div>

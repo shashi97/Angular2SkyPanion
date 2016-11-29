@@ -72,7 +72,7 @@ import { LedgerAccountDistributionComponent } from './ledger-account/ledger-acco
 import { IniSetupComponent } from './ini-setup/ini-setup.component';
 
 import { JobComponent } from './job/job-dashboard/job.component';
-import { JobDetailComponent } from './job/job-detail/jobDetail.component';
+import { JobDetailComponent } from './job/job-detail/job-detail.component';
 import { JobAttributeComponent } from './job/job-detail/attribute.component';
 import { JobCategoryComponent } from './job/job-detail/category.component';
 
