@@ -1,0 +1,27 @@
+<div id="slider" class="page-content">
+
+    <div class="page-heading">
+        <h1>{{jobDetail.JobDescription}}</h1>
+        <div class="options">
+        </div>
+    </div>
+    <ol class="breadcrumb">
+        <li>
+            <a href="#jobs">All Jobs</a>
+        </li>
+        <li class="active">{{jobDetail.JobDescription}}</li>
+    </ol>
+    <div class="container-fluid">
+
+        <div id="panel-advancedoptions">
+            <div class="row">
+                <div class="col-md-4">
+                    <sp-job-attribute [jobDetail]="jobDetail"></sp-job-attribute>
+                </div>
+                <div class="col-md-8">
+                    <sp-job-category [jobDetail]="jobDetail"></sp-job-category>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
