@@ -1,0 +1,27 @@
+ <div class="page-content">
+ <div class="page-heading" data-ng-show="invoiceID==0">
+            <!--<h1><strong>Proccessing Invoice:</strong> {{invoiceDetail.AttachmentName}}</h1>-->
+            <h1><strong>Proccessing Invoice:</strong> </h1>
+            <div class="options">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dgInvcoiceRemove" data-ng-click="ShowRejectionPopup()">
+                    Invalid/Remove
+                </button>
+
+                <button type="button" class="btn btn-default" data-ng-show="$scope.invoiceDetail.LockedByID == $scope.userID" data-ng-click="checklockingStatusForExit(attachmentBackLink)">
+                    <i class="fa fa-arrow-left"></i>
+                    Back
+                </button>
+
+            </div>
+        </div>
+
+    <ol class="breadcrumb">
+        <!--<li><a href="#accounts/{{account.AccountID}}">{{account.AccountName}}</a></li>-->
+        <li class="active">Uploaded PDFs</li>
+    </ol>
+    <!--<div>Displaying attachments <b>{{pageNumber}}-{{rowsPerPage}}</b> of <b>{{AttachmentCount}}</b> in total</div><br>-->
+   
+
+   <sp-vendor-dropdown></sp-vendor-dropdown> 
+   </div>
+<!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->
