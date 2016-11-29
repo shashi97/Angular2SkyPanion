@@ -10,7 +10,7 @@ import { LedgerAccountComponent } from './ledger-account/ledger-dashboard/ledger
 import { LedgerAccountDetailComponent } from './ledger-account/ledger-account-detail/ledger-account-detail.component';
 import { ApprovalCriteriaComponent } from './approval-criteria/approval-dashboard/approval-criteria.component';
 import { JobComponent } from './job/job-dashboard/job.component';
-import { JobDetailComponent } from './job/job-detail/jobDetail.component';
+import { JobDetailComponent } from './job/job-detail/job-detail.component';
 import { IniSetupComponent } from './ini-setup/ini-setup.component';
 import { AchSetupComponent } from './ach-setups/ach-setup-dashboard/ach-setup.component';
 import { AchSetupDetailComponent } from './ach-setups/ach-setup-detail/ach-setup-detail.component';

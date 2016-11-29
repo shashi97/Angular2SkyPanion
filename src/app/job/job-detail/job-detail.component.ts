@@ -13,7 +13,7 @@ import {SelectItem} from 'primeng/primeng';
 
 @Component({
   selector: 'sp-jobs',
-  templateUrl: './jobDetail.component.html',
+  templateUrl: './job-detail.component.html',
   providers: [JobsService, AccountService ]
 })
 export class JobDetailComponent extends BaseComponent implements OnInit {

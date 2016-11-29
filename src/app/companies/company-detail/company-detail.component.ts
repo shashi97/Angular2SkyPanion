@@ -19,7 +19,9 @@ export class CompanyDetailComponent extends BaseComponent implements OnInit {
 
   private companyId: number;
   private searchParameters: number;
-  private company: CompanyModel = new CompanyModel();
+  
+  // private company: CompanyModel = new CompanyModel();
+  private company: CompanyModel;
   constructor(private route: ActivatedRoute,
     private userService: UserService,
     public localStorageService: LocalStorageService,

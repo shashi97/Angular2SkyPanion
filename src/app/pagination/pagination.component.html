@@ -8,7 +8,7 @@
         <div class="field form-group">
         <pagination 
             *ngIf="totalItems > currentPageFiltered.pageSizeFilter"
-            [(ngModel)]="currentPageFiltered.pageNo" 
+            [ngModel]="currentPageFiltered.pageNo" 
             [boundaryLinks]="true" 
             [totalItems]="totalItems" 
             [itemsPerPage]="currentPageFiltered.pageSizeFilter"

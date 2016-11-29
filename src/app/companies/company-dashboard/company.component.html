@@ -8,6 +8,7 @@
 		</div>
 	</div>
 	<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+	
 	<div class="container-fluid">
 		<div class="col-md-12">
 			<sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
@@ -34,8 +35,8 @@
 						<td><a [ngClass]="{'text-success': item.ActivationLink=='Enable',
 				'text-danger': item.ActivationLink=='Disable'}" (click)="activateDeactiveCompany(item.Name,item.CompanyID,item.Active)">
 				{{item.ActivationLink}}</a>
-						</td>
-						<td><a routerLink="vendorDetail/{{item.VendorID}}">Details</a></td>
+					
+						<td><a routerLink="/companyDetail/{{searchText}}/{{item.CompanyID}}">Details</a></td>
 					</tr>
 				</tbody>
 				<!--<tfoot>
