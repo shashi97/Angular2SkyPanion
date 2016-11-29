@@ -107,6 +107,9 @@ import { InvoiceDetailDistributeComponent } from './invoice/invoice-detail/distr
 import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.component';
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
 
+import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
+
+
 import { AttachmentComponent } from './attachment/attachment.component';
 import {Pagination} from './pagination/directive/pagination.component';
 
@@ -172,7 +175,8 @@ let localStorageServiceConfig = {
     CompanyPathDropdownComponent,
     SyncTypeDropdownComponent,
     InvoiceCheckDetailComponent,
-    VendorFilterComponent
+    VendorFilterComponent,
+    InvoiceEntryComponent
   ],
   imports: [
     BrowserModule,
