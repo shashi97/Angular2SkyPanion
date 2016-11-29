@@ -38,7 +38,7 @@ import { Component, OnInit } from '@angular/core';
    private account: Object;
    private syncID: string= '-1' ;
    private syncTypeID: string= '-1' ;
-   private searchText: any = null;
+   private searchText: string = '';
    private _currentPage: CurrentPageArguments = new CurrentPageArguments();
    private company: CompanyModel;
    private companies: Array<any>;
@@ -109,7 +109,6 @@ import { Component, OnInit } from '@angular/core';
    }
 
    private getCompanies() {
-     this.searchText = ((this.searchText === '') ? null : this.searchText);
      this.companyService
        .getCompanies(this.syncID,
        this.syncTypeID,

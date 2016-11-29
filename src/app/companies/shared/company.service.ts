@@ -15,6 +15,7 @@ export class CompanyService {
         searchText: string,
         pageNumber: number,
         rowsPerPage: number): Promise<any> {
+        searchText = (searchText === '') ? null : searchText;
         return this
             .http
             .get(ApiUrl.baseUrl + 'api/company/'
@@ -51,7 +52,7 @@ export class CompanyService {
     }
 
     public activateDeactiveCompany(companyId: number, isActive: boolean): Promise<any> {
-         return this
+        return this
             .http
             .get(ApiUrl.baseUrl
             + 'api/company/getactivateCompany/'

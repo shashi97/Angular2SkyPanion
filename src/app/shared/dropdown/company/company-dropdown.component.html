@@ -9,5 +9,14 @@
                 <a role="menuitem">{{company.CompanyName}}</a>
             </li>
         </ul>
+
+<!--        
+                  <p-dropdown [options]="companies" 
+                    [(ngModel)]="selectedCompanyName" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                     (ngModelChange)="selectedCompany(filtered.companyId)"
+                    ></p-dropdown>-->
     </div>
 </div>
