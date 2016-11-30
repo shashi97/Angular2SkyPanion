@@ -1,0 +1,29 @@
+  <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2>Purchase Order Attributes</h2>
+                        </div>
+                        <div class="panel-body">
+                            <dl class="dl-horizontal">
+                                <dt>Company</dt>
+                                <dd><a href="#company/{{purchaseOrderDetail.CompanyID}}">{{purchaseOrderDetail.CompanyName}}</a></dd>
+
+                                <dt>Vendor</dt>
+                                <dd><a href="#vendorsDetails/{{purchaseOrderDetail.VendorID}}">{{purchaseOrderDetail.VendorName}}</a></dd>
+
+                                <dt>Description</dt>
+                                <dd>
+                                    {{purchaseOrderDetail.InvoiceDescription}}
+                                </dd>
+
+                                <dt>Dsc Date</dt>
+                                <dd> <span style="color: gray; font-style: italic">{{purchaseOrderDetail.DscDate}}</span></dd>
+
+                                <dt>Dsc Amount</dt>
+                                <dd>${{purchaseOrderDetail.DscAmount}}</dd>
+
+                                <dt>Requested By</dt>
+                                <dd>{{purchaseOrderDetail.RequestedBy}}</dd>
+
+                            </dl>
+                        </div>
+                    </div>

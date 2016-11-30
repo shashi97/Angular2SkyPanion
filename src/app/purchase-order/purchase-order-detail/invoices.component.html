@@ -1,0 +1,25 @@
+  <h4 style="display: inline">Invoices</h4>
+
+                    <div class="clearfix"></div>
+                    <hr>
+                    <br>
+                    <br>
+                    <table id="job_job_categories_table" class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Invoice</th>
+                                <th>Voucher</th>
+                                <th>Company</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr  *ngFor="let invoiceList of purchaseOrderDetail.Invoices">
+                                <td>{{invoiceList.InvoiceNumber}}</td>
+                                <td>{{invoiceList.VoucherNumber}}</td>
+                                <td>{{invoiceList.CompanyName}}</td>
+                                <td>{{invoiceList.Amount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+        
