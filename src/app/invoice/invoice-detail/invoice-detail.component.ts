@@ -63,21 +63,21 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private getSessionDetails() {
+  private getSessionDetails(): void {
     this.user = this.userService.getSessionDetails();
     if (this.user.userId) {
       this.getUserDetails();
     }
   }
 
-  private getUserDetails() {
+  private getUserDetails(): void {
     this.userService.getUserById(this.user.userId).then(result => {
       this.userDetail = result;
       this.getInvoiceId();
     });
   }
 
-  private getInvoiceId() {
+  private getInvoiceId(): void {
 
     let invSearchObject: Object = {
       invoiceId: this.invoiceId,
@@ -97,7 +97,7 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private getInvoiceDetail() {
+  private getInvoiceDetail(): void {
     let roleExistCount: number = 0;
     this.invoiceService.getInvoiceDetail(this.invoiceId, 0, false).then(result => {
 

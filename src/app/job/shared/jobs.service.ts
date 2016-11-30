@@ -21,7 +21,7 @@ export class JobsService {
       )
       .toPromise()
       .then(response => response.json() as JobModel[])
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   public handleError(error: any): Promise<any> {
@@ -42,7 +42,7 @@ export class JobsService {
       )
       .toPromise()
       .then(response => response.json() as JobModel)
-      .catch(this.handleError);
+      .catch(error => error);
 
   }
 

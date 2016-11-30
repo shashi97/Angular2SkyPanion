@@ -23,7 +23,8 @@ export class VendorFilterComponent extends BaseComponent implements OnInit {
   @Input() vendorDetail: VendorModel;
   @Output() filtered: EventEmitter<VendorFilterArguments> = new EventEmitter<VendorFilterArguments>();
   @Input() filteredValue: VendorFilterArguments = new VendorFilterArguments();
-  
+  private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
+
   constructor(
     localStorageService: LocalStorageService,
     router: Router
@@ -32,14 +33,24 @@ export class VendorFilterComponent extends BaseComponent implements OnInit {
     console.log(this.vendorDetail);
   }
 
+
   ngOnInit() {
   }
+
+  private get companyFilteredArg(): CompanyFilterArguments {
+    return this._companyFilteredValue;
+  }
+
+  private set companyFilteredArg(newValue: CompanyFilterArguments) {
+    this._companyFilteredValue = newValue;
+  }
+
   public onCurrentPageChanged(newValue: VendorFilterArguments) {
     this.filteredValue = newValue;
   }
 
   private searchUrl(): void {
-    this.filteredValue.companyId = 1;
+    this.filteredValue.companyId = this._companyFilteredValue.companyId;
     this.filtered.emit(this.filteredValue);
   }
 
@@ -47,6 +58,12 @@ export class VendorFilterComponent extends BaseComponent implements OnInit {
     this.filteredValue.companyId = 0;
     this.filteredValue.vendorKey = '';
     this.filteredValue.vendorName = '';
+    let companyArray = { companyId: 0 };
+    this.companyFilteredArg = companyArray;
     this.filtered.emit(this.filteredValue);
+  }
+
+  public onCompanyFiltered(filteredValue: CompanyFilterArguments): void {
+    this.companyFilteredArg = filteredValue;
   }
 }

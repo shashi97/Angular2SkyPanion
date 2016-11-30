@@ -37,7 +37,7 @@ export class VendorService {
       .toPromise()
       .then(response =>
         response.json() as VendorModel[])
-      .catch(this.handleError);
+       .catch(error => error);
 
   }
 
@@ -54,7 +54,7 @@ export class VendorService {
       .toPromise()
       .then(response =>
         response.json() as VendorModel)
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   getDistinctVendors() {
@@ -63,7 +63,7 @@ export class VendorService {
       .toPromise()
       .then(response =>
         response.json() as VendorModel)
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
 

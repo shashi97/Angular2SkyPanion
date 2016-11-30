@@ -16,7 +16,11 @@ import { AchSetupComponent } from './ach-setups/ach-setup-dashboard/ach-setup.co
 import { AchSetupDetailComponent } from './ach-setups/ach-setup-detail/ach-setup-detail.component';
 import { InvoiceComponent } from './invoice/invoice-dashboard/invoice.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
+<<<<<<< HEAD
 import { SyncBatchEntryComponent } from './sync-batch/sync-batch-entry/sync-batch-entry.component';
+=======
+import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
+>>>>>>> 3a3fc013925993772dcd93606b31c385ef2d12e0
 
 import { AttachmentComponent } from './attachment/attachment.component';
 
@@ -48,15 +52,22 @@ const APP_ROUTES: Routes = [
   { path: 'invoices', component: InvoiceComponent },
   { path: 'invoices/:SearchParameters', component: InvoiceComponent },
   { path: 'invoices/invoiceDetail/:invoiceId', component: InvoiceDetailComponent },
+   
 
   { path: 'purchaseOrder', component: PurchaseOrderComponent },
   { path: 'iniSetup', component: IniSetupComponent },
   { path: 'approvals', component: ApprovalCriteriaComponent },
+<<<<<<< HEAD
   { path: 'approvals/:companyId', component: ApprovalCriteriaComponent },
 
   { path: 'attachments', component: AttachmentComponent },
   { path: 'attachments/:SearchParameters', component: AttachmentComponent },
   { path: 'syncbatcheNew', component: SyncBatchEntryComponent }
+=======
+  
+  { path: 'attachments', component: AttachmentComponent },
+  { path: 'attachments/invoicesNew', component: InvoiceEntryComponent }
+>>>>>>> 3a3fc013925993772dcd93606b31c385ef2d12e0
 
 ];
 

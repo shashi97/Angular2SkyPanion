@@ -1,22 +1,20 @@
 <div class="filter_field_wrap  form-group">
     <div class="btn-group">
-        <a class="btn btn-default" href="#companies">NoneNoneNone</a>
+        <!--<a class="btn btn-default" href="#companies">NoneNoneNone</a>
         <a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
             <span class="caret"></span>
-        </a>
-        <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
+        </a>-->
+        <!--<ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
             <li *ngFor="let company of companies">
                 <a role="menuitem">{{company.CompanyName}}</a>
             </li>
-        </ul>
-
-<!--        
-                  <p-dropdown [options]="companies" 
-                    [(ngModel)]="selectedCompanyName" 
-                    [filter]="true"
-                    [autoWidth]="true"
-                    [style]="{'width':'150px'}"
-                     (ngModelChange)="selectedCompany(filtered.companyId)"
-                    ></p-dropdown>-->
+        </ul>-->                
+        <p-dropdown [options]="companies" 
+          [(ngModel)]="selectedCompanyArray" 
+          [filter]="true"
+          [autoWidth]="true"
+          [style]="{'width':'150px'}"
+          (ngModelChange)="selectedCompany(selectedCompanyArray)"
+          ></p-dropdown>
     </div>
 </div>

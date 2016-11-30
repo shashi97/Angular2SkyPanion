@@ -1,0 +1,272 @@
+<div class="page-content">
+  <div class="page-heading" data-ng-show="invoiceID==0">
+    <!--<h1><strong>Proccessing Invoice:</strong> {{invoiceDetail.AttachmentName}}</h1>-->
+    <h1><strong>Proccessing Invoice:</strong> </h1>
+    <div class="options">
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dgInvcoiceRemove" data-ng-click="ShowRejectionPopup()">
+                    Invalid/Remove
+                </button>
+      <button type="button" class="btn btn-default" data-ng-show="$scope.invoiceDetail.LockedByID == $scope.userID" data-ng-click="checklockingStatusForExit(attachmentBackLink)">
+                    <i class="fa fa-arrow-left"></i>
+                    Back
+                </button>
+    </div>
+  </div>
+  <div id="form_fields" class="col-md-4">
+    <div class="field form-group">
+      <label class="control-label col-md-4" for="invoice_company_id">{{invoiceDetail}}</label>
+      <div class="col-md-4" style="padding-top: 6px">
+        <i ng-class="{'fa fa-book': invoiceDetail=='Skypanion::Fund', 'fa fa-building': invoiceDetail=='Skypanion::Property'}"></i>
+        <a href="#company/{{invoiceDetail}}" tooltip-placement="top" uib-tooltip-html="companyTooltip">
+                                        {{invoiceDetail}}
+                                    </a>
+      </div>
+      <div class="col-md-4 input-group" style="padding: 0 !important;margin: 0 !important;" data-ng-if="invoiceDetail.InvoiceStatusID == 5 && sessionDetails.IsSuperUser == true">
+        <!--<ui-select ng-model="selectedCompany.selected"
+                                               theme="select2"
+                                               style="width:200px"
+                                               data-ng-change="onCompanyDropperChange(selectedCompany.selected.CompanyID , selectedCompany.selected.Number)">
+                                        <ui-select-match placeholder="Select a Company">{{selectedCompany.selected.CompanyName}}</ui-select-match>
+                                        <ui-select-choices repeat="company in companies| filter: $select.search">
+                                            {{company.CompanyName}}
+                                        </ui-select-choices>
+                                    </ui-select>-->
+      </div>
+    </div>
+    <div class="field form-group">
+      <label class="control-label col-md-4" for="invoice_InvoiceNumber">
+                                    Invoice Number
+                                </label>
+      <div class="col-md-8 tooltip-class input-group">
+        <input data-ng-model="invoiceDetail.InvoiceNumber" focus-name="1" class="filtered_field form-control" data-html="true" data-trigger="focus"
+          uib-tooltip="This field only accepts letters, numbers, spaces, and the following grammatical characters: -#&@." id="invoice_InvoiceNumber"
+          data-toggle="tooltip" placeholder="Enter Invoice Number" size="30" title="" type="text" tabindex="1" ng-blur="checkInvoiceNumberExists($event)">
+      </div>
+    </div>
+    <div class="field form-group">
+      <label class="control-label col-md-4">
+                                    PO Number
+                                </label>
+      <div class="col-md-8  input-group">
+        <div class='input-group'>
+          <input type="text" class="filtered_field form-control" focus-name="2" tabindex="2" data-ng-model="poNum" ng-blur="checkPONumber(poNum ,$event)"
+          />
+          <!--<span class="input-group-addon" dropdown-toggle " data-toggle="modal " data-target="#dgPoNumbers ">
+                                          
+                                            <span class="caret "></span>
+                                          
+                                        </span>-->
+        </div>
+      </div>
+    </div>
+    <sp-vendor-dropdown></sp-vendor-dropdown>
+    <div id="vendor_field_wrap " class="form-group ">
+      <label id="vendor_field_label " class="control-label col-md-4 ">
+                                </label>
+      <div class="col-md-8 input-group ">
+        <input id="invoice_vendor_id " type="hidden">
+        <div id="vendor_info_wrap " class="panel panel-default ">
+          <div class="panel-body ">
+            <b>{{invoiceDetail}}</b>
+            <br> {{invoiceDetail}}
+            <br>
+            <i class="icon icon-warning-sign "></i>
+            <span data-ng-show="invoiceDetail.VendorName!=null " class="text-error
+          " style="font-weight: bold ">Ach not configured</span>
+            <br>
+            <a data-ng-show="invoiceDetail!=null " href="#company/{{invoiceDetail}}/invoices/{{invoiceDetail}}
+          " target="_blank ">
+              <i class="fa fa-list-alt "></i><b>Invoice History</b>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="field form-group ">
+      <label class="control-label col-md-4 " for="invoice_InvoiceNumber ">
+                                    Invoice Date
+                                </label>
+      <div class="col-md-8 input-group ">
+        <div class='input-group date' id='datetimepicker_invoiceDate'>
+          <input type='text' class="form-control " focus-name="4 " tabindex="4
+          " data-ng-model="invoiceDate " placeholder="Click to select date " ng-blur="setDueDateByInvoiceDate(invoiceDate) "
+            date-time-picker />
+          <span class="input-group-addon ">
+
+                                         
+                                            <span class="caret "></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="field form-group ">
+      <label class="control-label col-md-4 " for="invoice_Amount ">
+                                    Amount
+                                </label>
+      <div class="col-md-8 input-group ">
+        <div class="input-group ">
+          <span class="input-group-addon ">
+                                            <i class="fa fa-usd "></i>
+                                        </span>
+          <input data-ng-model="invoiceDetail.InvoiceAmount " focus-name="5 " tabindex="5
+          " class="form-control " id="invoice_Amount " placeholder="Enter invoice amount " size="30 " type="text
+          " nks-only-number decimal-upto="2 " ng-blur="processInvAmtToDistribution(invoiceDetail.InvoiceAmount) ">
+        </div>
+      </div>
+    </div>
+    <div class="field form-group ">
+      <label class="control-label col-md-4 " for="invoice_Description ">Description</label>
+      <div class="col-md-8 input-group ">
+        <input data-ng-model="invoiceDetail.Description " focus-name="6 " tabindex="6
+          " class="filtered_field form-control " data-trigger="focus " id="invoice_Description " maxlength="50 " name="invoice[Description]
+          " placeholder="Describe this invoice. " rows="1 " size="50 " title=" " type="text ">
+      </div>
+    </div>
+    <div class="field form-group ">
+      <label class="control-label col-md-4 " for="invoice_InvoiceNumber ">
+                                    Due Date
+                                </label>
+      <div class="col-md-8 input-group ">
+        <div class='input-group date' id='datetimepicker_dueDate'>
+          <input type='text' class="form-control " focus-name="7 " tabindex="7
+          " placeholder="Click to select date " data-ng-model="dueDate " date-time-picker accept=" " ng-blur="setDueDate() "
+          />
+          <span class="input-group-addon ">
+                                            <span class="caret"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+     <sp-invoice-entry-accounts></sp-invoice-entry-accounts>
+      <sp-invoice-entry-distributions></sp-invoice-entry-distributions>
+
+       <div class="field form-group">
+                                <label class="control-label col-md-4" for="invoice_InvoiceNumber">
+                                    Post To GL Date
+                                </label>
+
+                                <div class="col-md-8  input-group">
+
+                                    <div class='input-group date' id='datetimepicker_GLDate'>
+                                        <input type='text' class="form-control" data-ng-model="postGlDate" placeholder="Click to select date" date-time-picker focus-name="12" tabindex="12" ng-blur="setPostToGLDate()" />
+                                        <span class="input-group-addon">
+
+                                            <!--<span class="glyphicon glyphicon-calendar"></span>-->
+                                            <span class="caret"></span>
+                                        </span>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+
+
+
+                            <div>
+                                <div class="field form-group">
+                                    <label class="control-label col-md-4" for="invoice_CashAccount">Cash Account</label>
+                                    <div class="col-md-8" style="margin-top:7px">
+
+                                        <div class="field" data-ng-show="companyData !='Unknown'">
+
+                                            <div class="col-md-12">
+                                                <label>
+                                                    <input type="radio" data-ng-model="Accountbind" value="AcDiscription1" data-ng-show="IsAcc1show">{{companyData}}
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="field" data-ng-show="companyData.CashAccount2Description !='Unknown'">
+
+                                            <div class="col-md-12">
+                                                <label>
+                                                    <input type="radio" data-ng-model="Accountbind" value="AcDiscription2" data-ng-show="IsAcc2show">{{companyData}}
+                                                </label>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="field" data-ng-show="companyData.CashAccount3Description !='Unknown'">
+
+                                            <div class="col-md-12">
+                                                <label>
+                                                    <input type="radio" data-ng-model="Accountbind" value="AcDiscription3" data-ng-show="IsAcc3show">{{companyData}}
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="field" data-ng-show="companyData.CashAccount4Description !='Unknown'">
+
+                                            <div class="col-md-12">
+                                                <label>
+                                                    <input type="radio" data-ng-model="Accountbind" value="AcDiscription4" data-ng-show="IsAcc4show">{{companyData}}
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="field form-group">
+                                <label class="control-label col-md-4" for="invoice_PayUsingAch">Pay Using</label>
+                                <div class="col-md-8 input-group">
+                                    <!--<ui-select ng-model="selectedPaymentMethod.selected"
+                                               theme="select2"
+                                               style="width: 100%"
+                                               data-ng-disabled="selectedPaymentMethod.selected.ID==0">
+                                        <ui-select-match placeholder="Select a Pay Using">{{selectedPaymentMethod}}</ui-select-match>
+                                        <ui-select-choices repeat="payment in paymentMethods| filter: $select.search">
+                                            {{payment}}
+                                        </ui-select-choices>
+                                    </ui-select>-->
+                                </div>
+                            </div>
+
+                            <div class="field form-group">
+                                <label class="control-label col-md-4" for="job_id_Job">Job</label>
+                                <div class="col-md-8 input-group">
+                                    <!--<ui-select ng-model="selectedJob.selected"
+                                               theme="select2"
+                                               focus-name="13" tabindex="13"
+                                               style="width: 100%"
+                                               data-ng-change="getJobCategory(selectedJob.selected.JobID)">
+                                        <ui-select-match placeholder="Select a Job">{{selectedJob}}</ui-select-match>
+                                        <ui-select-choices repeat="job in jobs| filter: $select.search">
+                                            {{job.Description}}
+                                        </ui-select-choices>
+                                    </ui-select>-->
+                                </div>
+                            </div>
+
+                            <div class="field form-group">
+                                <label class="control-label col-md-4" for="job_category_id_Job Category">Job category</label>
+                                <div class="col-md-8 input-group">
+                                    <!--<ui-select ng-model="selectedJobCategory.selected"
+                                               theme="select2"
+                                               focus-name="14" tabindex="14"
+                                               style="width: 100%"
+                                               data-ng-change="SelectJobCategory(selectedJobCategory.selected.JobCategoryID)">
+                                        <ui-select-match placeholder="Select a Job category">{{selectedJobCategory.selected.Category}}</ui-select-match>
+                                        <ui-select-choices repeat="jobCat in jobCategory| filter: $select.search">
+                                            {{jobCat.Category}}
+                                        </ui-select-choices>
+                                    </ui-select>-->
+                                </div>
+                            </div>
+
+                            <div class="field form-group">
+                                <label class="control-label col-md-4" for="invoice_Comment">Notes</label>
+                                <div class="col-md-8 input-group">
+                                    <textarea class="form-control" cols="40" id="invoice_Comment" focus-name="15" tabindex="15" maxlength="250" data-ng-model="invoiceDetail.Comment" placeholder="Enter a note for this invoice." rows="3"></textarea>
+                                    <span class="text-warning">**This field is for SkyPanion only.  It will not be synced with Skyline.</span>
+                                </div>
+                            </div><br>
+    <!--<div>Displaying attachments <b>{{pageNumber}}-{{rowsPerPage}}</b> of <b>{{AttachmentCount}}</b> in total</div><br>-->
+  </div>
+</div>
+<!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->

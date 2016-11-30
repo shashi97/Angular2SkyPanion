@@ -17,12 +17,17 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { ConfirmService } from './shared/services/otherServices/confirmService';
 
+<<<<<<< HEAD
 import {DropdownModule} from 'primeng/primeng';
 /* for pagination */
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 /* for dropdown */
 import {SelectModule} from 'angular2-select';
+=======
+import { DropdownModule } from 'primeng/primeng';
+import { SelectModule } from 'angular2-select';
+>>>>>>> 3a3fc013925993772dcd93606b31c385ef2d12e0
 
 /* bootstrap components start */
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
@@ -110,7 +115,20 @@ import { InvoiceDetailAttributeComponent } from './invoice/invoice-detail/attrib
 import { InvoiceDetailDistributeComponent } from './invoice/invoice-detail/distribution.component';
 import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.component';
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
+<<<<<<< HEAD
 import { AttachmentComponent } from './attachment/attachment.component';
+=======
+
+import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
+import { InvoiceEntryAccountsComponent } from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
+import { InvoiceEntryDistributionsComponent } from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
+import { InvoiceEntryPurchaseComponent } from './invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
+
+
+
+import { AttachmentComponent } from './attachment/attachment.component';
+import { Pagination } from './pagination/directive/pagination.component';
+>>>>>>> 3a3fc013925993772dcd93606b31c385ef2d12e0
 
 /* for sync batch entry */
 import { SyncBatchEntryComponent } from './sync-batch/sync-batch-entry/sync-batch-entry.component';
@@ -119,6 +137,8 @@ let localStorageServiceConfig = {
   prefix: 'my-app',
   storageType: 'localStorage'
 };
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -176,7 +196,16 @@ let localStorageServiceConfig = {
     SyncTypeDropdownComponent,
     InvoiceCheckDetailComponent,
     VendorFilterComponent,
+<<<<<<< HEAD
     SyncBatchEntryComponent
+=======
+    InvoiceEntryComponent,
+    InvoiceEntryAccountsComponent,
+    InvoiceEntryDistributionsComponent,
+    InvoiceEntryPurchaseComponent
+
+
+>>>>>>> 3a3fc013925993772dcd93606b31c385ef2d12e0
   ],
   imports: [
     BrowserModule,

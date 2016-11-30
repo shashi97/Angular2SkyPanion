@@ -1,13 +1,11 @@
 <div class="filter_field_wrap  form-group">
     <div class="btn-group">
-        <a class="btn btn-default" href="#companies">NoneNoneNone</a>
-        <a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
-            <span class="caret"></span>
-        </a>
-        <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-            <li *ngFor="let vendor of vendors">
-                <a role="menuitem">{{vendor.VendorName}}</a>
-            </li>
-        </ul>
+        <p-dropdown [options]="vendors" 
+          [(ngModel)]="selectedVendorArray" 
+          [filter]="true"
+          [autoWidth]="true"
+          [style]="{'width':'150px'}"
+          (ngModelChange)="selectedVendor(selectedVendorArray)"
+          ></p-dropdown>
     </div>
 </div>

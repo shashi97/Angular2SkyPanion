@@ -15,14 +15,14 @@ export class AchSetupService {
       .get(ApiUrl.baseUrl + "api/achsetups/" + pageNumber + "/" + rowsPerPage)
       .toPromise()
       .then(response => response.json())
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   getachSetupDetail(id) {
     return this.http.get(ApiUrl.baseUrl + "api/achsetups/" + id)
       .toPromise()
       .then(response => response.json())
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
 

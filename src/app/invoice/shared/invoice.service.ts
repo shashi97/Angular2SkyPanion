@@ -12,19 +12,8 @@ export class InvoiceService {
 
 
   getInvoices(searchFields) {
-    searchFields = {
-      companyID: 0,
-      currentPage: 1,
-      invFromDate: "",
-      invToDate: "",
-      invoiceDesc: "",
-      invoiceNumber: "",
-      pageSize: 25,
-      statusID: -1,
-      userID: -1,
-      vendorID: 0
-    }
-
+    searchFields.statusId = searchFields.statusId == 0 ? -1 : searchFields.statusId;
+    searchFields.userId = searchFields.userId == 0 ? -1 : searchFields.userId;
     var data = JSON.stringify(searchFields);
     return this.http
       .post(ApiUrl.baseUrl + "api/invoices/PostSearchTogetInvoices", data)
@@ -70,9 +59,24 @@ export class InvoiceService {
       .toPromise()
       .then(response => response.json())
       .catch(error => error);
-    
+
   }
 
+  public submitInvoiceExpedite(invoiceID) {
+    return this.http.get(ApiUrl.baseUrl
+      + "api/invoices/getInvoiceExpedite/" + invoiceID)
+      .toPromise()
+      .then(response => response.json())
+      .catch(error => error);
+  }
+
+
+  public submitInvoiceForApproval(invoiceID) {
+    return this.http.get(ApiUrl.baseUrl + "api/invoices/InvoiceForApproval/" + invoiceID)
+      .toPromise()
+      .then(response => response.json())
+      .catch(error => error);
+  }
 
   public handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

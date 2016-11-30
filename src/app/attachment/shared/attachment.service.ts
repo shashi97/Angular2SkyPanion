@@ -9,17 +9,17 @@ export class AttachmentService {
 
   }
 
-  getAttachments(): Promise<AttachmentObject[]> {
-      var companyID = 0;
-      var status = "all";
-      var pageNumber = 1;
-      var rowsPerPage = 25;
+  getAttachments(companyID:number,status:string,pageNumber:number,rowsPerPage:number): Promise<AttachmentObject[]> {
+      // var companyID = 0;
+      // var status = "all";
+      // var pageNumber = 1;
+      // var rowsPerPage = 25;
     return this
       .http
       .get(ApiUrl.baseUrl + 'api/attachments/' + companyID + "/" + status + "/" + pageNumber + "/" + rowsPerPage)
       .toPromise()
       .then(response => response.json() as AttachmentObject[])
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   private handleError(error: any): Promise<any> {

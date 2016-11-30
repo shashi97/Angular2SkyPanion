@@ -38,7 +38,7 @@ export class CompanyDetailComponent extends BaseComponent implements OnInit {
 
   private getSessionDetails(): void {
     this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
+    if (this.sessionDetails.userId) {
       this.getParameterValue();
     } else {
       let link = ['/login'];

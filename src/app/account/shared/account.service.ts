@@ -11,12 +11,12 @@ export class AccountService {
   constructor(private http: Http) {
 
   }
-  public getAccountName(): Promise<AccountModel> {
+  public getAccountName() {
     return this.http
       .get(ApiUrl.baseUrl + 'api/accounts')
       .toPromise()
-      .then(response => response.json() as AccountModel)
-      .catch(this.handleError);
+      .then(response => response.json())
+      .catch(error => error);
   }
 
   public handleError(error: any): Promise<any> {

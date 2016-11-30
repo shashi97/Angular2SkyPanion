@@ -35,8 +35,6 @@ export class AchSetupDetailComponent extends BaseComponent implements OnInit {
   ngOnInit() {
   }
 
-
-
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
       this.id = params['id'];
@@ -44,9 +42,9 @@ export class AchSetupDetailComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private getSessionDetails() {
+  private getSessionDetails(): void {
     this.user = this.userService.getSessionDetails();
-    if (this.user.userId != null && this.user.IsSuperUser == true) {
+    if (this.user.userId && this.user.IsSuperUser) {
       this.getachSetupDetail();
 
     } else {
@@ -55,7 +53,7 @@ export class AchSetupDetailComponent extends BaseComponent implements OnInit {
     }
   }
 
-  private getachSetupDetail() {
+  private getachSetupDetail(): void {
     this.achSetupService.getachSetupDetail(this.id).then(result => {
       this.achSetupDetail = result;
     });

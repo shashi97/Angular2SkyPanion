@@ -10,24 +10,12 @@ export class IniSetupService {
 
     }
 
-    // getVendorDetail(vendorId, companyId, pageNumber, rowsPerPage): Promise<VendorDetail> {
-    //     return this.http.get(ApiUrl.baseUrl
-    //       + "api/vendor/detail/"
-    //       + vendorId
-    //       + "/" + companyId
-    //       + "/" + pageNumber
-    //       + "/" + rowsPerPage)
-    //       .toPromise()
-    //       .then(response =>
-    //         response.json() as VendorDetail)
-    //       .catch(this.handleError);
-    //   }    
     getIniSetupDetails = function () {
         return this.http.get(ApiUrl.baseUrl + "api/iniSetup")
             .toPromise()
             .then(response =>
                 response.json())
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     public handleError(error: any): Promise<any> {
