@@ -1,0 +1,41 @@
+<div class="form-group">
+	<div id="distributions_panel" class="panel panel-default">
+		<div class="panel-body">
+			<!----here new distribution starts--->
+			<div id="purchase_order_field_wrap" class="">
+				<label id="purchase_order_field_label" class="control-label col-md-12 pull-right">
+					<a data-ng-click="addAccount()" focus-name="8" tabindex="8">
+						<i class="fa fa-plus"></i>Add Account
+					</a>
+				</label>
+			</div>
+			<div>
+				<div id="invoices_index_filters_form" data-ng-show="isAddAccount">
+					<div class="form-group col-md-offset-3 col-md-9" style="margin-left:29%">
+						<div class="input-group">
+							<input type="text" class="form-control ng-pristine ng-untouched ng-valid" focus-me="fcs_AccountNum" data-ng-model="glAccountObject.glAccountNumber"
+                ng-blur="checkglAccountNumber(glAccountObject.glAccountNumber,$event)" id="accountnumDD">
+								<!--<span class="input-group-addon" dropdown-toggle "=" " data-toggle="modal " data-target="#dgAccountNumbers ">
+									<span class="caret "></span>
+								</span>-->
+							</div>
+						</div>
+						<div class="form-group col-md-offset-3 col-md-9 " style="margin-left:29% ">
+							<!--ng-focus="onTextClick($event) "-->
+							<input class="form-control " id="countPerPage " data-ng-model="glAccountObject.glAccountDescription
+                " focus-me="fcs_description ">
+							</div>
+							<div class="form-group col-md-offset-3 col-md-9 " style="margin-left:29% ">
+								<input class="form-control ng-pristine ng-untouched ng-valid
+                " data-ng-model="glAccountObject.glAccountAmount " size="10 " type="text " nks-only-number decimal-upto="2 " focus-name="11
+                " tabindex="11 ">
+								</div>
+								<div class="form-group col-md-offset-3 col-md-9 " style="margin-left:29% ">
+									<button class="btn btn-primary " data-ng-click="addGlAccount() ">Add</button>
+								</div>
+							</div>
+							<!-- end ngIf: isAddAccount -->
+						</div>
+					</div>
+				</div>
+			</div>

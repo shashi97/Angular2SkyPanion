@@ -1,44 +1,75 @@
-<div class="page-content">
-    <div class="page-heading">
-        <h1>invoice-entry-distributions</h1>
-        <div class="options">
+<div id="distributions_panel" class="panel panel-default">
+  <div class="panel-heading">
+    <h2>Distributions</h2>
+  </div>
+  <div class="panel-body panel-no-padding">
+    <table cellspacing="0" cellpadding="0" border="0" id="distributions_table" class="table table-striped table-bordered datatables dataTable no-footer"
+      role="grid" aria-describedby="editable_info">
+      <thead>
+        <tr role="row">
+          <th>GL Account</th>
+          <th>Amount</th>
+          <th>Comment</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="item in invoiceDetail.InvoiceDistributions">
+          <td class="ledger_account_identifier">{{item}}</td>
+          <td class="amount_row">
+            <!--<a href="javascript:void(0)" uib-popover-template="DistAmountPopoverUrl" popover-placement="top" popover-is-open="item.isAmtOpen"
+              ng-click="openPopover($index, 'amount')" style="border-bottom-style: dashed; border-width: 1px;" dist-elem capital="A{{$index}}">{{item.DistributionAmount | currency:"$"  }}</a>-->
+            <script id="DistAmountPopover.html" type="text/ng-template">
 
-            <div class="form-inline" id="filter_form">
-                <div class="filter_field_wrap form-group">
-                    <!--<ui-select ng-model="selectedCompanyFilter.selected"
-                               theme="select2"
-                               style="width: 250px"
-                               data-ng-change="getCompanyID(selectedCompanyFilter.selected.CompanyID)">
-                        <ui-select-match placeholder="Select a Company">
-                            <span>{{selectedCompanyFilter.selected.CompanyName}}</span>
-                            <a class="btn btn-link pull-right"><i class="fa fa-remove transparent" data-ng-click="removeSelectedCompanyItem()"></i></a>
-                        </ui-select-match>
-                        <ui-select-choices repeat="company in companies| filter: $select.search">
-                            {{company.CompanyName}}
-                        </ui-select-choices>
-                    </ui-select>-->
-                </div>
+                                                                <div class="popover-list" style="min-width:200px;max-width:200px;" left="60">
+                                                                    <div class="popover-content" style="padding: 0px; margin: 0px">
+                                                                        <h3 class="popover-title">Enter distribution amount</h3>
+                                                                        <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
+                                                                            <div class="navbar-inner">
+                                                                                <div class="navbar-search navbar-form search_form" action="#" role="search">
+                                                                                    <div class="control-group form-group">
+                                                                                        <div class="editable-input" style="position: relative;">
+                                                                                            <input type="text" class="form-control input-sm" style="padding-right: 24px;"
+                                                                                                   data-ng-model="item.DistributionAmount" dist-close exclude-class="{{$index+255}}" index-no="A{{$index}}" valid-number decimal-upto="2"><span class="editable-clear-x"></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </script>
+          </td>
+          <td class="comment_row">
+            <!--<a href="javascript:void(0)" uib-popover-template="DistCommentPopoverUrl" popover-placement="top" popover-is-open="item.isComOpen"
+              ng-click="openPopover($index, 'comment')" style="border-bottom-style: dashed; border-width: 1px;" dist-comment
+              capital="B{{$index}}"><span>{{item.DistributionComment}}</span></a>-->
+            <script id="DistCommentPopover.html" type="text/ng-template">
 
-                <div class="form-group">
-                    <button class="btn btn-primary" name="commit" type="button" data-ng-click="searchURL()">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                        Filter
-                    </button>
+                                                                <div class="popover-list" id="divDistCommentPopover" style="min-width:200px;max-width:200px;" left="130">
+                                                                    <div class="popover-content" style="padding: 0px; margin: 0px">
+                                                                        <h3 class="popover-title">Enter distribution comment</h3>
+                                                                        <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
+                                                                            <div class="navbar-inner">
+                                                                                <div class="navbar-search navbar-form search_form" action="#" role="search">
+                                                                                    <div class="control-group form-group">
+                                                                                        <div class="editable-input" style="position: relative;">
+                                                                                            <input type="text" class="form-control input-sm" style="padding-right: 24px;" data-ng-model="item.DistributionComment" dist-closemm exclude-class="{{$index+741}}" index-no="B{{$index}}" /><span class="editable-clear-x"></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-                    <button class="btn btn-warning" data-ng-click="searchURLReset()">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                        Reset
-                    </button>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <ol class="breadcrumb">
-        <li><a href="#accounts/{{account.AccountID}}">{{account.AccountName}}</a></li>
-        <li class="active">Uploaded PDFs</li>
-    </ol>
-    
+                                                            </script>
+          </td>
+          <td>
+            <i class="fa fa-times remove_distribution" data-ng-click="removeInvoiceDistributions(item.DistributionID, $index)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
-<!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->

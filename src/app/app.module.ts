@@ -108,6 +108,10 @@ import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
 
 import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
+import { InvoiceEntryAccountsComponent } from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
+import { InvoiceEntryDistributionsComponent } from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
+import { InvoiceEntryPurchaseComponent } from './invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
+
 
 
 import { AttachmentComponent } from './attachment/attachment.component';
@@ -176,7 +180,12 @@ let localStorageServiceConfig = {
     SyncTypeDropdownComponent,
     InvoiceCheckDetailComponent,
     VendorFilterComponent,
-    InvoiceEntryComponent
+    InvoiceEntryComponent,
+    InvoiceEntryAccountsComponent,
+    InvoiceEntryDistributionsComponent,
+    InvoiceEntryPurchaseComponent
+
+
   ],
   imports: [
     BrowserModule,
