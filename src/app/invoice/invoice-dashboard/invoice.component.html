@@ -1,6 +1,9 @@
 <div id="slider" class="page-content">
 
-  <sp-invoice-filter-bar></sp-invoice-filter-bar>
+  <sp-invoice-filter-bar
+  (filteredInvoice)="onFilteredInvoice($event)"
+  [invoiceFilteredValue]="invoiceFilteredValue"
+  ></sp-invoice-filter-bar>
 
   <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
 

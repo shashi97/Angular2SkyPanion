@@ -13,7 +13,6 @@ import { CompanyService } from '../shared/company.service';
 export class AptTotalsComponent extends BaseComponent implements OnInit {
 
   @Input() companyId: number;
-  // private searchParameters: number;
   private companyChartDetail: any;
   private apTotals: boolean = false;
   private diskUsage: boolean = false;
@@ -89,7 +88,7 @@ export class AptTotalsComponent extends BaseComponent implements OnInit {
   };
 
 
-  private setDefaultAptValue(status: string) {
+  private setDefaultAptValue(status: string): void {
 
     switch (status) {
       case 'ap_totals':

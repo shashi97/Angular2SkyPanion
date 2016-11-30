@@ -36,7 +36,7 @@ export class InvoiceDetailInvoiceComponent extends BaseComponent implements OnIn
     this.invoiceArgs.invType = 'pdf';
   }
 
-  private getInvoiceApprovals() {
+  private getInvoiceApprovals(): void {
     this.invoiceArgs.invType = 'approvals';
     this.invoiceService.getInvoiceApprovals(
       this.invoiceArgs.invoiceId,

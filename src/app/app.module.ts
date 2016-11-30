@@ -17,8 +17,8 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { ConfirmService } from './shared/services/otherServices/confirmService';
 
-import {DropdownModule} from 'primeng/primeng';
-import {SelectModule} from 'angular2-select';
+import { DropdownModule } from 'primeng/primeng';
+import { SelectModule } from 'angular2-select';
 
 /* bootstrap components start */
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
@@ -43,7 +43,7 @@ import { AttachmentService } from './attachment/shared/attachment.service';
 
 
 /*pipes */
-	import { OrderByPipe } from './shared/pipe/orderby';
+import { OrderByPipe } from './shared/pipe/orderby';
 
 /* sp-app components */
 import { AppComponent } from './app.component';
@@ -108,13 +108,15 @@ import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
 
 import { AttachmentComponent } from './attachment/attachment.component';
-import {Pagination} from './pagination/directive/pagination.component';
+import { Pagination } from './pagination/directive/pagination.component';
 
 
 let localStorageServiceConfig = {
   prefix: 'my-app',
   storageType: 'localStorage'
 };
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -183,7 +185,8 @@ let localStorageServiceConfig = {
     AlertModule,
     DataTableModule,
     DropdownModule,
-    SelectModule
+    SelectModule,
+    NgbModule.forRoot()
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

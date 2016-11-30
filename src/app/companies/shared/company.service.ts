@@ -26,7 +26,7 @@ export class CompanyService {
             + rowsPerPage)
             .toPromise()
             .then(response => response.json() as any)
-            .catch(this.handleError);
+            .catch(error => error);
 
     }
 
@@ -36,7 +36,7 @@ export class CompanyService {
             .get(ApiUrl.baseUrl + 'api/company/' + companyId)
             .toPromise()
             .then(response => response.json() as CompanyModel)
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     public getCompanyChartData(status: string, companyId: number): Promise<CompanyModel> {
@@ -48,7 +48,7 @@ export class CompanyService {
             + companyId)
             .toPromise()
             .then(response => response.json() as CompanyModel)
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     public activateDeactiveCompany(companyId: number, isActive: boolean): Promise<any> {
@@ -60,7 +60,7 @@ export class CompanyService {
             + isActive)
             .toPromise()
             .then(response => response as any)
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     public updateCompanyInvoiceRole(companyInvoiceRoleId: number, Rkey: string, companyId: number): Promise<string> {
@@ -75,14 +75,14 @@ export class CompanyService {
             + companyId)
             .toPromise()
             .then(response => response.json() as string)
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     public getCompanyDDOs() {
         return this.http.get(ApiUrl.baseUrl
             + 'api/company').toPromise()
             .then(response => response.json() as CompanyModel[])
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     public getCompanyName(companyId) {
@@ -91,7 +91,7 @@ export class CompanyService {
             + companyId)
             .toPromise()
             .then(response => response.json() as CompanyModel[])
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     public handleError(error: any): Promise<any> {

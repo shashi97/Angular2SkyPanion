@@ -18,7 +18,7 @@ export class ApprovalCriteriaService {
       .toPromise()
       .then(response =>
         response.json())
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   deleteApprovalCriteria(approvalCriteriaID) {
@@ -28,7 +28,7 @@ export class ApprovalCriteriaService {
       .toPromise()
       .then(response =>
         response)
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   public handleError(error: any): Promise<any> {

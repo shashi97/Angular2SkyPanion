@@ -33,7 +33,7 @@ export class UserService {
       .get(ApiUrl.baseUrl + 'api/resetpassword/sendmail/', { search: params })
       .toPromise()
       .then(response => response.json())
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   public getSessionDetails(): Object {
@@ -49,7 +49,7 @@ export class UserService {
       .toPromise()
       .then(response =>
         response.json())
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   public getApproverUserDDOs(companyId) {
@@ -58,14 +58,14 @@ export class UserService {
       + companyId)
       .toPromise()
       .then(response => response.json())
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   public getUserDDOs() {
     return this.http.get(ApiUrl.baseUrl + "api/users/list")
       .toPromise()
       .then(response => response.json())
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   getUserById(userID) {
@@ -73,7 +73,7 @@ export class UserService {
       .get(ApiUrl.baseUrl + "api/users/" + userID)
       .toPromise()
       .then(response => response.json())
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
   public handleError(error: any): Promise<any> {

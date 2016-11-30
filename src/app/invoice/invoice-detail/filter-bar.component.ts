@@ -41,7 +41,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
   }
 
 
-  private SubmitInvoiceForApproval(invoice) {
+  private SubmitInvoiceForApproval(invoice): void {
 
     //only make let to avoid error Please give the exact value when you call the service    
     let documentLockingId: number = 0;
@@ -71,7 +71,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
   }
 
 
-  private submitInvoiceExpedite(invoice) {
+  private submitInvoiceExpedite(invoice): void {
 
     //only make let to avoid error Please give the exact value when you call the service    
     let documentLockingId: number = 0;

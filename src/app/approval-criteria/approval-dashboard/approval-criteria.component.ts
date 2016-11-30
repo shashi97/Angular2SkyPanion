@@ -71,20 +71,16 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   private getSessionDetails(): void {
     this.user = this.userService.getSessionDetails();
 
-    if (this.user.userId) {
-      if (this.user.IsSuperUser) {
-        if (this.companyId === 0) {
-          this.getAccountName();
-        }
-        else {
-          this.getCompanyName();
-        }
+    if (this.user.userId && this.user.IsSuperUser) {
+      if (this.companyId === 0) {
+        this.getAccountName();
       }
       else {
-        let link = ['/dashboard'];
-        this.router.navigate(link);
+        this.getCompanyName();
       }
-
+    } else {
+      let link = ['/dashboard'];
+      this.router.navigate(link);
     }
 
   }
@@ -135,7 +131,7 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
       });
   }
 
-  deleteApprovalCriteria(approvalCriteriaID): void {
+  private deleteApprovalCriteria(approvalCriteriaID): void {
     if (confirm("Are you sure you'd like to destroy this approval criteria?") == true) {
       this.approvalCriteriaService.deleteApprovalCriteria(approvalCriteriaID).then(result => {
         //alert("Approval criteria successfully destroyed.");

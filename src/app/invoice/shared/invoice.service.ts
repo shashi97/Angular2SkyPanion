@@ -12,19 +12,8 @@ export class InvoiceService {
 
 
   getInvoices(searchFields) {
-    searchFields = {
-      companyID: 0,
-      currentPage: 1,
-      invFromDate: "",
-      invToDate: "",
-      invoiceDesc: "",
-      invoiceNumber: "",
-      pageSize: 25,
-      statusID: -1,
-      userID: -1,
-      vendorID: 0
-    }
-
+    searchFields.statusId = searchFields.statusId == 0 ? -1 : searchFields.statusId;
+    searchFields.userId = searchFields.userId == 0 ? -1 : searchFields.userId;
     var data = JSON.stringify(searchFields);
     return this.http
       .post(ApiUrl.baseUrl + "api/invoices/PostSearchTogetInvoices", data)

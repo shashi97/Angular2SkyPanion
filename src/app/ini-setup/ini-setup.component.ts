@@ -56,21 +56,21 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
   }
 
   private getUserDDOs(): void {
-    this.userService.getUserDDOs().then((result) => {
+    this.userService.getUserDDOs().then(result => {
       this.userArray = result;
       this.getAccountName();
     });
   }
 
   private getAccountName(): void {
-    this.accountService.getAccountName().then((result) => {
+    this.accountService.getAccountName().then(result => {
       this.account = result;
       this.getRoles();
     });
   }
 
   private getRoles(): void {
-    this.roleService.getRoles().then((result) => {
+    this.roleService.getRoles().then(result => {
       this.roleArray = result;
       // var obj = { RoleID: 0, AccountID: 0, Name: 'All', Description: 'All' }
       // this.roles.splice(0, 0, obj);
@@ -79,7 +79,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
   }
 
   private getIniSetupDetails(): void {
-    this.iniSetupService.getIniSetupDetails().then((result) => {
+    this.iniSetupService.getIniSetupDetails().then(result => {
 
       this.iniSetupModel = new IniSetupModel(result);
 

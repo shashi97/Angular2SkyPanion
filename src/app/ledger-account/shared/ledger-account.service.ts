@@ -32,7 +32,7 @@ export class LedgerAccountService {
             .toPromise()
             .then(response =>
                 response.json())
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     getledgerAccountsDetail(id, companyID) {
@@ -46,7 +46,7 @@ export class LedgerAccountService {
             .toPromise()
             .then(response =>
                 response.json())
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     getledgerAccountDistribution(id, pageNumber, rowsPerPage) {
@@ -62,7 +62,7 @@ export class LedgerAccountService {
             .toPromise()
             .then(response =>
                 response.json())
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     getLedgerAccountDDOsAccountTypeWise(companyId) {
@@ -76,7 +76,7 @@ export class LedgerAccountService {
             .toPromise()
             .then(response =>
                 response.json())
-            .catch(this.handleError);
+            .catch(error => error);
     }
 
     public handleError(error: any): Promise<any> {
