@@ -16,6 +16,7 @@ import { AchSetupComponent } from './ach-setups/ach-setup-dashboard/ach-setup.co
 import { AchSetupDetailComponent } from './ach-setups/ach-setup-detail/ach-setup-detail.component';
 import { InvoiceComponent } from './invoice/invoice-dashboard/invoice.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
+import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
 
 import { AttachmentComponent } from './attachment/attachment.component';
 
@@ -44,12 +45,14 @@ const APP_ROUTES: Routes = [
 
   { path: 'invoices', component: InvoiceComponent },
   { path: 'invoices/invoiceDetail/:invoiceId', component: InvoiceDetailComponent },
+   
 
   { path: 'purchaseOrder', component: PurchaseOrderComponent },
   { path: 'iniSetup', component: IniSetupComponent },
   { path: 'approvals', component: ApprovalCriteriaComponent },
-
-  { path: 'attachments', component: AttachmentComponent }
+  
+  { path: 'attachments', component: AttachmentComponent },
+  { path: 'attachments/invoicesNew', component: InvoiceEntryComponent }
 
 ];
 

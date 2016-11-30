@@ -1,10 +1,36 @@
+
 export class AttachmentObject {
-    attachmentID: number = 0;
-    accountID: number = 0;
-    companyID: number = 0;
-    type: string = '';
+    AttachedTo_id: number = 0;
+    AttachmentCount: number = 0;
+    AttachmentID: number = 0;
+    CompanyID: number = 0;
+    Filesize: number = 0;
+    LockedByID: number = 0;
+    RowNumber: number = 0;
+    UpdatedBy_id: number = 0;
+    account_id: number = 0;
+    rejected_by_id: number = 0;
+    remote_sync_id: number = 0;
+    Active: string = '';
+    AttachedTo_type: string = '';
+    CompanyName: string = '';
+    CompanyNameOnly: string = '';
+    CompanyNumber: string = '';
+    Filename: string = '';
+    Info: string = '';
+    IsLocked: string = '';
+    IsProcessLinkDisbale: string = '';
+    LockedBy: string = '';
+    Name: string = '';
+    RejectedDate: string = '';
+    RejectionMemo: string = '';
     companyName: string = '';
     uploaded: string = '';
-    fileName: string = '';
+    ViewInvoiceLink: string = '';
+    type: string = '';
+
 
 }
+
+
+
