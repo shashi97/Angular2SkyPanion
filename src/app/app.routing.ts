@@ -16,6 +16,7 @@ import { AchSetupComponent } from './ach-setups/ach-setup-dashboard/ach-setup.co
 import { AchSetupDetailComponent } from './ach-setups/ach-setup-detail/ach-setup-detail.component';
 import { InvoiceComponent } from './invoice/invoice-dashboard/invoice.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
+import { SyncBatchEntryComponent } from './sync-batch/sync-batch-entry/sync-batch-entry.component';
 
 import { AttachmentComponent } from './attachment/attachment.component';
 
@@ -34,22 +35,28 @@ const APP_ROUTES: Routes = [
   { path: 'vendor', component: VendorComponent },
   { path: 'vendor/:searchParameters', component: VendorComponent },
   { path: 'vendor/vendorDetail/:vendorId', component: VendorDetailComponent },
-
+  {path:  'company/:companyId/ledgeraccounts/led', component: LedgerAccountComponent},
   { path: 'ledgerAccount', component: LedgerAccountComponent },
   { path: 'ledgerAccount/:searchParameters', component: LedgerAccountComponent },
   { path: 'ledgerAccount/ledgerAccountDetail/:id', component: LedgerAccountDetailComponent },
 
   { path: 'achSetups', component: AchSetupComponent },
   { path: 'achSetups/achSetupDetail/:id', component: AchSetupDetailComponent },
+  { path: 'achSetups/:companyId/achsetups', component: AchSetupDetailComponent },
+
 
   { path: 'invoices', component: InvoiceComponent },
+  { path: 'invoices/:SearchParameters', component: InvoiceComponent },
   { path: 'invoices/invoiceDetail/:invoiceId', component: InvoiceDetailComponent },
 
   { path: 'purchaseOrder', component: PurchaseOrderComponent },
   { path: 'iniSetup', component: IniSetupComponent },
   { path: 'approvals', component: ApprovalCriteriaComponent },
+  { path: 'approvals/:companyId', component: ApprovalCriteriaComponent },
 
-  { path: 'attachments', component: AttachmentComponent }
+  { path: 'attachments', component: AttachmentComponent },
+  { path: 'attachments/:SearchParameters', component: AttachmentComponent },
+  { path: 'syncbatcheNew', component: SyncBatchEntryComponent }
 
 ];
 

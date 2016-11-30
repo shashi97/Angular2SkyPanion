@@ -18,6 +18,10 @@ import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-loc
 import { ConfirmService } from './shared/services/otherServices/confirmService';
 
 import {DropdownModule} from 'primeng/primeng';
+/* for pagination */
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+/* for dropdown */
 import {SelectModule} from 'angular2-select';
 
 /* bootstrap components start */
@@ -43,7 +47,7 @@ import { AttachmentService } from './attachment/shared/attachment.service';
 
 
 /*pipes */
-	import { OrderByPipe } from './shared/pipe/orderby';
+import { OrderByPipe } from './shared/pipe/orderby';
 
 /* sp-app components */
 import { AppComponent } from './app.component';
@@ -106,10 +110,10 @@ import { InvoiceDetailAttributeComponent } from './invoice/invoice-detail/attrib
 import { InvoiceDetailDistributeComponent } from './invoice/invoice-detail/distribution.component';
 import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.component';
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
-
 import { AttachmentComponent } from './attachment/attachment.component';
-import {Pagination} from './pagination/directive/pagination.component';
 
+/* for sync batch entry */
+import { SyncBatchEntryComponent } from './sync-batch/sync-batch-entry/sync-batch-entry.component';
 
 let localStorageServiceConfig = {
   prefix: 'my-app',
@@ -167,12 +171,12 @@ let localStorageServiceConfig = {
     AptTotalsComponent,
     CompanyRoleComponent,
     CompanyTitleComponent,
-    Pagination,
     PagerComponent,
     CompanyPathDropdownComponent,
     SyncTypeDropdownComponent,
     InvoiceCheckDetailComponent,
-    VendorFilterComponent
+    VendorFilterComponent,
+    SyncBatchEntryComponent
   ],
   imports: [
     BrowserModule,
@@ -183,7 +187,8 @@ let localStorageServiceConfig = {
     AlertModule,
     DataTableModule,
     DropdownModule,
-    SelectModule
+    SelectModule,
+    NgbModule.forRoot()
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

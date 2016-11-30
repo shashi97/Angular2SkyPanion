@@ -28,6 +28,7 @@ export class JobComponent extends BaseComponent implements OnInit {
   private jobs: Array<any>;
   private job: JobModel;
   private totalItems: number;
+  page = 4;
   // public currentPage: number = 1;
 
   // public totalItems: number = 200; // total numbar of page not items 

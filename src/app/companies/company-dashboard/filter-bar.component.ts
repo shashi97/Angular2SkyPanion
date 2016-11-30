@@ -7,7 +7,7 @@ import { SyncTypeArgument } from '../../shared/dropdown/sync-type/sync-type.comp
 import { CompanyPathArgument } from '../../shared/dropdown/company-path/company-path.component';
 @Component({
   selector: 'sp-company-filter-bar',
-  templateUrl: './filter-bar.component.html',
+  templateUrl: './filter-bar.component.html'
 })
 export class CompanyFilterComponent extends BaseComponent implements OnInit {
 

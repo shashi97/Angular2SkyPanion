@@ -78,7 +78,7 @@ export class PaginationComponent implements OnChanges {
         if (value !== undefined && value !== null) {
             this.currentPageFiltered.pageSizeFilter = value;
            // this.currentPageFiltered = new CurrentPageArguments();
-         //   this.currentPageFiltered.pageNo = null;
+            this.currentPageFiltered.pageNo = 1;
             this.pageChangeHandler();
         }
     }

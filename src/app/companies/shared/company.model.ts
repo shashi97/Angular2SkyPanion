@@ -51,5 +51,6 @@ export class CompanyModel {
   review_invoice_role_id: number= 0;
   type: string= '';
   view_invoice_role_id: number= 0;
+  status:any;
 }
 

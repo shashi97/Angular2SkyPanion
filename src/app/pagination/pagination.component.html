@@ -6,17 +6,15 @@
     <div class="options" style="padding-top:20px">
       <div class="form-inline text-center">
         <div class="field form-group">
-        <pagination 
-            *ngIf="totalItems > currentPageFiltered.pageSizeFilter"
-            [ngModel]="currentPageFiltered.pageNo" 
-            [boundaryLinks]="true" 
-            [totalItems]="totalItems" 
-            [itemsPerPage]="currentPageFiltered.pageSizeFilter"
-            (pageChanged)="onPageChanged($event)"
-            (click)="pageChangeHandler()"
-            [maxSize]="8"
-            [rotate]=false
-        ></pagination>
+          <ngb-pagination
+          *ngIf="totalItems > currentPageFiltered.pageSizeFilter"
+           [(page)]="currentPageFiltered.pageNo" 
+           [collectionSize]="totalItems" 
+           [pageSize]="currentPageFiltered.pageSizeFilter" 
+           (pageChange)="pageChangeHandler()" 
+           [maxSize]="8" 
+           [boundaryLinks]="true"
+           ngDefaultControl></ngb-pagination>
         </div>
         <div 
              class="field form-group" 

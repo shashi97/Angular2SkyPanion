@@ -383,45 +383,46 @@
           </dl>
 
         </div>
+    
         <div id="tab-1-4" class="tab-pane ">
           <div class="list-group">
-            <a href="#company/{{companyID}}/ledgeraccounts/led" class="list-group-item">
+            <a href="#/company/{{companyId}}/ledgeraccounts/led" class="list-group-item">
               <span class="badge">{{company.LedgerAccountCount}}
                                             </span>
               <i class="fa fa-bank"></i> Ledger Accounts
             </a>
-            <a href="#invoices/{{compSearchParameters}}" class="list-group-item">
+            <a href="#/invoices/null,0,{{companyId}},0,0,null,null" class="list-group-item">
               <span class="badge">{{company.InvoiceCount}}
                                             </span>
               <i class="fa fa-money"></i> Invoices
             </a>
-            <a href="#vendors/{{companyID}}" class="list-group-item">
+            <a href="#/vendor/{{companyId}}" class="list-group-item">
               <span class="badge">{{company.VendorCount}}
                                             </span>
               <i class="fa fa-truck"></i> Vendors
             </a>
-            <a href="#attachments/{{companyID}}" class="list-group-item">
+            <a href="#/attachments/{{companyId}}" class="list-group-item">
               <span class="badge">{{company.PDFCount}}
                                             </span>
               <i class="fa fa-file-pdf-o"></i> Uploaded PDFs
             </a>
-            <a href="#purchaseorders/{{companyID}}" class="list-group-item">
+            <a href="#/purchaseOrder/{{companyId}}" class="list-group-item">
               <span class="badge">{{company.POCount}}
                                             </span>
               <i class="fa fa-tags"></i> Purchase Orders
             </a>
-            <a href="#company/{{companyID}}/fundposts" class="list-group-item" data-ng-show="company.type=='Skypanion::Fund'">
+            <a href="#/company/{{companyId}}/fundposts" class="list-group-item" *ngIf="company.type=='Skypanion::Fund'">
               <span class="badge">{{company.FundCount}}
                                             </span>
               <i class="fa fa-chevron-right"></i> Fund Posts
             </a>
-            <a href="#approvals/{{companyID}}" class="list-group-item">
+            <a href="#/approvals/{{companyId}}" class="list-group-item">
               <span class="badge">{{company.ApprovalCriteriaCount }}
                                             </span>
               <i class="fa fa-thumbs-up"></i> Approval Criteria
             </a>
 
-            <a href="#achsetups/{{companyID}}/achsetups" class="list-group-item">
+            <a href="#/achSetups/{{companyId}}/achsetups" class="list-group-item">
               <span class="badge">
                                                 {{company.AchSetupCount}}
                                             </span>

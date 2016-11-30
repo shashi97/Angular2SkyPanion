@@ -27,8 +27,7 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
   public selectedApproveRole: any;
   public selectedBatchRole: any;
   public selectedDeleteRole: any;
-  public selectedApproverRole: any
-  ;
+  public selectedApproverRole: any;
   constructor(
     localStorageService: LocalStorageService,
     router: Router,

@@ -43,7 +43,7 @@ import { Component, OnInit } from '@angular/core';
    private company: CompanyModel;
    private companies: Array<any>;
    private totalItems: number;
-   private pageName: string = 'companies';
+   private pageName: string = 'Companies';
    public parameterValue: any;
 
    private syncList: Array<any> = [];
