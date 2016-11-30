@@ -13,6 +13,7 @@ import { CompanyService } from '../shared/company.service';
 export class AptTotalsComponent extends BaseComponent implements OnInit {
 
   @Input() companyId: number;
+  // private searchParameters: number;
   private companyChartDetail: any;
   private apTotals: boolean;
   private diskUsage: boolean;
@@ -96,36 +97,4 @@ export class AptTotalsComponent extends BaseComponent implements OnInit {
       }
     });
   };
-<<<<<<< HEAD
-=======
-
-
-  private setDefaultAptValue(status: string): void {
-
-    switch (status) {
-      case 'ap_totals':
-        this.apTotalsNoData = true;
-        this.diskUsageNoData = false;
-        this.syncInfoNoData = false;
-        this.companyChartDetail = '';
-        break;
-      case 'disk_usage':
-        this.apTotalsNoData = false;
-        this.diskUsageNoData = true;
-        this.syncInfoNoData = false;
-        this.companyChartDetail = '';
-        break;
-      case 'disk_usage':
-        this.apTotalsNoData = false;
-        this.diskUsageNoData = false;
-        this.syncInfoNoData = true;
-        this.companyChartDetail = '';
-        break;
-
-      default:
-        break;
-    }
-
-  }
->>>>>>> 3a3fc013925993772dcd93606b31c385ef2d12e0
 }
