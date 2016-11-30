@@ -82,6 +82,9 @@ import { ApprovalFilterComponent } from './approval-criteria/approval-dashboard/
 
 import { PurchaseOrderComponent } from './purchase-order/purchase-order-dashboard/purchase-order.component';
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
+import { PurchaseOrderAttributeComponent } from './purchase-order/purchase-order-detail/attribute.component';
+import { PurchaseOrderInvoicesComponent } from './purchase-order/purchase-order-detail/invoices.component';
+import { PurchaseOrderFilterComponent } from './purchase-order/purchase-order-dashboard/filter-bar.component';
 
 import { AchSetupComponent } from './ach-setups/ach-setup-dashboard/ach-setup.component';
 import { AchSetupDetailComponent } from './ach-setups/ach-setup-detail/ach-setup-detail.component';
@@ -162,6 +165,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     InvoiceDetailInvoiceComponent,
     PurchaseOrderComponent,
     PurchaseOrderDetailComponent,
+    PurchaseOrderAttributeComponent,
+    PurchaseOrderInvoicesComponent,
+    PurchaseOrderFilterComponent,
     JobCategoryComponent,
     IniSetupComponent,
     CompanyDropdownComponent,

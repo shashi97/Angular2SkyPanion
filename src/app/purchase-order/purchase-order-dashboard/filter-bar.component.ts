@@ -16,7 +16,7 @@ export class PurchaseOrderFilterComponent extends BaseComponent implements OnIni
 
   constructor(
     localStorageService: LocalStorageService,
-    router: Router,
+    router: Router
   ) {
     super(localStorageService, router);
   }

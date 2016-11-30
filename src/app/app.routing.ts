@@ -6,6 +6,8 @@ import { CompanyDetailComponent } from './companies/company-detail/company-detai
 import { VendorComponent } from './vendor/vendor-dashboard/vendor.component';
 import { VendorDetailComponent } from './vendor/vendor-detail/vendor-detail.component';
 import { PurchaseOrderComponent } from './purchase-order/purchase-order-dashboard/purchase-order.component';
+import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
+
 import { LedgerAccountComponent } from './ledger-account/ledger-dashboard/ledger-account.component';
 import { LedgerAccountDetailComponent } from './ledger-account/ledger-account-detail/ledger-account-detail.component';
 import { ApprovalCriteriaComponent } from './approval-criteria/approval-dashboard/approval-criteria.component';
@@ -48,6 +50,7 @@ const APP_ROUTES: Routes = [
    
 
   { path: 'purchaseOrder', component: PurchaseOrderComponent },
+  { path: 'purchaseOrder/:purchaseOrderId', component: PurchaseOrderDetailComponent },
   { path: 'iniSetup', component: IniSetupComponent },
   { path: 'approvals', component: ApprovalCriteriaComponent },
   

@@ -1,100 +1,117 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../../base.component';
-import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
-
-import { PurchaseOrderSevice } from '../shared/purchase-order.service';
+import { LocalStorageService } from 'angular-2-local-storage';
+import { MasterService } from '../../shared/services/master/master.service';
 import { AccountService } from '../../account/shared/account.service';
-import { CompanyService } from '../../companies/shared/company.service';
-import { UserService } from '../../user/shared/user.service';
-
-import { AccountModel } from '../../account/shared/account.model';
+import { PurchaseOrderSevice } from '../shared/purchase-order.service';
 import { PurchaseOrderModel } from '../shared/purchase-order.model';
+import { UserService } from '../../user/shared/user.service';
+import {CurrentPageArguments} from '../../pagination/pagination.component';
 
-import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
+import {
+  TableOptions,
+  TableColumn,
+  ColumnMode
+} from 'angular2-data-table';
 
 @Component({
   selector: 'sp-purchase-order',
   templateUrl: './purchase-order.component.html',
+  providers: [PurchaseOrderSevice, AccountService]
 })
 
 export class PurchaseOrderComponent extends BaseComponent implements OnInit {
+  private account: Object;
+  private purchaseOrders: Array<any>;
+  private purchaseOrder: PurchaseOrderModel;
+  private totalItems: number;
+  private pageName: string = 'Purchase Orders';
+  private _currentPage: CurrentPageArguments = new CurrentPageArguments();
 
-  private accountDetail: AccountModel
-  private companyId: number = 0;
-
+  options = new TableOptions({
+    columnMode: ColumnMode.force,
+    headerHeight: 50,
+    footerHeight: 50,
+    rowHeight: 'auto',
+    columns: [
+      new TableColumn({ name: 'Number', prop: 'VendorName' }),
+      new TableColumn({ name: 'Description', prop: 'InvoiceDescription' }),
+      new TableColumn({ name: 'Requested By', prop: 'RequestedBy' }),
+      new TableColumn({ name: '', prop: 'Details' })
+    ]
+  });
 
   constructor(
-    localStorageService: LocalStorageService,
-    router: Router,
-    private purchaseOrderSevice: PurchaseOrderSevice,
     private accountService: AccountService,
-    private companyService: CompanyService,
-    private userService: UserService
+    private userService: UserService,
+    public localStorageService: LocalStorageService,
+    public router: Router,
+    public purchaseOrderSevice: PurchaseOrderSevice,
+    public masterService: MasterService
   ) {
     super(localStorageService, router);
+    this.purchaseOrders = new Array<any>();
+    this.purchaseOrder = new PurchaseOrderModel();
+    this.getItemsPerPageList();
+  }
+  ngOnInit(): void { }
+
+  public pageChanged(event: any): void {
+    // this method will trigger every page click  
+    console.log('Number items per page: ' + event.itemsPerPage);
+  };
+
+  private get currentPageFiltered(): CurrentPageArguments {
+    return this._currentPage;
+  }
+
+  private set currentPageFiltered(newValue: CurrentPageArguments) {
+    this._currentPage = newValue;
+    this.getPurchaseOrders();
+  }
+
+  public onCurrentPageChanged(newValue: CurrentPageArguments) {
+    this.currentPageFiltered = newValue;
+  }
+
+  private getItemsPerPageList() {
     this.getSessionDetails();
   }
 
-  ngOnInit() {
-  }
-
   private getSessionDetails(): void {
-    this.user = this.userService.getSessionDetails();
-    if (this.user.userId && this.user.IsSuperUser) {
-      if (this.companyId == 0) {
-        this.getAccountName();
-      } else {
-        this.getCompanyName();
-      }
+    this.sessionDetails = this.userService.getSessionDetails();
+    if (this.sessionDetails.userId != null) {
+      this.getAccountName();
     } else {
-      let link = ['/dashboard']
+      let link = ['/login'];
       this.router.navigate(link);
     }
   }
 
   private getAccountName(): void {
     this.accountService.getAccountName().then(result => {
-      if (result.status == 404 || result.status == 500) {
-      } else {
-        this.accountDetail = result.data;
-        this.getPurchaseOrders();
-      }
-    });
-  }
-
-  private getCompanyName(): void {
-    this.companyService.getCompanyName(this.companyId).then(result => {
-      if (result.status == 404) {
-        // $scope.gridData = [];
-        // $scope.totalItems = 0;
-        // $scope.companyName = '';
-      } else if (result.status == 500) {
-      } else {
-        this.getPurchaseOrders();
-        // $scope.companyName = result.data.replace(/"/g, '');
-      }
+      this.account = result;
+      this.getPurchaseOrders();
     });
   }
 
   private getPurchaseOrders(): void {
-    // if ($scope.pageSizeFilter) {
-    //   $scope.pageSize = $scope.pageSizeFilter;
-    // }
-
-    // this.purchaseOrderSevice.getPurchaseOrders($scope.companyID, $scope.currentPage, $scope.pageSize)
-    //   .then(result => {
-    //     if (result.status == 404) {
-    //       $scope.gridData = [];
-    //       $scope.totalItems = 0;
-    //     } else if (result.status == 500) {
-    //     } else {
-    //       $scope.gridData = result;
-    //       $scope.totalItems = $scope.gridData[0].TotalCount;
-    //       //$scope.getAccountName();
-    //     }
-    //   });
+    this.purchaseOrderSevice
+      .getPurchaseOrders(this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)
+      .then(result => {
+        if (result.status == 404) {
+          this.purchaseOrders = [];
+          this.totalItems = 0;
+        } else if (result.status == 500) {
+        } else {
+          this.purchaseOrders = result;
+          if (this.purchaseOrders && this.purchaseOrders.length > 0) {
+            this.totalItems = this.purchaseOrders[0].TotalCount;
+          } else {
+            this.totalItems = 0;
+          }
+        }
+      });
   }
-
 }
-
