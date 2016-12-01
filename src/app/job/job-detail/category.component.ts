@@ -20,5 +20,6 @@ export class JobCategoryComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
+      console.log(this.jobDetail);
     }
 }

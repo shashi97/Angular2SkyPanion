@@ -13,7 +13,7 @@
       || invoiceDetail.InvoiceStatusID == 1 
       ||invoiceDetail.InvoiceStatusID == 5 
       ||invoiceDetail.InvoiceStatusID == 2 
-      ||(sessionDetails.IsSuperUser == true && (invoiceDetail.InvoiceStatusID == 4 
+      ||(user.IsSuperUser == true && (invoiceDetail.InvoiceStatusID == 4 
       ||invoiceDetail.InvoiceStatusID == 6)))"
         class="edit_invoice_link btn btn-default remote_href" style="margin-top: 0px;"><i class="fa fa-edit"></i>Edit</a>
 

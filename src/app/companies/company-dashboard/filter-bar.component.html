@@ -1,6 +1,6 @@
 	<div class="filter_field_wrap form-group">
 					<input class="form-control" id="search_filter_param" name="searchstr" placeholder="Enter text to search for." type="text"
-						[(ngModel)]="searchText">
+						[(ngModel)]="filteredValue.searchText">
 				</div>
 				<div class="filter_field_wrap form-group">
 					 <sp-syncType-dropdown
@@ -17,12 +17,12 @@
 				</div>
 
 				<div class="filter_field_wrap form-group">
-					<button class="btn btn-primary" name="commit" type="button" (click)="searchURL()">
+					<button class="btn btn-primary" name="commit" type="button" (click)="searchUrl()">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         Filter
                     </button>
 
-					<button class="btn btn-warning" (click)="searchURLReset()">
+					<button class="btn btn-warning" (click)="searchUrlReset()">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                         Reset
                     </button>

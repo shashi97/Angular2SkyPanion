@@ -89,7 +89,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
         } else {
           this.userService.updateUserDetail(this.loginModel.userName).then((result) => {
             // messageService.hidePleaseWait();
-            let link = ['/company'];
+            let link = ['/company/-1/-1'];
             this.router.navigate(link);
           });
         }

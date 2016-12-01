@@ -21,23 +21,24 @@ import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.
 import { SyncBatchEntryComponent } from './sync-batch/sync-batch-entry/sync-batch-entry.component';
 import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
 import { AttachmentComponent } from './attachment/attachment.component';
+import { SyncBatchComponent } from './sync-batch/sync-batch-dashboard/sync-batch.component';
+import { SyncBatchDetailComponent } from './sync-batch/sync-batch-detail/sync-batch-detail.component';
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-
-  { path: 'company', component: CompanyComponent },
-  { path: 'company/:searchParameters' , component: CompanyComponent  },
+ 
+  { path: 'company/:pageSizeFilter/:searchParameters', component: CompanyComponent },
+  { path: 'companyDetail/:pageSizeFilter/:searchParameters/:companyId', component: CompanyDetailComponent },
   { path: 'companyDetail/:companyId', component: CompanyDetailComponent },
-  { path: 'companyDetail/:SearchParameters/:companyId', component: CompanyDetailComponent },
 
-  { path: 'job', component: JobComponent },
-  { path: 'job/:jobId', component: JobDetailComponent },
+  { path: 'job/:pageSizeFilter', component: JobComponent },
+  { path: 'jobDetail/:jobId', component: JobDetailComponent },
 
-  { path: 'vendor', component: VendorComponent },
-  { path: 'vendor/:searchParameters', component: VendorComponent },
-  { path: 'vendor/vendorDetail/:vendorId', component: VendorDetailComponent },
-  {path:  'company/:companyId/ledgeraccounts/led', component: LedgerAccountComponent},
+  { path: 'vendor/:pageSizeFilter/:searchParameters', component: VendorComponent },
+  { path: 'vendorDetail/:pageSizeFilter/:searchParameters/:vendorId', component: VendorDetailComponent },
+
+  { path: 'company/:companyId/ledgeraccounts/led', component: LedgerAccountComponent },
   { path: 'ledgerAccount', component: LedgerAccountComponent },
   { path: 'ledgerAccount/:searchParameters', component: LedgerAccountComponent },
   { path: 'ledgerAccount/ledgerAccountDetail/:id', component: LedgerAccountDetailComponent },
@@ -48,7 +49,7 @@ const APP_ROUTES: Routes = [
 
   { path: 'invoices', component: InvoiceComponent },
   { path: 'invoices/:SearchParameters', component: InvoiceComponent },
-  { path: 'invoices/invoiceDetail/:invoiceId', component: InvoiceDetailComponent },
+  { path: 'invoiceDetail/:invoiceId', component: InvoiceDetailComponent },
 
   { path: 'purchaseOrder', component: PurchaseOrderComponent },
   { path: 'purchaseOrder/:purchaseOrderId', component: PurchaseOrderDetailComponent },
@@ -59,7 +60,11 @@ const APP_ROUTES: Routes = [
   { path: 'attachments/:SearchParameters', component: AttachmentComponent },
   { path: 'syncbatcheNew', component: SyncBatchEntryComponent },
   { path: 'attachments', component: AttachmentComponent },
-  { path: 'attachments/invoicesNew', component: InvoiceEntryComponent }
+  { path: 'attachments/invoicesNew', component: InvoiceEntryComponent },
+
+  { path: 'syncBatches', component: SyncBatchComponent },
+  { path: 'syncBatches/syncBatchDetail/:syncBatchId', component: SyncBatchDetailComponent }
+
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

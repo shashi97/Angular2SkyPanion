@@ -1,0 +1,24 @@
+<div class="page-content">
+
+  <sp-sync-batch-detail-filter-bar></sp-sync-batch-detail-filter-bar>
+
+  <ol class="breadcrumb">
+    <li>
+      <a href="#syncbatchesList/{{pageSizeFilter}}/{{searchParameters}}">All Sync Batches</a>
+    </li>
+    <li class="active">Batch Details</li>
+  </ol>
+
+  <div class="container-fluid">
+    <div id="panel-advancedoptions">
+      <div class="row">
+
+        <sp-sync-batch-detail-attribute *ngIf="syncBatcheDetail" [syncBatcheDetail]="syncBatcheDetail"></sp-sync-batch-detail-attribute>
+
+        <sp-sync-batch-detail-invoices *ngIf="syncBatcheDetail" [syncBatcheDetail]="syncBatcheDetail"></sp-sync-batch-detail-invoices>
+
+      </div>
+    </div>
+  </div>
+
+</div>

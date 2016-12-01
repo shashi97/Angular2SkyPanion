@@ -49,25 +49,25 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private activatedRoute: ActivatedRoute) {
     super(localStorageService, router);
-    this.getParameterValues();
+    this.getSessionDetails();
   }
 
   ngOnInit() {
+  }
+
+  private getSessionDetails(): void {
+    this.user = this.userService.getSessionDetails();
+    if (this.user.userId) {
+      this.getParameterValues();
+    }
   }
 
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
       this.invoiceId = params['invoiceId'];
       this.invoiceArgs.invoiceId = this.invoiceId;
-      this.getSessionDetails();
-    });
-  }
-
-  private getSessionDetails(): void {
-    this.user = this.userService.getSessionDetails();
-    if (this.user.userId) {
       this.getUserDetails();
-    }
+    });
   }
 
   private getUserDetails(): void {
@@ -92,8 +92,9 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
       if (result.status == 404) {
         this.getInvoiceDetail();
       } else {
+        this.getInvoiceDetail();
       }
-      this.getInvoiceDetail();
+
     });
   }
 

@@ -17,12 +17,12 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { ConfirmService } from './shared/services/otherServices/confirmService';
 
-import {DropdownModule} from 'primeng/primeng';
+import { DropdownModule } from 'primeng/primeng';
 /* for pagination */
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 /* for dropdown */
-import {SelectModule} from 'angular2-select';
+import { SelectModule } from 'angular2-select';
 
 
 
@@ -47,6 +47,7 @@ import { RoleService } from './role/shared/role.service';
 import { AchSetupService } from './ach-setups/shared/ach-setup.service';
 import { InvoiceService } from './invoice/shared/invoice.service';
 import { AttachmentService } from './attachment/shared/attachment.service';
+import { SyncBatchService } from './sync-batch/shared/sync-batch.service';
 
 
 /*pipes */
@@ -117,6 +118,15 @@ import { InvoiceDetailDistributeComponent } from './invoice/invoice-detail/distr
 import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.component';
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
 import { AttachmentComponent } from './attachment/attachment.component';
+
+
+import { SyncBatchComponent } from './sync-batch/sync-batch-dashboard/sync-batch.component';
+import { SyncBatchFilterComponent } from './sync-batch/sync-batch-dashboard/filter-bar.component';
+import { SyncBatchDetailComponent } from './sync-batch/sync-batch-detail/sync-batch-detail.component';
+import { SyncBatchDetailFilterComponent } from './sync-batch/sync-batch-detail/filter-bar.component';
+import { SyncBatchDetailAttributeComponent } from './sync-batch/sync-batch-detail/attribute.component';
+import { SyncBatchDetailInvoiceComponent } from './sync-batch/sync-batch-detail/invoices.component';
+
 
 
 import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
@@ -193,6 +203,12 @@ let localStorageServiceConfig = {
     PagerComponent,
     CompanyPathDropdownComponent,
     SyncTypeDropdownComponent,
+    SyncBatchDetailComponent,
+    SyncBatchFilterComponent,
+    SyncBatchComponent,
+    SyncBatchDetailFilterComponent,
+    SyncBatchDetailAttributeComponent,
+    SyncBatchDetailInvoiceComponent,
     InvoiceCheckDetailComponent,
     VendorFilterComponent,
     SyncBatchEntryComponent,
@@ -231,6 +247,7 @@ let localStorageServiceConfig = {
     AchSetupService,
     CompanyService,
     AttachmentService,
+    SyncBatchService,
     {
       provide: Http,
       useFactory: (xhrBackend: XHRBackend,

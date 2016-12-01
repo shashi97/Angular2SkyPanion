@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { VendorModel } from '../shared/vendor.model';
 import { VendorFilterArguments } from './filter-bar.component';
@@ -14,7 +15,9 @@ import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-
 import { VendorService } from '../shared/vendor.service';
 import { MasterService } from '../../shared/services/master/master.service';
 import { AccountService } from '../../account/shared/account.service';
-import {CurrentPageArguments} from '../../pagination/pagination.component';
+import { UserService } from '../../user/shared/user.service';
+
+import { CurrentPageArguments } from '../../pagination/pagination.component';
 
 @Component({
   selector: 'sp-vendorDetail',
@@ -25,8 +28,8 @@ export class VendorComponent extends BaseComponent implements OnInit {
 
   private account: Object;
   /* Temporary variables */
-  private currentPage: number = 1;
-  private pageSize: number = 25;
+  private searchString: string = '';
+
   private totalItems: number = 0;
   private pageName: string = 'venders';
   private ledgerAccountId: number = null;
@@ -41,50 +44,79 @@ export class VendorComponent extends BaseComponent implements OnInit {
     private masterService: MasterService,
     localStorageService: LocalStorageService,
     router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
+    private location: Location
   ) {
     super(localStorageService, router);
     this.vendors = new Array<VendorModel>();
-    this.getParameterValues();
+    this.getSessionDetails();
   }
 
   ngOnInit() {
   }
+
   private get currentPageFiltered(): CurrentPageArguments {
     return this._currentPage;
   }
+
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
     this.getVendors();
   }
+
   private get filteredValue(): VendorFilterArguments {
     return this._filteredValue;
   }
+
   private set filteredValue(newValue: VendorFilterArguments) {
     this._filteredValue = newValue;
-    this.searchUrl();
+    this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+      + this.filteredValue.companyId + ','
+      + this.filteredValue.vendorKey + ','
+      + this.filteredValue.vendorName;
+    this.getVendors();
   }
 
   public onCurrentPageChanged(newValue: CurrentPageArguments) {
     this.currentPageFiltered = newValue;
   }
 
-  private getParameterValues(): void {
-    this.activatedRoute.params.subscribe(params => {
-      let searchParameters = params['searchParameters'];
-      if (searchParameters) {
-        let parameterArray: Array<string> = searchParameters.split(',');
-        this._filteredValue.companyId = parseInt(parameterArray[0]);
-        this._filteredValue.vendorKey = parameterArray[1];
-        this._filteredValue.vendorName = parameterArray[2];
-      }
-      this.getItemsPerPageList();
-    });
+  private getSessionDetails(): void {
+    this.sessionDetails = this.userService.getSessionDetails();
+    if (this.sessionDetails.userId != null) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
 
-  getItemsPerPageList(): void {
-    // this.itemsPerPageList = this.masterService.getItemsPerPageList();
-    this.getAccountName();
+  private getParameterValues(): void {
+    this.activatedRoute.params.subscribe(params => {
+
+      let parameterValue: any = ((params) ? params : 1);
+      let pageSizeFilter = params['pageSizeFilter'];
+      let searchParameters = params['searchParameters'];
+
+      if (searchParameters != '-1') {
+        let parameterArray: Array<string> = parameterValue.searchParameters.split(',');
+        this.filteredValue.companyId = parseInt(parameterArray[0]);
+        this.filteredValue.vendorKey = parameterArray[1];
+        this.filteredValue.vendorName = parameterArray[2];
+      }
+
+      if (pageSizeFilter != '-1') {
+        this.currentPageFiltered.pageSizeFilter = pageSizeFilter;
+      }
+
+      this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+        + this.filteredValue.companyId + ','
+        + this.filteredValue.vendorKey + ','
+        + this.filteredValue.vendorName;
+
+      this.getAccountName();
+    });
   }
 
   private getAccountName(): void {
@@ -96,15 +128,7 @@ export class VendorComponent extends BaseComponent implements OnInit {
 
   private getVendors() {
 
-    // this.ledgerAccountID = 0;
-    // if ($scope.pageSizeFilter != null) {
-    //   $scope.pageSize = $scope.pageSizeFilter;
-    // }
-    // this.companies.forEach((item) => {
-    //   if (item.CompanyID == this.companyId) {
-    //     // $scope.selectedCompany.selected = item;
-    //   }
-    // });
+    this.location.replaceState('vendor/' + this.searchString);
 
     this.vendorSevice
       .getVendors(
@@ -128,10 +152,10 @@ export class VendorComponent extends BaseComponent implements OnInit {
       });
   }
 
-  private searchUrl(): void {
-    let link = ['/vendor', this._filteredValue.companyId + ',' + this._filteredValue.vendorKey + ',' + this._filteredValue.vendorName];
-    this.router.navigate(link);
-  }
+  // private searchUrl(): void {
+  //   let link = ['/vendor', this._filteredValue.companyId + ',' + this._filteredValue.vendorKey + ',' + this._filteredValue.vendorName];
+  //   this.router.navigate(link);
+  // }
 
   public onFiltered(filteredValue: VendorFilterArguments): void {
     this.filteredValue = filteredValue;

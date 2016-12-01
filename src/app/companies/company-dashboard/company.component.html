@@ -3,7 +3,11 @@
 		<h1>{{pageName}}</h1>
 		<div class="options">
 			<div class="btn-toolbar form-inline">
-				<sp-company-filter-bar></sp-company-filter-bar>
+				<sp-company-filter-bar
+        	(filtered)='onFiltered($event)'
+          [filteredValue]='filteredValue' 
+        >
+        </sp-company-filter-bar>
 			</div>
 		</div>
 	</div>
@@ -15,10 +19,10 @@
 			<table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 				<thead>
 					<tr>
-						<th style="width: 25%">Number</th>
-						<th style="width: 25%">Name</th>
-						<th style="width: 25%">Sync</th>
-						<th style="width: 25%"></th>
+						<th style="width: 20%">Number</th>
+						<th style="width: 40%">Name</th>
+						<th style="width: 20%">Sync</th>
+						<th style="width: 20%"></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -36,7 +40,7 @@
 				'text-danger': item.ActivationLink=='Disable'}" (click)="activateDeactiveCompany(item.Name,item.CompanyID,item.Active)">
 				{{item.ActivationLink}}</a>
 					
-						<td><a routerLink="/companyDetail/{{searchText}}/{{item.CompanyID}}">Details</a></td>
+						<td><a routerLink="/companyDetail/{{searchString}}/{{item.CompanyID}}">Details</a></td>
 					</tr>
 				</tbody>
 				<!--<tfoot>

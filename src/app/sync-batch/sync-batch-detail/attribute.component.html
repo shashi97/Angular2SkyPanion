@@ -1,0 +1,30 @@
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>Sync Batch Attributes</h2>
+    </div>
+    <div class="panel-body">
+      <dl class="dl-horizontal">
+        <dt>Synced</dt>
+        <dd>
+          <span ng-class="{'text-success': syncBatcheDetail.Synced != 'Never Synced', 'text-warning': syncBatcheDetail.Synced == 'Never Synced' }">{{syncBatcheDetail.Synced}}</span>
+        </dd>
+
+        <dt>Account</dt>
+        <dd>
+          <a href="#accounts/{{syncBatcheDetail.AccountID}}">{{syncBatcheDetail.AccountName}}</a>
+        </dd>
+
+        <dt>Created By</dt>
+        <dd>
+          <a href="#user/{{syncBatcheDetail.UserID}}">{{syncBatcheDetail.UserName}}</a>
+        </dd>
+
+        <dt>Comment</dt>
+        <dd>
+          <span style="color: gray;" ng-class="{ 'italic-font': syncBatcheDetail.Comment=='None Supplied' }">{{syncBatcheDetail.Comment}}</span>
+        </dd>
+      </dl>
+    </div>
+  </div>
+</div>

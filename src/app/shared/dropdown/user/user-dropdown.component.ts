@@ -13,7 +13,7 @@ import { UserService } from '../../../user/shared/user.service';
 
 export class UserDropdownComponent extends BaseComponent implements OnInit {
   private users: Array<any> = [];
-  private userName: string = 'Select Clerk';
+  private userName: string = 'Select Creater';
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -32,4 +32,7 @@ export class UserDropdownComponent extends BaseComponent implements OnInit {
     });
   }
 
+  private onSelectUser(selectedUserId) {
+    this.user.UserID = selectedUserId;
+  }
 }

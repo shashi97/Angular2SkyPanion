@@ -8,7 +8,7 @@ import { DashboardService } from '../../../dashboard/shared/dashboard.service';
 
 
 export class CompanyPathArgument {
-    syncTypeID: string = '-1';
+    syncTypeId: string = '-1';
     companyType: string = 'Company Type';
 }
 
@@ -41,7 +41,7 @@ export class CompanyPathDropdownComponent extends BaseComponent implements OnIni
             this.skyPanionTypeList.splice(i, 0, item[i]);
 
             this.skyPanionTypeList.map((skyPanionType) => {
-                if (skyPanionType.ID === this.companyPathFiltered.syncTypeID) {
+                if (skyPanionType.ID === this.companyPathFiltered.syncTypeId) {
                    this.companyPathFiltered.companyType = skyPanionType.Name;
                 }
             });
@@ -51,7 +51,7 @@ export class CompanyPathDropdownComponent extends BaseComponent implements OnIni
     private selectCompanyType(id): void {
         this.skyPanionTypeList.map((skyPanionType) => {
             if (skyPanionType.ID === id) {
-                this.companyPathFiltered.syncTypeID = id;
+                this.companyPathFiltered.syncTypeId = id;
                  this.companyPathFiltered.companyType = skyPanionType.Name;
             }
         });
