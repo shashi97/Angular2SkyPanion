@@ -2,7 +2,7 @@
   <h1>{{invoiceDetail.InvoiceNumber}}</h1>
   <div class="options">
     <div class="btn-toolbar">
-      <div class="invoice_state_message" style="margin-top: -15px;">
+      <div class="invoice_state_message">
         <h4 class="text-danger" [hidden]="invoiceDetail.InvoiceStatusID != 5">Rejected by <a href="#user/{{invoiceDetail.RejectedByID}}">{{invoiceDetail.RejectedBy}}</a></h4>
         <h4 class="text-info" [hidden]="invoiceDetail.InvoiceStatusID != 4">Waiting for upload to Skyline</h4>
         <h4 class="text-warning" [hidden]="invoiceDetail.InvoiceState != 2">Waiting for approval by <a href="#user/{{invoiceDetail.ApproverID}}">{{invoiceDetail.ApproverName}}</a></h4>
@@ -41,7 +41,7 @@
 
 
 
-      <div id="next_last_wrap" class="btn-group pull-right" (disabled)="invoiceIDs == ''">
+      <div id="next_last_wrap" class="btn-group pull-right" (disabled)="invoiceIDs == ''" style="margin-left: 8px;">
         <a (click)="getNextInvoice(invoiceIDs.PreviousInvoiceID)" (disabled)="invoiceIDs.PreviousInvoiceID == invoiceDetail.InvoiceID || invoiceIDs.PreviousInvoiceID == null"
           class="btn btn-default aTooltip" data-html="true"><i class="fa fa-arrow-left"></i></a>
         <a (click)="getNextInvoice(invoiceIDs.NextInvoiceID)" (disabled)="invoiceIDs.NextInvoiceID == invoiceDetail.InvoiceID || invoiceIDs.NextInvoiceID == null"

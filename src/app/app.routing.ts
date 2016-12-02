@@ -27,7 +27,7 @@ import { SyncBatchDetailComponent } from './sync-batch/sync-batch-detail/sync-ba
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
- 
+
   { path: 'company/:pageSizeFilter/:searchParameters', component: CompanyComponent },
   { path: 'companyDetail/:pageSizeFilter/:searchParameters/:companyId', component: CompanyDetailComponent },
   { path: 'companyDetail/:companyId', component: CompanyDetailComponent },
@@ -45,8 +45,8 @@ const APP_ROUTES: Routes = [
   { path: 'achSetups/:pageSizeFilter', component: AchSetupComponent },
   { path: 'achSetupDetail/:pageSizeFilter/:id', component: AchSetupDetailComponent },
 
-  { path: 'invoices/:pageSizeFilter/:SearchParameters', component: InvoiceComponent },
-  { path: 'invoiceDetail/:invoiceId', component: InvoiceDetailComponent },
+  { path: 'invoices/:pageSizeFilter/:searchParameters', component: InvoiceComponent },
+  { path: 'invoiceDetail/:pageSizeFilter/:searchParameters/:invoiceId', component: InvoiceDetailComponent },
 
   { path: 'purchaseOrder', component: PurchaseOrderComponent },
   { path: 'purchaseOrder/:purchaseOrderId', component: PurchaseOrderDetailComponent },
@@ -54,7 +54,7 @@ const APP_ROUTES: Routes = [
   { path: 'approvals', component: ApprovalCriteriaComponent },
   { path: 'approvals/:companyId', component: ApprovalCriteriaComponent },
   { path: 'attachments', component: AttachmentComponent },
-  { path: 'attachments/:SearchParameters', component: AttachmentComponent },
+  { path: 'attachments/:searchParameters', component: AttachmentComponent },
   { path: 'syncbatcheNew', component: SyncBatchEntryComponent },
   { path: 'attachments', component: AttachmentComponent },
   { path: 'attachments/invoicesNew', component: InvoiceEntryComponent },

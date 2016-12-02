@@ -50,7 +50,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
     if (this.user.userId && this.user.IsSuperUser) {
       this.getUserDDOs();
     } else {
-      window.location.href = "/#/dashboard";
+      window.location.href = '/#/dashboard';
     }
   }
 
@@ -83,25 +83,25 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
       this.iniSetupModel = new IniSetupModel(result);
 
       this.roleArray.forEach((item) => {
-        if (item.RoleID == this.iniSetupModel.GlobalPermissions.ProcessScannedRoleID) {
+        if (item.RoleID === this.iniSetupModel.GlobalPermissions.ProcessScannedRoleID) {
           this.selectedProcessScannedRole[0].selected = item;
         }
-        if (item.RoleID == this.iniSetupModel.GlobalPermissions.ReviewInvoiceRoleID) {
+        if (item.RoleID === this.iniSetupModel.GlobalPermissions.ReviewInvoiceRoleID) {
           this.selectedReviewRole[0].selected = item;
         }
-        if (item.RoleID == this.iniSetupModel.GlobalPermissions.ApproveInvoiceRoleID) {
+        if (item.RoleID === this.iniSetupModel.GlobalPermissions.ApproveInvoiceRoleID) {
           this.selectedApproveRole[0].selected = item;
         }
-        if (item.RoleID == this.iniSetupModel.GlobalPermissions.BatchInvoiceRoleID) {
+        if (item.RoleID === this.iniSetupModel.GlobalPermissions.BatchInvoiceRoleID) {
           this.selectedBatchRole[0].selected = item;
         }
-        if (item.RoleID == this.iniSetupModel.GlobalPermissions.DeleteInvoiceRoleID) {
+        if (item.RoleID === this.iniSetupModel.GlobalPermissions.DeleteInvoiceRoleID) {
           this.selectedDeleteRole[0].selected = item;
         }
-        if (item.RoleID == this.iniSetupModel.GlobalPermissions.ApproverOverrideRoleID) {
+        if (item.RoleID === this.iniSetupModel.GlobalPermissions.ApproverOverrideRoleID) {
           this.selectedApproverOverrideRole[0].selected = item;
         }
-        if (item.RoleID == this.iniSetupModel.GlobalPermissions.SyncBatchestoSkylineRoleID) {
+        if (item.RoleID === this.iniSetupModel.GlobalPermissions.SyncBatchestoSkylineRoleID) {
           this.selectedSyncBatchestoSkylineRole[0].selected = item;
         }
       });

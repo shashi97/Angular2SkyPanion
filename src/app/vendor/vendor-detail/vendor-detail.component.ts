@@ -26,13 +26,11 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
   private itemsPerPageList: Array<any>;
   private pageSize: number = 25;
   private pageSizeFilter: number = 25;
-  private currentPage: number = 1;
   private totalItems: number = 0;
   private vendorDetail: VendorModel;
   private vendorId: number = 0;
-  private companyId: number = 0;
   private _filteredValue: VendorFilterArguments = new VendorFilterArguments();
-  
+
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -40,7 +38,6 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
     private masterService: MasterService,
     private vendorService: VendorService) {
     super(localStorageService, router);
-    this.vendorDetail = new VendorModel();
     this.getParameterValues();
   }
 

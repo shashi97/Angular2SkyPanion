@@ -22,5 +22,6 @@ export class VendorDetailAttributeComponent extends BaseComponent implements OnI
     }
 
     ngOnInit() {
+      console.log(this.vendorDetail);
     }
 }
