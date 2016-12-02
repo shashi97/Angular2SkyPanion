@@ -26,7 +26,7 @@ export class SyncBatchFilterComponent extends BaseComponent implements OnInit {
 
   constructor(
     localStorageService: LocalStorageService,
-    router: Router,
+    router: Router
   ) {
     super(localStorageService, router);
   }

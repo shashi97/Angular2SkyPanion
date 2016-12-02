@@ -21,8 +21,15 @@ import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.
 import { SyncBatchEntryComponent } from './sync-batch/sync-batch-entry/sync-batch-entry.component';
 import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
 import { AttachmentComponent } from './attachment/attachment.component';
+
+import { RoleComponent } from './role/role-dashboard/role.component';
+import { RoleViewComponent } from './role/role-view/role-view.component';
+import { RoleEntryComponent } from './role/role-entry/role-entry.component';
+import { CustomModal } from './account/custom-modal';
+
 import { SyncBatchComponent } from './sync-batch/sync-batch-dashboard/sync-batch.component';
 import { SyncBatchDetailComponent } from './sync-batch/sync-batch-detail/sync-batch-detail.component';
+
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -42,6 +49,7 @@ const APP_ROUTES: Routes = [
   { path: 'ledgerAccount/:pageSizeFilter/:searchParameters', component: LedgerAccountComponent },
   { path: 'ledgerAccountDetail/:pageSizeFilter/:searchParameters/:id', component: LedgerAccountDetailComponent },
 
+
   { path: 'achSetups/:pageSizeFilter', component: AchSetupComponent },
   { path: 'achSetupDetail/:pageSizeFilter/:id', component: AchSetupDetailComponent },
 
@@ -50,14 +58,29 @@ const APP_ROUTES: Routes = [
 
   { path: 'purchaseOrder', component: PurchaseOrderComponent },
   { path: 'purchaseOrder/:purchaseOrderId', component: PurchaseOrderDetailComponent },
+
   { path: 'iniSetup', component: IniSetupComponent },
+
   { path: 'approvals', component: ApprovalCriteriaComponent },
   { path: 'approvals/:companyId', component: ApprovalCriteriaComponent },
-  { path: 'attachments', component: AttachmentComponent },
-  { path: 'attachments/:searchParameters', component: AttachmentComponent },
+
   { path: 'syncbatcheNew', component: SyncBatchEntryComponent },
+
   { path: 'attachments', component: AttachmentComponent },
+  { path: 'attachments/:SearchParameters', component: AttachmentComponent },
+
   { path: 'attachments/invoicesNew', component: InvoiceEntryComponent },
+
+  { path: 'syncbatcheNew', component: SyncBatchEntryComponent },
+  { path: 'syncbatcheNew/:SearchParameters/:SyncBatcheID/new', component: SyncBatchEntryComponent },
+
+  { path: 'modal', component: CustomModal},
+
+  { path: 'role', component: RoleComponent},
+  { path: 'role/:SearchParameters', component: RoleComponent},
+  { path: 'roles/:SearchParameters/:RoleId', component: RoleViewComponent},
+  { path: 'roles/:SearchParameters/:roleId/edit', component: RoleEntryComponent },
+
 
   { path: 'syncBatches', component: SyncBatchComponent },
   { path: 'syncBatches/syncBatchDetail/:syncBatchId', component: SyncBatchDetailComponent }

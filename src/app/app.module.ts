@@ -12,6 +12,9 @@ import { HttpInterceptor } from './shared/httpInterceptor';
 import { XHRBackend } from '@angular/http';
 
 import { DataTableModule } from 'angular2-datatable';
+import { ModalModule,DialogRef } from 'angular2-modal';
+import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
+
 import { PaginationComponent } from './pagination/pagination.component';
 
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
@@ -20,6 +23,9 @@ import { ConfirmService } from './shared/services/otherServices/confirmService';
 import { DropdownModule } from 'primeng/primeng';
 /* for pagination */
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+/* for tooltip */
+import {TooltipModule} from "ng2-tooltip";
 
 /* for dropdown */
 import { SelectModule } from 'angular2-select';
@@ -47,7 +53,9 @@ import { RoleService } from './role/shared/role.service';
 import { AchSetupService } from './ach-setups/shared/ach-setup.service';
 import { InvoiceService } from './invoice/shared/invoice.service';
 import { AttachmentService } from './attachment/shared/attachment.service';
+
 import { SyncBatchService } from './sync-batch/shared/sync-batch.service';
+
 
 
 /*pipes */
@@ -140,14 +148,24 @@ import { InvoiceEntryPurchaseComponent } from './invoice/invoice-entry-component
 
 /* for sync batch entry */
 import { SyncBatchEntryComponent } from './sync-batch/sync-batch-entry/sync-batch-entry.component';
+import { ReleaseInvoiceComponent } from './sync-batch/sync-batch-entry/release-invoices.Component';
+import { WaitingInvoiceComponent } from './sync-batch/sync-batch-entry/waiting-invoices.component';
+import { FilterInvoiceComponent } from './sync-batch/sync-batch-entry/filter-invoice.component';
+
+/* for role entry */
+import { RoleComponent } from './role/role-dashboard/role.component';
+
+import { CustomModal } from './account/custom-modal';
+import { RoleViewComponent } from './role/role-view/role-view.component';
+import { RoleMemberComponent } from './role/role-view/role-member.component';
+import { RoleAttributeComponent } from './role/role-view/role-attribute.component';
+import { RoleEntryComponent } from './role/role-entry/role-entry.component';
+import { RoleFilterComponent } from './role/role-dashboard/filter-bar.component';
 
 let localStorageServiceConfig = {
   prefix: 'my-app',
   storageType: 'localStorage'
 };
-
-
-
 
 @NgModule({
 
@@ -218,7 +236,17 @@ let localStorageServiceConfig = {
     InvoiceEntryComponent,
     InvoiceEntryAccountsComponent,
     InvoiceEntryDistributionsComponent,
-    InvoiceEntryPurchaseComponent
+    InvoiceEntryPurchaseComponent,
+    ReleaseInvoiceComponent,
+    WaitingInvoiceComponent,
+    FilterInvoiceComponent,
+    CustomModal,
+    RoleComponent,
+    RoleViewComponent,
+    RoleMemberComponent,
+    RoleAttributeComponent,
+    RoleEntryComponent,
+    RoleFilterComponent
   ],
   imports: [
     BrowserModule,
@@ -230,7 +258,10 @@ let localStorageServiceConfig = {
     DataTableModule,
     DropdownModule,
     SelectModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ModalModule.forRoot(),
+    BootstrapModalModule,
+    TooltipModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

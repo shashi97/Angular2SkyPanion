@@ -1,0 +1,38 @@
+
+
+
+            <div class="page-heading">
+    <!--<sp-filter-invoice-attribute></sp-filter-invoice-attribute>-->
+    
+        <h1>Create Sync Batch</h1>
+        <div class="options">
+            <div class="form-inline" id="invoices_index_filters_form">
+
+                <div class="form-group">
+                    <sp-company-dropdown
+                     [companyFilteredArg]='companyFilteredArg'
+                     (companyFiltered)="onCompanyFiltered($event)"
+                    ></sp-company-dropdown>
+                </div>
+                <sp-user-dropdown
+                  [userFilteredArg]='userFilteredArg'
+                  (userFiltered)="onUserFiltered($event)"
+                ></sp-user-dropdown>
+        <!--(companyFiltered)="onCompanyFiltered($event)"-->
+                <div class="filter_field_wrap form-group">
+                    <button class="btn btn-primary" name="commit" type="button" (click)="searchURL()">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Filter
+                    </button>
+
+                    <button class="btn btn-warning" (click)="searchURLReset()">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                        Reset
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+  
+  </div>

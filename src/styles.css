@@ -7,3 +7,8 @@ body {
   color: #5f7676;
   background-color: #f2f5f7;
 }
+#customcrumb{
+
+  margin: 20px 10px !important;
+    padding: 4px 12px !important;
+}

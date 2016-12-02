@@ -40,6 +40,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
     private roleService: RoleService
   ) {
     super(localStorageService, router);
+    this.getSessionDetails();
   }
 
   ngOnInit() {
@@ -80,10 +81,11 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
   private getIniSetupDetails(): void {
     this.iniSetupService.getIniSetupDetails().then(result => {
 
-      this.iniSetupModel = new IniSetupModel(result);
+      this.iniSetupModel = result;
 
       this.roleArray.forEach((item) => {
         if (item.RoleID === this.iniSetupModel.GlobalPermissions.ProcessScannedRoleID) {
+
           this.selectedProcessScannedRole[0].selected = item;
         }
         if (item.RoleID === this.iniSetupModel.GlobalPermissions.ReviewInvoiceRoleID) {
@@ -107,5 +109,4 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
       });
     });
   }
-
 }

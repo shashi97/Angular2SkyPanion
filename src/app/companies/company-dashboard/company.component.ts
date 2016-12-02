@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
-import { CompanyModel } from '../shared/company.model';
-
 import { CompanyService } from '../shared/company.service';
 import { ConfirmService } from '../../shared/services/otherServices/confirmService';
 import { AccountService } from '../../account/shared/account.service';
@@ -220,3 +218,4 @@ export class CompanyComponent extends BaseComponent implements OnInit {
     this.currentPageFiltered = newValue;
   }
 }
+
