@@ -51,12 +51,11 @@ export class LoginComponent extends BaseComponent implements OnInit {
     // messageService.showPleaseWait();
     this.userService.sendResetPasswordEmail(this.loginModel.email).then((result) => {
       // messageService.hidePleaseWait();
-      if (result.status == 404 || result.status == 500) {
+      if (result.status === 404 || result.status === 500) {
         this.message = 'Email not found, Please enter correct email';
-      }
-      else {
-        // alert("Reset Password link successfully send to your email " + $scope.email);
-        // messageService.showMsgBox("Success", "Reset Password link successfully send to your email " + this.loginModel.email, "success");
+      } else {
+        // alert('Reset Password link successfully send to your email ' + $scope.email);
+        // messageService.showMsgBox('Success', 'Reset Password link successfully send to your email ' + this.loginModel.email, 'success');
 
         this.loginAccount();
       }
@@ -70,18 +69,22 @@ export class LoginComponent extends BaseComponent implements OnInit {
       // console.log(self.loginModel);
       if (this.loginModel.useRefreshTokens) {
         this.localStorageService.set('authorization', 'Bearer ' + response.access_token);
-        //this.localStorageService.set('authorization', { token: response.access_token, userName: this.loginModel.userName, refreshToken: response.refresh_token, useRefreshTokens: true, IsResetPasswordRequired: JSON.parse(response.IsResetPasswordRequired) });
-        this.localStorageService.set('sessionData', { AccountID: response.AccountID, ImageName: response.ImageName, IsSuperUser: JSON.parse(response.IsSuperUser), userId: (response.userId), Name: response.Name, userName: response.userName, IsResetPasswordRequired: JSON.parse(response.IsResetPasswordRequired) });
-      }
-      else {
+        this.localStorageService.set('sessionData',
+          {
+            AccountID: response.AccountID, ImageName: response.ImageName,
+            IsSuperUser: JSON.parse(response.IsSuperUser), userId: (response.userId),
+            Name: response.Name, userName: response.userName,
+            IsResetPasswordRequired: JSON.parse(response.IsResetPasswordRequired)
+          });
+      } else {
         this.localStorageService.set('authorization', 'Bearer ' + response.access_token);
-        //this.localStorageService.set('authorization', { token: response.access_token, userName: this.loginModel.userName, refreshToken: "", useRefreshTokens: false, isResetPasswordRequired: response.isResetPasswordRequired });
-        this.localStorageService.set('sessionData', { AccountID: "", ImageName: "", IsSuperUser: "", userId: "", Name: "", userName: "" });
+        this.localStorageService.set('sessionData',
+          { AccountID: '', ImageName: '', IsSuperUser: '', userId: '', Name: '', userName: '' });
       }
 
       this.sessionDetails = this.userService.getSessionDetails();
-      if (this.sessionDetails.userId != null && this.sessionDetails.userId != undefined) {
-        if (this.sessionDetails.IsResetPasswordRequired == true) {
+      if (this.sessionDetails.userId != null && this.sessionDetails.userId !== undefined) {
+        if (this.sessionDetails.IsResetPasswordRequired === true) {
           // messageService.hidePleaseWait();
           let link = ['/resetpassword'];
           this.router.navigate(link);
@@ -99,7 +102,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
         // messageService.hidePleaseWait();
         this.message = err.error_description;
 
-        if (this.message == undefined) {
+        if (this.message === undefined) {
           this.message = 'Login failed for this user';
         }
       });

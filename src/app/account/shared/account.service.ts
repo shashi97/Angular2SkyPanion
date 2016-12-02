@@ -1,7 +1,6 @@
 
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
-import { AccountModel } from './account.model';
 
 import { ApiUrl } from '../../config.component';
 import 'Rxjs/Rx';

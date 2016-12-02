@@ -24,7 +24,6 @@ export class CompanyFilterComponent extends BaseComponent implements OnInit {
   @Output() filtered: EventEmitter<CompanyFilterArguments> = new EventEmitter<CompanyFilterArguments>();
   @Input() filteredValue: CompanyFilterArguments = new CompanyFilterArguments();
 
-  private searchText: any = null;
   private _syncType: SyncTypeArgument = new SyncTypeArgument();
   private _companyPath: CompanyPathArgument = new CompanyPathArgument();
 

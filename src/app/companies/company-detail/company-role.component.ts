@@ -18,8 +18,6 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
   @Input() companyId: number;
   @Input() company: CompanyModel;
   private roleModel: RoleModel;
-  private selectedCity: any;
-  private options: Array<any> = [];
   private roles: Array<any> = [];
   public selectedViewInvoicesRole: any;
   public selectedProcessRole: any;

@@ -6,20 +6,20 @@ import { Router } from '@angular/router';
 import { JobModel } from '.././shared/job.model';
 
 @Component({
-    selector: 'sp-job-category',
-    templateUrl: './category.component.html',
+  selector: 'sp-job-category',
+  templateUrl: './category.component.html',
 })
 
 export class JobCategoryComponent extends BaseComponent implements OnInit {
-    @Input() jobDetail:JobModel;
-    constructor(
-        localStorageService: LocalStorageService,
-        router: Router
-    ) {
-        super(localStorageService, router);
-    }
+  @Input() jobDetail: JobModel;
+  constructor(
+    localStorageService: LocalStorageService,
+    router: Router
+  ) {
+    super(localStorageService, router);
+  }
 
-    ngOnInit() {
-      console.log(this.jobDetail);
-    }
+  ngOnInit() {
+    console.log(this.jobDetail);
+  }
 }

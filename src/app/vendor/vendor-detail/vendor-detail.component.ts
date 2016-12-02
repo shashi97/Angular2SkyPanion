@@ -58,7 +58,6 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
       this.vendorId = params['vendorId'];
-      let searchParameters = params['searchParameters'];
       this.getItemsPerPageList();
     });
   }
@@ -77,7 +76,7 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
       if (this.vendorDetail.VendorInvoices.length > 0) {
         this.totalItems = this.vendorDetail.VendorInvoices[0].TotalCount;
       }
-      if (this.vendorDetail.glAccount.AccountTitle == "" || this.vendorDetail.glAccount.AccountTitle == null) {
+      if (this.vendorDetail.glAccount.AccountTitle === '' || this.vendorDetail.glAccount.AccountTitle == null) {
         this.vendorDetail.glAccount.AccountTitle = 'Unknown';
       }
     });

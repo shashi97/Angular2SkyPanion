@@ -67,7 +67,6 @@ export class CompanyComponent extends BaseComponent implements OnInit {
       + this.filteredValue.searchText + ','
       + this.filteredValue.syncId + ','
       + this.filteredValue.syncTypeId;
-    
     this.getCompanies();
   }
 
@@ -96,14 +95,14 @@ export class CompanyComponent extends BaseComponent implements OnInit {
       let pageSizeFilter = params['pageSizeFilter'];
       let searchParameters = params['searchParameters'];
 
-      if (searchParameters != '-1') {
+      if (searchParameters !== '-1') {
         let parameterArray: Array<string> = parameterValue.searchParameters.split(',');
         this.filteredValue.searchText = parameterArray[0];
         this.filteredValue.syncId = parameterArray[1];
         this.filteredValue.syncTypeId = parameterArray[2];
       }
 
-      if (pageSizeFilter != '-1') {
+      if (pageSizeFilter !== '-1') {
         this.currentPageFiltered.pageSizeFilter = pageSizeFilter;
       }
 

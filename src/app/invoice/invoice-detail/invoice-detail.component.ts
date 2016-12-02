@@ -89,7 +89,7 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
     }
 
     this.invoiceService.getInvoiceId(invSearchObject).then(result => {
-      if (result.status == 404) {
+      if (result.status === 404) {
         this.getInvoiceDetail();
       } else {
         this.getInvoiceDetail();
@@ -110,40 +110,41 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
         this.invoiceDetail.docType = 10;
       }
 
-      // this.pdfsrc1 = apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber + '/' + this.invoiceDetail.AttachmentName;
+      // this.pdfsrc1 = apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber +
+      // '/' + this.invoiceDetail.AttachmentName;
       // this.pdfsrc = $sce.trustAsResourceUrl(this.pdfsrc1);
 
       if (this.invoiceDetail.InvoiceStatusID == 0) {
         this.invoiceArgs.invType = 'duplicates';
       }
 
-      this.companiesService.getCompanyDetail(this.invoiceDetail.CompanyID).then(result => {
+      this.companiesService.getCompanyDetail(this.invoiceDetail.CompanyID).then(response => {
 
-        this.companyDetail = result;
+        this.companyDetail = response;
 
         let link = ['/company'];
-        if (this.user.IsSuperUser == false && this.companyDetail.view_invoice_role_id != 0) {
+        if (this.user.IsSuperUser === false && this.companyDetail.view_invoice_role_id !== 0) {
           if (this.userDetail.selectedRoles.length > 0) {
             this.userDetail.selectedRoles.forEach(element => {
-              if (this.companyDetail.view_invoice_role_id == element.RoleID) {
+              if (this.companyDetail.view_invoice_role_id === element.RoleID) {
                 roleExistCount = roleExistCount + 1;
               }
             });
           } else {
             this.router.navigate(link);
           }
-          if (roleExistCount == 0) {
+          if (roleExistCount === 0) {
             this.router.navigate(link);
           }
         }
 
         let invSearchData = { invoiceNumber: this.invoiceDetail.InvoiceNumber, CompanyId: this.invoiceDetail.CompanyID };
 
-        this.invoiceService.getInvoicesCheckDetailsByInvoiceNumber(invSearchData).then(result => {
-          if (result.status == 404) {
-          } else if (result.status == 500) {
+        this.invoiceService.getInvoicesCheckDetailsByInvoiceNumber(invSearchData).then(res => {
+          if (res.status === 404) {
+          } else if (res.status === 500) {
           } else {
-            this.checkDetails = result;
+            this.checkDetails = res;
           }
         });
       });

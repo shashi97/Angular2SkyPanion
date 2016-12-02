@@ -11,7 +11,7 @@ export class DashboardService {
     }
 
     getSkypanionsCompanies() {
-        return this.http.get(ApiUrl.baseUrl + "api/dashboard/skypanionsCompanies")
+        return this.http.get(ApiUrl.baseUrl + 'api/dashboard/skypanionsCompanies')
             .toPromise()
             .then(response =>
                 response.json())

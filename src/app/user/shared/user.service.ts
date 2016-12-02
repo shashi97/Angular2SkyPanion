@@ -11,20 +11,21 @@ import { LocalStorageService } from 'angular-2-local-storage';
 
 export class UserService {
 
-
+  sessionData: Object;
   constructor(private http: Http,
     public localStorageService: LocalStorageService) {
+    this.sessionData = {
+      IsResetPasswordRequired: false,
+      IsSuperUser: false,
+      ImageName: '',
+      Name: '',
+      userName: '',
+      AccountID: 0,
+      userId: 0
+    };
   }
 
-  sessionData: Object = {
-    IsResetPasswordRequired: false,
-    IsSuperUser: false,
-    ImageName: '',
-    Name: '',
-    userName: '',
-    AccountID: 0,
-    userId: 0
-  };
+
 
   public sendResetPasswordEmail(email: string) {
     let params: URLSearchParams = new URLSearchParams();
@@ -43,7 +44,7 @@ export class UserService {
 
   public updateUserDetail(userName: string) {
     // let params: URLSearchParams = new URLSearchParams();
-    //params.set('userName', userName);
+    // params.set('userName', userName);
     return this.http
       .post(ApiUrl.baseUrl + 'api/users/updatelogin/' + userName, {})
       .toPromise()
@@ -54,7 +55,7 @@ export class UserService {
 
   public getApproverUserDDOs(companyId) {
     return this.http.get(ApiUrl.baseUrl
-      + "api/users/companyApproverList/"
+      + 'api/users/companyApproverList/'
       + companyId)
       .toPromise()
       .then(response => response.json())
@@ -62,7 +63,7 @@ export class UserService {
   }
 
   public getUserDDOs() {
-    return this.http.get(ApiUrl.baseUrl + "api/users/list")
+    return this.http.get(ApiUrl.baseUrl + 'api/users/list')
       .toPromise()
       .then(response => response.json())
       .catch(error => error);
@@ -70,7 +71,7 @@ export class UserService {
 
   getUserById(userID) {
     return this.http
-      .get(ApiUrl.baseUrl + "api/users/" + userID)
+      .get(ApiUrl.baseUrl + 'api/users/' + userID)
       .toPromise()
       .then(response => response.json())
       .catch(error => error);
@@ -80,4 +81,4 @@ export class UserService {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
-}  
+}

@@ -37,18 +37,15 @@ const APP_ROUTES: Routes = [
 
   { path: 'vendor/:pageSizeFilter/:searchParameters', component: VendorComponent },
   { path: 'vendorDetail/:pageSizeFilter/:searchParameters/:vendorId', component: VendorDetailComponent },
+  { path: 'vendorDetail/:vendorId', component: VendorDetailComponent },
 
-  { path: 'company/:companyId/ledgeraccounts/led', component: LedgerAccountComponent },
-  { path: 'ledgerAccount', component: LedgerAccountComponent },
-  { path: 'ledgerAccount/:searchParameters', component: LedgerAccountComponent },
-  { path: 'ledgerAccount/ledgerAccountDetail/:id', component: LedgerAccountDetailComponent },
+  { path: 'ledgerAccount/:pageSizeFilter/:searchParameters', component: LedgerAccountComponent },
+  { path: 'ledgerAccountDetail/:pageSizeFilter/:searchParameters/:id', component: LedgerAccountDetailComponent },
 
-  { path: 'achSetups', component: AchSetupComponent },
-  { path: 'achSetups/achSetupDetail/:id', component: AchSetupDetailComponent },
-  { path: 'achSetups/:companyId/achsetups', component: AchSetupDetailComponent },
+  { path: 'achSetups/:pageSizeFilter', component: AchSetupComponent },
+  { path: 'achSetupDetail/:pageSizeFilter/:id', component: AchSetupDetailComponent },
 
-  { path: 'invoices', component: InvoiceComponent },
-  { path: 'invoices/:SearchParameters', component: InvoiceComponent },
+  { path: 'invoices/:pageSizeFilter/:SearchParameters', component: InvoiceComponent },
   { path: 'invoiceDetail/:invoiceId', component: InvoiceDetailComponent },
 
   { path: 'purchaseOrder', component: PurchaseOrderComponent },

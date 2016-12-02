@@ -6,19 +6,12 @@ import { Location } from '@angular/common';
 
 import { MasterService } from '../../shared/services/master/master.service';
 import { AccountService } from '../../account/shared/account.service';
-// import { AccountModel} from '../../account/shared/account.model';
 import { JobsService } from '.././shared/jobs.service';
 import { JobModel } from '.././shared/job.model';
 import { UserService } from '../../user/shared/user.service';
 import { BaseComponent } from '../../base.component';
 import { CurrentPageArguments } from '../../pagination/pagination.component';
 
-
-import {
-  TableOptions,
-  TableColumn,
-  ColumnMode
-} from 'angular2-data-table';
 
 @Component({
   selector: 'sp-jobs',
@@ -77,10 +70,9 @@ export class JobComponent extends BaseComponent implements OnInit {
 
   private getParameterValues(): void {
     this.route.params.subscribe(params => {
-      let parameterValue: any = ((params) ? params : 1);
       let pageSizeFilter = params['pageSizeFilter'];
 
-      if (pageSizeFilter != '-1') {
+      if (pageSizeFilter !== '-1') {
         this.currentPageFiltered.pageSizeFilter = pageSizeFilter;
       }
       this.getAccountName();
@@ -100,10 +92,10 @@ export class JobComponent extends BaseComponent implements OnInit {
     this.jobsService
       .getJobs(this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)
       .then(result => {
-        if (result.status == 404) {
+        if (result.status === 404) {
           this.jobs = [];
           this.totalItems = 0;
-        } else if (result.status == 500) {
+        } else if (result.status === 500) {
         } else {
           this.jobs = result;
           if (this.jobs && this.jobs.length > 0) {

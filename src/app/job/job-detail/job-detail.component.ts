@@ -4,12 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 
 import { AccountService } from '../../account/shared/account.service';
-import { AccountModel } from '../../account/shared/account.model';
 import { JobsService } from '.././shared/jobs.service';
 import { JobModel } from '.././shared/job.model';
 import { UserService } from '../../user/shared/user.service';
 import { BaseComponent } from '../../base.component';
-import {SelectItem} from 'primeng/primeng';
+
 
 @Component({
   selector: 'sp-jobs',

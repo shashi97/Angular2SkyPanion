@@ -72,10 +72,12 @@ import { VendorDetailAttributeComponent } from './vendor/vendor-detail/attribute
 import { VendorDetailInvoiceComponent } from './vendor/vendor-detail/invoice.component';
 
 import { LedgerAccountComponent } from './ledger-account/ledger-dashboard/ledger-account.component';
+import { LedgerAccountFilterComponent } from './ledger-account/ledger-dashboard/filter-bar.component';
 import { LedgerAccountDetailComponent } from './ledger-account/ledger-account-detail/ledger-account-detail.component';
 import { LedgerFilterComponent } from './ledger-account/ledger-account-detail/filter-bar.component';
 import { LedgerAttributeComponent } from './ledger-account/ledger-account-detail/attribute.component';
 import { LedgerAccountDistributionComponent } from './ledger-account/ledger-account-detail/account-distribution.component';
+
 
 import { IniSetupComponent } from './ini-setup/ini-setup.component';
 
@@ -163,6 +165,7 @@ let localStorageServiceConfig = {
     VendorDetailAttributeComponent,
     VendorDetailInvoiceComponent,
     LedgerAccountComponent,
+    LedgerAccountFilterComponent,
     LedgerAccountDetailComponent,
     LedgerFilterComponent,
     LedgerAttributeComponent,

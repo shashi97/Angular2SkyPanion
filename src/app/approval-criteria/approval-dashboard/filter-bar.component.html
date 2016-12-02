@@ -3,9 +3,9 @@
   <div class="options">
     <div class="btn-toolbar form-inline">
       <div class="btn-group">
-        <a (click)="getApprovalCriteria('all')" class="btn btn-default" [ngClass]="{active: type=='all'}">All</a>
-        <a (click)="getApprovalCriteria('RangeApproval')" class="btn btn-default" [ngClass]="{active: type=='RangeApproval'}">Range Approvals</a>
-        <a (click)="getApprovalCriteria('LedgerAccountApproval')" class="btn btn-default" [ngClass]="{active: type=='LedgerAccountApproval'}">Ledger Account Approvals</a>
+        <a (click)="getApprovalCriteria('all')" class="btn btn-default" [ngClass]="{active: filteredValue.type=='all'}">All</a>
+        <a (click)="getApprovalCriteria('RangeApproval')" class="btn btn-default" [ngClass]="{active: filteredValue.type=='RangeApproval'}">Range Approvals</a>
+        <a (click)="getApprovalCriteria('LedgerAccountApproval')" class="btn btn-default" [ngClass]="{active: filteredValue.type=='LedgerAccountApproval'}">Ledger Account Approvals</a>
       </div>
       <div class="btn-group" [hidden]="!companyId!=0">
         <!--<a class="btn btn-primary" href="#company/{{CompanyId}}/approvals">

@@ -41,18 +41,11 @@ export class LedgerAccountDetailComponent extends BaseComponent implements OnIni
   ngOnInit() {
   }
 
-  private getParameterValues(): void {
-    this.activatedRoute.params.subscribe(params => {
-      this.id = params['id'];
-      this.getSessionDetails();
-    });
-  }
-
   private getSessionDetails() {
     this.user = this.userService.getSessionDetails();
     if (this.user.userId !== undefined) {
       if (this.user.IsSuperUser === true) {
-        this.getledgerAccountsDetail();
+        this.getParameterValues();
       } else {
         let link = ['/company'];
         this.router.navigate(link);
@@ -60,17 +53,32 @@ export class LedgerAccountDetailComponent extends BaseComponent implements OnIni
     }
   }
 
+  private getParameterValues(): void {
+    this.activatedRoute.params.subscribe(params => {
+      this.id = params['id'];
+      this.getledgerAccountsDetail();
+    });
+  }
+
   private getledgerAccountsDetail(): void {
     this.ledgerAccountService.getledgerAccountsDetail(this.id, this.companyId).then(result => {
-      this.ledgerAccountDetail = result;
-      this.getledgerAccountDistribution(this.id);
+      if (result.status === 404) {
+        this.ledgerAccountDetail = new LedgerAccountModel();
+      } else {
+        this.ledgerAccountDetail = result;
+        this.getledgerAccountDistribution(this.id);
+      }
     });
   }
 
   private getledgerAccountDistribution(id: number): void {
     this.ledgerAccountService.getledgerAccountDistribution(id, this.currentPage, this.pageSize).then((result) => {
-      this.ledgerAccounts = result;
-      this.totalItems = this.ledgerAccounts[0].TotalCount;
+      if (result.status === 404) {
+        this.ledgerAccounts = new Array<LedgerAccountModel>();
+      } else {
+        this.ledgerAccounts = result;
+        this.totalItems = this.ledgerAccounts[0].TotalCount;
+      }
     });
   }
 }
