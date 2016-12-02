@@ -4,7 +4,7 @@ import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
-import { ApprovalCriteriaService } from '../shared/approval-criteria.service'
+import { ApprovalCriteriaService } from '../shared/approval-criteria.service';
 import { UserService } from '../../user/shared/user.service';
 import { CompanyService } from '../../companies/shared/company.service';
 import { AccountService } from '../../account/shared/account.service';
@@ -126,15 +126,19 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
       this.currentPageFiltered.pageNo,
       this.currentPageFiltered.pageSizeFilter)
       .then(result => {
-        this.approvals = result;
-        this.totalItems = this.approvals[0].ApprovalCount;
+        if (result.status === 404) {
+          this.approvals = [];
+        } else {
+          this.approvals = result;
+          this.totalItems = this.approvals[0].ApprovalCount;
+        }
       });
   }
 
   private deleteApprovalCriteria(approvalCriteriaID): void {
-    if (confirm("Are you sure you'd like to destroy this approval criteria?") == true) {
+    if (confirm('Are you sure you would like to destroy this approval criteria?') === true) {
       this.approvalCriteriaService.deleteApprovalCriteria(approvalCriteriaID).then(result => {
-        //alert("Approval criteria successfully destroyed.");
+        // alert("Approval criteria successfully destroyed.");
         // messageService.showMsgBox("Approval Criteria", "Approval criteria successfully destroyed.", "success");
         this._filteredValue.type = 'all';
         this.getApprovalCriteria(this._filteredValue.type);

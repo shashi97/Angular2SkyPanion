@@ -10,8 +10,8 @@ export class JobsService {
   constructor(private http: Http) {
 
   }
-  public getJobs(pageNumber: number, rowsPerPage: number): Promise<JobModel[]> {
-   return this
+  public getJobs(pageNumber: number, rowsPerPage: number) {
+    return this
       .http
       .get(ApiUrl.baseUrl
       + 'api/jobs/'
@@ -20,7 +20,7 @@ export class JobsService {
       + rowsPerPage
       )
       .toPromise()
-      .then(response => response.json() as JobModel[])
+      .then(response => response.json())
       .catch(error => error);
   }
 
@@ -30,7 +30,7 @@ export class JobsService {
   }
 
   public getJobById(jobId: number, currentPage: number, pageSize: number): Promise<JobModel> {
-   return this
+    return this
       .http
       .get(ApiUrl.baseUrl
       + 'api/jobs/'
@@ -41,7 +41,7 @@ export class JobsService {
       + pageSize
       )
       .toPromise()
-      .then(response => response.json() as JobModel)
+      .then(response => response.json())
       .catch(error => error);
 
   }

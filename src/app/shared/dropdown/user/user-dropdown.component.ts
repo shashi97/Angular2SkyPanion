@@ -22,6 +22,8 @@ export class UserDropdownComponent extends BaseComponent implements OnInit {
   @Input() userFilteredArg: UserFilterArguments = new UserFilterArguments();
   private users: Array<any> = [];
   private selectedUser: any;
+  private userName: string = 'Select Creater';
+
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -42,9 +44,16 @@ export class UserDropdownComponent extends BaseComponent implements OnInit {
     });
   }
 
+
   private selectUser(selectedUser): void {
     this.userFilteredArg.UserID = selectedUser.UserID;
     this.userFilteredArg.userName = selectedUser.username;
     this.userFiltered.emit(this.userFilteredArg);
   }
+
+  private onSelectUser(selectedUserId) {
+    this.user.UserID = selectedUserId;
+  }
 }
+
+

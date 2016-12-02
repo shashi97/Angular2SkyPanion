@@ -22,7 +22,6 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
   private userArray: Array<any> = [];
   private account: Object;
   private roleArray: Array<any> = [];
-  private iniSetup: Object;
 
   private selectedProcessScannedRole: Array<any> = [];
   private selectedReviewRole: Array<any> = [];

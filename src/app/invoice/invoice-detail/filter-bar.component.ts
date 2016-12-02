@@ -31,11 +31,12 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
 
   private getInvoiceDetailsByID(): void {
     this.masterService.checkDocumentLocking(this.invoiceDetail.InvoiceID, 10).then(result => {
-      if (result.IsLocked == 0) {
+      if (result.IsLocked === 0) {
         // messageService.showMsgBox("error", "This Invoice is locked by " + result.data.LockBy, "error");
         return;
       } else {
-        // $location.path('/invoices/'+$scope.searchParameters +'/'+ parseInt($scope.invoiceDetail.InvoiceID) + '/edit').search({ status: $scope.invoiceDetail.InvoiceStatusID, amount: $scope.invoiceDetail.InvoiceAmount });
+        // $location.path('/invoices/'+$scope.searchParameters +'/'+ parseInt($scope.invoiceDetail.InvoiceID) 
+        // + '/edit').search({ status: $scope.invoiceDetail.InvoiceStatusID, amount: $scope.invoiceDetail.InvoiceAmount });
       }
     });
   }
@@ -43,27 +44,28 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
 
   private SubmitInvoiceForApproval(invoice): void {
 
-    //only make let to avoid error Please give the exact value when you call the service    
+    // only make let to avoid error Please give the exact value when you call the service    
     let documentLockingId: number = 0;
     let docType: string = '';
     let documentId: number = 0;
 
     this.masterService.checkLockedDocumentState(documentLockingId, docType, documentId)
       .then(result => {
-        if (result.IsLocked == 0) {
+        if (result.IsLocked === 0) {
           // messageService.showMsgBox("error", "This invoice is locked by " + result.data.LockBy, "error");
           return;
         } else {
-          if (invoice.InvoiceAmount != 0.00 && invoice.InvoiceAmount != 0) {
-            this.invoiceService.submitInvoiceForApproval(invoice.InvoiceID).then(function (result) {
-              if (result.Status == 500) {
+          if (invoice.InvoiceAmount !== 0.00 && invoice.InvoiceAmount !== 0) {
+            this.invoiceService.submitInvoiceForApproval(invoice.InvoiceID).then(function (response) {
+              if (response.Status === 500) {
               } else {
                 // messageService.showMsgBox("Success", "Invoice submit for approval successfully", "success");
                 // $location.path('/dashboard');
               }
             });
           } else {
-            // $location.path('/invoices/' + parseInt(invoice.InvoiceID) + '/edit').search({ status: invoice.InvoiceStatusID, amount: invoice.InvoiceAmount });
+            // $location.path('/invoices/' + parseInt(invoice.InvoiceID) + '/edit').search
+            // ({ status: invoice.InvoiceStatusID, amount: invoice.InvoiceAmount });
             // return;
           }
         }
@@ -73,27 +75,28 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
 
   private submitInvoiceExpedite(invoice): void {
 
-    //only make let to avoid error Please give the exact value when you call the service    
+    // only make let to avoid error Please give the exact value when you call the service    
     let documentLockingId: number = 0;
     let docType: string = '';
     let documentId: number = 0;
 
     this.masterService.checkLockedDocumentState(documentLockingId, docType, documentId)
       .then(result => {
-        if (result.data.IsLocked == 0) {
+        if (result.data.IsLocked === 0) {
           // messageService.showMsgBox("error", "This invoice is locked by " + result.data.LockBy, "error");
           return;
         } else {
           if (invoice.InvoiceAmount > 0) {
-            this.invoiceService.submitInvoiceExpedite(invoice.InvoiceID).then(function (result) {
-              if (result.Status == 500) {
+            this.invoiceService.submitInvoiceExpedite(invoice.InvoiceID).then(function (response) {
+              if (response.Status === 500) {
               } else {
                 // messageService.showMsgBox("Success", "Invoice expedited successfully", "success");
                 // $location.path('/dashboard');
               }
             });
           } else {
-            // $location.path('/invoices/' + parseInt(invoice.InvoiceID) + '/edit').search({ status: invoice.InvoiceStatusID, amount: invoice.InvoiceAmount });
+            // $location.path('/invoices/' + parseInt(invoice.InvoiceID) + '/edit').
+            // search({ status: invoice.InvoiceStatusID, amount: invoice.InvoiceAmount });
             // return false;
           }
         }

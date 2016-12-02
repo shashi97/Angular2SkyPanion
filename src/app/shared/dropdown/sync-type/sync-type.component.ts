@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { DashboardService } from '../../../dashboard/shared/dashboard.service';
 
 export class SyncTypeArgument {
-  syncID: string = '-1';
+  syncId: string = '-1';
   syncName: string = 'Sync Type';
 }
 
@@ -41,7 +41,7 @@ export class SyncTypeDropdownComponent extends BaseComponent implements OnInit {
             this.syncList.splice(i, 0, item[i]);
 
             this.syncList.map((sync) => {
-                if (sync.ID === this.syncTypeFiltered.syncID) {
+                if (sync.ID === this.syncTypeFiltered.syncId) {
                     this.syncTypeFiltered.syncName = sync.Name;
                 }
             });
@@ -52,7 +52,7 @@ export class SyncTypeDropdownComponent extends BaseComponent implements OnInit {
   private selectSync(id): void {
     this.syncList.map((sync) => {
       if (sync.ID === id) {
-        this.syncTypeFiltered.syncID = id;
+        this.syncTypeFiltered.syncId = id;
         this.syncTypeFiltered.syncName = sync.Name;
       }
     });

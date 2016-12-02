@@ -1,4 +1,4 @@
-import { Http, Response, URLSearchParams } from '@angular/http';
+import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'Rxjs/Rx';
 import { ApiUrl } from '../../config.component';
@@ -10,11 +10,11 @@ export class ApprovalCriteriaService {
 
   getApprovalCriteria(approvalType, companyId, pageNumber, rowsPerPage) {
     return this.http.get(ApiUrl.baseUrl
-      + "api/approvalcriteria/"
+      + 'api/approvalcriteria/'
       + approvalType
-      + "/" + companyId
-      + "/" + pageNumber
-      + "/" + rowsPerPage)
+      + '/' + companyId
+      + '/' + pageNumber
+      + '/' + rowsPerPage)
       .toPromise()
       .then(response =>
         response.json())
@@ -24,7 +24,7 @@ export class ApprovalCriteriaService {
   deleteApprovalCriteria(approvalCriteriaID) {
 
     return this.http
-      .post(ApiUrl.baseUrl + "api/approvalcriteria/delete/" + approvalCriteriaID, {})
+      .post(ApiUrl.baseUrl + 'api/approvalcriteria/delete/' + approvalCriteriaID, {})
       .toPromise()
       .then(response =>
         response)
@@ -35,5 +35,4 @@ export class ApprovalCriteriaService {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
-
 }

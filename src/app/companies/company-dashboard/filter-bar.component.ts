@@ -1,20 +1,29 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
 import { SyncTypeArgument } from '../../shared/dropdown/sync-type/sync-type.component';
 import { CompanyPathArgument } from '../../shared/dropdown/company-path/company-path.component';
+
+export class CompanyFilterArguments {
+  searchText: string = '';
+  syncTypeId: string = '-1';
+  syncId: string = '-1';
+}
+
+
 @Component({
   selector: 'sp-company-filter-bar',
   templateUrl: './filter-bar.component.html'
 })
+
 export class CompanyFilterComponent extends BaseComponent implements OnInit {
 
-  // @Input() vendorDetail: VendorModel;
-  // @Output() filtered: EventEmitter<VendorFilterArguments> = new EventEmitter<VendorFilterArguments>();
-  // @Input() filteredValue: VendorFilterArguments = new VendorFilterArguments();
-  private searchText: any = null;
+
+  @Output() filtered: EventEmitter<CompanyFilterArguments> = new EventEmitter<CompanyFilterArguments>();
+  @Input() filteredValue: CompanyFilterArguments = new CompanyFilterArguments();
+
   private _syncType: SyncTypeArgument = new SyncTypeArgument();
   private _companyPath: CompanyPathArgument = new CompanyPathArgument();
 
@@ -23,7 +32,7 @@ export class CompanyFilterComponent extends BaseComponent implements OnInit {
   }
   private set syncTypeFiltered(newValue: SyncTypeArgument) {
     this._syncType = newValue;
-   // this.getJobs();
+    // this.getJobs();
   }
 
   public onsyncTypeChanged(newValue: SyncTypeArgument) {
@@ -31,15 +40,15 @@ export class CompanyFilterComponent extends BaseComponent implements OnInit {
   }
 
 
-   private get companyPathFiltered(): CompanyPathArgument {
+  private get companyPathFiltered(): CompanyPathArgument {
     return this._companyPath;
   }
   private set companyPathFiltered(newValue: CompanyPathArgument) {
     this._companyPath = newValue;
-   // this.getJobs();
+    // this.getJobs();
   }
 
-   public oncompanyPathChanged(newValue: CompanyPathArgument) {
+  public oncompanyPathChanged(newValue: CompanyPathArgument) {
     this.companyPathFiltered = newValue;
   }
 
@@ -53,25 +62,21 @@ export class CompanyFilterComponent extends BaseComponent implements OnInit {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
-  private searchURL(): void {
-    // if (this.searchText === '' || this.searchText === undefined || this.searchText === 'null') {
-    //  // this.searchText = null;
-    // }
-    let link = ['/company/' + this.searchText +
-      ',' + this.syncTypeFiltered.syncID +
-      ',' + this.companyPathFiltered.syncTypeID];
-    this.router.navigate(link);
+  private searchUrl(): void {
 
+    this.filteredValue.syncId = this.syncTypeFiltered.syncId;
+    this.filteredValue.syncTypeId = this._companyPath.syncTypeId;
+    this.filtered.emit(this.filteredValue);
+    // let link = ['/company/' + this.searchText +
+    //   ',' + this.syncTypeFiltered.syncId +
+    //   ',' + this.companyPathFiltered.syncTypeId];
+    // this.router.navigate(link);
   }
 
-  private searchURLReset(): void {
-    this.syncTypeFiltered.syncID = '-1';
-    this.companyPathFiltered.syncTypeID = '-1';
-    this.searchText = '';
-    this.syncTypeFiltered.syncName = 'Sync Type';
-    this.companyPathFiltered.companyType = 'Company Type';
-    this.searchURL();
+  private searchUrlReset(): void {
+    this.filteredValue = new CompanyFilterArguments();
+     this.filtered.emit(this.filteredValue);
   };
 }

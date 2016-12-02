@@ -1,0 +1,30 @@
+<div class="page-heading">
+        <h1>Ledger Accounts</h1>
+        <div class="options">
+            <div class="btn-toolbar form-inline">
+
+                <div class="filter_field_wrap form-group">
+                    <input class="form-control" id="search_filter_param" name="searchstr" placeholder="Enter an account number" type="text" 
+                    [(ngModel)]="filteredValue.accountNumberSearch">
+                </div>
+
+                <div class="filter_field_wrap form-group">
+                    <input class="form-control" id="Text1" name="searchstr" placeholder="Enter an account title" type="text" 
+                    [(ngModel)]="filteredValue.accountTitleSearch">
+                </div>
+
+                <div class="filter_field_wrap form-group">
+                    <button class="btn btn-primary" name="commit" type="button" (click)="searchUrl()">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        Filter
+                    </button>
+
+                    <button class="btn btn-warning" (click)="searchUrlReset()">
+                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>

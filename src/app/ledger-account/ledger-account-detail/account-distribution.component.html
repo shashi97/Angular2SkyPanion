@@ -1,41 +1,54 @@
 <div id="ledger_account_distributions" class="col-md-8">
-    <div [hidden]="!ledgerAccounts.length > 0">
-        <h4 class="left_align">Account Distributions</h4>
-        <span id="distribution_page_info" class="right_align">
-                            <span [hidden]="totalItems >= pageSize" class="right_align">Displaying <b>{{totalItems}}</b> distributions</span>
-        <span [hidden]="totalItems <= pageSize" class="right_align">Displaying distributions <b>{{currentPage*pageSize-pageSize+1}}&nbsp;-&nbsp; 
-                                <span *ngIf="currentPage*pageSize < totalItems">{{currentPage*pageSize}}</span>
-        <span *ngIf="currentPage*pageSize > totalItems">{{totalItems}}
-                                </span></b> of <b>{{totalItems}}</b> in total</span>
-        </span>
-        <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th>Invoice #</th>
-                    <th>Vendor</th>
-                    <th>Amount</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let dist of ledgerAccounts" current-page="currentPage" total-items="totalItems">
-                    <td><a href="#invoicesDetails/{{dist.invoice_id}}">{{dist.InvoiceNumber}}</a></td>
-                    <td><a href="#vendorsDetails/{{dist.vendor_id}}">{{dist.Name}}</a></td>
-                    <td><span>${{dist.Amount}}</span></td>
-                    <td><a href="invoicesDetails/{{dist.invoice_id}}">Details</a></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="text-center">
-            <!--<dir-pagination-controls max-size="8" on-page-change="pageChangeHandler(newPageNumber)" direction-links="true" boundary-links="true" template-url="../../Scripts/Pagination/dirPagination.tpl.html"></dir-pagination-controls>-->
-        </div>
-    </div>
+  <div [hidden]="!ledgerAccounts.length > 0">
+    <h4 class="left_align">Account Distributions</h4>
 
-    <div id="no_distributions_alert" class="alert alert-info" [hidden]="!ledgerAccounts.length == 0">
-        <h3>No Distributions</h3>
-        <p>
-            There are no distributions for this ledger account.
-        </p>
+    <span id="distribution_page_info" class="right_align">                            
+      <!--<span [hidden]="totalItems >= pageSize" class="right_align">Displaying
+        <b>{{totalItems}}</b> distributions
+      </span>
+    <span [hidden]="totalItems <= pageSize" class="right_align">Displaying distributions <b>{{currentPage*pageSize-pageSize+1}}&nbsp;-&nbsp; 
+        <span *ngIf="currentPage*pageSize < totalItems">{{currentPage*pageSize}}</span>
+    <span *ngIf="currentPage*pageSize > totalItems">
+          {{totalItems}}
+        </span></b> of
+    <b>{{totalItems}}</b> in total
+    </span>-->
+
+    <span *ngIf="totalItems" class="right_align">Displaying
+        <b>{{totalItems}}</b> distributions
+      </span>
+    </span>
+
+
+
+    <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>Invoice #</th>
+          <th>Vendor</th>
+          <th>Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dist of ledgerAccounts" current-page="currentPage" total-items="totalItems">
+          <td><a href="#/invoiceDetail/{{dist.invoice_id}}">{{dist.InvoiceNumber}}</a></td>
+          <td><a href="#/vendorDetail/{{dist.vendor_id}}">{{dist.Name}}</a></td>
+          <td><span>${{dist.Amount}}</span></td>
+          <td><a href="#/invoiceDetail/{{dist.invoice_id}}?vendor_id=751">Details</a></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-center">
+      <!--<dir-pagination-controls max-size="8" on-page-change="pageChangeHandler(newPageNumber)" direction-links="true" boundary-links="true" template-url="../../Scripts/Pagination/dirPagination.tpl.html"></dir-pagination-controls>-->
     </div>
+  </div>
+
+  <div id="no_distributions_alert" class="alert alert-info" [hidden]="!ledgerAccounts.length == 0">
+    <h3>No Distributions</h3>
+    <p>
+      There are no distributions for this ledger account.
+    </p>
+  </div>
 
 </div>

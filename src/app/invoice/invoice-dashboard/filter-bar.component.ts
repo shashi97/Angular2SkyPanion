@@ -3,7 +3,6 @@ import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
-import { InvoiceModel } from '../shared/invoice.model';
 import { CompanyDropdownComponent, CompanyFilterArguments } from '../../shared/dropdown/company/company-dropdown.component';
 import { VendorDropdownComponent, VendorFilterArguments } from '../../shared/dropdown/vendor/vendor-dropdown.component';
 import { UserDropdownComponent } from '../../shared/dropdown/user/user-dropdown.component';
@@ -34,15 +33,15 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
 
 
   private status: Array<any> =
-  [{ statusId: null, StatusName: "None" },
-  { statusId: 0, statusName: "Static" },
-  { statusId: 1, statusName: "Waiting for Review" },
-  { statusId: 2, statusName: "Waiting for Approval" },
-  { statusId: 3, statusName: "Waiting for Batch" },
-  { statusId: 4, statusName: "Waiting for Sync" },
-  { statusId: 6, statusName: "Synced" },
-  { statusId: 5, statusName: "Rejected" },
-  { statusId: 7, statusName: "Deleted" }
+  [{ statusId: null, StatusName: 'None' },
+  { statusId: 0, statusName: 'Static' },
+  { statusId: 1, statusName: 'Waiting for Review' },
+  { statusId: 2, statusName: 'Waiting for Approval' },
+  { statusId: 3, statusName: 'Waiting for Batch' },
+  { statusId: 4, statusName: 'Waiting for Sync' },
+  { statusId: 6, statusName: 'Synced' },
+  { statusId: 5, statusName: 'Rejected' },
+  { statusId: 7, statusName: 'Deleted' }
   ];
 
   constructor(
@@ -72,8 +71,8 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
   }
 
   private searchUrl(): void {
-    this.invoiceFilteredValue.vendorId = this.vendorFilteredArg.vendorId
-    this.invoiceFilteredValue.companyId = this.companyFilteredArg.companyId
+    this.invoiceFilteredValue.vendorId = this.vendorFilteredArg.vendorId;
+    this.invoiceFilteredValue.companyId = this.companyFilteredArg.companyId;
     this.filteredInvoice.emit(this.invoiceFilteredValue);
   }
 

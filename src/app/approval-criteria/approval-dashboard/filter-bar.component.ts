@@ -3,7 +3,6 @@ import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
-import { ApprovalCriteriaModel } from '../shared/approval-criteria.model';
 
 export class ApprovalFilterArguments {
   type: string = '';

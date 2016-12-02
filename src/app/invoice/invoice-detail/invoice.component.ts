@@ -43,11 +43,9 @@ export class InvoiceDetailInvoiceComponent extends BaseComponent implements OnIn
       this.invoiceDetail.InvoiceAmount,
       this.invoiceDetail.CompanyID)
       .then(result => {
-        if (result.status == 404) {
-        }
-        else if (result.status == 500) {
-        }
-        else {
+        if (result.status === 404) {
+        } else if (result.status === 500) {
+        } else {
           this.invApprovals = result;
         }
       });

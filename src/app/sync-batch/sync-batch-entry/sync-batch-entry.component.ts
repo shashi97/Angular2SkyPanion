@@ -7,7 +7,7 @@ import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.compo
 import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-dropdown.component';
 import { UserService } from '../../user/shared/user.service';
 import { SyncBatchEntryModel } from '../shared/sync-batch-entry.model';
-import { SyncBatchEntryService } from '../shared/sync-batch.service';
+import { SyncBatchService } from '../shared/sync-batch.service';
 
 @Component({
     selector: 'sp-sync-batch-entry',
@@ -27,7 +27,7 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
         localStorageService: LocalStorageService,
         router: Router,
         private route: ActivatedRoute,
-        private syncBatchEntryService: SyncBatchEntryService
+        private syncBatchEntryService: SyncBatchService
 
     ) {
         super(localStorageService, router);

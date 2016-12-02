@@ -22,12 +22,12 @@
     </thead>
     <tbody>
       <tr *ngFor="let vDetail of vendorDetail.VendorInvoices" current-page="currentPage" total-items="totalItems">
-        <td><a routerLink="invoicesDetails/{{vDetail.InvoiceID}}">{{vDetail.InvoiceNumber}}</a></td>
+        <td><a routerLink="/invoiceDetail/{{vDetail.InvoiceID}}">{{vDetail.InvoiceNumber}}</a></td>
         <td>{{vDetail.VoucherNumber}}</td>
-        <td><a routerLink="company/{{vDetail.CompanyID}}">{{vDetail.CompanyName}}</a></td>
+        <td><a routerLink="/companyDetail/{{vDetail.CompanyID}}">{{vDetail.CompanyName}}</a></td>
         <td>${{vDetail.Amount}}</td>
         <td>
-          <a routerLink="invoicesDetails/{{vDetail.InvoiceID}}?vendor_id={{vDetail.VendorID}}"><i class="icon icon-search"></i>Details</a>
+          <a routerLink="/invoiceDetail/{{vDetail.InvoiceID}}?vendor_id={{vDetail.VendorID}}">Details</a>
         </td>
       </tr>
     </tbody>

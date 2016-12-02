@@ -3,7 +3,7 @@ import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { SyncBatchModel, SyncBatchEntryModel } from '../shared/sync-batch-entry.model';
-import { SyncBatchEntryService } from '../shared/sync-batch.service';
+import { SyncBatchService } from '../shared/sync-batch.service';
 import { ConfirmService } from '../../shared/services/otherServices/confirmService';
 @Component({
     selector: 'sp-release-invoice-attribute',
@@ -18,7 +18,7 @@ export class ReleaseInvoiceComponent extends BaseComponent implements OnInit {
         localStorageService: LocalStorageService,
         router: Router,
         public confirmService: ConfirmService,
-        private syncBatchEntryService: SyncBatchEntryService
+        private syncBatchEntryService: SyncBatchService
     ) {
         super(localStorageService, router);
         this.syncBatch = new SyncBatchModel();

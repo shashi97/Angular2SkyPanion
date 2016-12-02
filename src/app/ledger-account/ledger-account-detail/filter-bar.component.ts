@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { LedgerAccountModel } from '../shared/ledger-account.model';
 
 @Component({
-    selector: 'sp-ledger-filter-bar',
+    selector: 'sp-ledger-detail-filter-bar',
     templateUrl: './filter-bar.component.html',
 })
 

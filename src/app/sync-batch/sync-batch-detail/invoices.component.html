@@ -1,0 +1,140 @@
+<div class="col-md-8">
+  <h3>Invoices in batch</h3>
+  <hr>
+  <div id="invoice_dashboard_wrap">
+    <div class="row">
+      <div class="col-md-12">
+
+        <span *ngIf="totalItems>0">Displaying <b>all {{totalItems}}</b> invoices</span>
+        <span *ngIf="totalItems==0">No Invoices Found</span>
+
+        <br>
+        <br>
+
+        <div id="invoices_accordion" class="panel-group panel-default">
+          <div class="panel panel-default" *ngFor="let invoice of syncBatcheDetail.SyncBatcheInvoices">
+            <a href="#collapse-{{invoice.CssID}}" data-parent="#invoices_accordion" data-toggle="collapse">
+              <div class="panel-heading">
+                <h2>
+                  <strong>{{invoice.CompanyName}}</strong> - {{invoice.VendorKey}}
+                </h2>
+              </div>
+            </a>
+            <div class="collapse in" id="collapse-{{invoice.CssID}}">
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                      <dt>Invoice Details</dt>
+                      <dd>
+                        <a href="#invoicesDetails/{{invoice.InvoiceID}}" class="badge badge-info"><i class="fa fa-info"></i>View Details</a>
+                      </dd>
+
+                      <dt>Invoice Number</dt>
+                      <dd>
+                        {{invoice.InvoiceNumber}}
+                      </dd>
+
+
+                      <dt>Status</dt>
+                      <dd>
+                        <span ng-class="{'text-success': invoice.Status=='Synced', 'text-info': invoice.Status=='Waiting For Sync'}">{{invoice.Status}}</span>
+                      </dd>
+
+                      <dt>Company</dt>
+                      <dd>
+                        <a href="#company/{{invoice.company_id}}" target="_blank"><i ng-class="{'fa fa-book': invoice.type=='Skypanion::Fund', 'fa fa-building': invoice.type=='Skypanion::Property'}"></i>{{invoice.CompanyName}}</a>
+                      </dd>
+
+                      <dt>Vendor</dt>
+                      <dd>
+                        <a href="#vendorsDetails/{{invoice.vendor_id}}">{{invoice.VendorName}}</a>
+                        <br>
+                        <a href="#companyVendors/{{invoice.company_id}}/vendors?vendor_id={{invoice.vendor_id}}" target="_blank"><i class="fa fa-list-alt"></i>&nbsp;Vendor History </a>
+                      </dd>
+
+                      <dt>Invoice Date</dt>
+                      <dd>{{invoice.InvoiceDate}}</dd>
+
+                    </dl>
+                  </div>
+                  <div class="col-md-4">
+                    <dl class="dl-horizontal">
+
+                      <dt>Due Date</dt>
+                      <dd>{{invoice.DueDate}}</dd>
+
+                      <dt>Amount</dt>
+                      <dd>${{invoice.Amount | number: 2}}</dd>
+
+                      <dt>Cash Account</dt>
+                      <dd>
+                        <span ng-class="{'text-warning': invoice.CashAccount=='Unknown'}">{{invoice.CashAccount}}</span>
+                      </dd>
+
+                      <dt>Distributions</dt>
+                      <dd>
+                        <ul class="distributions_list">
+                          <li class="distribution_list_item" *ngFor="let dectribution of invoice.InvoiceDestributions">
+                            <span *ngIf="dectribution.Distributions=='No Distributions'">{{dectribution.Distributions}}</span>
+                            <a href="#ledgerAccountsDetails/{{dectribution.ledger_account_id}}" *ngIf="dectribution.Distributions!='No Distributions'">{{dectribution.Distributions}}</a>
+                            <blockquote class="no_comment" ng-class="{'text-warning': dectribution.DestributionComment=='No Comment'}">
+                              {{dectribution.DestributionComment}}
+                            </blockquote>
+                          </li>
+                        </ul>
+                      </dd>
+                    </dl>
+                  </div>
+                  <div class="col-md-4">
+                    <dl class="dl-horizontal">
+
+                      <dt>Job</dt>
+                      <dd>
+                        <a href="#jobs/{{invoice.job_id}}" *ngIf="invoice.job_id!=null">{{invoice.Job}}</a>
+                        <span style="color: gray;" *ngIf="invoice.job_id==null">{{invoice.Job}}</span>
+                      </dd>
+
+                      <dt>Job Category</dt>
+                      <dd>
+                        <span style="color: gray;" ng-class="{'italic-font': invoice.Job=='N/A'}">{{invoice.JobCategory}}</span>
+                      </dd>
+
+                      <dt>Clerk</dt>
+                      <dd>
+                        <a href="#user/{{invoice.clerk_id}}">{{invoice.ClerkName}}</a>
+                      </dd>
+
+                      <dt>Updated By</dt>
+                      <dd>
+                        <a href="#user/{{invoice.updated_by_id}}">{{invoice.UpdatedByName}}</a>
+                      </dd>
+
+                      <dt>Description</dt>
+                      <dd>
+                        <span>{{invoice.Description}}</span>
+                      </dd>
+
+                      <dt>Comment</dt>
+                      <dd>
+                        <span style="color: gray;" ng-class="{'italic-font': invoice.Comment=='None supplied'}">{{invoice.Comment}}</span>
+                      </dd>
+                    </dl>
+                  </div>
+                </div>
+                <div class="row invoice_buttons_wrap">
+                  <div class="col-md-12">
+                    <hr style="margin-top: 10px; margin-bottom: 10px">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <nav style="text-align: center">
+        </nav>
+      </div>
+    </div>
+  </div>
+
+</div>
