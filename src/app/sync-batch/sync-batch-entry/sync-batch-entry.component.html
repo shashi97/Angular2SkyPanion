@@ -1,43 +1,15 @@
 <div id="slider" class="page-content">
-    <div class="page-heading">
+<sp-filter-invoice-attribute></sp-filter-invoice-attribute>
+    <!--<div class="page-heading">
         <h1>Create Sync Batch</h1>
         <div class="options">
             <div class="form-inline" id="invoices_index_filters_form">
 
                 <div class="form-group">
-                    <!--<ui-select ng-model="selectedCompany.selected"
-                               theme="select2"
-                               style="width:180px"
-                               data-ng-change="onCompanySelectionChange(selectedCompany.selected.CompanyID)">
-                        <ui-select-match placeholder="Select a Company">{{selectedCompany.selected.CompanyName}}</ui-select-match>
-                        <ui-select-choices repeat="company in companies| filter: $select.search">
-                            {{company.CompanyName}}
-                        </ui-select-choices>
-                    </ui-select>-->
+                    <sp-company-dropdown></sp-company-dropdown>
                 </div>
-
-
-                <div class="form-group">
-                    <div class="btn-group">
-                        <a class="btn btn-default" href="#invoices">
-                            <!--<img class="img-circle" [src]="{{imagePath}}" height="14" width="14" *ngIf="userID!=0">-->
-                            {{userName}}
-                        </a>
-                        <a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
-                            <span class="caret"></span>
-                        </a>
-                        <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-                            <li>
-                                <a role="menuitem" data-ng-repeat="user in users" (click)="selectUser(user.UserID)">
-                                    <!--<img class="img-circle" [src]="{{user.ImagePath}}" height="30" width="30" *ngIf="user.UserID!=0">-->
-                                    &nbsp;{{user.username}}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-
+                <sp-user-dropdown></sp-user-dropdown>
+        
                 <div class="filter_field_wrap form-group">
                     <button class="btn btn-primary" name="commit" type="button" (click)="searchURL()">
                         <i class="fa fa-search" aria-hidden="true"></i>
@@ -52,8 +24,8 @@
 
 
             </div>
-        </div>
-    </div>
+        </div>-->
+  
     <ol class="breadcrumb">
         <li>
             <a href="#syncbatches">Sync Batches</a>
@@ -82,261 +54,9 @@
 
                     <div class="container-fluid">
                         <div id="Div1">
-                            <div class="row">
-                                <div class="col-md-3">
-
-                                    <div class="form-group">
-                                        <textarea class="form-control" cols="40" id="sync_batch_Comment" maxlength="250"
-                                                  data-ng-model="syncBatch.Comment" placeholder="Enter a comment for this sync batch." rows="12"></textarea>
-                                    </div>
-
-                                    <input class="btn btn-primary right_align" value="Release Invoices" (click)="releaseInvoice()" />
-                                    <br class="clear_both">
-                                </div>
-                                <div class="col-md-9">
-                                    <h3>Invoices Waiting For Sync</h3>
-                                    <hr>
-                                    <div id="invoice_dashboard_wrap">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <!--<style type="text/css">
-                                                    #invoice_dashboard_wrap .control-label {
-                                                        font-weight: bold;
-                                                        width: 120px;
-                                                    }
-
-                                                    #invoice_dashboard_wrap .controls {
-                                                        padding-top: 5px;
-                                                        margin-left: 140px;
-                                                    }
-
-                                                    #invoice_dashboard_wrap .form-group {
-                                                        margin-bottom: 4px !important;
-                                                    }
-
-                                                    #invoice_dashboard_wrap .invoice_details {
-                                                        margin-right: 8px;
-                                                    }
-
-                                                    #invoice_dashboard_wrap .invoice_button_form {
-                                                        margin-bottom: 0;
-                                                    }
-
-                                                    #pdf_frame {
-                                                        position: relative;
-                                                        z-index: 1;
-                                                    }
-
-                                                    .distributions_list {
-                                                        padding-left: 0;
-                                                        list-style: none;
-                                                    }
-
-                                                        .distributions_list li {
-                                                            border-bottom: 1px dotted lightgray;
-                                                            padding-top: 6px;
-                                                        }
-
-                                                            .distributions_list li:first-child {
-                                                                padding-top: 0;
-                                                            }
-
-                                                            .distributions_list li:last-child {
-                                                                border-bottom: none;
-                                                            }
-
-                                                    .distribution_list_item .comment, .distribution_list_item .no_comment {
-                                                        font-size: 12px;
-                                                    }
-
-                                                    .distribution_list_item .no_comment {
-                                                        font-style: italic;
-                                                    }
-
-                                                    .distributions_list li blockquote {
-                                                        margin-top: 10px;
-                                                        margin-bottom: 10px;
-                                                    }
-                                                </style>
-                                                <script type="text/javascript">
-                                                    $(function () {
-                                                        $(".aTooltip").tooltip();
-
-                                                        $(".review_invoice_form input:submit, .batch_invoice_form input:submit").bind("click", function (evt) {
-                                                            if (!confirm("Are you sure you'd like to proceed with this action?")) {
-                                                                evt.preventDefault();
-                                                                evt.stopPropagation();
-                                                            }
-                                                        });
-
-
-
-                                                        $(".approve_invoice_link, .reject_invoice_link").bind("ajax:before", function (xhr, settings) {
-                                                            //alert("Before");
-                                                        }).bind("ajax:complete", function (xhr, status) {
-                                                            //alert("Complete");
-                                                        }).bind("ajax:success", function (xhr, data, status) {
-                                                            //alert("Success")
-                                                            $("body").append(data);
-                                                        }).bind("ajax:error", function (evt, xhr, status) {
-                                                            alert("Error " + xhr.status);
-                                                        });
-
-                                                        $(".view_attachment_butt").bind("ajax:before", function (xhr, settings) {
-                                                            //alert("Before");
-                                                        }).bind("ajax:complete", function (xhr, status) {
-                                                            //alert("Complete");
-                                                        }).bind("ajax:success", function (xhr, data, status) {
-                                                            //alert("Success")
-                                                            $("body").append(data);
-                                                        }).bind("ajax:error", function (evt, xhr, status) {
-                                                            alert("Error " + xhr.status);
-                                                        });
-                                                    });
-                                                </script>-->
-
-                                                <span *ngIf="totalItems>0">Displaying <b>all {{totalItems}}</b> invoices</span>
-                                                <span *ngIf="totalItems==0">No Invoices Found</span>
-
-                                                <br>
-                                                <br>
-
-                                                <div id="invoices_accordion" class="panel-group panel-default">
-                                                    <div class="panel panel-default" ng-repeat="invoice in syncBatch.SyncBatcheInvoices">
-                                                        <a href="#collapse-{{invoice.CssID}}" data-parent="#invoices_accordion" data-toggle="collapse">
-                                                            <div class="panel-heading">
-                                                                <h2>
-                                                                    <strong>{{invoice.CompanyName}}</strong> - {{invoice.VendorKey}}
-                                                                </h2>
-                                                            </div>
-                                                        </a>
-                                                        <div class="collapse in" id="collapse-{{invoice.CssID}}">
-                                                            <div class="panel-body">
-                                                                <div class="row">
-                                                                    <div class="col-md-4">
-                                                                        <dl class="dl-horizontal">
-                                                                            <dt>Invoice Details</dt>
-                                                                            <dd>
-                                                                                <a href="#invoices/{{invoice.InvoiceID}}" class="badge badge-info"><i class="fa fa-info"></i>View Details</a>
-                                                                            </dd>
-
-                                                                            <dt>Invoice Number</dt>
-                                                                            <dd>
-                                                                                {{invoice.InvoiceNumber}}
-                                                                            </dd>
-
-                                                                            <dt>Status</dt>
-                                                                            <dd>
-                                                                                <span ng-class="{'text-success': invoice.Status=='Synced', 'text-info': invoice.Status=='Waiting For Sync'}">{{invoice.Status}}</span>
-                                                                            </dd>
-
-                                                                            <dt>Company</dt>
-                                                                            <dd>
-                                                                                <a href="#company/{{invoice.company_id}}" target="_blank"><i ng-class="{'fa fa-book': invoice.type=='Skypanion::Fund', 'fa fa-building': invoice.type=='Skypanion::Property'}"></i>{{invoice.CompanyName}}</a>
-                                                                            </dd>
-
-                                                                            <dt>Vendor</dt>
-                                                                            <dd>
-                                                                                <a href="#vendors/{{invoice.vendor_id}}">{{invoice.VendorName}}</a>
-                                                                                <br>
-                                                                                <a href="#company/{{invoice.company_id}}/vendors?vendor_id={{invoice.vendor_id}}" target="_blank"><i class="fa fa-list-alt"></i>&nbsp;Vendor History </a>
-                                                                            </dd>
-
-                                                                            <dt>Invoice Date</dt>
-                                                                            <dd>{{invoice.InvoiceDate}}</dd>
-
-
-                                                                        </dl>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <dl class="dl-horizontal">
-
-                                                                            <dt>Due Date</dt>
-                                                                            <dd>{{invoice.DueDate}}</dd>
-
-                                                                            <dt>Amount</dt>
-                                                                            <dd>${{invoice.Amount | number: 2}}</dd>
-
-                                                                            <dt>Cash Account</dt>
-                                                                            <dd>
-                                                                                <span ng-class="{'text-warning': invoice.CashAccount=='Unknown'}">{{invoice.CashAccount}}</span>
-                                                                            </dd>
-
-                                                                            <dt>Distributions</dt>
-                                                                            <dd>
-                                                                                <ul class="distributions_list">
-                                                                                    <li class="distribution_list_item" ng-repeat="dectribution in invoice.InvoiceDestributions">
-                                                                                        <span ng-show="dectribution.Distributions=='No Distributions'">{{dectribution.Distributions}}</span>
-                                                                                        <a href="#ledgeraccounts/{{dectribution.ledger_account_id}}" ng-show="dectribution.Distributions!='No Distributions'">{{dectribution.Distributions}}</a>
-                                                                                        <blockquote class="no_comment" ng-class="{'text-warning': dectribution.DestributionComment=='No Comment'}">
-                                                                                            {{dectribution.DestributionComment}}
-                                                                                        </blockquote>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </dd>
-                                                                        </dl>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <dl class="dl-horizontal">
-
-                                                                            <dt>Job</dt>
-                                                                            <dd>
-                                                                                <a href="#jobs/{{invoice.job_id}}" *ngIf="invoice.job_id!=null">{{invoice.Job}}</a>
-                                                                                <span style="color: gray;" *ngIf="invoice.job_id==null">{{invoice.Job}}</span>
-                                                                            </dd>
-
-                                                                            <dt>Job Category</dt>
-                                                                            <dd>
-                                                                                <span style="color: gray;" ng-class="{'italic-font': invoice.Job=='N/A'}">{{invoice.JobCategory}}</span>
-                                                                            </dd>
-
-                                                                            <dt>Clerk</dt>
-                                                                            <dd>
-                                                                                <a href="#user/{{invoice.clerk_id}}">{{invoice.ClerkName}}</a>
-                                                                            </dd>
-
-                                                                            <dt>Updated By</dt>
-                                                                            <dd>
-                                                                                <a href="#user/{{invoice.updated_by_id}}">{{invoice.UpdatedByName}}</a>
-                                                                            </dd>
-
-                                                                            <dt>Description</dt>
-                                                                            <dd>
-                                                                                <span>{{invoice.Description}}</span>
-                                                                            </dd>
-
-                                                                            <dt>Comment</dt>
-                                                                            <dd>
-                                                                                <span style="color: gray;" ng-class="{'italic-font': invoice.Comment=='None supplied'}">{{invoice.Comment}}</span>
-                                                                            </dd>
-                                                                        </dl>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="row invoice_buttons_wrap">
-                                                                    <div class="col-md-12">
-                                                                        <hr style="margin-top: 10px; margin-bottom: 10px">
-                                                                        <div id="invoice_reject_button_wrap">
-                                                                            <span class="right_align">
-                                                                                <a class="reject_invoice_link btn btn-danger" data-toggle="modal" data-target="#dgRejectInvoice"
-                                                                                   data-remote="true" style="color: white!important" (click)="openRejectionPopup(invoice.InvoiceID ,invoice.Amount , invoice.company_id ,invoice.InvoiceNumber)"><i class="fa fa-remove"></i>Reject Invoice</a>
-                                                                            </span>
-                                                                            <br class="clear_both">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <nav style="text-align: center">
-                                                </nav>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                            <div class="row" >
+                                <sp-release-invoice-attribute *ngIf ="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices"></sp-release-invoice-attribute>
+                                <sp-waiting-invoice-attribute *ngIf ="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices" [totalItems]="totalItems"></sp-waiting-invoice-attribute> 
                             </div>
                         </div>
                     </div>
@@ -344,13 +64,17 @@
             </div>
         </div>
     </div>
+
+
+
+
 </div>
 
 
 
 <div id="dgRejectInvoice" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="GenerateDrivesDialogBox" aria-hidden="true">
 
-
+<!--
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -372,7 +96,7 @@
 
                     <div class="form-group">
                         <label class="control-label" for="attachment_RejectionMemo"><b>Leave a comment (required)</b></label>
-                        <textarea class="form-control" cols="40" id="Textarea1" maxlength="250" data-ng-model="rejectionComment" placeholder="Enter Comment" rows="2"></textarea>
+                        <textarea class="form-control" cols="40" id="Textarea1" maxlength="250" [(ngModel)]="rejectionComment" placeholder="Enter Comment" rows="2"></textarea>
                     </div>
                 </form>
             </div>
@@ -382,7 +106,7 @@
                 <a id="A2" class="btn btn-danger" (click)="rejectInvoice()">Reject Invoice</a>
             </div>
         </div>
-    </div>
+    </div>-->
 
 
 </div>

@@ -1,0 +1,16 @@
+<h2>Members</h2>
+<hr>
+<div *ngIf="role.PortalMemberRoles.length > 0">
+    <div class="list-group" *ngFor="let item of role.PortalMemberRoles">
+        <a href="#user/{{item.UserID}}" class="list-group-item">
+            <img alt="{{item.ImageName}}" class="img-circle" [src]="item.ImagePath" src="" height="22" width="22"> {{item.Name}}
+        </a>
+    </div>
+</div>
+<div class="alert alert-warning" *ngIf="!role.PortalMemberRoles.length > 0">
+    <h3>No Members</h3>
+    <p>
+        This role has no members. You can assign a role to a member by clicking the "Edit" button located in the upper right of their
+        profile page.
+    </p>
+</div>

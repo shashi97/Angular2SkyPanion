@@ -29,5 +29,61 @@ export class RoleService {
       .get(ApiUrl.baseUrl + 'api/roles/roleType')
       .map((res: Response) => res.json());
   }
+  public getRoleList(roleName, pageNumber, rowsPerPage): Promise<any> {
+    return this.http
+      .get(ApiUrl.baseUrl
+      + 'api/roles/'
+      + roleName
+      + '/'
+      + pageNumber
+      + '/'
+      + rowsPerPage)
+      .toPromise()
+      .then(Response => Response.json() as any)
+      .catch(this.handleError);
+  }
+  public getMemberRoleDetail(roleID): Promise<any> {
+    return this.http
+      .get(ApiUrl.baseUrl
+      + 'api/roles/member/'
+      + roleID)
+      .toPromise()
+      .then(Response => Response.json() as any)
+      .catch(this.handleError);
+  }
+
+  public getRolesByRoleId(roleId): Promise<any> {
+    return this.http
+      .get(ApiUrl.baseUrl
+      + 'api/roles/'
+      + roleId)
+      .toPromise()
+      .then((Response) => Response.json() as any)
+      .catch(this.handleError);
+  }
+
+
+  public saveRole(role): Promise<any> {
+    let data = JSON.stringify(role);
+    return this.http
+      .post(ApiUrl.baseUrl
+      + 'api/roles/newOrUpdate'
+      , data)
+      .toPromise()
+      .then((Response) => Response.json() as any)
+      .catch(this.handleError);
+  }
+
+  public deleteRole(roleId): Promise<any> {
+
+    return this.http
+      .post(ApiUrl.baseUrl
+      + 'api/roles/delete/'
+      , roleId)
+      .toPromise()
+      .then((Response) => Response.json() as any)
+      .catch(this.handleError);
+  }
 
 }
+

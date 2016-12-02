@@ -1,14 +1,14 @@
 <div class="form-group">
   <div class="btn-group">
     <a class="btn btn-default" href="#invoices">
-      <img class="img-circle" height="14" width="14" [hidden]="userID==0"> {{userName}}
+      <img class="img-circle" height="14" width="14" *ngIf="userFilteredArg.UserID!=0"> {{userFilteredArg.userName}}
     </a>
     <a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
       <span class="caret"></span>
     </a>
     <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
       <li>
-        <a role="menuitem" *ngFor="let user of users" (click)="selectUser(user.UserID)">
+        <a role="menuitem" *ngFor="let user of users" (click)="selectUser(user)">
           <img class="img-circle"  height="30" width="30" [hidden]="user.UserID==0"> &nbsp;{{user.username}}
         </a>
       </li>

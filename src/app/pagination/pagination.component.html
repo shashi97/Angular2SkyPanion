@@ -16,7 +16,8 @@
            [boundaryLinks]="true"
            ngDefaultControl></ngb-pagination>
         </div>
-        <div 
+       
+        <div  *ngIf="totalItems > 25"
              class="field form-group" 
              style="padding-left:10px;margin-top:-5px">
         <label 
@@ -24,7 +25,7 @@
             for="invoice_PayUsingAch">Items Per Page:</label>
         </div>
 
-      <div class="field form-group" 
+      <div class="field form-group"  *ngIf="totalItems > 25"
            style="padding-left:1px;margin-top:-5px">
           <div class="col-md-8 dropup">
             <button 
@@ -45,6 +46,7 @@
                      (click)="getDataAsPerPerPageRequired(page.value)">{{page.value}}</a></li>
             </ul>
           </div>
+       
         </div>
       </div>
     

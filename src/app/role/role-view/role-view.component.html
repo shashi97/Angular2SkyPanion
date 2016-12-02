@@ -1,0 +1,33 @@
+
+<div id="slider" class="page-content">
+    <div class="page-heading">
+        <h1>{{role.RoleName}}</h1>
+        <div class="options">
+            <div class="btn-toolbar">
+                <a href="#/roles/{{SearchParameters}}/{{roleId}}/edit" class="btn btn-default"><i class="fa fa-fw fa-cog"></i></a>
+            </div>
+        </div>
+    </div>
+    <ol class="breadcrumb">
+        <li><a href="#/role">All Roles</a></li>
+        <li class="active">{{role.RoleName}}</li>
+    </ol>
+    <div class="container-fluid">
+        <div id="panel-advancedoptions">
+            <div class="row">
+                <div class="col-md-6">
+                    <sp-role-attribute [role]="role"></sp-role-attribute>
+              
+                </div>
+                <div class="col-md-6">
+                    <sp-role-member [role]="role"></sp-role-member>
+              
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- #page-content -->
+</div>

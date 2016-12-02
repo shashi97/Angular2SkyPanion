@@ -21,6 +21,10 @@ import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.
 import { SyncBatchEntryComponent } from './sync-batch/sync-batch-entry/sync-batch-entry.component';
 import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
 import { AttachmentComponent } from './attachment/attachment.component';
+import { RoleComponent } from './role/role-dashboard/role.component';
+import { RoleViewComponent } from './role/role-view/role-view.component';
+import { RoleEntryComponent } from './role/role-entry/role-entry.component';
+import { CustomModal } from './account/custom-modal';
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -44,7 +48,7 @@ const APP_ROUTES: Routes = [
 
   { path: 'achSetups', component: AchSetupComponent },
   { path: 'achSetups/achSetupDetail/:id', component: AchSetupDetailComponent },
-  { path: 'achSetups/:companyId/achsetups', component: AchSetupDetailComponent },
+  { path: 'achSetups/:id/achsetups', component: AchSetupDetailComponent },
 
   { path: 'invoices', component: InvoiceComponent },
   { path: 'invoices/:SearchParameters', component: InvoiceComponent },
@@ -58,8 +62,14 @@ const APP_ROUTES: Routes = [
   { path: 'attachments', component: AttachmentComponent },
   { path: 'attachments/:SearchParameters', component: AttachmentComponent },
   { path: 'syncbatcheNew', component: SyncBatchEntryComponent },
+  { path: 'syncbatcheNew/:SearchParameters/:SyncBatcheID/new', component: SyncBatchEntryComponent },
   { path: 'attachments', component: AttachmentComponent },
-  { path: 'attachments/invoicesNew', component: InvoiceEntryComponent }
+  { path: 'attachments/invoicesNew', component: InvoiceEntryComponent },
+  { path: 'modal', component: CustomModal},
+  { path: 'role', component: RoleComponent},
+  { path: 'role/:SearchParameters', component: RoleComponent},
+  { path: 'roles/:SearchParameters/:RoleId', component: RoleViewComponent},
+  { path: 'roles/:SearchParameters/:roleId/edit', component: RoleEntryComponent }
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);
