@@ -7,6 +7,8 @@ import { CompanyDropdownComponent, CompanyFilterArguments } from '../../shared/d
 import { VendorDropdownComponent, VendorFilterArguments } from '../../shared/dropdown/vendor/vendor-dropdown.component';
 import { UserDropdownComponent } from '../../shared/dropdown/user/user-dropdown.component';
 
+declare let jQuery: any;
+
 export class InvoiceFilteredArgs {
   invFromDate: string = '';
   invToDate: string = '';
@@ -52,6 +54,8 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    jQuery('#invoice_FromDate').datepicker();
+    jQuery('#invToDate').datepicker();
   }
 
   private get companyFilteredArg(): CompanyFilterArguments {

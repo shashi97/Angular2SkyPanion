@@ -1,0 +1,10 @@
+<div class="page-heading">
+  <h1>{{messageHeader}}</h1>
+  <h1 *ngIf="userDetail.userID!=0">&nbsp;{{userDetail.userName}}</h1>
+  <div class="options">
+    <div class="btn-toolbar" *ngIf="userDetail.userID!=0">
+      <a href="#userDetails/-1/{{userID}}/details" class="btn btn-default"><i class="fa fa-fw fa-chevron-left"></i></a>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

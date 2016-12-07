@@ -35,7 +35,7 @@
             <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.Memo=='Unknown'}">{{vendorDetail.Memo}}</span></dd>
            
             <dt>GL Acc.</dt>
-            <dd><span style="color: gray;" ng-class="{'italic-font': vendorDetail.glAccount.AccountTitle=='Unknown'}">{{vendorDetail.glAccount.AccountTitle}}</span></dd>
+            <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.glAccount.AccountTitle=='Unknown'}">{{vendorDetail.glAccount.AccountTitle}}</span></dd>
 
 
           </dl>

@@ -1,0 +1,112 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>Attributes</h2>
+    <div class="options">
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#user1" aria-expanded="true">User</a></li>
+        <li class=""><a data-toggle="tab" href="#profile1" aria-expanded="false">Profile</a></li>
+        <li class=""><a data-toggle="tab" href="#member1" aria-expanded="false">Configuration</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="tab-content">
+      <div id="user1" class="tab-pane active">
+        <div id="user_attributes">
+          <dl class="dl-horizontal">
+            <dt>Account</dt>
+            <dd><a href="#accounts/{{userDetail.accountID}}" target="_blank">{{userDetail.accountName}}</a></dd>
+
+            <dt>Username</dt>
+            <dd>{{userDetail.userName}}</dd>
+
+            <dt>Email</dt>
+            <dd><a href="mailto:{{userDetail.email}}">{{userDetail.email}}</a></dd>
+
+            <dt>Status</dt>
+            <dd>
+              <span class="text-success" [hidden]="userDetail.disableAt!=null">Enabled</span>
+              <span class="text-warning" [hidden]="userDetail.disableAt==null">Unconfimed</span>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div id="profile1" class="tab-pane">
+        <div id="profile_attributes">
+          <dl class="dl-horizontal">
+            <dt>First Name</dt>
+            <dd>
+              {{userDetail.firstName}}
+            </dd>
+
+            <dt>Last Name</dt>
+            <dd>
+              {{userDetail.lastName}}
+            </dd>
+
+            <dt>Mobile Number</dt>
+            <dd>
+              <span [hidden]="userDetail.mobileNumber=='' && userDetail.mobileNumber==null">{{userDetail.mobileNumber}}</span>
+              <span class="text-warning" [hidden]="userDetail.mobileNumber!='' || userDetail.mobileNumber!=null">None Supplied</span>
+
+            </dd>
+
+            <dt>Work Number</dt>
+            <dd>
+              <span [hidden]="userDetail.workNumber=='' && userDetail.workNumber==null">{{userDetail.workNumber}}</span>
+              <span class="text-warning" [hidden]="userDetail.workNumber!='' || userDetail.workNumber!=null">None Supplied</span>
+            </dd>
+
+            <dt></dt>
+            <dd [hidden]="userDetail.IsSuperUser != true">
+              <span>Superuser</span>
+            </dd>
+
+          </dl>
+        </div>
+      </div>
+      <div id="member1" class="tab-pane">
+        <div id="member_attributes">
+          <dl class="dl-horizontal">
+            <dl class="dl-horizontal">
+              <dt>Time Zone</dt>
+              <dd>
+
+                <span [hidden]="userDetail.timeZone=='' && userDetail.timeZone==null">{{userDetail.timeZone}}</span>
+                <span class="text-warning" [hidden]="userDetail.timeZone!='' || userDetail.timeZone!=null">None Supplied</span>
+
+
+              </dd>
+
+              <dt *ngIf="userDetail.IsSuperUser == false">Role(s)</dt>
+              <dd *ngIf="userDetail.IsSuperUser == false">
+
+
+                <span *ngIf="userDetail.selectedRoles.length==0" class="text-warning">None</span>
+                <span *ngIf="userDetail.selectedRoles.length==1">{{userDetail.selectedRoles[0].Name}}</span>
+
+
+                <ul [hidden]="userDetail.selectedRoles.length<1">
+                  <li *ngFor="let item of userDetail.selectedRoles">
+                    <a href="#roles/{{item.RoleID}}">{{item.Name}}</a>
+                  </li>
+                </ul>
+
+
+
+              </dd>
+              <hr>
+              <dt>Invoice Digests</dt>
+              <dd>
+
+
+                <strong class="text-success" [hidden]="!userDetail.invoiceDigestEnabled">Enabled</strong>
+                <strong class="text-danger" [hidden]="userDetail.invoiceDigestEnabled">Disabled</strong>
+              </dd>
+            </dl>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

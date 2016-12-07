@@ -30,6 +30,10 @@ import { CustomModal } from './account/custom-modal';
 import { SyncBatchComponent } from './sync-batch/sync-batch-dashboard/sync-batch.component';
 import { SyncBatchDetailComponent } from './sync-batch/sync-batch-detail/sync-batch-detail.component';
 
+import { UserComponent } from './user/user-dashboard/user.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { UserEntryComponent } from './user/user-entry/user-entry.component';
+
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -74,16 +78,20 @@ const APP_ROUTES: Routes = [
   { path: 'syncbatcheNew', component: SyncBatchEntryComponent },
   { path: 'syncbatcheNew/:SearchParameters/:SyncBatcheID/new', component: SyncBatchEntryComponent },
 
-  { path: 'modal', component: CustomModal},
+  { path: 'modal', component: CustomModal },
 
-  { path: 'role', component: RoleComponent},
-  { path: 'role/:SearchParameters', component: RoleComponent},
-  { path: 'roles/:SearchParameters/:RoleId', component: RoleViewComponent},
+  { path: 'role', component: RoleComponent },
+  { path: 'role/:SearchParameters', component: RoleComponent },
+  { path: 'roles/:SearchParameters/:RoleId', component: RoleViewComponent },
   { path: 'roles/:SearchParameters/:roleId/edit', component: RoleEntryComponent },
 
 
   { path: 'syncBatches', component: SyncBatchComponent },
-  { path: 'syncBatches/syncBatchDetail/:syncBatchId', component: SyncBatchDetailComponent }
+  { path: 'syncBatches/syncBatchDetail/:syncBatchId', component: SyncBatchDetailComponent },
+
+  { path: 'users/:pageSizeFilter/:searchParameters', component: UserComponent },
+  { path: 'userDetail/:pageSizeFilter/:userId', component: UserDetailComponent },
+  { path: 'userEntry/:userId', component: UserEntryComponent }
 
 ];
 

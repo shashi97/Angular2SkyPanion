@@ -15,14 +15,14 @@ export class UserModel {
   digestDayEnabled7: boolean = false;
   digestEnd: string = '';
   digestStart: string = '';
-  disableAt: number= null;
-  email: string = '';
+  disableAt: number = null;
+  email: string = 'tu7i7';
   emailNotificationEnabled: boolean = false;
   firstName: string = '';
   imageName: string = '';
   imagePath: string = '';
-  imageSource: number= null;
-  imageType: number= null;
+  imageSource: number = null;
+  imageType: number = null;
   invoiceDigestEnabled: boolean = false;
   lastName: string = '';
   mobileNumber: string = '';
@@ -35,4 +35,17 @@ export class UserModel {
   userID: number = 0;
   userName: string = '';
   workNumber: string = '';
+  UserCount: number = 0;
+}
+
+
+
+export class EventTypeModel {
+
+  EmailEventNotificationID: number = 0;
+  EventDescription: string = '';
+  EventTypeID: number = 0;
+  EventTypeName: string = '';
+  IsSelected: boolean = false;
+  UserID: number = 0;
 }

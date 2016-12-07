@@ -16,7 +16,7 @@ import { CurrentPageArguments } from '../../pagination/pagination.component';
 
 
 @Component({
-  selector: 'spcompanies',
+  selector: 'sp-companies',
   templateUrl: './company.component.html',
   providers: [CompanyService]
 })
@@ -51,7 +51,6 @@ export class CompanyComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
   private get filteredValue(): CompanyFilterArguments {

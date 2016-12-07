@@ -12,7 +12,7 @@ import { HttpInterceptor } from './shared/httpInterceptor';
 import { XHRBackend } from '@angular/http';
 
 import { DataTableModule } from 'angular2-datatable';
-import { ModalModule,DialogRef } from 'angular2-modal';
+import { ModalModule, DialogRef } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 
 import { PaginationComponent } from './pagination/pagination.component';
@@ -25,7 +25,7 @@ import { DropdownModule } from 'primeng/primeng';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 /* for tooltip */
-import {TooltipModule} from "ng2-tooltip";
+import { TooltipModule } from 'ng2-tooltip';
 
 /* for dropdown */
 import { SelectModule } from 'angular2-select';
@@ -62,6 +62,16 @@ import { SyncBatchService } from './sync-batch/shared/sync-batch.service';
 import { OrderByPipe } from './shared/pipe/orderby';
 
 /* sp-app components */
+
+import { UserComponent } from './user/user-dashboard/user.component';
+import { UserFilterComponent } from './user/user-dashboard/filter-bar.component';
+import { UserDetailComponent } from './user/user-detail/user-detail.component';
+import { UserDetailAttributeComponent } from './user/user-detail/attribute.component';
+import { UserDetailFilterComponent } from './user/user-detail/filter-bar.component';
+import { UserEntryComponent } from './user/user-entry/user-entry.component';
+import { UserEntryFilterComponent } from './user/user-entry/filter-bar.component';
+
+
 import { AppComponent } from './app.component';
 import { OtherComponent } from './other/other.component';
 import { LoginComponent } from './login/login.component';
@@ -140,8 +150,13 @@ import { SyncBatchDetailInvoiceComponent } from './sync-batch/sync-batch-detail/
 
 
 import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
-import { InvoiceEntryAccountsComponent } from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
-import { InvoiceEntryDistributionsComponent } from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
+
+import { InvoiceEntryAccountsComponent }
+  from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
+
+import { InvoiceEntryDistributionsComponent }
+  from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
+
 import { InvoiceEntryPurchaseComponent } from './invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
 
 
@@ -162,6 +177,7 @@ import { RoleAttributeComponent } from './role/role-view/role-attribute.componen
 import { RoleEntryComponent } from './role/role-entry/role-entry.component';
 import { RoleFilterComponent } from './role/role-dashboard/filter-bar.component';
 
+
 let localStorageServiceConfig = {
   prefix: 'my-app',
   storageType: 'localStorage'
@@ -170,6 +186,7 @@ let localStorageServiceConfig = {
 @NgModule({
 
   declarations: [
+    OrderByPipe,
     AppComponent,
     OtherComponent,
     LoginComponent,
@@ -233,6 +250,13 @@ let localStorageServiceConfig = {
     InvoiceCheckDetailComponent,
     VendorFilterComponent,
     SyncBatchEntryComponent,
+    UserFilterComponent,
+    UserComponent,
+    UserDetailComponent,
+    UserDetailAttributeComponent,
+    UserDetailFilterComponent,
+    UserEntryComponent,
+    UserEntryFilterComponent,
     InvoiceEntryComponent,
     InvoiceEntryAccountsComponent,
     InvoiceEntryDistributionsComponent,

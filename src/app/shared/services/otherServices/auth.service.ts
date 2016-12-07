@@ -15,7 +15,7 @@ export class AuthService {
     }
 
     public login(loginData): Promise<any> {
-        var data = "grant_type=password&username=" + loginData.userName + "&password=" + loginData.password;
+        var data = 'grant_type=password&username=' + loginData.userName + '&password=' + loginData.password;
         if (loginData.useRefreshTokens) {
             // data = data + "&client_id=" + 'IOneApp';//ngAuthSettings.clientId;
         }
