@@ -48,9 +48,7 @@
         </tr>
       </tbody>
     </table>
-    <sp-pagination [dataSource]='syncBatchs'
-      [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)'
-      [currentPageFiltered]='currentPageFiltered'>
+    <sp-pagination [dataSource]='syncBatchs' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'>
     </sp-pagination>
   </div>
 

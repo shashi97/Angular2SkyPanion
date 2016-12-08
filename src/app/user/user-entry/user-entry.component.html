@@ -229,16 +229,13 @@
                 <div class="ms-container" id="ms-multi-select2">
                   <div class="ms-selectable col-md-5" style="overflow-y:auto;height:200px;padding: 0;">
                     <ul class="ms-list" tabindex="-1">
-                      <li class="ms-elem-selectable ms-selected" id="19-selectable" *ngFor="let item of roles | orderby" 
-                      (click)="setSelectedList(item)"><span>{{item.Name}}</span></li>
+                      <li class="ms-elem-selectable ms-selected" id="19-selectable" *ngFor="let item of roles | orderby" (click)="setSelectedList(item)"><span>{{item.Name}}</span></li>
                     </ul>
                   </div>
                   <div class="col-md-2"></div>
                   <div class="ms-selection col-md-5" style="overflow-y:auto;height:200px;padding: 0;">
                     <ul class="ms-list" tabindex="-1">
-                      <li class="ms-elem-selectable ms-selected" id="19-selection" 
-                      *ngFor="let item of userDetail.selectedRoles| orderby" 
-                      (click)="removeFromSelectedList(item)"><span>{{item.Name}}</span></li>
+                      <li class="ms-elem-selectable ms-selected" id="19-selection" *ngFor="let item of userDetail.selectedRoles| orderby" (click)="removeFromSelectedList(item)"><span>{{item.Name}}</span></li>
                     </ul>
                   </div>
                 </div>
@@ -313,8 +310,7 @@
               <label class="control-label col-md-3" for="member_PictureFile">Profile Picture</label>
               <div class="col-md-9">
                 <span style="color: gray">{{userDetail.imageName}}</span><br>
-                <input id="member_PictureFile" name="member[PictureFile]" type="file" 
-                  onchange="angular.element(this).scope().setFile(this)"
+                <input id="member_PictureFile" name="member[PictureFile]" type="file" onchange="angular.element(this).scope().setFile(this)"
                   accept="image/*">
               </div>
             </div>
@@ -339,14 +335,16 @@
             <div class="form-group field">
               <label class="control-label col-md-3" for="member_EmailNotificationsEnabled">Invoice Digest Enabled</label>
               <div class="col-md-9">
-                <input name="member[EmailNotificationsEnabled]" type="hidden" value="0">
-                <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on 
-                  bootstrap-switch-animate bootstrap-switch-id-member_EmailNotificationsEnabled">
-                  <div class="bootstrap-switch-container">
-                    <input type="checkbox" [(ngModel)]="userDetail.invoiceDigestEnabled" bootstrap-switch class="bootstrap-switch switch-alt"
-                      data-off-color="default" data-on-color="success" name="userDetail.invoiceDigestEnabled" />
-                  </div>
+                <!--<input name="member[EmailNotificationsEnabled]" type="hidden" value="0">-->
+                <!--<div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on -->
+                <!--bootstrap-switch-animate bootstrap-switch-id-member_EmailNotificationsEnabled">-->
+                <div class="bootstrap-switch-container">
+
+                  <ui-switch [(ngModel)]="userDetail.invoiceDigestEnabled" name="userDetail.invoiceDigestEnabled"></ui-switch>
+                  <!--<input type="checkbox" [(ngModel)]="userDetail.invoiceDigestEnabled" bootstrap-switch class="bootstrap-switch switch-alt"
+                    data-off-color="default" data-on-color="success" name="userDetail.invoiceDigestEnabled" />-->
                 </div>
+                <!--</div>-->
               </div>
             </div>
 
@@ -503,11 +501,7 @@
                     </ui-select-choices>
                   </ui-select>-->
 
-                  <p-dropdown [options]="digests" 
-                    [(ngModel)]="selectedDigestArray" 
-                    [filter]="true" 
-                    [autoWidth]="true" 
-                    (ngModelChange)="onSelectedDigest(selectedDigestArray)"
+                  <p-dropdown [options]="digests" [(ngModel)]="selectedDigestArray" [filter]="true" [autoWidth]="true" (ngModelChange)="onSelectedDigest(selectedDigestArray)"
                     name="selectedDigestArray">
                   </p-dropdown>
                 </div>

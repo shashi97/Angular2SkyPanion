@@ -23,7 +23,7 @@ declare let jQuery: any;
   templateUrl: './user-entry.component.html',
 })
 
-export class UserEntryComponent extends BaseComponent implements OnInit {
+export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck {
 
   private testchkbox: boolean = true;
   private messageHeader: string = 'New Member';
@@ -63,26 +63,23 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
 
 
   ngOnInit() {
-    setTimeout(() => {
-      jQuery(this._elRef.nativeElement).find('#example_id').ionRangeSlider({
-        type: 'double',
-        min: 0,
-        max: 24,
-        from: 0,
-        to: 1,
-        keyboard: true,
-        from_shadow: true
-      });
-    }, 500);
 
   }
 
-  // ngDoCheck() {
+  ngDoCheck() {
+    jQuery(this._elRef.nativeElement).find('#example_id').ionRangeSlider({
+      type: 'double',
+      min: 0,
+      max: 24,
+      from: 0,
+      to: 1,
+      keyboard: true,
+      from_shadow: true
+    });
 
-  //   console.log('dddd');
-  //   // let slider = jQuery('#example_id').data('ionRangeSlider');
-  //   // console.log(slider.old_from + '-------' + slider.old_to);
-  // }
+    // let slider = jQuery('#example_id').data('ionRangeSlider');
+    // console.log(slider.old_from + '-------' + slider.old_to);
+  }
 
 
   private getSessionDetails(): void {
@@ -244,6 +241,9 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
 
     if (pageLoad) {
       setTimeout(() => {
+        if (this.userId === 0) {
+          hours1 = 1;
+        }
         let slider = jQuery('#example_id').data('ionRangeSlider');
         console.log(slider.old_from + '---' + slider.old_to);
 

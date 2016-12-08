@@ -75,8 +75,8 @@ const APP_ROUTES: Routes = [
 
   { path: 'attachments/invoicesNew', component: InvoiceEntryComponent },
 
-  { path: 'syncbatcheNew', component: SyncBatchEntryComponent },
-  { path: 'syncbatcheNew/:SearchParameters/:SyncBatcheID/new', component: SyncBatchEntryComponent },
+  { path: 'syncBatcheNew', component: SyncBatchEntryComponent },
+  { path: 'syncBatcheNew/:searchParameters', component: SyncBatchEntryComponent },
 
   // { path: 'modal', component: CustomModal },
 

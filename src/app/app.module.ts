@@ -21,6 +21,7 @@ import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-loc
 import { ConfirmService } from './shared/services/otherServices/confirmService';
 
 import { DropdownModule } from 'primeng/primeng';
+
 /* for pagination */
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -36,6 +37,7 @@ import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 /* bootstrap components start */
 import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { UiSwitchModule } from 'angular2-ui-switch';
 /* bootstrap components end */
 
 
@@ -282,7 +284,8 @@ let localStorageServiceConfig = {
 
 
   ],
-  imports: [
+   imports: [
+    UiSwitchModule,
     BrowserModule,
     FormsModule,
     HttpModule,

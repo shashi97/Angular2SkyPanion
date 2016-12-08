@@ -1,6 +1,11 @@
 <div id="slider" class="page-content">
-<sp-filter-invoice-attribute></sp-filter-invoice-attribute>
-    <!--<div class="page-heading">
+  
+  <sp-filter-invoice-attribute
+    (filtered)="onFiltered($event)" 
+    [filteredValue]="filteredValue"
+  >
+  </sp-filter-invoice-attribute>
+  <!--<div class="page-heading">
         <h1>Create Sync Batch</h1>
         <div class="options">
             <div class="form-inline" id="invoices_index_filters_form">
@@ -25,45 +30,45 @@
 
             </div>
         </div>-->
-  
-    <ol class="breadcrumb">
-        <li>
-            <a href="#syncbatches">Sync Batches</a>
-        </li>
-        <li class="active">New Sync Batch</li>
-    </ol>
-    <div class="container-fluid">
-        <div id="panel-advancedoptions">
-            <div class="row">
-                <div class="col-md-12" *ngIf="totalItems == 0">
-                    <div class="alert alert-warning">
-                        There are no invoices to release back to skyline.
-                    </div>
-                </div>
 
-                <div class="col-md-12" *ngIf="showdashboardMessage">
-                    <div class="alert alert-info">
-                        <i class="fa fa-info-circle"></i>
-                        <strong>Heads Up!</strong>
-                        {{dashboardMessage}}
-                        <a class="close" data-dismiss="alert">×</a>
-                    </div>
-                </div>
-
-                <div class="col-md-12" *ngIf="totalItems>0">
-
-                    <div class="container-fluid">
-                        <div id="Div1">
-                            <div class="row" >
-                                <sp-release-invoice-attribute *ngIf ="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices"></sp-release-invoice-attribute>
-                                <sp-waiting-invoice-attribute *ngIf ="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices" [totalItems]="totalItems" (invoceRemoved)="getSyncBatcheInvoices()"></sp-waiting-invoice-attribute> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <ol class="breadcrumb">
+    <li>
+      <a href="#syncbatches">Sync Batches</a>
+    </li>
+    <li class="active">New Sync Batch</li>
+  </ol>
+  <div class="container-fluid">
+    <div id="panel-advancedoptions">
+      <div class="row">
+        <div class="col-md-12" *ngIf="totalItems == 0">
+          <div class="alert alert-warning">
+            There are no invoices to release back to skyline.
+          </div>
         </div>
+
+        <div class="col-md-12" *ngIf="showdashboardMessage">
+          <div class="alert alert-info">
+            <i class="fa fa-info-circle"></i>
+            <strong>Heads Up!</strong> {{dashboardMessage}}
+            <a class="close" data-dismiss="alert">×</a>
+          </div>
+        </div>
+
+        <div class="col-md-12" *ngIf="totalItems>0">
+
+          <div class="container-fluid">
+            <div id="Div1">
+              <div class="row">
+                <sp-release-invoice-attribute *ngIf="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices"></sp-release-invoice-attribute>
+                <sp-waiting-invoice-attribute *ngIf="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices" [totalItems]="totalItems"
+                  (invoceRemoved)="getSyncBatcheInvoices()"></sp-waiting-invoice-attribute>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 
 
 
@@ -74,7 +79,7 @@
 
 <div id="dgRejectInvoice" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="GenerateDrivesDialogBox" aria-hidden="true">
 
-<!--
+  <!--
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -110,4 +115,3 @@
 
 
 </div>
-

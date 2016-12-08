@@ -2,10 +2,9 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
-
 import { UserDropdownComponent } from '../../shared/dropdown/user/user-dropdown.component';
-
 // import { SyncBatchModel } from '../shared/sync-batch.model';
+
 export class SyncBatchFilteredArgs {
   syncFromDate: string = '';
   syncToDate: string = '';
@@ -19,7 +18,6 @@ export class SyncBatchFilteredArgs {
 })
 
 export class SyncBatchFilterComponent extends BaseComponent implements OnInit {
-
   private totalItems: number = 0;
   @Input() syncBatchFilteredValue: SyncBatchFilteredArgs = new SyncBatchFilteredArgs();
   @Output() filteredsyncBatch: EventEmitter<SyncBatchFilteredArgs> = new EventEmitter<SyncBatchFilteredArgs>();
@@ -35,13 +33,10 @@ export class SyncBatchFilterComponent extends BaseComponent implements OnInit {
   }
 
   private searchUrl(): void {
-
-this.filteredsyncBatch.emit(this.syncBatchFilteredValue);
+    this.filteredsyncBatch.emit(this.syncBatchFilteredValue);
   }
 
   private searchUrlReset(): void {
-
   }
-
 
 }
