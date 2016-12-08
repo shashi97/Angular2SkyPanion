@@ -1,0 +1,83 @@
+<div>
+
+    <section id="widget-grid" class="">
+        <div class="row">
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <div class="modal-body">
+
+                    <div class="panel-group smart-accordion-default" id="accordion-2">
+                        <div class="panel-body">
+                            <div class="row">
+
+                                <!-- NEW COL START -->
+
+                                <article class="col-sm-12 col-md-12 col-lg-12">
+                                    <form class="form-horizontal">
+                                        <div data-ng-class="displayValue">
+                                            <div id="Div1" *ngIf="Errors.length > 0">
+                                                <h3>{{ErrorsHeaders}}</h3>
+                                                <ul>
+                                                    <li *ngFor="let error of Errors">{{error.ErrorName}}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </article>
+
+                                <article class="col-sm-12 col-md-12 col-lg-6">
+                                    <form class="form-horizontal">
+
+                                        <div class="form-group">
+
+                                            <table id="listview">
+                                                <tr class="noselect">
+
+                                                    <th id="two">
+                                                        <p>
+                                                            List:
+                                                            <a (click)="getDirectories(null , 14)">
+                                                                <i class="fa fa-folder"></i>
+                                                            </a>
+                                                        </p>
+                                                    </th>
+                                                </tr>
+                                                <tr *ngFor="let files of Serverfiles">
+                                                    <td>
+                                                        <span *ngIf="files.Category.Value == 0 || files.Category.Value == 14 || files.Category.Value == 10" style="width: 20px"><i class="fa fa-folder"></i></span>
+                                                        <span *ngIf="files.Category.Value == 1" Style="width: 20px"><i class="fa fa-file-o"></i></span>
+                                                        <span (click)="getDirectories(files.FullPath ,files.Category.Value)"  style="padding-left: 10px">{{files.Name}}</span>
+                                                        <div  Style=" float: right; padding-left: 20px" *ngIf="files.Category.Value == 1" (click)="saveSelectedfilePath(files.FullPath)"><a>Select File</a></div>
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+                                            
+                                        </div>
+                                    </form>
+                                </article>
+                                <!-- END COL -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+                    <span class="pull-left"><b>{{filepath.path}}</b></span>
+                    <button type="button" class="btn btn-danger closeButton" data-dismiss="modal" (click)="closeModel()">
+                                        <i class="fa fa-remove"></i>
+                                        Cancel
+                                    </button>
+
+                    <button type="button" (click)="getParentDirectory()" class="btn btn-default">
+                                        <i class="fa fa-arrow-left"></i>
+                                        Back
+                                    </button>
+                </div>
+            </article>
+
+        </div>
+    </section>
+</div>

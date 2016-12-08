@@ -39,7 +39,7 @@ export class SyncBatchService {
     }
 
     public getSyncBatches(searchCriteriaSyncBatches) {
-        var data = JSON.stringify(searchCriteriaSyncBatches);
+        let data = JSON.stringify(searchCriteriaSyncBatches);
 
         let options = new RequestOptions();
         options.headers = new Headers();
@@ -57,6 +57,19 @@ export class SyncBatchService {
             .toPromise()
             .then(response => response.json())
             .catch(error => error);
+    }
+
+    rejectInvoice(invoiceID, companyID, invAmount, rejectionComment) {
+        return this.http.get(ApiUrl.baseUrl + 'api/invoices/reject/'
+            + invoiceID + '/'
+            + companyID + '/'
+            + invAmount + '/'
+            + rejectionComment)
+            .toPromise()
+            .then((response) => response.json())
+            .catch(error => error);
+
+
     }
 }
 

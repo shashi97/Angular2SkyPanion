@@ -56,7 +56,7 @@
                         <div id="Div1">
                             <div class="row" >
                                 <sp-release-invoice-attribute *ngIf ="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices"></sp-release-invoice-attribute>
-                                <sp-waiting-invoice-attribute *ngIf ="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices" [totalItems]="totalItems"></sp-waiting-invoice-attribute> 
+                                <sp-waiting-invoice-attribute *ngIf ="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices" [totalItems]="totalItems" (invoceRemoved)="getSyncBatcheInvoices()"></sp-waiting-invoice-attribute> 
                             </div>
                         </div>
                     </div>

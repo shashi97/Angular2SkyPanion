@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-
-import { BaseComponent } from '../base.component';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
-
+import { Overlay, OverlayConfig } from 'angular2-modal';
+import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
+import { BaseComponent } from '../base.component';
 import { IniSetupModel } from './shared/ini-setup.model';
 
 import { UserService } from '../user/shared/user.service';
 import { AccountService } from '../account/shared/account.service';
 import { IniSetupService } from './shared/ini-setup.service';
 import { RoleService } from '../role/shared/role.service';
-
+import { CustomModal, CustomModalContext } from './setup-modal.component';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'sp-ini-setup',
@@ -21,26 +22,32 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
   private iniSetupModel: IniSetupModel;
   private userArray: Array<any> = [];
   private account: Object;
-  private roleArray: Array<any> = [];
+  private roles: Array<any> = [];
 
-  private selectedProcessScannedRole: Array<any> = [];
-  private selectedReviewRole: Array<any> = [];
-  private selectedApproveRole: Array<any> = [];
-  private selectedBatchRole: Array<any> = [];
-  private selectedDeleteRole: Array<any> = [];
-  private selectedApproverOverrideRole: Array<any> = [];
-  private selectedSyncBatchestoSkylineRole: Array<any> = [];
+  private selectedProcessScannedRole: any;
+  private selectedReviewRole: any;
+  private selectedApproveRole: any;
+  private selectedBatchRole: any;
+  private selectedDeleteRole: any;
+  private selectedApproverOverrideRole: any;
+  private selectedSyncBatchestoSkylineRole: any;
 
   constructor(
+    vcRef: ViewContainerRef,
+    overlay: Overlay,
+    public modal: Modal,
     localStorageService: LocalStorageService,
     router: Router,
     private userService: UserService,
     private accountService: AccountService,
     private iniSetupService: IniSetupService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    public toastr: ToastsManager
   ) {
     super(localStorageService, router);
+    this.iniSetupModel = new IniSetupModel();
     this.getSessionDetails();
+    overlay.defaultViewContainer = vcRef;
   }
 
   ngOnInit() {
@@ -71,41 +78,119 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
 
   private getRoles(): void {
     this.roleService.getRoles().then(result => {
-      this.roleArray = result;
-      // var obj = { RoleID: 0, AccountID: 0, Name: 'All', Description: 'All' }
-      // this.roles.splice(0, 0, obj);
+      this.roles = result;
+      let obj = { RoleID: 0, AccountID: 0, Name: 'All', Description: 'All' };
+      this.roles.splice(0, 0, obj);
+      let temp = this.roles;
+      this.roles = [];
+      temp.map((item: any) => {
+        this.roles.push(
+          { label: item.Name, value: item });
+      });
       this.getIniSetupDetails();
     });
   }
 
   private getIniSetupDetails(): void {
     this.iniSetupService.getIniSetupDetails().then(result => {
-
       this.iniSetupModel = result;
-
-      this.roleArray.forEach((item) => {
-        if (item.RoleID === this.iniSetupModel.GlobalPermissions.ProcessScannedRoleID) {
-         // this.selectedProcessScannedRole[0].selected = item;
+      this.roles.map((item) => {
+        if (item.value.RoleID === this.iniSetupModel.GlobalPermissions.ProcessScannedRoleID) {
+          // this.selectedProcessScannedRole[0].selected = item;
+          this.selectedProcessScannedRole = item.value;
         }
-        if (item.RoleID === this.iniSetupModel.GlobalPermissions.ReviewInvoiceRoleID) {
-       //   this.selectedReviewRole[0].selected = item;
+        if (item.value.RoleID === this.iniSetupModel.GlobalPermissions.ReviewInvoiceRoleID) {
+          this.selectedReviewRole = item.value;
         }
-        if (item.RoleID === this.iniSetupModel.GlobalPermissions.ApproveInvoiceRoleID) {
-        ///  this.selectedApproveRole[0].selected = item;
+        if (item.value.RoleID === this.iniSetupModel.GlobalPermissions.ApproveInvoiceRoleID) {
+          this.selectedApproveRole = item.value;
         }
-        if (item.RoleID === this.iniSetupModel.GlobalPermissions.BatchInvoiceRoleID) {
-        //  this.selectedBatchRole[0].selected = item;
+        if (item.value.RoleID === this.iniSetupModel.GlobalPermissions.BatchInvoiceRoleID) {
+          this.selectedBatchRole = item.value;
         }
-        if (item.RoleID === this.iniSetupModel.GlobalPermissions.DeleteInvoiceRoleID) {
-         // this.selectedDeleteRole[0].selected = item;
+        if (item.value.RoleID === this.iniSetupModel.GlobalPermissions.DeleteInvoiceRoleID) {
+          this.selectedDeleteRole = item.value;
         }
-        if (item.RoleID === this.iniSetupModel.GlobalPermissions.ApproverOverrideRoleID) {
-        //  this.selectedApproverOverrideRole[0].selected = item;
+        if (item.value.RoleID === this.iniSetupModel.GlobalPermissions.ApproverOverrideRoleID) {
+          this.selectedApproverOverrideRole = item.value;
         }
-        if (item.RoleID === this.iniSetupModel.GlobalPermissions.SyncBatchestoSkylineRoleID) {
-         // this.selectedSyncBatchestoSkylineRole[0].selected = item;
+        if (item.value.RoleID === this.iniSetupModel.GlobalPermissions.SyncBatchestoSkylineRoleID) {
+          this.selectedSyncBatchestoSkylineRole = item.value;
         }
       });
     });
+  }
+
+  private updateInvoiceRole(RoleID, verb): void {
+
+  }
+
+  private saveIniSetupDetails(): boolean {
+    this.iniSetupModel.GlobalPermissions.ProcessScannedRoleID = this.selectedProcessScannedRole.RoleID;
+    this.iniSetupModel.GlobalPermissions.ReviewInvoiceRoleID = this.selectedReviewRole.RoleID;
+    this.iniSetupModel.GlobalPermissions.ApproveInvoiceRoleID = this.selectedApproveRole.RoleID;
+    this.iniSetupModel.GlobalPermissions.BatchInvoiceRoleID = this.selectedBatchRole.RoleID;
+    this.iniSetupModel.GlobalPermissions.DeleteInvoiceRoleID = this.selectedDeleteRole.RoleID;
+    this.iniSetupModel.GlobalPermissions.ApproverOverrideRoleID = this.selectedApproverOverrideRole.RoleID;
+    this.iniSetupModel.GlobalPermissions.SyncBatchestoSkylineRoleID = this.selectedSyncBatchestoSkylineRole.RoleID;
+    if (this.iniSetupModel.filepathObject.path == null) {
+      this.toastr.error('please select ini file to uplaod first', 'Oops!');
+      // alert("please select ini file to uplaod first");
+      // messageService.showMsgBox("Error", "please select ini file to uplaod first", "error");
+      return false;
+    }
+    this.iniSetupService.saveIniSetupDetails(this.iniSetupModel).then((result) => {
+      if (result.status === 404) {
+      } else if (result.status === 500) {
+      } else {
+        this.getIniSetupDetails();
+        // alert("Ini Setup successfully saved.");
+        this.toastr.success('Ini Setup successfully saved.', 'Success!');
+        // messageService.showMsgBox("Success", "Ini Setup successfully saved.", "success");
+      }
+    });
+
+  }
+
+  public getDirectories(filepath, category) {
+    let Serverfiles: Array<any> = [];
+    if (filepath === '') {
+      filepath = null;
+    }
+
+    if (category === '14') {
+      category = 14;
+    }
+    this.iniSetupModel.filepathObject.path = filepath;
+    this.iniSetupModel.filepathObject.Category = category;
+    if (category === 14 || category === 0 || category === 10) {
+       this.getDirectoryDetail(this.iniSetupModel);
+    }
+  }
+  public getDirectoryDetail(Serverfiles) {
+    const builder = new BSModalContextBuilder<CustomModalContext>(
+      {  Serverfiles: Serverfiles } as any,
+      undefined,
+      CustomModalContext
+    );
+
+    let overlayConfig: OverlayConfig = {
+      context: builder.toJSON()
+    };
+    // return this.modal.open(InvoiceEntryAccountsComponent, overlayConfig)
+    //   .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+    //    .then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
+    //    .then(result => {
+    //     alert(result)
+    //    this.addGlAccountByPopup(result);
+
+    //    })
+
+  return this.modal.open(CustomModal, overlayConfig)
+      .catch(err => alert('ERROR'))
+      .then(dialog => dialog.result)
+      .then(result => {
+        this.getIniSetupDetails();
+      });
   }
 }

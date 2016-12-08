@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-body {
+/*body {
   font-family: 'Source Sans Pro', 'Segoe UI', 'Droid Sans', Tahoma, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
@@ -11,4 +11,8 @@ body {
 
   margin: 20px 10px !important;
     padding: 4px 12px !important;
-}
+}*/
+ #listview tr td:hover {
+            cursor: pointer;
+            background-color: #f7de79;
+        }

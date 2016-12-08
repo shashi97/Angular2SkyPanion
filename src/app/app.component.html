@@ -1,3 +1,4 @@
+ 
 <div id="headerbar">
   <div class="container-fluid">
     <div class="row">
@@ -22,6 +23,7 @@
           </div>
         </a>
       </div>
+
       <div class="col-xs-6 col-sm-2">
         <a href="#" class="shortcut-tiles tiles-primary">
           <div class="tiles-body">
@@ -161,8 +163,8 @@
                     <li><a routerLink="syncbatcheNew/-1/0/new">New Sync Batch</a></li>
                   </ul>
                 </li>
-
-                <li data-ng-if="sessionDetails.IsSuperUser"><a routerLink="iniSetup"><i class="fa fa-cogs"></i><span>Setup</span></a></li>
+                     
+                <li><a routerLink="iniSetup"><i class="fa fa-cogs"></i><span>Setup</span></a></li>
 
                 <li data-ng-if="sessionDetails.IsSuperUser">
                   <a href="javascript:;"><i class="fa fa-random"></i><span>Administration</span></a>
@@ -184,6 +186,7 @@
       <div class="static-content">
         <div id="body">
           <div>
+              <span defaultOverlayTarget></span>
             <router-outlet></router-outlet>
           </div>
         </div>
