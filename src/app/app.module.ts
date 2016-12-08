@@ -29,6 +29,7 @@ import { TooltipModule } from 'ng2-tooltip';
 
 /* for dropdown */
 import { SelectModule } from 'angular2-select';
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
 
 
 
@@ -294,7 +295,8 @@ let localStorageServiceConfig = {
     NgbModule.forRoot(),
     ModalModule.forRoot(),
     BootstrapModalModule,
-    TooltipModule
+    TooltipModule,
+    ToastModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
