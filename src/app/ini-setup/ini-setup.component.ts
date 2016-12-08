@@ -94,6 +94,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
   private getIniSetupDetails(): void {
     this.iniSetupService.getIniSetupDetails().then(result => {
       this.iniSetupModel = result;
+
       this.roles.map((item) => {
         if (item.value.RoleID === this.iniSetupModel.GlobalPermissions.ProcessScannedRoleID) {
           // this.selectedProcessScannedRole[0].selected = item;
@@ -164,12 +165,12 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
     this.iniSetupModel.filepathObject.path = filepath;
     this.iniSetupModel.filepathObject.Category = category;
     if (category === 14 || category === 0 || category === 10) {
-       this.getDirectoryDetail(this.iniSetupModel);
+      this.getDirectoryDetail(this.iniSetupModel);
     }
   }
   public getDirectoryDetail(Serverfiles) {
     const builder = new BSModalContextBuilder<CustomModalContext>(
-      {  Serverfiles: Serverfiles } as any,
+      { Serverfiles: Serverfiles } as any,
       undefined,
       CustomModalContext
     );
@@ -186,7 +187,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
 
     //    })
 
-  return this.modal.open(CustomModal, overlayConfig)
+    return this.modal.open(CustomModal, overlayConfig)
       .catch(err => alert('ERROR'))
       .then(dialog => dialog.result)
       .then(result => {

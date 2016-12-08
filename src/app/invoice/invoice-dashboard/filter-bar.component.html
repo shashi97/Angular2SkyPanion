@@ -5,13 +5,17 @@
     <div class="form-inline" id="invoices_index_filters_form">
 
       <div class="form-group">
-        <input class="form-control" id="invoice_FromDate" [(ngModel)]="invoiceFilteredValue.invFromDate" date-picker placeholder="Invoice Date From" size="12"
-          type="text" value="" />
+        <input class="form-control" id="invoice_FromDate" [(ngModel)]="invoiceFilteredValue.invFromDate" placeholder="Invoice Date From"
+          size="12" type="text" value="" />
+
+        <!--<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
+          (dayClicked)="dayClicked($event.day)">
+        </mwl-calendar-month-view>-->
       </div>
 
       <div class="form-group">
-        <input class="form-control" id="invToDate" [(ngModel)]="invoiceFilteredValue.invToDate" date-picker placeholder="Invoice Date To" size="12" type="text"
-          value="" />
+        <input class="form-control" id="invToDate" [(ngModel)]="invoiceFilteredValue.invToDate" placeholder="Invoice Date To"
+          size="12" type="text" value="" />
       </div>
 
       <div class="form-group">
@@ -24,14 +28,10 @@
         />
       </div>
 
-      <sp-company-dropdown 
-        [companyFilteredArg]='companyFilteredArg' 
-        (companyFiltered)="onCompanyFiltered($event)">
+      <sp-company-dropdown [companyFilteredArg]='companyFilteredArg' (companyFiltered)="onCompanyFiltered($event)">
       </sp-company-dropdown>
-      
-      <sp-vendor-dropdown
-        [vendorFilteredArg]='vendorFilteredArg' 
-        (vendorFiltered)="onVendorFiltered($event)">
+
+      <sp-vendor-dropdown [vendorFilteredArg]='vendorFilteredArg' (vendorFiltered)="onVendorFiltered($event)">
       </sp-vendor-dropdown>
 
       <div class="form-group">

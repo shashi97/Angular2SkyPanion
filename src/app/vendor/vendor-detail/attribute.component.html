@@ -1,44 +1,46 @@
-
 <div class="col-md-4">
-    <div class="panel-group" id="atts_accordion" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <a data-toggle="collapse" data-parent="#atts_accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    <h2 class="panel-title">
-                        Vendor Attributes
-                    </h2>
-                </a>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
+  <div class="panel-group" id="atts_accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingOne">
+        <a data-toggle="collapse" data-parent="#atts_accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <h2 class="panel-title">
+            Vendor Attributes
+          </h2>
+        </a>
+      </div>
+      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <div class="panel-body">
 
-                    <dl class="dl-horizontal">
+          <dl class="dl-horizontal">
 
-                        <dt>Address</dt>
-                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.Address=='Unknown'}">{{vendorDetail.Address}}</span></dd>
+            <dt>Address</dt>
+            <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.Address=='Unknown'}">{{vendorDetail.Address}}</span></dd>
 
-                        <dt>Phone #</dt>
-                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.PhoneNumber=='Unknown'}">{{vendorDetail.PhoneNumber}}</span></dd>
+            <dt>Phone #</dt>
+            <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.PhoneNumber=='Unknown'}">{{vendorDetail.PhoneNumber}}</span></dd>
 
-                        <dt>Account #</dt>
-                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.AccountNumber=='Unknown'}">{{vendorDetail.AccountNumber}}</span></dd>
+            <dt>Account #</dt>
+            <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.AccountNumber=='Unknown'}">{{vendorDetail.AccountNumber}}</span></dd>
 
-                        <dt>Tax Id</dt>
-                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.TaxId=='Unknown'}">{{vendorDetail.TaxId}}</span></dd>
+            <dt>Tax Id</dt>
+            <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.TaxId=='Unknown'}">{{vendorDetail.TaxId}}</span></dd>
 
-                        <dt>Legal Name</dt>
-                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.LegalName=='Unknown'}">{{vendorDetail.LegalName}}</span></dd>
+            <dt>Legal Name</dt>
+            <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.LegalName=='Unknown'}">{{vendorDetail.LegalName}}</span></dd>
 
-                        <dt>Web Site</dt>
-                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.WebSite=='Unknown'}">{{vendorDetail.WebSite}}</span></dd>
+            <dt>Web Site</dt>
+            <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.WebSite=='Unknown'}">{{vendorDetail.WebSite}}</span></dd>
 
-                        <dt>Memo</dt>
-                        <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.Memo=='Unknown'}">{{vendorDetail.Memo}}</span></dd>
+            <dt>Memo</dt>
+            <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.Memo=='Unknown'}">{{vendorDetail.Memo}}</span></dd>
+           
+            <dt>GL Acc.</dt>
+            <dd><span style="color: gray;" [ngClass]="{'italic-font': vendorDetail.glAccount.AccountTitle=='Unknown'}">{{vendorDetail.glAccount.AccountTitle}}</span></dd>
 
-                        
-                    </dl>
-                </div>
-            </div>
+
+          </dl>
         </div>
+      </div>
     </div>
+  </div>
 </div>

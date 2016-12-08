@@ -1,0 +1,536 @@
+<div class="page-content" id="userentry" *ngIf="userDetail">
+
+  <sp-user-entry-filter-bar [userDetail]="userDetail" [messageHeader]="messageHeader"></sp-user-entry-filter-bar>
+
+
+  <!--<sp-crumb-bar *ngIf="userDetail.IsSuperUser" [pageDetail]="userDetail"></sp-crumb-bar>-->
+
+
+  <!--<ol class="breadcrumb" *ngIf="userDetail.IsSuperUser == true">
+    <li>
+      <a href="#accounts/{{userDetail.accountID}}">{{userDetail.accountName}}</a>
+    </li>
+    <li *ngIf="userID!=0">
+      <a href="#usersList/-1/-1">Account Users</a>
+    </li>
+    <li class="active" *ngIf="userID!=0">{{userDetail.userName}}</li>
+    <li class="active" data-ng-hide="userID!=0">{{msgHeader}}</li>
+  </ol>-->
+
+  <div class="container-fluid">
+    <div id="panel-advancedoptions">
+
+      <div id="user_form_row" class="row">
+        <div class="col-md-12">
+          <form accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" id="edit_member_52" role="form">
+
+            <!--<div data-ng-class="displayValue">
+              <div id="error_explanation" *ngIf="errors.length>0">
+                <h2>{{errorHeader}}</h2>
+                <ul>
+                  <li *ngFor="let error of errors">{{error.ErrorName}}</li>
+                </ul>
+              </div>
+            </div>-->
+
+            <div class="form-group field">
+              <label class="control-label col-md-3" for="member_account_id">Account</label>
+              <div class="col-md-9">
+
+                <p class="form-control-static">
+                  <a href="#accounts/{{userDetail.accountID}}" target="_blank">{{userDetail.accountName}}</a>
+                </p>
+              </div>
+            </div>
+
+            <div class="form-group field">
+              <label class="control-label col-md-3" for="member_username">Username</label>
+              <div class="col-md-9">
+                <input class="form-control" id="member_username" name="member[username]" placeholder="Enter a username for Portal::Member"
+                  size="30" type="text" [(ngModel)]="userDetail.userName">
+              </div>
+            </div>
+
+            <div class="form-group field">
+              <label class="control-label col-md-3" for="member_email">Email</label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-envelope-o"></i>
+                  </span>
+                  <input class="form-control" id="member_email" name="member[email]" placeholder="Enter an email for Portal::Member" size="30"
+                    type="text" [(ngModel)]="userDetail.email">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group field">
+              <label class="control-label col-md-3" for="member_TimeZone">Timezone</label>
+              <div class="col-md-9">
+                <select class="form-control" id="member_TimeZone" name="member[TimeZone]" [(ngModel)]="userDetail.timeZone">
+                                    <option value="Hawaii" selected="selected">(GMT-10:00) Hawaii</option>
+                                    <option value="Alaska">(GMT-09:00) Alaska</option>
+                                    <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
+                                    <option value="Arizona">(GMT-07:00) Arizona</option>
+                                    <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
+                                    <option value="Central Time (US &amp; Canada)">(GMT-06:00) Central Time (US &amp; Canada)</option>
+                                    <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
+                                    <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
+                                    <option value="" disabled="disabled">-------------</option>
+                                    <option value="American Samoa">(GMT-11:00) American Samoa</option>
+                                    <option value="International Date Line West">(GMT-11:00) International Date Line West</option>
+                                    <option value="Midway Island">(GMT-11:00) Midway Island</option>
+                                    <option value="Tijuana">(GMT-08:00) Tijuana</option>
+                                    <option value="Chihuahua">(GMT-07:00) Chihuahua</option>
+                                    <option value="Mazatlan">(GMT-07:00) Mazatlan</option>
+                                    <option value="Central America">(GMT-06:00) Central America</option>
+                                    <option value="Guadalajara">(GMT-06:00) Guadalajara</option>
+                                    <option value="Mexico City">(GMT-06:00) Mexico City</option>
+                                    <option value="Monterrey">(GMT-06:00) Monterrey</option>
+                                    <option value="Saskatchewan">(GMT-06:00) Saskatchewan</option>
+                                    <option value="Bogota">(GMT-05:00) Bogota</option>
+                                    <option value="Lima">(GMT-05:00) Lima</option>
+                                    <option value="Quito">(GMT-05:00) Quito</option>
+                                    <option value="Caracas">(GMT-04:30) Caracas</option>
+                                    <option value="Atlantic Time (Canada)">(GMT-04:00) Atlantic Time (Canada)</option>
+                                    <option value="Georgetown">(GMT-04:00) Georgetown</option>
+                                    <option value="La Paz">(GMT-04:00) La Paz</option>
+                                    <option value="Santiago">(GMT-04:00) Santiago</option>
+                                    <option value="Newfoundland">(GMT-03:30) Newfoundland</option>
+                                    <option value="Brasilia">(GMT-03:00) Brasilia</option>
+                                    <option value="Buenos Aires">(GMT-03:00) Buenos Aires</option>
+                                    <option value="Greenland">(GMT-03:00) Greenland</option>
+                                    <option value="Mid-Atlantic">(GMT-02:00) Mid-Atlantic</option>
+                                    <option value="Azores">(GMT-01:00) Azores</option>
+                                    <option value="Cape Verde Is.">(GMT-01:00) Cape Verde Is.</option>
+                                    <option value="Casablanca">(GMT+00:00) Casablanca</option>
+                                    <option value="Dublin">(GMT+00:00) Dublin</option>
+                                    <option value="Edinburgh">(GMT+00:00) Edinburgh</option>
+                                    <option value="Lisbon">(GMT+00:00) Lisbon</option>
+                                    <option value="London">(GMT+00:00) London</option>
+                                    <option value="Monrovia">(GMT+00:00) Monrovia</option>
+                                    <option value="UTC">(GMT+00:00) UTC</option>
+                                    <option value="Amsterdam">(GMT+01:00) Amsterdam</option>
+                                    <option value="Belgrade">(GMT+01:00) Belgrade</option>
+                                    <option value="Berlin">(GMT+01:00) Berlin</option>
+                                    <option value="Bern">(GMT+01:00) Bern</option>
+                                    <option value="Bratislava">(GMT+01:00) Bratislava</option>
+                                    <option value="Brussels">(GMT+01:00) Brussels</option>
+                                    <option value="Budapest">(GMT+01:00) Budapest</option>
+                                    <option value="Copenhagen">(GMT+01:00) Copenhagen</option>
+                                    <option value="Ljubljana">(GMT+01:00) Ljubljana</option>
+                                    <option value="Madrid">(GMT+01:00) Madrid</option>
+                                    <option value="Paris">(GMT+01:00) Paris</option>
+                                    <option value="Prague">(GMT+01:00) Prague</option>
+                                    <option value="Rome">(GMT+01:00) Rome</option>
+                                    <option value="Sarajevo">(GMT+01:00) Sarajevo</option>
+                                    <option value="Skopje">(GMT+01:00) Skopje</option>
+                                    <option value="Stockholm">(GMT+01:00) Stockholm</option>
+                                    <option value="Vienna">(GMT+01:00) Vienna</option>
+                                    <option value="Warsaw">(GMT+01:00) Warsaw</option>
+                                    <option value="West Central Africa">(GMT+01:00) West Central Africa</option>
+                                    <option value="Zagreb">(GMT+01:00) Zagreb</option>
+                                    <option value="Athens">(GMT+02:00) Athens</option>
+                                    <option value="Bucharest">(GMT+02:00) Bucharest</option>
+                                    <option value="Cairo">(GMT+02:00) Cairo</option>
+                                    <option value="Harare">(GMT+02:00) Harare</option>
+                                    <option value="Helsinki">(GMT+02:00) Helsinki</option>
+                                    <option value="Istanbul">(GMT+02:00) Istanbul</option>
+                                    <option value="Jerusalem">(GMT+02:00) Jerusalem</option>
+                                    <option value="Kyiv">(GMT+02:00) Kyiv</option>
+                                    <option value="Pretoria">(GMT+02:00) Pretoria</option>
+                                    <option value="Riga">(GMT+02:00) Riga</option>
+                                    <option value="Sofia">(GMT+02:00) Sofia</option>
+                                    <option value="Tallinn">(GMT+02:00) Tallinn</option>
+                                    <option value="Vilnius">(GMT+02:00) Vilnius</option>
+                                    <option value="Baghdad">(GMT+03:00) Baghdad</option>
+                                    <option value="Kuwait">(GMT+03:00) Kuwait</option>
+                                    <option value="Minsk">(GMT+03:00) Minsk</option>
+                                    <option value="Nairobi">(GMT+03:00) Nairobi</option>
+                                    <option value="Riyadh">(GMT+03:00) Riyadh</option>
+                                    <option value="Tehran">(GMT+03:30) Tehran</option>
+                                    <option value="Abu Dhabi">(GMT+04:00) Abu Dhabi</option>
+                                    <option value="Baku">(GMT+04:00) Baku</option>
+                                    <option value="Moscow">(GMT+04:00) Moscow</option>
+                                    <option value="Muscat">(GMT+04:00) Muscat</option>
+                                    <option value="St. Petersburg">(GMT+04:00) St. Petersburg</option>
+                                    <option value="Tbilisi">(GMT+04:00) Tbilisi</option>
+                                    <option value="Volgograd">(GMT+04:00) Volgograd</option>
+                                    <option value="Yerevan">(GMT+04:00) Yerevan</option>
+                                    <option value="Kabul">(GMT+04:30) Kabul</option>
+                                    <option value="Islamabad">(GMT+05:00) Islamabad</option>
+                                    <option value="Karachi">(GMT+05:00) Karachi</option>
+                                    <option value="Tashkent">(GMT+05:00) Tashkent</option>
+                                    <option value="Chennai">(GMT+05:30) Chennai</option>
+                                    <option value="Kolkata">(GMT+05:30) Kolkata</option>
+                                    <option value="Mumbai">(GMT+05:30) Mumbai</option>
+                                    <option value="New Delhi">(GMT+05:30) New Delhi</option>
+                                    <option value="Sri Jayawardenepura">(GMT+05:30) Sri Jayawardenepura</option>
+                                    <option value="Kathmandu">(GMT+05:45) Kathmandu</option>
+                                    <option value="Almaty">(GMT+06:00) Almaty</option>
+                                    <option value="Astana">(GMT+06:00) Astana</option>
+                                    <option value="Dhaka">(GMT+06:00) Dhaka</option>
+                                    <option value="Ekaterinburg">(GMT+06:00) Ekaterinburg</option>
+                                    <option value="Rangoon">(GMT+06:30) Rangoon</option>
+                                    <option value="Bangkok">(GMT+07:00) Bangkok</option>
+                                    <option value="Hanoi">(GMT+07:00) Hanoi</option>
+                                    <option value="Jakarta">(GMT+07:00) Jakarta</option>
+                                    <option value="Novosibirsk">(GMT+07:00) Novosibirsk</option>
+                                    <option value="Beijing">(GMT+08:00) Beijing</option>
+                                    <option value="Chongqing">(GMT+08:00) Chongqing</option>
+                                    <option value="Hong Kong">(GMT+08:00) Hong Kong</option>
+                                    <option value="Krasnoyarsk">(GMT+08:00) Krasnoyarsk</option>
+                                    <option value="Kuala Lumpur">(GMT+08:00) Kuala Lumpur</option>
+                                    <option value="Perth">(GMT+08:00) Perth</option>
+                                    <option value="Singapore">(GMT+08:00) Singapore</option>
+                                    <option value="Taipei">(GMT+08:00) Taipei</option>
+                                    <option value="Ulaan Bataar">(GMT+08:00) Ulaan Bataar</option>
+                                    <option value="Urumqi">(GMT+08:00) Urumqi</option>
+                                    <option value="Irkutsk">(GMT+09:00) Irkutsk</option>
+                                    <option value="Osaka">(GMT+09:00) Osaka</option>
+                                    <option value="Sapporo">(GMT+09:00) Sapporo</option>
+                                    <option value="Seoul">(GMT+09:00) Seoul</option>
+                                    <option value="Tokyo">(GMT+09:00) Tokyo</option>
+                                    <option value="Adelaide">(GMT+09:30) Adelaide</option>
+                                    <option value="Darwin">(GMT+09:30) Darwin</option>
+                                    <option value="Brisbane">(GMT+10:00) Brisbane</option>
+                                    <option value="Canberra">(GMT+10:00) Canberra</option>
+                                    <option value="Guam">(GMT+10:00) Guam</option>
+                                    <option value="Hobart">(GMT+10:00) Hobart</option>
+                                    <option value="Melbourne">(GMT+10:00) Melbourne</option>
+                                    <option value="Port Moresby">(GMT+10:00) Port Moresby</option>
+                                    <option value="Sydney">(GMT+10:00) Sydney</option>
+                                    <option value="Yakutsk">(GMT+10:00) Yakutsk</option>
+                                    <option value="New Caledonia">(GMT+11:00) New Caledonia</option>
+                                    <option value="Vladivostok">(GMT+11:00) Vladivostok</option>
+                                    <option value="Auckland">(GMT+12:00) Auckland</option>
+                                    <option value="Fiji">(GMT+12:00) Fiji</option>
+                                    <option value="Kamchatka">(GMT+12:00) Kamchatka</option>
+                                    <option value="Magadan">(GMT+12:00) Magadan</option>
+                                    <option value="Marshall Is.">(GMT+12:00) Marshall Is.</option>
+                                    <option value="Solomon Is.">(GMT+12:00) Solomon Is.</option>
+                                    <option value="Wellington">(GMT+12:00) Wellington</option>
+                                    <option value="Nuku'alofa">(GMT+13:00) Nuku'alofa</option>
+                                    <option value="Samoa">(GMT+13:00) Samoa</option>
+                                    <option value="Tokelau Is.">(GMT+13:00) Tokelau Is.</option>
+                                </select>
+              </div>
+            </div>
+            <hr>
+
+
+
+            <div class="form-group field" *ngIf="userDetail.IsSuperUser == false && user.IsSuperUser == true">
+              <label class="control-label col-md-3" for="member_role_id">Role</label>
+
+              <div class="col-md-9">
+
+                <div class="ms-container" id="ms-multi-select2">
+                  <div class="ms-selectable col-md-5" style="overflow-y:auto;height:200px;padding: 0;">
+                    <ul class="ms-list" tabindex="-1">
+                      <li class="ms-elem-selectable ms-selected" id="19-selectable" *ngFor="let item of roles | orderby" 
+                      (click)="setSelectedList(item)"><span>{{item.Name}}</span></li>
+                    </ul>
+                  </div>
+                  <div class="col-md-2"></div>
+                  <div class="ms-selection col-md-5" style="overflow-y:auto;height:200px;padding: 0;">
+                    <ul class="ms-list" tabindex="-1">
+                      <li class="ms-elem-selectable ms-selected" id="19-selection" 
+                      *ngFor="let item of userDetail.selectedRoles| orderby" 
+                      (click)="removeFromSelectedList(item)"><span>{{item.Name}}</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <hr>
+            <div class="field form-group" *ngIf="userDetail.userID != 0">
+              <label class="control-label col-md-3" for="member_password">Password</label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-key"></i>
+                  </span>
+                  <input class="form-control" id="member_password" name="member[password]" size="30" type="password" [(ngModel)]="userDetail.password">
+                </div>
+                <div id="password_strength">
+                </div>
+              </div>
+            </div>
+            <div class="field form-group" *ngIf="userDetail.userID != 0">
+              <label class="control-label col-md-3" for="member_password_confirmation">Password confirmation</label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                                        <i class="fa fa-key"></i>
+                                    </span>
+                  <input class="form-control" id="member_password_confirmation" name="member[password_confirmation]" size="30" type="password"
+                    [(ngModel)]="userDetail.confirmPassword">
+                </div>
+              </div>
+            </div>
+            <hr *ngIf="userDetail.userID != 0">
+            <div class="field form-group">
+              <label class="control-label col-md-3" for="member_FirstName">First Name</label>
+              <div class="col-md-9">
+                <input class="form-control" id="member_FirstName" name="member[FirstName]" size="30" type="text" [(ngModel)]="userDetail.firstName">
+              </div>
+            </div>
+            <div class="field form-group">
+              <label class="control-label col-md-3" for="member_LastName">Last Name</label>
+              <div class="col-md-9">
+                <input class="form-control" id="member_LastName" name="member[LastName]" size="30" type="text" [(ngModel)]="userDetail.lastName">
+              </div>
+            </div>
+            <div class="field form-group">
+              <label class="control-label col-md-3" for="member_MobileNumber">Mobile Number</label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                  <input class="form-control" id="member_MobileNumber" name="member[MobileNumber]" size="30" type="text" [(ngModel)]="userDetail.mobileNumber">
+                </div>
+              </div>
+            </div>
+            <div class="field form-group">
+              <label class="control-label col-md-3" for="member_WorkNumber">Work Number</label>
+              <div class="col-md-9">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </span>
+                  <input class="form-control" id="member_WorkNumber" name="member[WorkNumber]" size="30" type="text" [(ngModel)]="userDetail.workNumber">
+                </div>
+              </div>
+            </div>
+
+
+            <div class="field form-group">
+              <label class="control-label col-md-3" for="member_PictureFile">Profile Picture</label>
+              <div class="col-md-9">
+                <span style="color: gray">{{userDetail.imageName}}</span><br>
+                <input id="member_PictureFile" name="member[PictureFile]" type="file" 
+                  onchange="angular.element(this).scope().setFile(this)"
+                  accept="image/*">
+              </div>
+            </div>
+            <hr>
+
+
+            <div class="form-group field" *ngIf="eventTypes.length >0">
+              <label class="control-label col-md-3" for="member_DaysArr">Email Notifications</label>
+              <div class="col-md-9">
+                <div *ngFor="let event of eventTypes; let i =index">
+                  <div class="checkbox block">
+                    <label>
+                        <input type="checkbox" id="Checkbox1" [(ngModel)]="event.IsSelected" name="event.EventTypeID{{i}}">
+                        <span>{{event.EventTypeName}}</span>
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group field">
+              <label class="control-label col-md-3" for="member_EmailNotificationsEnabled">Invoice Digest Enabled</label>
+              <div class="col-md-9">
+                <input name="member[EmailNotificationsEnabled]" type="hidden" value="0">
+                <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-on 
+                  bootstrap-switch-animate bootstrap-switch-id-member_EmailNotificationsEnabled">
+                  <div class="bootstrap-switch-container">
+                    <input type="checkbox" [(ngModel)]="userDetail.invoiceDigestEnabled" bootstrap-switch class="bootstrap-switch switch-alt"
+                      data-off-color="default" data-on-color="success" name="userDetail.invoiceDigestEnabled" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group field">
+              <label class="control-label col-md-3" for="member_DaysArr">Digest Days</label>
+              <div class="col-md-9">
+                <div class="checkbox block">
+                  <label>
+                      <input type="checkbox" id="member_DigestDays_0" name="userDetail.digestDayEnabled7" [(ngModel)]="userDetail.digestDayEnabled7">
+                      Sunday
+                  </label>
+                </div>
+                <div class="checkbox block">
+                  <label>
+                      <input type="checkbox" id="member_DigestDays_1" name="userDetail.digestDayEnabled1" [(ngModel)]="userDetail.digestDayEnabled1">
+                      Monday
+                  </label>
+                </div>
+                <div class="checkbox block">
+                  <label>
+                      <input type="checkbox" id="member_DigestDays_2" name="userDetail.digestDayEnabled2" [(ngModel)]="userDetail.digestDayEnabled2">
+                      Tuesday
+                  </label>
+                </div>
+                <div class="checkbox block">
+                  <label>
+                      <input type="checkbox" id="member_DigestDays_3" name="userDetail.digestDayEnabled3" [(ngModel)]="userDetail.digestDayEnabled3">
+                      Wednesday
+                  </label>
+                </div>
+                <div class="checkbox block">
+                  <label>
+                      <input type="checkbox" id="member_DigestDays_4" name="userDetail.digestDayEnabled4" [(ngModel)]="userDetail.digestDayEnabled4">
+                      Thursday
+                  </label>
+                </div>
+                <div class="checkbox block">
+                  <label>
+                      <input type="checkbox" id="member_DigestDays_5" name="userDetail.digestDayEnabled5" [(ngModel)]="userDetail.digestDayEnabled5">
+                      Friday
+                  </label>
+                </div>
+                <div class="checkbox block">
+                  <label>
+                    <input type="checkbox" id="member_DigestDays_6" name="userDetail.digestDayEnabled6" [(ngModel)]="userDetail.digestDayEnabled6">
+                    Saturday
+                </label>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="form-group field">
+              <label class="control-label col-md-3" for="member_digest_start">Digest Timespan</label>
+              <div class="col-md-9">
+
+                <input type="text" id="example_id" name="example_name" />
+                <br>
+
+                <span class="irs js-irs-0 irs-with-grid" style="height:27px;margin-top: -35px;">
+    
+                                    <span class="irs-grid" style="width: 97.6571%; left: 1.07146%;">
+                                        <span class="irs-grid-pol" style="left: 0%"></span>
+                <span class="irs-grid-text js-grid-text-0" style="left: 0%; margin-left: -2.28967%;">12:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 2.08478%"></span>
+                <span class="irs-grid-pol" style="left: 4.16956%"></span>
+                <span class="irs-grid-text js-grid-text-1" style="left: 4.16956%; visibility: visible; margin-left: -2.07667%;">1:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 6.25434%"></span>
+                <span class="irs-grid-pol" style="left: 8.33912%"></span>
+                <span class="irs-grid-text js-grid-text-2" style="left: 8.33912%; visibility: visible; margin-left: -2.07667%;">2:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 10.4239%"></span>
+                <span class="irs-grid-pol" style="left: 12.50868%"></span>
+                <span class="irs-grid-text js-grid-text-3" style="left: 12.5087%; visibility: visible; margin-left: -2.07667%;">3:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 14.59346%"></span>
+                <span class="irs-grid-pol" style="left: 16.67824%"></span>
+                <span class="irs-grid-text js-grid-text-4" style="left: 16.6782%; margin-left: -2.07667%;">4:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 18.76302%"></span>
+                <span class="irs-grid-pol" style="left: 20.8478%"></span>
+                <span class="irs-grid-text js-grid-text-5" style="left: 20.8478%; visibility: visible; margin-left: -2.07667%;">5:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 22.93258%"></span>
+                <span class="irs-grid-pol" style="left: 25.01736%"></span>
+                <span class="irs-grid-text js-grid-text-6" style="left: 25.0174%; visibility: visible; margin-left: -2.07667%;">6:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 27.10214%"></span><span class="irs-grid-pol" style="left: 29.18692%"></span>
+                <span class="irs-grid-text js-grid-text-7" style="left: 29.1869%; visibility: visible; margin-left: -2.07667%;">7:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 31.2717%"></span>
+                <span class="irs-grid-pol" style="left: 33.35648%"></span>
+                <span class="irs-grid-text js-grid-text-8" style="left: 33.3565%; margin-left: -2.07667%;">8:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 35.44126%"></span>
+                <span class="irs-grid-pol" style="left: 37.52604%"></span>
+                <span class="irs-grid-text js-grid-text-9" style="left: 37.526%; visibility: visible; margin-left: -2.07667%;">9:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 39.61082%"></span>
+                <span class="irs-grid-pol" style="left: 41.6956%"></span>
+                <span class="irs-grid-text js-grid-text-10" style="left: 41.6956%; visibility: visible; margin-left: -2.34292%;">10:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 43.78038%"></span>
+                <span class="irs-grid-pol" style="left: 45.86516%"></span>
+                <span class="irs-grid-text js-grid-text-11" style="left: 45.8652%; visibility: visible; margin-left: -2.28967%;">11:00 AM</span>
+                <span class="irs-grid-pol small" style="left: 47.94994%"></span>
+                <span class="irs-grid-pol" style="left: 50.03472%"></span>
+                <span class="irs-grid-text js-grid-text-12" style="left: 50.0347%; margin-left: -2.28967%;">12:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 52.1195%"></span>
+                <span class="irs-grid-pol" style="left: 54.20428%"></span>
+                <span class="irs-grid-text js-grid-text-13" style="left: 54.2043%; visibility: visible; margin-left: -2.02343%;">1:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 56.28906%"></span>
+                <span class="irs-grid-pol" style="left: 58.37384%"></span>
+                <span class="irs-grid-text js-grid-text-14" style="left: 58.3738%; visibility: visible; margin-left: -2.02343%;">2:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 60.45862%"></span>
+                <span class="irs-grid-pol" style="left: 62.5434%"></span>
+                <span class="irs-grid-text js-grid-text-15" style="left: 62.5434%; visibility: visible; margin-left: -2.02343%;">3:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 64.62818%"></span>
+                <span class="irs-grid-pol" style="left: 66.71296%"></span>
+                <span class="irs-grid-text js-grid-text-16" style="left: 66.713%; margin-left: -2.02343%;">4:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 68.79774%"></span>
+                <span class="irs-grid-pol" style="left: 70.88252%"></span>
+                <span class="irs-grid-text js-grid-text-17" style="left: 70.8825%; visibility: visible; margin-left: -2.02343%;">5:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 72.9673%"></span>
+                <span class="irs-grid-pol" style="left: 75.05208%"></span>
+                <span class="irs-grid-text js-grid-text-18" style="left: 75.0521%; visibility: visible; margin-left: -2.02343%;">6:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 77.13686%"></span>
+                <span class="irs-grid-pol" style="left: 79.22164%"></span>
+                <span class="irs-grid-text js-grid-text-19" style="left: 79.2216%; visibility: visible; margin-left: -2.02343%;">7:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 81.30642%"></span>
+                <span class="irs-grid-pol" style="left: 83.3912%"></span>
+                <span class="irs-grid-text js-grid-text-20" style="left: 83.3912%; margin-left: -2.02343%;">8:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 85.47598%"></span>
+                <span class="irs-grid-pol" style="left: 87.56076%"></span>
+                <span class="irs-grid-text js-grid-text-21" style="left: 87.5608%; visibility: visible; margin-left: -2.02343%;">9:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 89.64554%"></span>
+                <span class="irs-grid-pol" style="left: 91.73032%"></span>
+                <span class="irs-grid-text js-grid-text-22" style="left: 91.7303%; visibility: visible; margin-left: -2.28967%;">10:00 PM</span>
+                <span class="irs-grid-pol small" style="left: 93.8151%"></span>
+                <span class="irs-grid-pol" style="left: 95.89988%"></span>
+                <span class="irs-grid-text js-grid-text-23" style="left: 95.8999%; visibility: visible; margin-left: -2.28967%;">11:00 PM</span>
+                <span class="irs-grid-pol" style="left: 100%"></span>
+                <span class="irs-grid-text js-grid-text-24" style="left: 100%; margin-left: -2.28967%;">11:59 PM</span>
+                </span>
+                <span class="irs-bar" style="left: 41.8902%; width: 40.7187%;"></span>
+                <span class="irs-shadow shadow-from" style="display: none;"></span>
+                <span class="irs-shadow shadow-to" style="display: none;"></span>
+                <!--<span class="irs-slider from type_last" style="left: 40.7187%;"></span>
+                                    <span class="irs-slider to" style="left: 81.4374%;"></span>-->
+                </span>
+
+              </div>
+            </div>
+            <div class="form-group field">
+              <label class="control-label col-md-3" for="member_NumberOfDigests">Number of digests</label>
+              <div class="col-md-9">
+
+                <div class="form-group">
+                  <!--<ui-select ng-model="selectedInvoiceDigest.selected" theme="select2" style="width:100%">
+                    <ui-select-match placeholder="Select Number Digest">{{selectedInvoiceDigest.selected.numberOfDigests}}</ui-select-match>
+                    <ui-select-choices repeat="dig in Digests| filter: $select.search">
+                      {{dig.numberOfDigests}}
+                    </ui-select-choices>
+                  </ui-select>-->
+
+                  <p-dropdown [options]="digests" 
+                    [(ngModel)]="selectedDigestArray" 
+                    [filter]="true" 
+                    [autoWidth]="true" 
+                    (ngModelChange)="onSelectedDigest(selectedDigestArray)"
+                    name="selectedDigestArray">
+                  </p-dropdown>
+                </div>
+                <br>
+                <p class="form-control-static" style="text-align: center">
+                  <span class="text-warning">**Digests will be sent out at equal intervals starting at the beginnnig of the timespan selected above, and continue to be sent out at equal intervals throughout the day.  
+                                    </span>
+                  <br>
+                  <strong>For example:</strong> If you've selected 2 digests between 8AM and 8PM (twelve hours apart), the
+                  first digest will arrive at 8AM and the second will arrive at 2PM (six hours later).
+                </p>
+              </div>
+            </div>
+            <hr>
+            <div class="form-group actions">
+              <label class="control-label col-md-3">&nbsp;</label>
+              <div class="col-md-9">
+                <input class="btn btn-primary" name="commit" (click)="savePortalUser()" value="Save" type="button">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

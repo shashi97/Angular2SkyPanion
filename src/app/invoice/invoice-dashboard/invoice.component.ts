@@ -91,7 +91,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       let pageSizeFilter = params['pageSizeFilter'];
       let searchParameters = params['searchParameters'];
 
-      if (searchParameters != '-1') {
+      if (searchParameters !== '-1') {
         let parameterArray: Array<string> = parameterValue.searchParameters.split(',');
         this.invoiceFilteredValue.invFromDate = parameterArray[0];
         this.invoiceFilteredValue.invToDate = parameterArray[1];
@@ -101,7 +101,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
         this.invoiceFilteredValue.vendorId = parseInt(parameterArray[5]);
       }
 
-      if (pageSizeFilter != '-1') {
+      if (pageSizeFilter !== '-1') {
         this.currentPageFiltered.pageSizeFilter = pageSizeFilter;
       }
 

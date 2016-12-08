@@ -11,12 +11,12 @@ export class RoleService {
 
   }
 
-  public getRoles(): Promise<RoleModel[]> {
+  public getRoles() {
     return this.http
       .get(ApiUrl.baseUrl + 'api/roles')
       .toPromise()
-      .then(Response => Response.json() as RoleModel[])
-      .catch(this.handleError);
+      .then(Response => Response.json())
+      .catch(error => error);
   }
 
   public handleError(error: any): Promise<any> {
@@ -29,6 +29,7 @@ export class RoleService {
       .get(ApiUrl.baseUrl + 'api/roles/roleType')
       .map((res: Response) => res.json());
   }
+
   public getRoleList(roleName, pageNumber, rowsPerPage): Promise<any> {
     return this.http
       .get(ApiUrl.baseUrl
@@ -40,7 +41,7 @@ export class RoleService {
       + rowsPerPage)
       .toPromise()
       .then(Response => Response.json() as any)
-      .catch(this.handleError);
+       .catch(error => error);
   }
   public getMemberRoleDetail(roleID): Promise<any> {
     return this.http
@@ -49,7 +50,7 @@ export class RoleService {
       + roleID)
       .toPromise()
       .then(Response => Response.json() as any)
-      .catch(this.handleError);
+       .catch(error => error);
   }
 
   public getRolesByRoleId(roleId): Promise<any> {
@@ -59,7 +60,7 @@ export class RoleService {
       + roleId)
       .toPromise()
       .then((Response) => Response.json() as any)
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
 
@@ -71,7 +72,7 @@ export class RoleService {
       , data)
       .toPromise()
       .then((Response) => Response.json() as any)
-      .catch(this.handleError);
+       .catch(error => error);
   }
 
   public deleteRole(roleId): Promise<any> {
@@ -82,7 +83,7 @@ export class RoleService {
       , roleId)
       .toPromise()
       .then((Response) => Response.json() as any)
-      .catch(this.handleError);
+       .catch(error => error);
   }
 
 }

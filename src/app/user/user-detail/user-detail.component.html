@@ -1,0 +1,29 @@
+<div id="slider" class="page-content">
+
+  <div class="page-heading">
+    <sp-user-detail-filter-bar *ngIf="userDetail" [userDetail]="userDetail"></sp-user-detail-filter-bar>
+  </div>
+
+  <!--<sp-crumb-bar *ngIf="vendorDetail" [pageDetail]="vendorDetail"></sp-crumb-bar>-->
+  <ol class="breadcrumb" *ngIf="userDetail" [hidden]="userDetail.IsSuperUser != true">
+    <li>
+      <a href="#/users/{{pageSizeFilter}}/-1">All Users</a>
+    </li>
+    <li class="active">{{userDetail.userName}}</li>
+  </ol>
+
+  <div class="container-fluid">
+    <div id="panel-advancedoptions">
+
+      <div class="col-md-4">
+        <!--<img *ngIf="userDetail" [src]="userDetail.imagePath" [title]="userDetail.imageName">-->
+      </div>
+
+      <div id="attributes" class="col-md-8">
+        <sp-user-detail-attribute *ngIf="userDetail" [userDetail]="userDetail"></sp-user-detail-attribute>
+      </div>
+
+    </div>
+  </div>
+
+</div>

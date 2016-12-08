@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, URLSearchParams } from '@angular/http';
+import { Http, URLSearchParams, RequestOptions, Headers } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import { ApiUrl } from '../../config.component';
@@ -69,9 +69,39 @@ export class UserService {
       .catch(error => error);
   }
 
-  getUserById(userID) {
+  public getUserById(userID) {
     return this.http
       .get(ApiUrl.baseUrl + 'api/users/' + userID)
+      .toPromise()
+      .then(response => response.json())
+      .catch(error => error);
+  }
+
+
+  public getUsers(userTypeID, roleID, pageNumber, rowsPerPage) {
+
+    let stringUrl = ApiUrl.baseUrl
+      + 'api/users/' + userTypeID + '/' + roleID + '/' + pageNumber + '/' + rowsPerPage;
+
+    return this.http.get(stringUrl)
+      .toPromise()
+      .then(response => response.json())
+      .catch(error => error);
+  }
+
+  public getEmailEventTypes() {
+    return this.http.get(ApiUrl.baseUrl + 'api/users/getEmailEventTypes')
+      .toPromise()
+      .then(response => response.json())
+      .catch(error => error);
+  }
+
+  public savePortalUser(userPortal) {
+    let options = new RequestOptions();
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/json, charset=utf-8');
+    let data = JSON.stringify(userPortal);
+    return this.http.post(ApiUrl.baseUrl + 'api/users/newOrUpdate', data, options)
       .toPromise()
       .then(response => response.json())
       .catch(error => error);
