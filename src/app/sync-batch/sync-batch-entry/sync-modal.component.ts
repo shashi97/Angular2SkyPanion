@@ -16,19 +16,12 @@ export class SyncModalContext extends BSModalContext {
  * A Sample of how simple it is to create a new window, with its own injects.
  */
 @Component({
-    selector: 'sp-sync-modal',
-    //styleUrls: ['./bootstrap.min.css'],
-    //TODO: [ngClass] here on purpose, no real use, just to show how to workaround ng2 issue #4330.
-    // Remove when solved.
-    /* tslint:disable */
+    selector: 'modal',
     templateUrl: './sync-modal.component.html',
 })
 
 export class SyncModelComponent implements CloseGuard, ModalComponent<SyncModalContext> {
     //  context: CustomModalContext;
-
-
-    
     private syncModel: SyncModalContext;
     private rejectionComment: string;
     private errorsInv: Array<any> = [];
@@ -45,9 +38,9 @@ export class SyncModelComponent implements CloseGuard, ModalComponent<SyncModalC
         this.dialog.close();
     }
 
-    private rejectInvoice():boolean {
-        if (this.rejectionComment == null || this.rejectionComment == "") {
-            var obj = { ErrorName: "Rejection Memo Required to Invoice" }
+    private rejectInvoice(): boolean {
+        if (this.rejectionComment == null || this.rejectionComment === '') {
+            let obj = { ErrorName: 'Rejection Memo Required to Invoice' };
             this.errorsInv.splice(this.errorsInv.length, 0, obj);
         }
 
@@ -56,14 +49,16 @@ export class SyncModelComponent implements CloseGuard, ModalComponent<SyncModalC
             return false;
         }
 
-        this.syncBatchService.rejectInvoice(this.syncModel.invoiceId, this.syncModel.companyId, this.syncModel.invAmount, this.syncModel.rejectionComment).then((result) => {
-            if (result.Status == 500) {
-            }
-            else {
+        this.syncBatchService.rejectInvoice(
+            this.syncModel.invoiceId,
+            this.syncModel.companyId,
+            this.syncModel.invAmount,
+            this.syncModel.rejectionComment).then((result) => {
+            if (result.Status === 500) {
+            } else {
                 this.rejectionComment = null;
                 this.dialog.close(true);
-               
-                //var elementText1 = angular.element('#dgRejectInvoice');
+                // var elementText1 = angular.element('#dgRejectInvoice');
                 // elementText1.modal("hide");
                 // $scope.getSyncBatcheInvoices()
                 // $scope.dashboardMessage = "Invoice Number " + $scope.InvoiceNumber + "  rejected Successfully"; need to be conferm
@@ -71,6 +66,5 @@ export class SyncModelComponent implements CloseGuard, ModalComponent<SyncModalC
             }
         });
     }
-    
 
 }

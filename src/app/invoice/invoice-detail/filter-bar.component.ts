@@ -7,6 +7,7 @@ import { InvoiceModel } from '../shared/invoice.model';
 
 import { MasterService } from '../../shared/services/master/master.service';
 import { InvoiceService } from '../../invoice/shared/invoice.service';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'sp-invoice-detail-filter-bar',
@@ -21,7 +22,8 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
     localStorageService: LocalStorageService,
     router: Router,
     private masterService: MasterService,
-    private invoiceService: InvoiceService
+    private invoiceService: InvoiceService,
+    public toastr: ToastsManager
   ) {
     super(localStorageService, router);
   }
@@ -32,6 +34,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
   private getInvoiceDetailsByID(): void {
     this.masterService.checkDocumentLocking(this.invoiceDetail.InvoiceID, 10).then(result => {
       if (result.IsLocked === 0) {
+        this.toastr.error('This Invoice is locked by' + result.LockBy, 'Oops!');
         // messageService.showMsgBox("error", "This Invoice is locked by " + result.data.LockBy, "error");
         return;
       } else {
@@ -59,6 +62,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
             this.invoiceService.submitInvoiceForApproval(invoice.InvoiceID).then(function (response) {
               if (response.Status === 500) {
               } else {
+                this.toastr.success('Invoice submit for approval successfully', 'Success!');
                 // messageService.showMsgBox("Success", "Invoice submit for approval successfully", "success");
                 // $location.path('/dashboard');
               }
@@ -83,6 +87,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
     this.masterService.checkLockedDocumentState(documentLockingId, docType, documentId)
       .then(result => {
         if (result.data.IsLocked === 0) {
+          this.toastr.error('This invoice is locked by' + result.LockBy, 'Oops!');
           // messageService.showMsgBox("error", "This invoice is locked by " + result.data.LockBy, "error");
           return;
         } else {
@@ -90,6 +95,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
             this.invoiceService.submitInvoiceExpedite(invoice.InvoiceID).then(function (response) {
               if (response.Status === 500) {
               } else {
+                 this.toastr.success('Invoice expedited successfully', 'Success!');
                 // messageService.showMsgBox("Success", "Invoice expedited successfully", "success");
                 // $location.path('/dashboard');
               }

@@ -188,7 +188,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
     //    })
 
     return this.modal.open(CustomModal, overlayConfig)
-      .catch(err => alert('ERROR'))
+      .catch (err => alert('ERROR'))
       .then(dialog => dialog.result)
       .then(result => {
         this.getIniSetupDetails();

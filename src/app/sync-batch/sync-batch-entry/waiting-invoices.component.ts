@@ -32,6 +32,7 @@ export class WaitingInvoiceComponent extends BaseComponent implements OnInit {
     ) {
         super(localStorageService, router);
         this.syncBatch = new SyncBatchModel();
+        overlay.defaultViewContainer = vcRef;
     }
 
     ngOnInit() {
