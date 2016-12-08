@@ -30,7 +30,7 @@ import { TooltipModule } from 'ng2-tooltip';
 /* for dropdown */
 import { SelectModule } from 'angular2-select';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
-
+import { ClickOutsideModule } from 'ng2-click-outside';
 
 
 
@@ -49,6 +49,7 @@ import { VendorService } from './vendor/shared/vendor.service';
 import { DashboardService } from './dashboard/shared/dashboard.service';
 import { LedgerAccountService } from './ledger-account/shared/ledger-account.service';
 import { ApprovalCriteriaService } from './approval-criteria/shared/approval-criteria.service';
+import { ApprovalModalComponent } from './approval-criteria/approval-dashboard/approval-criteria.modal';
 import { IniSetupService } from './ini-setup/shared/ini-setup.service';
 import { RoleService } from './role/shared/role.service';
 import { AchSetupService } from './ach-setups/shared/ach-setup.service';
@@ -274,11 +275,13 @@ let localStorageServiceConfig = {
     RoleEntryComponent,
     RoleFilterComponent,
     SyncModelComponent,
-    CustomModal
+    CustomModal,
+    ApprovalModalComponent
   ],
    entryComponents: [
     SyncModelComponent,
-    CustomModal
+    CustomModal,
+    ApprovalModalComponent
 
 
   ],
@@ -296,7 +299,8 @@ let localStorageServiceConfig = {
     ModalModule.forRoot(),
     BootstrapModalModule,
     TooltipModule,
-    ToastModule
+    ToastModule,
+    ClickOutsideModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

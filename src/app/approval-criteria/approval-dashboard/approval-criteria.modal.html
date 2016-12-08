@@ -1,0 +1,95 @@
+    <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{modelHeader}}</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form" class="form-horizontal">
+
+                        <!--<div id="error_explanation" class="alert alert-danger" *ngIf="errors.length > 0" data-ng-style="showHideErrorLog">
+                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                            <h3>{{errorHeader}}</h3>
+                            <ul>
+                                <li data-ng-repeat="error in errors">{{error.ErrorName}}</li>
+                            </ul>
+                        </div>-->
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label ">Company </label>
+                            <div class="col-md-8">
+                                <input class="form-control" disabled="disabled" type="text" [(ngModel)]="companyName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label ">Approver </label>
+                            <div class="col-md-8">
+                                <input class="form-control" disabled="disabled" type="text" *ngIf="companyID==0" [(ngModel)]="userName">
+                                <!--<ui-select ng-model="selectedApprover.selected"
+                                           theme="select2"
+                                           *ngIf="companyID!=0"
+                                           style="width: 100%">
+                                    <ui-select-match placeholder="Select a Approver">{{selectedApprover.selected.username}}</ui-select-match>
+                                    <ui-select-choices repeat="user in approvers| filter: $select.search">
+                                        {{user.username}}
+                                    </ui-select-choices>
+                                </ui-select>-->
+                            </div>
+                        </div>
+                        <div class="form-group" *ngIf="type=='ledger' || ledgerAccountID != null">
+                            <label class="col-md-4 control-label">Ledger Account </label>
+                            <div class="col-md-8">
+                                <!--<ui-select ng-model="selectedLedgerAccount.selected"
+                                           theme="select2"
+                                           style="width: 100%">
+                                    <ui-select-match placeholder="Select a LedgerAccount">{{selectedLedgerAccount.selected.LedgerAccount}}</ui-select-match>
+                                    <ui-select-choices repeat="ledacc in ledgerAccounts| filter: $select.search">
+                                        {{ledacc.LedgerAccount}}
+                                    </ui-select-choices>-->
+                                <!--</ui-select>-->
+                            </div>
+                        </div>
+                        <!--data-ng-class="{'has-error': rangeStart == '0.00'}"-->
+
+                        <div class="form-group" *ngIf="(type=='' || type=='range') && ledgerAccountID == null">
+                            <label class="col-md-4 control-label">Range Start </label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-usd"></i>
+                                    </span>
+                                    <input class="form-control" placeholder="Enter the start of the range" type="text" valid-number [(ngModel)]="rangeStart" ng-change="checkRangeAmount()">
+                                </div>
+                            </div>
+                        </div>
+                        <!--data-ng-class="{'has-error': rangeEnd == '0.00'}"-->
+
+                        <div class="form-group" *ngIf="(type=='' || type=='range') && ledgerAccountID == null">
+                            <label class="col-md-4 control-label">Range End </label>
+                            <div class="col-md-8">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-usd"></i>
+                                    </span>
+                                    <input class="form-control" placeholder="Enter the end of the range" type="text" valid-number [(ngModel)]="rangeEnd" ng-change="checkRangeAmount()">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="error " *ngIf="rangeAmtError">
+                            <small class="pull-right alert-danger">
+                                Range Start cannot exceed Range End
+                            </small>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default close_button" (click)="closeModel()">Close</button>
+                    <button type="button" class="btn btn-primary" (click)="saveApprovalCriteria()">Save</button>
+                </div>
+            </div>
+
+
+

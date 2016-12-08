@@ -15,6 +15,7 @@ import { UserService } from '../../user/shared/user.service';
 import { RoleService } from '../../role/shared/role.service';
 
 import { OrderByPipe } from '../../shared/pipe/orderby';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 declare let jQuery: any;
 
@@ -54,7 +55,8 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private location: Location,
     private roleService: RoleService,
-    private _elRef: ElementRef
+    private _elRef: ElementRef,
+    public toastr: ToastsManager
   ) {
     super(localStorageService, router);
     this.getSessionDetails();
@@ -289,7 +291,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
   }
 
 
-  private savePortalUser(): void {
+  private savePortalUser(): boolean {
     this.errors = [];
     this.errorHeader = '';
 
@@ -308,8 +310,8 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
       // if (!regexp1.test(this.User.email)) {
       //   //alert('Please Enter Reciever Mail Address With Correct Fromat');
       //   messageService.showMsgBox('Invoice', 'Please Enter Reciever Mail Address With Correct Fromat', 'error');
-
-      //   return false;
+        this.toastr.error('Please Enter Reciever Mail Address With Correct Fromat', 'Oops!');
+         return false;
       // }
     }
 
@@ -413,7 +415,8 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
         // this.showHideErrorLog = { 'display': 'none' };
         // this.displayValue = 'none';
         // alert('Member successfully saved.');
-        // messageService.showMsgBox('Success', 'Member successfully saved.', 'success');
+         // messageService.showMsgBox('Success', 'Member successfully saved.', 'success');
+         this.toastr.success('Member successfully saved.', 'Success!');
         // $location.path('/usersList/-1/-1');
         let link = ['users/-1/-1'];
         this.router.navigate(link);

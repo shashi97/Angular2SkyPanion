@@ -84,7 +84,7 @@ const APP_ROUTES: Routes = [
   { path: 'role/:SearchParameters', component: RoleComponent },
   { path: 'roles/:SearchParameters/:RoleId', component: RoleViewComponent },
   { path: 'roles/:SearchParameters/:roleId/edit', component: RoleEntryComponent },
-
+  { path: 'rolesAdd/:roleId/new', component: RoleEntryComponent},
 
   { path: 'syncBatches', component: SyncBatchComponent },
   { path: 'syncBatches/syncBatchDetail/:syncBatchId', component: SyncBatchDetailComponent },

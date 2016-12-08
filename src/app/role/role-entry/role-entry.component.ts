@@ -9,6 +9,7 @@ import {CurrentPageArguments} from '../../pagination/pagination.component';
 import { AccountService } from '../../account/shared/account.service';
 import { RoleService } from '../shared/role.service';
 import { RoleModel } from '../shared/role.model';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
     selector: 'sp-role-entry',
@@ -29,7 +30,8 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
         private userService: UserService,
         private accountService: AccountService,
         private roleService: RoleService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        public toastr: ToastsManager
 
     ) {
         super(localStorageService, router);
@@ -104,6 +106,7 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
    private saveRole(): boolean  {
 
             if (this.roleDetail.RoleName === '' || this.roleDetail.RoleName == null) {
+                 this.toastr.error('Please enter role name', 'Oops!');
                // messageService.showMsgBox("Error", "Please enter role name", "error");
                 return false;
             }
@@ -112,6 +115,7 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
                 if (result.status === 404) {
                 } else if (result.status === 500) {
                 } else {
+                    this.toastr.success('Role saved successfully', 'Success!');
                    // messageService.showMsgBox("Success", "Role saved successfully", "success");
                     // $location.path('/roles/' + $scope.searchParameters + '/' + result.data)
                      let link = ['/roles/' + this.SearchParameters + '/' + result];
