@@ -7,6 +7,11 @@ import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { ApprovalContext, ApprovalModalComponent } from './approval-criteria.modal';
 
 import { ApprovalCriteriaModel } from '../shared/approval-criteria.model';
+import { DragulaModule } from  'ng2-dragula/ng2-dragula';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
+import { ApprovalCriteriaService } from '../shared/approval-criteria.service'
+import 'jquery';
+declare var jQuery:any;
 
 @Component({
     selector: 'sp-approvals-view',
@@ -19,16 +24,38 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
     @Input() companyId:number;
     @Input() approvers:Array<any>;
     @Output() approvalCreteriaChanged: EventEmitter<any> = new EventEmitter<any>();
+    private approvalListForUpdate : Array<any> = [];
+    private newWeightCount :number = 0;
 
     constructor(
         localStorageService: LocalStorageService,
         router: Router,
         vcRef: ViewContainerRef,
         overlay: Overlay,
-        public modal: Modal
+        public modal: Modal,
+        private dragulaService: DragulaService,
+        private approvalCriteriaService: ApprovalCriteriaService
     ) {
         super(localStorageService, router);
+            dragulaService.drag.subscribe((value) => {
+            console.log(`drag: ${value[0]}`);
+            this.onDrag(value.slice(1));
+            });
+        dragulaService.drop.subscribe((value) => {
+        console.log(`drop: ${value[0]}`);
+        this.onDrop(value.slice(1));
+        });
     }
+
+     private onDrag(args) {
+        let [e, el] = args;
+  }
+
+  private onDrop(args) {
+    let [e, el] = args;
+    this.sortApprovalCriteriaList();
+  }
+
 
     ngOnInit() {
     }
@@ -61,4 +88,25 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
               //  this.getIniSetupDetails();
             });
     }
+
+       private sortApprovalCriteriaList (): void {
+            if(this.approvals){
+                this.newWeightCount = 0;
+                this.approvalListForUpdate = [];
+                    for(var i = 0 ; i <this.approvals.length ; i++){
+                          var obj ={
+                              ApprovalCriteriaID:this.approvals[i].ApprovalCriteriaID,
+                              Weight:this.newWeightCount++,
+                              CompanyID:this.approvals[i].CompanyID
+                          }  
+                           this.approvalListForUpdate.splice(this.approvalListForUpdate.length, 0, obj);
+                    }
+
+                     this.approvalCriteriaService.updateApprovers(this.approvalListForUpdate).then(result => {
+       
+                        });
+
+            }
+   }
+
 }

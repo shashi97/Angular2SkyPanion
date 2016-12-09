@@ -33,6 +33,9 @@ import { SelectModule } from 'angular2-select';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { ClickOutsideModule } from 'ng2-click-outside';
 
+/* for drag and drop grid rows */
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+
 
 
 /* bootstrap components start */
@@ -293,6 +296,7 @@ let localStorageServiceConfig = {
     FormsModule,
     HttpModule,
     routing,
+    DragulaModule,
     Angular2DataTableModule,
     AlertModule,
     DataTableModule,
