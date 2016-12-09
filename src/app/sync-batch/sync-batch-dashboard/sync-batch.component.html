@@ -34,11 +34,11 @@
           <td>{{item.BatchDate}}</td>
           <td>
 
-            <div class="ui-grid-cell-contents" [ngClass]="{'text-warning': item.Synced == 'Never Synced'}" *ngIf="item.Synced == 'Never Synced'">
+            <div [ngClass]="{'text-warning': item.Synced == 'Never Synced'}" *ngIf="item.Synced == 'Never Synced'">
               <i class="fa fa-exclamation"></i> {{item.Synced}}
             </div>
 
-            <div class="ui-grid-cell-contents" [ngClass]="{'text-success': item.Synced == 'Synced'}" *ngIf="item.Synced == 'Synced'">
+            <div [ngClass]="{'text-success': item.Synced == 'Synced'}" *ngIf="item.Synced == 'Synced'">
               <i class="fa fa-check"></i> {{item.Synced}}
             </div>
 
@@ -48,9 +48,7 @@
         </tr>
       </tbody>
     </table>
-    <sp-pagination [dataSource]='syncBatchs'
-      [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)'
-      [currentPageFiltered]='currentPageFiltered'>
+    <sp-pagination [dataSource]='syncBatchs' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'>
     </sp-pagination>
   </div>
 

@@ -73,6 +73,10 @@ export class CompanyComponent extends BaseComponent implements OnInit {
 
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
+    this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+      + this.filteredValue.searchText + ','
+      + this.filteredValue.syncId + ','
+      + this.filteredValue.syncTypeId;
     this.getCompanies();
   }
 
@@ -88,12 +92,11 @@ export class CompanyComponent extends BaseComponent implements OnInit {
 
   private getParameterValues(): void {
     this.route.params.subscribe(params => {
-      let parameterValue: any = ((params) ? params : 1);
       let pageSizeFilter = params['pageSizeFilter'];
       let searchParameters = params['searchParameters'];
 
       if (searchParameters !== '-1') {
-        let parameterArray: Array<string> = parameterValue.searchParameters.split(',');
+        let parameterArray: Array<string> = searchParameters.split(',');
         this.filteredValue.searchText = parameterArray[0];
         this.filteredValue.syncId = parameterArray[1];
         this.filteredValue.syncTypeId = parameterArray[2];
@@ -127,11 +130,11 @@ export class CompanyComponent extends BaseComponent implements OnInit {
 
     this.companyService
       .getCompanies(
-        this.filteredValue.syncId,
-        this.filteredValue.syncTypeId,
-        this.filteredValue.searchText,
-        this.currentPageFiltered.pageNo,
-        this.currentPageFiltered.pageSizeFilter)
+      this.filteredValue.syncId,
+      this.filteredValue.syncTypeId,
+      this.filteredValue.searchText,
+      this.currentPageFiltered.pageNo,
+      this.currentPageFiltered.pageSizeFilter)
       .then(result => {
         if (result.status === 404) {
           this.companies = new Array<any>();

@@ -24,9 +24,8 @@ declare let jQuery: any;
   templateUrl: './user-entry.component.html',
 })
 
-export class UserEntryComponent extends BaseComponent implements OnInit {
+export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck {
 
-  private testchkbox: boolean = true;
   private messageHeader: string = 'New Member';
   private userDetail: UserModel;
   private styleLeft: string = '';
@@ -36,11 +35,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
   private userId: number = 0;
   private selectedDigestArray: any;
   private errorHeader: string = '';
-
-  // private digestStartNumber: number = 0;
-  // private digestEndNumber: number = 0;
-
-
+  private regexp1: RegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
   private errors: Array<any> = [];
 
 
@@ -65,26 +60,23 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
 
 
   ngOnInit() {
-    setTimeout(() => {
-      jQuery(this._elRef.nativeElement).find('#example_id').ionRangeSlider({
-        type: 'double',
-        min: 0,
-        max: 24,
-        from: 0,
-        to: 1,
-        keyboard: true,
-        from_shadow: true
-      });
-    }, 500);
 
   }
 
-  // ngDoCheck() {
+  ngDoCheck() {
+    jQuery(this._elRef.nativeElement).find('#example_id').ionRangeSlider({
+      type: 'double',
+      min: 0,
+      max: 24,
+      from: 0,
+      to: 1,
+      keyboard: true,
+      from_shadow: true
+    });
 
-  //   console.log('dddd');
-  //   // let slider = jQuery('#example_id').data('ionRangeSlider');
-  //   // console.log(slider.old_from + '-------' + slider.old_to);
-  // }
+    // let slider = jQuery('#example_id').data('ionRangeSlider');
+    // console.log(slider.old_from + '-------' + slider.old_to);
+  }
 
 
   private getSessionDetails(): void {
@@ -246,6 +238,9 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
 
     if (pageLoad) {
       setTimeout(() => {
+        if (this.userId === 0) {
+          hours1 = 1;
+        }
         let slider = jQuery('#example_id').data('ionRangeSlider');
         console.log(slider.old_from + '---' + slider.old_to);
 
@@ -307,12 +302,13 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
     }
 
     if (this.userDetail.email) {
-      // if (!regexp1.test(this.User.email)) {
-      //   //alert('Please Enter Reciever Mail Address With Correct Fromat');
-      //   messageService.showMsgBox('Invoice', 'Please Enter Reciever Mail Address With Correct Fromat', 'error');
+      if (!this.regexp1.test(this.userDetail.email)) {
+        // alert('Please Enter Reciever Mail Address With Correct Fromat');
+        // messageService.showMsgBox('Invoice', 'Please Enter Reciever Mail Address With Correct Fromat', 'error');
         this.toastr.error('Please Enter Reciever Mail Address With Correct Fromat', 'Oops!');
-         return false;
-      // }
+        return false;
+        // }
+      }
     }
 
     if (!this.userDetail.firstName) {
@@ -415,8 +411,8 @@ export class UserEntryComponent extends BaseComponent implements OnInit {
         // this.showHideErrorLog = { 'display': 'none' };
         // this.displayValue = 'none';
         // alert('Member successfully saved.');
-         // messageService.showMsgBox('Success', 'Member successfully saved.', 'success');
-         this.toastr.success('Member successfully saved.', 'Success!');
+        // messageService.showMsgBox('Success', 'Member successfully saved.', 'success');
+        this.toastr.success('Member successfully saved.', 'Success!');
         // $location.path('/usersList/-1/-1');
         let link = ['users/-1/-1'];
         this.router.navigate(link);

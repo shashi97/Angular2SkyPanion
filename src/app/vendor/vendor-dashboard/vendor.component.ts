@@ -79,6 +79,10 @@ export class VendorComponent extends BaseComponent implements OnInit {
   }
 
   public onCurrentPageChanged(newValue: CurrentPageArguments) {
+    this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+      + this.filteredValue.companyId + ','
+      + this.filteredValue.vendorKey + ','
+      + this.filteredValue.vendorName;
     this.currentPageFiltered = newValue;
   }
 
@@ -95,12 +99,11 @@ export class VendorComponent extends BaseComponent implements OnInit {
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
 
-      let parameterValue: any = ((params) ? params : 1);
       let pageSizeFilter = params['pageSizeFilter'];
       let searchParameters = params['searchParameters'];
 
-      if (searchParameters != '-1') {
-        let parameterArray: Array<string> = parameterValue.searchParameters.split(',');
+      if (searchParameters !== '-1') {
+        let parameterArray: Array<string> = searchParameters.split(',');
         this.filteredValue.companyId = parseInt(parameterArray[0]);
         this.filteredValue.vendorKey = parameterArray[1];
         this.filteredValue.vendorName = parameterArray[2];

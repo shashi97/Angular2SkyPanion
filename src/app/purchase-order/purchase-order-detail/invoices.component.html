@@ -1,25 +1,94 @@
-  <h4 style="display: inline">Invoices</h4>
+<!--<h4 style="display: inline">Invoices</h4>
 
-                    <div class="clearfix"></div>
-                    <hr>
-                    <br>
-                    <br>
-                    <table id="job_job_categories_table" class="table table-striped table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Invoice</th>
-                                <th>Voucher</th>
-                                <th>Company</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr  *ngFor="let invoiceList of purchaseOrderDetail.Invoices">
-                                <td>{{invoiceList.InvoiceNumber}}</td>
-                                <td>{{invoiceList.VoucherNumber}}</td>
-                                <td>{{invoiceList.CompanyName}}</td>
-                                <td>{{invoiceList.Amount}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-        
+<div class="clearfix"></div>
+<hr>
+<br>
+<br>
+<table id="job_job_categories_table" class="table table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Invoice</th>
+      <th>Voucher</th>
+      <th>Company</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let invoiceList of purchaseOrderDetail.Invoices">
+      <td>{{invoiceList.InvoiceNumber}}</td>
+      <td>{{invoiceList.VoucherNumber}}</td>
+      <td>{{invoiceList.CompanyName}}</td>
+      <td>{{invoiceList.Amount}}</td>
+    </tr>
+  </tbody>
+</table>-->
+
+<div class="col-md-8" *ngIf="totalItems==0">
+  <h3>Invoices</h3>
+  <div class="alert alert-warning">
+    <h3>No Invoices</h3>
+    <p>
+      It appears that there are no invoices associated with this purchase order
+    </p>
+  </div>
+</div>
+
+<div class="col-md-8" *ngIf="totalItems>0">
+  <h3 class="left_align">Invoice History</h3>
+  <span [hidden]="totalItems >= pageSize" class="right_align">Displaying <b>{{totalItems}}</b> invoice</span>
+  <span *ngIf="totalItems >= pageSize" class="right_align">
+      Displaying invoice
+      <b>{{currentPage*pageSize-pageSize+1}}&nbsp;-&nbsp; 
+        <span *ngIf="currentPage*pageSize < totalItems">
+          {{currentPage*pageSize}}
+        </span>
+        <span data-ng-if="currentPage*pageSize > totalItems">
+          {{totalItems}}
+        </span>
+      </b> 
+        of 
+      <b>
+        {{totalItems}}
+      </b> in total
+    </span>
+
+  <br class="clear_both">
+
+  <table id="vendor_invoices_table" class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Invoice #</th>
+        <th>Voucher #</th>
+        <th>Company</th>
+        <th>Amount</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let invoiceList of purchaseOrderDetail.Invoices">
+      <!--<tr dir-paginate="poDetail in purchaseOrderDetail.Invoices | itemsPerPage : pageSize" current-page="currentPage" total-items="totalItems">-->
+        <td>
+          <a href="#/invoiceDetail/{{invoiceList.InvoiceID}}">
+            {{invoiceList.InvoiceNumber}}
+          </a>
+        </td>
+        <td>
+          {{invoiceList.VoucherNumber}}
+        </td>
+        <td>
+          <a href="#/companyDetail/{{invoiceList.CompanyID}}">
+          {{invoiceList.CompanyName}}
+          </a>
+        </td>
+        <td>
+          ${{invoiceList.Amount | number: 2}}
+        </td>
+        <td>
+          <a href="#/invoicesDetail/{{invoiceList.InvoiceID}}">
+            <i class="icon icon-search"></i>Details
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

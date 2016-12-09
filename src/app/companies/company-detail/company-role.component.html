@@ -386,7 +386,7 @@
     
         <div id="tab-1-4" class="tab-pane ">
           <div class="list-group">
-            <a href="#/company/{{companyId}}/ledgeraccounts/led" class="list-group-item">
+            <a href="#/ledgerAccount/-1/-1" class="list-group-item">
               <span class="badge">{{company.LedgerAccountCount}}
                                             </span>
               <i class="fa fa-bank"></i> Ledger Accounts
@@ -396,7 +396,7 @@
                                             </span>
               <i class="fa fa-money"></i> Invoices
             </a>
-            <a href="#/vendor/{{companyId}}" class="list-group-item">
+            <a href="#/vendor/-1/{{companyId}},," class="list-group-item">
               <span class="badge">{{company.VendorCount}}
                                             </span>
               <i class="fa fa-truck"></i> Vendors
@@ -406,7 +406,7 @@
                                             </span>
               <i class="fa fa-file-pdf-o"></i> Uploaded PDFs
             </a>
-            <a href="#/purchaseOrder/{{companyId}}" class="list-group-item">
+            <a href="#/purchaseOrder/-1/{{companyId}}" class="list-group-item">
               <span class="badge">{{company.POCount}}
                                             </span>
               <i class="fa fa-tags"></i> Purchase Orders
@@ -422,7 +422,7 @@
               <i class="fa fa-thumbs-up"></i> Approval Criteria
             </a>
 
-            <a href="#/achSetups/achSetupDetail/{{companyId}}" class="list-group-item">
+            <a href="#/achSetups/-1/{{companyId}}" class="list-group-item">
               <span class="badge">
                                                 {{company.AchSetupCount}}
                                             </span>

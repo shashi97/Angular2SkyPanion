@@ -16,7 +16,7 @@
       "mobile": false,
       "styles": [
         "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css"
-      ],  
+      ],
       "scripts": [],
       "environments": {
         "source": "environments/environment.ts",
@@ -26,7 +26,11 @@
     }
   ],
   "addons": [],
-  "packages": [],
+  "packages": [
+    {
+      "moment": "../node_modules/moment"
+    }
+  ],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"

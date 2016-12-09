@@ -76,7 +76,9 @@ export class CompanyFilterComponent extends BaseComponent implements OnInit {
   }
 
   private searchUrlReset(): void {
+    this.syncTypeFiltered = new SyncTypeArgument();
+    this.companyPathFiltered = new CompanyPathArgument();
     this.filteredValue = new CompanyFilterArguments();
-     this.filtered.emit(this.filteredValue);
+    this.filtered.emit(this.filteredValue);
   };
 }

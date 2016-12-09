@@ -21,7 +21,7 @@ export class SyncTypeDropdownComponent extends BaseComponent implements OnInit {
     public syncTypeChanged: EventEmitter<SyncTypeArgument> = new EventEmitter<SyncTypeArgument>();
     @Input() syncTypeFiltered: SyncTypeArgument = new SyncTypeArgument();
     private syncList: Array<any> = [];
-    //private syncName: string = 'Sync Type';
+    // private syncName: string = 'Sync Type';
     constructor(
         localStorageService: LocalStorageService,
         router: Router,

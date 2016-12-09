@@ -48,6 +48,7 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
     private approvalCriteriaService: ApprovalCriteriaService,
     private location: Location,
     private route: ActivatedRoute
+
   ) {
     super(localStorageService, router);
     this.approvals = new Array<ApprovalCriteriaModel>();
