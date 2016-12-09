@@ -69,7 +69,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       + this.invoiceFilteredValue.invoiceDesc + ','
       + this.invoiceFilteredValue.invoiceNumber + ','
       + this.invoiceFilteredValue.companyId + ','
-      + this.invoiceFilteredValue.vendorId;
+      + this.invoiceFilteredValue.vendorId + ','
+      + this.invoiceFilteredValue.userId;
 
     this.getInvoices();
   }
@@ -99,6 +100,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
         this.invoiceFilteredValue.invoiceNumber = parameterArray[3];
         this.invoiceFilteredValue.companyId = parseInt(parameterArray[4]);
         this.invoiceFilteredValue.vendorId = parseInt(parameterArray[5]);
+        this.invoiceFilteredValue.userId = parseInt(parameterArray[6]);
       }
 
       if (pageSizeFilter !== '-1') {
@@ -111,7 +113,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
         + this.invoiceFilteredValue.invoiceDesc + ','
         + this.invoiceFilteredValue.invoiceNumber + ','
         + this.invoiceFilteredValue.companyId + ','
-        + this.invoiceFilteredValue.vendorId;
+        + this.invoiceFilteredValue.vendorId + ','
+        + this.invoiceFilteredValue.userId;
 
       this.getAccountName();
     });

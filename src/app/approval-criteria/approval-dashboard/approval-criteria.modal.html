@@ -1,30 +1,40 @@
-    <div class="modal-content">
+    <div class="modal-content" *ngIf="divAddApprover">
 
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="closeModel()">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">{{modelHeader}}</h4>
                 </div>
                 <div class="modal-body">
                     <form role="form" class="form-horizontal">
 
-                        <!--<div id="error_explanation" class="alert alert-danger" *ngIf="errors.length > 0" data-ng-style="showHideErrorLog">
-                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        <div id="error_explanation" class="alert alert-danger" *ngIf="errors.length > 0" [ngStyle]="showHideErrorLog">
+                            <button aria-hidden="true" class="close" type="button" >×</button>
                             <h3>{{errorHeader}}</h3>
                             <ul>
                                 <li data-ng-repeat="error in errors">{{error.ErrorName}}</li>
                             </ul>
-                        </div>-->
+                        </div>
 
                         <div class="form-group">
                             <label class="col-md-4 control-label ">Company </label>
                             <div class="col-md-8">
-                                <input class="form-control" disabled="disabled" type="text" [(ngModel)]="companyName">
+                                <input class="form-control" disabled="disabled" type="text" [(ngModel)]="companyName" name="first">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label ">Approver </label>
                             <div class="col-md-8">
-                                <input class="form-control" disabled="disabled" type="text" *ngIf="companyID==0" [(ngModel)]="userName">
+                                <input class="form-control" disabled="disabled" type="text" *ngIf="context.companyId==0" [(ngModel)]="userName" name="first">
+                               
+                                 <p-dropdown [options]="approvers" 
+                                  style="width: 100%"
+                                  *ngIf="context.companyId!=0"
+                                  [(ngModel)]="selectedApprover" 
+                                  [filter]="true"
+                                  [autoWidth]="true"
+                                  [style]="{'width':'150px'}"
+                                  name = "first"
+                                 ></p-dropdown>
                                 <!--<ui-select ng-model="selectedApprover.selected"
                                            theme="select2"
                                            *ngIf="companyID!=0"
@@ -39,6 +49,14 @@
                         <div class="form-group" *ngIf="type=='ledger' || ledgerAccountID != null">
                             <label class="col-md-4 control-label">Ledger Account </label>
                             <div class="col-md-8">
+                                <p-dropdown [options]="ledgerAccounts" 
+                                  style="width: 100%"
+                                  [(ngModel)]="selectedLedgerAccount" 
+                                  [filter]="true"
+                                  [autoWidth]="true"
+                                  [style]="{'width':'150px'}"
+                                  name="second"
+                                 ></p-dropdown>
                                 <!--<ui-select ng-model="selectedLedgerAccount.selected"
                                            theme="select2"
                                            style="width: 100%">
@@ -58,7 +76,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-usd"></i>
                                     </span>
-                                    <input class="form-control" placeholder="Enter the start of the range" type="text" valid-number [(ngModel)]="rangeStart" ng-change="checkRangeAmount()">
+                                    <input class="form-control" placeholder="Enter the start of the range" type="text" valid-number [(ngModel)]="rangeStart" (ngModelChange)="checkRangeAmount()" name="third">
                                 </div>
                             </div>
                         </div>
@@ -71,7 +89,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-usd"></i>
                                     </span>
-                                    <input class="form-control" placeholder="Enter the end of the range" type="text" valid-number [(ngModel)]="rangeEnd" ng-change="checkRangeAmount()">
+                                    <input class="form-control" placeholder="Enter the end of the range" type="text" valid-number [(ngModel)]="rangeEnd" ng-change="checkRangeAmount()" name="four">
                                 </div>
                             </div>
                         </div>

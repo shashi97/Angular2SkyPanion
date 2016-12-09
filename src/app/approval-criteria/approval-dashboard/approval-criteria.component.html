@@ -45,7 +45,7 @@
         <div class="col-md-12">
 
           <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
-          <sp-approvals-view *ngIf="approvals" [approvals]="approvals"></sp-approvals-view>
+          <sp-approvals-view *ngIf="approvals" [approvals]="approvals" [companyId]="companyId" [approvers]="approvers" (approvalCreteriaChanged)="getApprovalCriteria('all')"></sp-approvals-view>
 
           <div class="text-center">
             <sp-pagination [dataSource]='companies' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>

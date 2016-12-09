@@ -25,7 +25,6 @@ import { AttachmentComponent } from './attachment/attachment.component';
 import { RoleComponent } from './role/role-dashboard/role.component';
 import { RoleViewComponent } from './role/role-view/role-view.component';
 import { RoleEntryComponent } from './role/role-entry/role-entry.component';
- import {  CustomModal } from './ini-setup/setup-modal.component';
 
 import { SyncBatchComponent } from './sync-batch/sync-batch-dashboard/sync-batch.component';
 import { SyncBatchDetailComponent } from './sync-batch/sync-batch-detail/sync-batch-detail.component';
@@ -65,7 +64,7 @@ const APP_ROUTES: Routes = [
 
   { path: 'iniSetup', component: IniSetupComponent },
 
-  { path: 'approvals', component: ApprovalCriteriaComponent },
+  // { path: 'approvals', component: ApprovalCriteriaComponent },
   { path: 'approvals/:companyId', component: ApprovalCriteriaComponent },
 
   { path: 'syncbatcheNew', component: SyncBatchEntryComponent },

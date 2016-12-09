@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { CompanyDropdownComponent, CompanyFilterArguments } from '../../shared/dropdown/company/company-dropdown.component';
 import { VendorDropdownComponent, VendorFilterArguments } from '../../shared/dropdown/vendor/vendor-dropdown.component';
 import { UserDropdownComponent } from '../../shared/dropdown/user/user-dropdown.component';
+import { UserFilterArguments } from '../../shared/dropdown/user/user-dropdown.component';
 
 declare let jQuery: any;
 
@@ -14,7 +15,7 @@ export class InvoiceFilteredArgs {
   invToDate: string = '';
   invoiceDesc: string = '';
   invoiceNumber: string = '';
-  companyId: number = 0;
+  companyId: number;
   vendorId: number = 0;
   userId: number = 0;
   statusId: number = 0;
@@ -30,25 +31,26 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
   private statusName: string = 'Invoice Status';
   private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
   private _vendorFilteredValue: VendorFilterArguments = new VendorFilterArguments();
-  @Input() invoiceFilteredValue: InvoiceFilteredArgs = new InvoiceFilteredArgs();
+  private _userFilteredValue: UserFilterArguments = new UserFilterArguments();
+  @Input() invoiceFilteredValue: InvoiceFilteredArgs;
   @Output() filteredInvoice: EventEmitter<InvoiceFilteredArgs> = new EventEmitter<InvoiceFilteredArgs>();
 
 
   private status: Array<any> =
   [{ statusId: null, StatusName: 'None' },
-  { statusId: 0, statusName: 'Static' },
-  { statusId: 1, statusName: 'Waiting for Review' },
-  { statusId: 2, statusName: 'Waiting for Approval' },
-  { statusId: 3, statusName: 'Waiting for Batch' },
-  { statusId: 4, statusName: 'Waiting for Sync' },
-  { statusId: 6, statusName: 'Synced' },
-  { statusId: 5, statusName: 'Rejected' },
-  { statusId: 7, statusName: 'Deleted' }
+    { statusId: 0, statusName: 'Static' },
+    { statusId: 1, statusName: 'Waiting for Review' },
+    { statusId: 2, statusName: 'Waiting for Approval' },
+    { statusId: 3, statusName: 'Waiting for Batch' },
+    { statusId: 4, statusName: 'Waiting for Sync' },
+    { statusId: 6, statusName: 'Synced' },
+    { statusId: 5, statusName: 'Rejected' },
+    { statusId: 7, statusName: 'Deleted' }
   ];
 
   constructor(
     localStorageService: LocalStorageService,
-    router: Router,
+    router: Router
   ) {
     super(localStorageService, router);
   }
@@ -74,23 +76,44 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
     this._vendorFilteredValue = newValue;
   }
 
+  // get set for user
+  private get userFilteredArg(): UserFilterArguments {
+    return this._userFilteredValue;
+  }
+
+  private set userFilteredArg(newValue: UserFilterArguments) {
+    this._userFilteredValue = newValue;
+  }
+
   private searchUrl(): void {
+    let dateFrom = jQuery('#invoice_FromDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
+    this.invoiceFilteredValue.invFromDate = dateFrom.val();
+    let dateTo = jQuery('#invToDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
+    this.invoiceFilteredValue.invToDate = dateTo.val();
     this.invoiceFilteredValue.vendorId = this.vendorFilteredArg.vendorId;
     this.invoiceFilteredValue.companyId = this.companyFilteredArg.companyId;
+    this.invoiceFilteredValue.userId = this.userFilteredArg.UserID;
     this.filteredInvoice.emit(this.invoiceFilteredValue);
   }
 
   private searchUrlReset(): void {
     this.invoiceFilteredValue = new InvoiceFilteredArgs();
-    // let vendorArray = { vendorId: 0 };
-    // let companyArray = { companyId: 0 };
-    // this.vendorFilteredArg = vendorArray;
-    // this.companyFilteredArg = companyArray;
+    jQuery('#invoice_FromDate').val('');
+    jQuery('#invToDate').val('');
+    this.statusName = 'Invoice Status';
+    this.userFilteredArg = new UserFilterArguments();
+    this.vendorFilteredArg = new VendorFilterArguments();
+    this.companyFilteredArg = new CompanyFilterArguments();
     this.filteredInvoice.emit(this.invoiceFilteredValue);
   }
 
-  private onSelectStatus(selectedStatus) {
+  private onSelectStatus(selectedStatus, selectedStatusName) {
     this.invoiceFilteredValue.statusId = selectedStatus;
+    this.statusName = selectedStatusName;
+  }
+
+  public onUserFiltered(filteredValue: UserFilterArguments): void {
+    this.userFilteredArg = filteredValue;
   }
 
   public onCompanyFiltered(filteredValue: CompanyFilterArguments): void {

@@ -1,5 +1,4 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { SyncBatchService } from '../shared/sync-batch.service';
@@ -7,9 +6,9 @@ import { SyncBatchService } from '../shared/sync-batch.service';
 
 export class SyncModalContext extends BSModalContext {
     invoiceId: number;
-    companyId: number;
+    companyId: string;
     invAmount: number;
-    rejectionComment: string;
+    InvoiceNumber: string;
 }
 
 /**
@@ -26,6 +25,8 @@ export class SyncModelComponent implements CloseGuard, ModalComponent<SyncModalC
     private rejectionComment: string;
     private errorsInv: Array<any> = [];
     private errorHeader: string;
+    private showdashboardMessage: boolean= false;
+    private dashboardMessage: string;
     constructor(public dialog: DialogRef<SyncModalContext>,
         private syncBatchService: SyncBatchService
     ) {
@@ -53,10 +54,12 @@ export class SyncModelComponent implements CloseGuard, ModalComponent<SyncModalC
             this.syncModel.invoiceId,
             this.syncModel.companyId,
             this.syncModel.invAmount,
-            this.syncModel.rejectionComment).then((result) => {
+            this.rejectionComment).then((result) => {
             if (result.Status === 500) {
             } else {
                 this.rejectionComment = null;
+                this.dashboardMessage = 'Invoice Number ' +  this.syncModel.InvoiceNumber + 'rejected Successfully';
+                this.showdashboardMessage = true;
                 this.dialog.close(true);
                 // var elementText1 = angular.element('#dgRejectInvoice');
                 // elementText1.modal("hide");

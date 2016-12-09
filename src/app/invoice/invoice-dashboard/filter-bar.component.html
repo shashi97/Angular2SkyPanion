@@ -41,12 +41,15 @@
             <span class="caret"></span>
           </a>
           <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-            <li><a role="menuitem" *ngFor="let st of status" (click)="onSelectStatus(st.statusId)">{{st.statusName}}</a></li>
+            <li><a role="menuitem" *ngFor="let st of status" (click)="onSelectStatus(st.statusId,st.statusName)">{{st.statusName}}</a></li>
           </ul>
         </div>
       </div>
 
-      <sp-user-dropdown></sp-user-dropdown>
+      <sp-user-dropdown 
+       [userFilteredArg]='userFilteredArg' 
+       (userFiltered)="onUserFiltered($event)">
+     </sp-user-dropdown>
 
       <div class="filter_field_wrap form-group">
         <button class="btn btn-primary" name="commit" type="button" (click)="searchUrl()">

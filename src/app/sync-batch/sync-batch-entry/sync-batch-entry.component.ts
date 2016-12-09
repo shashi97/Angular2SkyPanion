@@ -51,10 +51,9 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
     private getParameterValues(): void {
      this.route.params.subscribe(params => {
        this.parameterValue = ((params) ? params : 1);
-       if (this.parameterValue.SearchParameters) {
-         let parameterArray: Array<any> = this.parameterValue.SearchParameters.split(',');
-         this.companyId = Number(parameterArray[0]);
-         this.userId = Number(parameterArray[1]);
+       if (this.parameterValue) {
+         this.userId = Number(this.parameterValue.SearchParameters);
+         this.companyId = Number(this.parameterValue.SyncBatcheID);
        }
      });
      this.getSyncBatcheInvoices();

@@ -8,6 +8,7 @@ import { ConfirmService } from '../../shared/services/otherServices/confirmServi
 import { Overlay, OverlayConfig } from 'angular2-modal';
 import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { SyncModelComponent, SyncModalContext } from './sync-modal.component';
+import { ApprovalContext, ApprovalModalComponent } from '../../approval-criteria/approval-dashboard/approval-criteria.modal';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class WaitingInvoiceComponent extends BaseComponent implements OnInit {
 
     @Input() syncBatcheInvoices: Array<SyncBatchEntryModel>;
     @Input() totalItems: number;
-    @Output() public invoceRemoved: EventEmitter<any> = new EventEmitter<any>();
+    @Output() invoceRemoved: EventEmitter<any> = new EventEmitter<any>();
     private syncBatch: SyncBatchModel;
     constructor(
         vcRef: ViewContainerRef,
@@ -32,15 +33,21 @@ export class WaitingInvoiceComponent extends BaseComponent implements OnInit {
     ) {
         super(localStorageService, router);
         this.syncBatch = new SyncBatchModel();
-        overlay.defaultViewContainer = vcRef;
+        // overlay.defaultViewContainer = vcRef;
     }
 
     ngOnInit() {
     }
 
-    public openRejectionPopup(invoiceId, companyId, invAmount, rejectionComment) {
+    private openRejectionPopup(invoiceId, invAmount, companyId, InvoiceNumber) {
+
         const builder = new BSModalContextBuilder<SyncModalContext>(
-            { invoiceId: invoiceId, companyId: companyId, invAmount: invAmount, rejectionComment: rejectionComment } as any,
+            {
+                invoiceId: invoiceId,
+                companyId: companyId,
+                invAmount: invAmount,
+                InvoiceNumber: InvoiceNumber
+            } as any,
             undefined,
             SyncModalContext
         );
@@ -48,46 +55,14 @@ export class WaitingInvoiceComponent extends BaseComponent implements OnInit {
         let overlayConfig: OverlayConfig = {
             context: builder.toJSON()
         };
-        // return this.modal.open(InvoiceEntryAccountsComponent, overlayConfig)
-        //   .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-        //    .then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-        //    .then(result => {
-        //     alert(result)
-        //    this.addGlAccountByPopup(result);
-
-        //    })
 
         return this.modal.open(SyncModelComponent, overlayConfig)
-            .catch(err => err) // catch error not related to the result (modal open...)
-            .then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
+            .catch(err => alert('ERROR'))
+            .then(dialog => dialog.result)
             .then(result => {
                 if (result === true) {
-                this.invoceRemoved.emit();
-            }
-                // this.addGlAccountByPopup(result);
-
+                    this.invoceRemoved.emit();
+                }
             });
-
     }
-    // releaseInvoice(): void {
-    //     this.syncBatch.SyncBatcheInvoices = this.syncBatcheInvoices;
-    //     {
-    //         let message = 'Are you sure you' + 'd like to synced these filtered';
-    //         if (this.confirmService.confermMessage(message, 'Invoices?')) {
-    //                 this.syncBatchEntryService.releaseInvoiceforSyncing(this.syncBatch).then( (result) => {
-    //            // messageService.showMsgBox('Success', 'Invoices releases successfully', 'success');
-    //            // $location.path('/syncbatches');
-    //         });
-
-    //         }
-
-    //     }
-    // if (confirm('Are you sure you'd like to synced these filtered Invoices?') === true) {
-    //     this.syncBatchEntryService.releaseInvoiceforSyncing(syncBatch).then(function (result) {
-    //         messageService.showMsgBox('Success', 'Invoices releases successfully', 'success');
-    //        // $location.path('/syncbatches');
-    //     });
-    // }
-    // }
-
 }

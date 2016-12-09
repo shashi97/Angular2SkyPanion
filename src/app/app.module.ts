@@ -279,9 +279,9 @@ let localStorageServiceConfig = {
     ApprovalModalComponent
   ],
    entryComponents: [
-    SyncModelComponent,
     CustomModal,
-    ApprovalModalComponent
+    ApprovalModalComponent,
+    SyncModelComponent
 
 
   ],

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef , Output, EventEmitter} from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -16,6 +16,9 @@ import { ApprovalCriteriaModel } from '../shared/approval-criteria.model';
 export class ApprovalsViewComponent extends BaseComponent implements OnInit {
 
     @Input() approvals: Array<ApprovalCriteriaModel>;
+    @Input() companyId:number;
+    @Input() approvers:Array<any>;
+    @Output() approvalCreteriaChanged: EventEmitter<any> = new EventEmitter<any>();
 
     constructor(
         localStorageService: LocalStorageService,
@@ -29,10 +32,16 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
     }
-    private showApprovalCriteria(data, type, isNew) {
+    private showApprovalCriteria(data, typeData, isNew) {
 
         const builder = new BSModalContextBuilder<ApprovalContext>(
-            { data: data, Type: type, isNew: isNew, approvals: this.approvals } as any,
+            { data: data,
+              type: typeData,
+              isNew: isNew,
+              approvals: this.approvals,
+              companyId: this.companyId,
+              approvers: this.approvers
+             } as any,
             undefined,
             ApprovalContext
         );
@@ -45,6 +54,10 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
             .catch(err => alert('ERROR'))
             .then(dialog => dialog.result)
             .then(result => {
+                if (result != null) {
+                    this.approvalCreteriaChanged.emit();
+                      //  this.getApprovalCriteria(this.type); need to emit for parnt call
+                }
               //  this.getIniSetupDetails();
             });
     }
