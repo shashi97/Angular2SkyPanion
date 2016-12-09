@@ -28,7 +28,7 @@ export class SyncBatchService {
             .http
             .post(ApiUrl.baseUrl + 'api/syncbatches/newOrUpdate', data)
             .toPromise()
-            .then(response => response.json() as any)
+            .then(response => response as any)
             .catch(this.handleError);
 
     }

@@ -45,7 +45,6 @@
             There are no invoices to release back to skyline.
           </div>
         </div>
-
         <div class="col-md-12" *ngIf="showdashboardMessage">
           <div class="alert alert-info">
             <i class="fa fa-info-circle"></i>
@@ -61,7 +60,7 @@
               <div class="row">
                 <sp-release-invoice-attribute *ngIf="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices"></sp-release-invoice-attribute>
                 <sp-waiting-invoice-attribute *ngIf="syncBatcheInvoices" [syncBatcheInvoices]="syncBatcheInvoices" [totalItems]="totalItems"
-                  (invoceRemoved)="getSyncBatcheInvoices()"></sp-waiting-invoice-attribute>
+                  (invoceRemoved)="onInvoiceRemoved($event)"></sp-waiting-invoice-attribute>
               </div>
             </div>
           </div>

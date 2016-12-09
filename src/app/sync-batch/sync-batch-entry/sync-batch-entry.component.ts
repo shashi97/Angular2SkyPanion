@@ -25,6 +25,8 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
   private parameterValue: any;
   private totalItems: number = 0;
   private rejectionComment: string = '';
+  private dashboardMessage: string;
+  private showdashboardMessage: boolean = false;
 
   private searchString: string = '';
 
@@ -69,9 +71,6 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
     }
   }
 
-   
-
-   
 
   //   private getSyncBatcheInvoices(): void {
 
@@ -166,6 +165,12 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
 
   public onFiltered(filteredValue: SyncBatchEntryFilterArguments): void {
     this.filteredValue = filteredValue;
+  }
+
+  public onInvoiceRemoved(showdashboard): void {
+    this.dashboardMessage = showdashboard.dashboardMessage;
+    this.showdashboardMessage = showdashboard.showMessage;
+     this.getSyncBatcheInvoices();
   }
 
 }

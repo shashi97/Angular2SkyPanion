@@ -60,8 +60,8 @@ export class WaitingInvoiceComponent extends BaseComponent implements OnInit {
             .catch(err => alert('ERROR'))
             .then(dialog => dialog.result)
             .then(result => {
-                if (result === true) {
-                    this.invoceRemoved.emit();
+                if (result.status === true) {
+                    this.invoceRemoved.emit(result);
                 }
             });
     }

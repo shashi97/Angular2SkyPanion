@@ -1,0 +1,437 @@
+<div id="property_attributes" class="col-md-5">
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>
+        <ul class="nav nav-tabs">
+          <li class="active">
+            <a data-toggle="tab" href="#tab-1-1">Info</a>
+          </li>
+          <li class="">
+
+            <a data-toggle="tab" href="#tab-1-2">Permissions</a>
+          </li>
+          <li>
+            <a data-toggle="tab" href="#tab-1-3">Accounts</a>
+          </li>
+          <li>
+            <a data-toggle="tab" href="#tab-1-4">Related</a>
+          </li>
+        </ul>
+      </h2>
+    </div>
+    <div class="panel-body">
+      <div class="tab-content">
+        <div id="tab-1-1" class="tab-pane active">
+          <div class="property_attribute">
+            <label class="left_align"><b>Account</b></label>
+            <span class="right_align"><a href="#accounts/{{company.account_id}}">{{company.AccountName}}</a></span>
+            <br class="clear_both">
+          </div>
+          <hr>
+          <div class="property_attribute">
+            <label class="left_align"><b>Number</b></label>
+            <span class="right_align">{{company.Number}}</span>
+            <br class="clear_both">
+          </div>
+          <hr>
+          <div class="property_attribute">
+            <label class="left_align"><b>Sync Enabled</b></label>
+            <span class="right_align">
+                                            <span [ngClass]="{'text-success': company.SyncEnabled=='Yes', 'text-danger': company.SyncEnabled=='No'}">{{company.SyncEnabled}}</span>
+            </span>
+            <br class="clear_both">
+          </div>
+          <hr>
+          <div class="property_attribute">
+            <label class="left_align"><b>Synced</b></label>
+            <span class="right_align" style="color: orange">Never</span>
+            <br class="clear_both">
+          </div>
+
+          <hr>
+          <div class="property_attribute">
+            <label class="left_align"><b>Pdf Path</b></label>
+            <!--  <label class="left_align"><b><a data-toggle="modal" data-target="#dgpdfFolderList" data- (ngModelChange) ="getDirectories(null , 14)">Pdf Path</a></b></label>-->
+            <span class="right_align">{{company.PdfFolderPath}}</span>
+
+            <br class="clear_both">
+          </div>
+
+        </div>
+
+
+        <div id="tab-1-2" class="tab-pane">
+
+
+          <div class="property_attribute">
+
+            <label class="left_align"><b>View Invoices</b></label>
+            <span class="right_align">
+                    <!--<select [ngModel]="selectedViewInvoicesRole.RoleID"
+                             (ngModelChange)="updateInvoiceRole($event.target.value,'view')">
+  <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
+
+</select>-->
+                  <p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedViewInvoicesRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                     (ngModelChange)="updateInvoiceRole(selectedViewInvoicesRole, 'view')"
+                    ></p-dropdown>
+                    
+                                            <!--<ui-select
+                                                ng-model="selectedViewInvoicesRole.selected"
+                                                theme="select2"
+                                                style="width: 150px;"
+                                                ng-change="updateInvoiceRole(selectedViewInvoicesRole.selected.RoleID, 'view')">
+                                                    <ui-select-match>{{selectedViewInvoicesRole.selected.Name}}</ui-select-match>
+                                                    <ui-select-choices  repeat="role in roles| filter: $select.search" >
+                                                        {{role.Name}}
+                                                    </ui-select-choices>
+                                                </ui-select>-->
+                                        </span>
+            <br class="clear_both">
+          </div>
+          <hr>
+
+          <div class="property_attribute">
+            <label class="left_align"><b>Process Scanned Pdfs</b></label>
+            <span class="right_align">
+                            <!--<select [ngModel]="selectedProcessRole.RoleID"
+                              (ngModelChange)="updateInvoiceRole($event.target.value,'process')"
+                            >
+  <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
+
+</select>-->
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedProcessRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                     (ngModelChange)="updateInvoiceRole(selectedProcessRole, 'process')"
+                    ></p-dropdown>
+                                            <!--<ui-select
+                                                ng-model="selectedProcessRole.selected"
+                                                theme="select2"
+                                                style="width: 150px;"
+                                                ng-change="updateInvoiceRole(selectedProcessRole.selected.RoleID, 'process')">
+                                                    <ui-select-match>{{selectedProcessRole.selected.Name}}</ui-select-match>
+                                                    <ui-select-choices  repeat="role in roles| filter: $select.search" >
+                                                        {{role.Name}}
+                                                    </ui-select-choices>
+                                                </ui-select>-->
+                                        </span>
+            <br class="clear_both">
+          </div>
+
+          <hr>
+          <div class="property_attribute">
+            <label class="left_align"><b>Review Invoices</b></label>
+            <span class="right_align">
+                         <!--<select [ngModel]="selectedReviewRole.RoleID"
+                           (ngModelChange)="updateInvoiceRole($event.target.value,'review')"
+                          >
+  <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
+
+</select>-->
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedReviewRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                     (ngModelChange)="updateInvoiceRole(selectedReviewRole, 'review')"
+                    ></p-dropdown>
+                                            <!--<ui-select
+                                                ng-model="selectedReviewRole.selected"
+                                                theme="select2"
+                                                style="width: 150px;"
+                                                ng-change="updateInvoiceRole(selectedReviewRole.selected.RoleID, 'review')">
+                                                    <ui-select-match>{{selectedReviewRole.selected.Name}}</ui-select-match>
+                                                    <ui-select-choices  repeat="role in roles| filter: $select.search" >
+                                                        {{role.Name}}
+                                                    </ui-select-choices>
+                                                </ui-select>-->
+                                        </span>
+            <br class="clear_both">
+          </div>
+          <hr>
+          <div class="property_attribute">
+            <label class="left_align"><b>Approve Invoices</b></label>
+            <span class="right_align">
+                               <!--<select [ngModel]="selectedApproveRole.RoleID"
+                                 (ngModelChange)="updateInvoiceRole($event.target.value,'approve')">
+  <option *ngFor="let role of roles"  [value]="role.RoleID">{{role.Name}}</option>-->
+
+<!--</select>-->
+
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedApproveRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                     (ngModelChange)="updateInvoiceRole(selectedApproveRole, 'approve')"
+                    ></p-dropdown>
+                                            <!--<ui-select
+                                                ng-model="selectedApproveRole.selected"
+                                                theme="select2"
+                                                style="width: 150px;"
+                                                ng-change="updateInvoiceRole(selectedApproveRole.selected.RoleID, 'approve')">
+                                                    <ui-select-match>{{selectedApproveRole.selected.Name}}</ui-select-match>
+                                                    <ui-select-choices  repeat="role in roles| filter: $select.search" >
+                                                        {{role.Name}}
+                                                    </ui-select-choices>
+                                                </ui-select>-->
+                                        </span>
+            <br class="clear_both">
+          </div>
+          <hr>
+          <div class="property_attribute">
+            <label class="left_align"><b>Batch Invoices</b></label>
+            <span class="right_align">
+                                 <!--<select [ngModel]="selectedBatchRole.RoleID"
+                                   (ngModelChange)="updateInvoiceRole($event.target.value,'batch')">
+  <option *ngFor="let role of roles"  [value]="role.RoleID">{{role.Name}}</option>
+
+</select>-->
+
+
+
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedBatchRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                     (ngModelChange)="updateInvoiceRole(selectedBatchRole, 'batch')"
+                    ></p-dropdown>
+                                            <!--<ui-select
+                                                ng-model="selectedBatchRole.selected"
+                                                theme="select2"
+                                                style="width: 150px;"
+                                                ng-change="updateInvoiceRole(selectedBatchRole.selected.RoleID, 'batch')">
+                                                    <ui-select-match>{{selectedBatchRole.selected.Name}}</ui-select-match>
+                                                    <ui-select-choices  repeat="role in roles| filter: $select.search" >
+                                                        {{role.Name}}
+                                                    </ui-select-choices>
+                                                </ui-select>-->
+                                        </span>
+            <br class="clear_both">
+          </div>
+          <hr>
+          <div class="property_attribute">
+            <label class="left_align"><b>Delete Invoices</b></label>
+            <span class="right_align">
+                        <!--<select [(ngModel)]="selectedDeleteRole.RoleID"
+                         (ngModelChange)="updateInvoiceRole($event.target.value,'delete')">
+  <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
+
+
+</select>-->
+
+
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedDeleteRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                     (ngModelChange)="updateInvoiceRole(selectedDeleteRole, 'delete')"
+                    ></p-dropdown>
+                    
+                                            <!--<ui-select
+                                                ng-model="selectedDeleteRole.selected"
+                                                theme="select2"
+                                                style="width: 150px;"
+                                                ng-change="updateInvoiceRole(selectedDeleteRole.selected.RoleID, 'delete')">
+                                                    <ui-select-match>{{selectedDeleteRole.selected.Name}}</ui-select-match>
+                                                    <ui-select-choices  repeat="role in roles| filter: $select.search" >
+                                                        {{role.Name}}
+                                                    </ui-select-choices>
+                                                </ui-select>-->
+                                        </span>
+            <br class="clear_both">
+          </div>
+          <hr>
+          <div class="property_attribute">
+            <label class="left_align"><b>Approver Override</b></label>
+            <span class="right_align">
+                               <!--<select [(ngModel)]="selectedApproverRole.RoleID"
+                                 (ngModelChange)="updateInvoiceRole($event.target.value,'approver')">
+  <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
+
+</select>-->
+
+<p-dropdown [options]="roles" 
+                    [(ngModel)]="selectedApproverRole" 
+                    [filter]="true"
+                    [autoWidth]="true"
+                    [style]="{'width':'150px'}"
+                   (ngModelChange)="updateInvoiceRole(selectedApproverRole, 'approver')"
+                    ></p-dropdown>
+           
+                                            <!--<ui-select
+                                                ng-model="selectedApproverRole.selected"
+                                                theme="select2"
+                                                style="width: 150px;"
+                                                ng-change="updateInvoiceRole(selectedApproverRole.selected.RoleID, 'approver')">
+                                                    <ui-select-match>{{selectedApproverRole.selected.Name}}</ui-select-match>
+                                                    <ui-select-choices  repeat="role in roles| filter: $select.search" >
+                                                        {{role.Name}}
+                                                    </ui-select-choices>
+                                                </ui-select>-->
+                                        </span>
+            <br class="clear_both">
+          </div>
+        </div>
+        <div id="tab-1-3" class="tab-pane">
+          <dl class="dl-horizontal">
+            <dt>Cash Account #1</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.cash_account_1_id}}</span>
+            </dd>
+
+            <dt>Cash Account #1 Desc</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.CashAccount1Description}}</span>
+            </dd>
+            <hr>
+            <dt>Cash Account #2</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.cash_account_2_id}}</span>
+            </dd>
+
+            <dt>Cash Account #2 Desc</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.CashAccount2Description}}</span>
+            </dd>
+            <hr>
+
+            <dt>Cash Account #3</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.cash_account_3_id}}</span>
+            </dd>
+
+            <dt>Cash Account #3 Desc</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.CashAccount3Description}}</span>
+            </dd>
+            <hr>
+
+            <dt>Cash Account #4</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.cash_account_4_id}}</span>
+            </dd>
+
+            <dt>Cash Account #4 Desc</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.CashAccount4Description}}</span>
+            </dd>
+            <hr>
+
+            <dt>A/P Account</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.ap_account_id}}</span>
+            </dd>
+
+            <dt>A/P Account Desc</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.APDescription}}</span>
+            </dd>
+            <hr>
+
+            <dt>Discount Account</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.discount_account_id}}</span>
+            </dd>
+
+            <dt>Discount Desc</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.DiscountDescription}}</span>
+            </dd>
+            <hr>
+
+            <dt>Pre-Paid Account</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.pre_paid_account_id}}</span>
+            </dd>
+
+            <dt>Pre-Paid Desc</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.PrePaidDescription}}</span>
+            </dd>
+            <hr>
+
+            <dt>Company Name Check 1</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.CompanyNameCheck1}}</span>
+            </dd>
+
+            <dt>Company Name Check 2</dt>
+            <dd>
+              <span style="color: gray; font-style: italic">{{company.CompanyNameCheck2}}</span>
+            </dd>
+
+            <dt>Show Property On Stub</dt>
+            <dd>
+              <span [ngClass]="{'text-success': company.ShowPropOnStub=='Yes', 'text-danger': company.ShowPropOnStub=='No'}">{{company.ShowPropOnStub}}</span>
+            </dd>
+
+            <dt>Show Accts On Stub</dt>
+            <dd>
+              <span [ngClass]="{'text-success': company.ShowAcctsOnStub=='Yes', 'text-danger': company.ShowAcctsOnStub=='No'}">{{company.ShowAcctsOnStub}}</span>
+            </dd>
+          </dl>
+
+        </div>
+    
+        <div id="tab-1-4" class="tab-pane ">
+          <div class="list-group">
+            <a href="#/ledgerAccount/-1/-1" class="list-group-item">
+              <span class="badge">{{company.LedgerAccountCount}}
+                                            </span>
+              <i class="fa fa-bank"></i> Ledger Accounts
+            </a>
+            <a href="#/invoices/null,0,{{companyId}},0,0,null,null" class="list-group-item">
+              <span class="badge">{{company.InvoiceCount}}
+                                            </span>
+              <i class="fa fa-money"></i> Invoices
+            </a>
+            <a href="#/vendor/-1/{{companyId}},," class="list-group-item">
+              <span class="badge">{{company.VendorCount}}
+                                            </span>
+              <i class="fa fa-truck"></i> Vendors
+            </a>
+            <a href="#/attachments/{{companyId}}" class="list-group-item">
+              <span class="badge">{{company.PDFCount}}
+                                            </span>
+              <i class="fa fa-file-pdf-o"></i> Uploaded PDFs
+            </a>
+            <a href="#/purchaseOrder/-1/{{companyId}}" class="list-group-item">
+              <span class="badge">{{company.POCount}}
+                                            </span>
+              <i class="fa fa-tags"></i> Purchase Orders
+            </a>
+            <a href="#/company/{{companyId}}/fundposts" class="list-group-item" *ngIf="company.type=='Skypanion::Fund'">
+              <span class="badge">{{company.FundCount}}
+                                            </span>
+              <i class="fa fa-chevron-right"></i> Fund Posts
+            </a>
+            <a href="#/approvals/{{companyId}}" class="list-group-item">
+              <span class="badge">{{company.ApprovalCriteriaCount }}
+                                            </span>
+              <i class="fa fa-thumbs-up"></i> Approval Criteria
+            </a>
+
+            <a href="#/achSetups/-1/{{companyId}}" class="list-group-item">
+              <span class="badge">
+                                                {{company.AchSetupCount}}
+                                            </span>
+              <i class="fa fa-money"></i> Ach Setups
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
