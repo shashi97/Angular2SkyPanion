@@ -79,6 +79,10 @@ export class VendorComponent extends BaseComponent implements OnInit {
   }
 
   public onCurrentPageChanged(newValue: CurrentPageArguments) {
+    this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+      + this.filteredValue.companyId + ','
+      + this.filteredValue.vendorKey + ','
+      + this.filteredValue.vendorName;
     this.currentPageFiltered = newValue;
   }
 

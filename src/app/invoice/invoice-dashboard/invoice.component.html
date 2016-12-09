@@ -36,9 +36,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of Invoices">
-         
+
           <td>
-            <input type="checkbox" [(ngModel)]="item.IsInoiveSelected" style="margin-left:17px;margin-top:5px;height:15px;width:15px;"
+            <input type="checkbox" [(ngModel)]="item.IsInoiveSelected"
+            style="margin-left:17px;margin-top:5px;height:15px;width:15px;"
               class="gridCellIcon" />
           </td>
 
@@ -50,7 +51,7 @@
 
           <td>
             <div>
-              <a href="#company/{{item.CompanyID}}">
+              <a href="#/company/{{item.CompanyID}}">
                 <i [ngClass]="{'fa fa-book': item.Type=='Skypanion::Fund', 'fa fa-building': item.Type=='Skypanion::Property'}">
                    </i>&nbsp; {{item.CompanyNumber}}
               </a>
@@ -63,28 +64,29 @@
 
           <td>
             <div>
-              <a href="#vendorDetail/{{item.VendorID}}" class="remote_href" data-remote="true">{{item.VendorKey}}&nbsp;
+              <a href="#/vendorDetail/{{item.VendorID}}" class="remote_href" data-remote="true">{{item.VendorKey}}&nbsp;
               </a> {{item.VendorName}}
             </div>
 
           </td>
 
           <td>
-            <div class="italic-font text-warning" [hidden]="item.Distributions!='None' && item.LedgerAccountID!=0">
-              {{item.Distributions}}1
+            <div class="italic-font text-warning" *ngIf="item.Distributions=='None' && item.LedgerAccountID==0">
+              {{item.Distributions}}
             </div>
 
-            <div [hidden]="item.Distributions=='None' && item.LedgerAccountID==0">
-              <a href="#ledgerAccountsDetail/{{item.LedgerAccountID}}">
-                {{item.Distributions}}2
+            <div *ngIf="item.Distributions!='None' && item.LedgerAccountID!=0">
+              <a href="#/ledgerAccountsDetail/{{item.LedgerAccountID}}">
+                {{item.Distributions}}
               </a>
             </div>
 
             <div>
-              <a [hidden]="item.Distributions=='None' && item.LedgerAccountID!=0">
-                  {{item.Distributions}}3
+              <a *ngIf="item.Distributions!='None' && item.LedgerAccountID==0">
+                  {{item.Distributions}}
               </a>
             </div>
+            
           </td>
 
           <td>
@@ -95,7 +97,7 @@
 
           <td>
             <!--<div [ngClass]="'text-success': item.PaidStatus=='Full Paid', 'text-danger': item.PaidStatus=='Not Paid' ,'text-warning': item.PaidStatus=='Partial Paid'">-->
-              {{item.PaidStatus}}
+            {{item.PaidStatus}}
             <!--</div>-->
           </td>
 

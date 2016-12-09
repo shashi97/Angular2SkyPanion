@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseComponent } from '../../base.component';
+import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { Location } from '@angular/common';
+
 import { Router } from '@angular/router';
 import { SyncBatchModel } from '../shared/sync-batch.model';
-import { UserModel } from '../../user/shared/user.model';
 import { SyncBatchFilteredArgs } from './filter-bar.component';
 import { CurrentPageArguments } from '../../pagination/pagination.component';
 import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
@@ -18,6 +20,7 @@ import { SyncBatchService } from '../shared/sync-batch.service';
 
 export class SyncBatchComponent extends BaseComponent implements OnInit {
 
+  private searchString: string = '';
   private totalItems: number = 0;
   private userId: number = 0;
   private account: Object;
@@ -30,7 +33,9 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
     router: Router,
     private accountService: AccountService,
     private userService: UserService,
-    private syncBatchService: SyncBatchService
+    private activatedRoute: ActivatedRoute,
+    private syncBatchService: SyncBatchService,
+    private location: Location
   ) {
     super(localStorageService, router);
     this.getSessionDetails();
@@ -45,6 +50,11 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
 
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
+    this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+      + this.syncBatchFilteredValue.syncFromDate + ','
+      + this.syncBatchFilteredValue.syncToDate + ','
+      + this.syncBatchFilteredValue.batchNumber + ','
+      + this.syncBatchFilteredValue.userId;
     this.getSyncBatches();
   }
 
@@ -54,15 +64,49 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
 
   private set syncBatchFilteredValue(newValue: SyncBatchFilteredArgs) {
     this._currentSyncBatchArgs = newValue;
+    this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+      + this.syncBatchFilteredValue.syncFromDate + ','
+      + this.syncBatchFilteredValue.syncToDate + ','
+      + this.syncBatchFilteredValue.batchNumber + ','
+      + this.syncBatchFilteredValue.userId;
     this.getSyncBatches();
   }
 
   getSessionDetails() {
     this.user = this.userService.getSessionDetails();
     if (this.user.userId != null) {
-      this.getAccountName();
+      this.getParameterValues();
     }
   }
+
+  private getParameterValues(): void {
+    this.activatedRoute.params.subscribe(params => {
+
+      let pageSizeFilter = params['pageSizeFilter'];
+      let searchParameters = params['searchParameters'];
+
+      if (searchParameters !== '-1') {
+        let parameterArray: Array<string> = searchParameters.split(',');
+        this.syncBatchFilteredValue.syncFromDate = parameterArray[0];
+        this.syncBatchFilteredValue.syncToDate = parameterArray[1];
+        this.syncBatchFilteredValue.batchNumber = parameterArray[2];
+        this.syncBatchFilteredValue.userId = parseInt(parameterArray[2]);
+      }
+
+      if (pageSizeFilter !== '-1') {
+        this.currentPageFiltered.pageSizeFilter = pageSizeFilter;
+      }
+
+      this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+        + this.syncBatchFilteredValue.syncFromDate + ','
+        + this.syncBatchFilteredValue.syncToDate + ','
+        + this.syncBatchFilteredValue.batchNumber + ','
+        + this.syncBatchFilteredValue.userId;
+
+      this.getAccountName();
+    });
+  }
+
 
   getAccountName() {
     this.accountService.getAccountName().then(result => {
@@ -75,6 +119,9 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
   }
 
   getSyncBatches() {
+
+    this.location.replaceState('syncBatcheNew/' + this.searchString);
+
     let searchCriteriaSyncBatches = {
       syncFromDate: this._currentSyncBatchArgs.syncFromDate,
       syncToDate: this._currentSyncBatchArgs.syncToDate,

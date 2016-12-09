@@ -92,12 +92,11 @@ export class CompanyComponent extends BaseComponent implements OnInit {
 
   private getParameterValues(): void {
     this.route.params.subscribe(params => {
-      let parameterValue: any = ((params) ? params : 1);
       let pageSizeFilter = params['pageSizeFilter'];
       let searchParameters = params['searchParameters'];
 
       if (searchParameters !== '-1') {
-        let parameterArray: Array<string> = parameterValue.searchParameters.split(',');
+        let parameterArray: Array<string> = searchParameters.split(',');
         this.filteredValue.searchText = parameterArray[0];
         this.filteredValue.syncId = parameterArray[1];
         this.filteredValue.syncTypeId = parameterArray[2];

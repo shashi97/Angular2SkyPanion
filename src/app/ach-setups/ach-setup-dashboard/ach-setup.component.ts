@@ -68,6 +68,7 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
 
       let pageSizeFilter = params['pageSizeFilter'];
+      this.companyId = params['companyId'];
 
       if (pageSizeFilter !== '-1') {
         this.currentPageFiltered.pageSizeFilter = pageSizeFilter;

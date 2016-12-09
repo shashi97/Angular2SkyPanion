@@ -8,12 +8,12 @@ export class PurchaseOrderSevice {
   constructor(private http: Http) {
 
   }
-  public getPurchaseOrders(pageNumber: number, rowsPerPage: number) {
+  public getPurchaseOrders(companyId: number, pageNumber: number, rowsPerPage: number) {
     return this
       .http
       .get(ApiUrl.baseUrl
       + 'api/purchaseorders/all/'
-      + 0
+      + companyId
       + '/'
       + pageNumber
       + '/'
@@ -25,7 +25,7 @@ export class PurchaseOrderSevice {
   }
 
 
-  public getPurchaseOrderById(purchaseOrderId: number, currentPage: number, pageSize: number){
+  public getPurchaseOrderById(purchaseOrderId: number, currentPage: number, pageSize: number) {
     return this
       .http
       .get(ApiUrl.baseUrl

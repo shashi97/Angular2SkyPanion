@@ -3,23 +3,26 @@
   <div class="options">
     <div class="form-inline" id="invoices_index_filters_form">
       <div class="form-group">
-        <input class="form-control" id="sync_FromDate" [(ngModel)]="syncFromDate" date-picker placeholder="Sync Batch Date From"
+        <input class="form-control" id="syncFromDate" [(ngModel)]="syncBatchFilteredValue.syncFromDate" date-picker placeholder="Sync Batch Date From"
           size="25" type="text" value="" />
       </div>
 
       <div class="form-group">
-        <input class="form-control" id="syncToDate" [(ngModel)]="syncToDate" date-picker placeholder="Sync Batch Date To" size="25"
+        <input class="form-control" id="syncToDate" [(ngModel)]="syncBatchFilteredValue.syncToDate" date-picker placeholder="Sync Batch Date To" size="25"
           type="text" value="" />
       </div>
 
       <div class="form-group">
-        <input class="form-control" id="batch_number" name="batch_number" placeholder="Enter an batch number" type="text" [(ngModel)]="batchNumber"
+        <input class="form-control" id="batch_number" name="batch_number" placeholder="Enter an batch number" type="text" [(ngModel)]="syncBatchFilteredValue.batchNumber"
           my-enter="resetSearch()" />
       </div>
 
 
-      <sp-user-dropdown></sp-user-dropdown>
-      
+      <sp-user-dropdown 
+        [userFilteredArg]='userFilteredArg' 
+        (userFiltered)="onUserFiltered($event)">
+      </sp-user-dropdown>
+
       <div class="form-group">
         <button class="btn btn-primary" name="commit" type="button" (click)="searchUrl()">
                         <i class="fa fa-search" aria-hidden="true"></i>

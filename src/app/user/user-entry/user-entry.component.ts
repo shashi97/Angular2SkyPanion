@@ -26,7 +26,6 @@ declare let jQuery: any;
 
 export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck {
 
-  private testchkbox: boolean = true;
   private messageHeader: string = 'New Member';
   private userDetail: UserModel;
   private styleLeft: string = '';
@@ -36,11 +35,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
   private userId: number = 0;
   private selectedDigestArray: any;
   private errorHeader: string = '';
-
-  // private digestStartNumber: number = 0;
-  // private digestEndNumber: number = 0;
-
-
+  private regexp1: RegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
   private errors: Array<any> = [];
 
 
@@ -307,12 +302,13 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
     }
 
     if (this.userDetail.email) {
-      // if (!regexp1.test(this.User.email)) {
-      //   //alert('Please Enter Reciever Mail Address With Correct Fromat');
-      //   messageService.showMsgBox('Invoice', 'Please Enter Reciever Mail Address With Correct Fromat', 'error');
+      if (!this.regexp1.test(this.userDetail.email)) {
+        // alert('Please Enter Reciever Mail Address With Correct Fromat');
+        // messageService.showMsgBox('Invoice', 'Please Enter Reciever Mail Address With Correct Fromat', 'error');
         this.toastr.error('Please Enter Reciever Mail Address With Correct Fromat', 'Oops!');
-         return false;
-      // }
+        return false;
+        // }
+      }
     }
 
     if (!this.userDetail.firstName) {
@@ -415,8 +411,8 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
         // this.showHideErrorLog = { 'display': 'none' };
         // this.displayValue = 'none';
         // alert('Member successfully saved.');
-         // messageService.showMsgBox('Success', 'Member successfully saved.', 'success');
-         this.toastr.success('Member successfully saved.', 'Success!');
+        // messageService.showMsgBox('Success', 'Member successfully saved.', 'success');
+        this.toastr.success('Member successfully saved.', 'Success!');
         // $location.path('/usersList/-1/-1');
         let link = ['users/-1/-1'];
         this.router.navigate(link);

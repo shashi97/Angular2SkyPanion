@@ -69,8 +69,12 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
   private get currentPageFiltered(): CurrentPageArguments {
     return this._currentPage;
   }
+
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
+    this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+      + this.filteredValue.accountNumberSearch + ','
+      + this.filteredValue.accountTitleSearch;
     this.getLedgerAccounts();
   }
 

@@ -1,27 +1,20 @@
 <div id="slider" class="page-content">
 
-    <div class="page-heading">
-        <h1>{{purchaseOrderDetail.PONum}}</h1>
-        <div class="options">
-        </div>
+  <div class="page-heading">
+    <h1>{{purchaseOrderDetail.PONum}}</h1>
+    <div class="options">
     </div>
-    <ol class="breadcrumb">
-        <li>
-            <a href="#purchaseOrder">All PurcahseOrder</a>
-        </li>
-        <li class="active">{{purchaseOrderDetail.PONum}}</li>
-    </ol>
-    <div class="container-fluid">
+  </div>
 
-        <div id="panel-advancedoptions">
-            <div class="row">
-                <div class="col-md-4">
-                    <sp-po-attribute [purchaseOrderDetail]="purchaseOrderDetail"></sp-po-attribute>
-                </div>
-                <div class="col-md-8">
-                    <sp-po-invoices [purchaseOrderDetail]="purchaseOrderDetail"></sp-po-invoices>
-                </div>
-            </div>
+  <div class="container-fluid">
+    <div id="panel-advancedoptions">
+      <div class="row">
+        <div class="col-md-4">
+          <sp-po-attribute [purchaseOrderDetail]="purchaseOrderDetail"></sp-po-attribute>
         </div>
-    </div>  
+        <sp-po-invoices [purchaseOrderDetail]="purchaseOrderDetail"></sp-po-invoices>
+      </div>
+    </div>
+  </div>
+  
 </div>

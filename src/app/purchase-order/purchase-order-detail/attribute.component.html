@@ -1,29 +1,78 @@
+<!--<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>Purchase Order Attributes</h2>
+  </div>
+  <div class="panel-body">
+    <dl class="dl-horizontal">
+      <dt>Company</dt>
+      <dd><a href="#/companyDetail/{{purchaseOrderDetail.CompanyID}}">{{purchaseOrderDetail.CompanyName}}</a></dd>
+
+      <dt>Vendor</dt>
+      <dd><a href="#/vendorDetail/{{purchaseOrderDetail.VendorID}}">{{purchaseOrderDetail.VendorName}}</a></dd>
+
+      <dt>Description</dt>
+      <dd>
+        {{purchaseOrderDetail.InvoiceDescription}}
+      </dd>
+
+      <dt>Dsc Date</dt>
+      <dd> <span style="color: gray; font-style: italic">{{purchaseOrderDetail.DscDate}}</span></dd>
+
+      <dt>Dsc Amount</dt>
+      <dd>${{purchaseOrderDetail.DscAmount}}</dd>
+
+      <dt>Requested By</dt>
+      <dd>{{purchaseOrderDetail.RequestedBy}}</dd>
+
+    </dl>
+  </div>
+</div>
+-->
+
+
+
+
+
+
+
+<div class="panel-group" id="atts_accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h2>Purchase Order Attributes</h2>
-                        </div>
-                        <div class="panel-body">
-                            <dl class="dl-horizontal">
-                                <dt>Company</dt>
-                                <dd><a href="#company/{{purchaseOrderDetail.CompanyID}}">{{purchaseOrderDetail.CompanyName}}</a></dd>
+    <div class="panel-heading" role="tab" id="headingOne">
+      <a data-toggle="collapse" data-parent="#atts_accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <h2 class="panel-title">
+          Purchase Order Attributes
+        </h2>
+      </a>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+          <dt>Company</dt>
+       <dd><a href="#/companyDetail/{{purchaseOrderDetail.CompanyID}}">{{purchaseOrderDetail.CompanyName}}</a></dd>
 
-                                <dt>Vendor</dt>
-                                <dd><a href="#vendorsDetails/{{purchaseOrderDetail.VendorID}}">{{purchaseOrderDetail.VendorName}}</a></dd>
+          <dt>Vendor</dt>
+         <dd><a href="#/vendorDetail/{{purchaseOrderDetail.VendorID}}">{{purchaseOrderDetail.VendorName}}</a></dd>
 
-                                <dt>Description</dt>
-                                <dd>
-                                    {{purchaseOrderDetail.InvoiceDescription}}
-                                </dd>
 
-                                <dt>Dsc Date</dt>
-                                <dd> <span style="color: gray; font-style: italic">{{purchaseOrderDetail.DscDate}}</span></dd>
+          <dt>Description</dt>
+          <dd>{{purchaseOrderDetail.InvoiceDescription}}</dd>
 
-                                <dt>Dsc Amount</dt>
-                                <dd>${{purchaseOrderDetail.DscAmount}}</dd>
+          <dt>Dsc Date</dt>
+          <dd>
+            <span style="color: gray; font-style: italic">{{purchaseOrderDetail.DscDate}}</span>
+          </dd>
 
-                                <dt>Requested By</dt>
-                                <dd>{{purchaseOrderDetail.RequestedBy}}</dd>
+          <dt>Dsc Amount</dt>
+          <dd>
+            ${{purchaseOrderDetail.DscAmount}}
+          </dd>
 
-                            </dl>
-                        </div>
-                    </div>
+          <dt>Requested By</dt>
+          <dd>
+            {{purchaseOrderDetail.RequestedBy}}
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
