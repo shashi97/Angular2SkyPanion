@@ -7,9 +7,14 @@ import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { ApprovalContext, ApprovalModalComponent } from './approval-criteria.modal';
 import { ConfirmService } from '../../shared/services/otherServices/confirmService';
 import { ApprovalCriteriaService } from '../shared/approval-criteria.service';
-
 import { ApprovalCriteriaModel } from '../shared/approval-criteria.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { DragulaModule } from  'ng2-dragula/ng2-dragula';
+import { DragulaService } from 'ng2-dragula/ng2-dragula';
+
+
+import 'jquery';
+declare var jQuery: any;
 
 
 @Component({
@@ -23,6 +28,8 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
     @Input() companyId: number;
     @Input() approvers: Array<any>;
     @Output() approvalCreteriaChanged: EventEmitter<any> = new EventEmitter<any>();
+    private approvalListForUpdate : Array<any> = [];
+    private newWeightCount : number = 0;
 
     constructor(
         localStorageService: LocalStorageService,
@@ -30,12 +37,33 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
         vcRef: ViewContainerRef,
         overlay: Overlay,
         public modal: Modal,
+
         public confirmService: ConfirmService,
         public approvalCriteriaService: ApprovalCriteriaService,
-        public toastr: ToastsManager
+        public toastr: ToastsManager,
+        private dragulaService: DragulaService
+       
     ) {
         super(localStorageService, router);
+            dragulaService.drag.subscribe((value) => {
+            console.log(`drag: ${value[0]}`);
+            this.onDrag(value.slice(1));
+            });
+        dragulaService.drop.subscribe((value) => {
+        console.log(`drop: ${value[0]}`);
+        this.onDrop(value.slice(1));
+        });
     }
+
+     private onDrag(args) {
+        let [e, el] = args;
+  }
+
+  private onDrop(args) {
+    let [e, el] = args;
+    this.sortApprovalCriteriaList();
+  }
+
 
     ngOnInit() {
     }
@@ -70,6 +98,7 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
             });
     }
 
+
     private deleteApprovalCriteria(ApprovalCriteriaID): void {
         let message = 'Are you sure you' + 'd like to destroy this approval criteria?';
         if (this.confirmService.confermMessage(message)) {
@@ -87,4 +116,26 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
         }
 
     }
+
+       private sortApprovalCriteriaList (): void {
+            if(this.approvals){
+                this.newWeightCount = 0;
+                this.approvalListForUpdate = [];
+                    for(var i = 0 ; i <this.approvals.length ; i++){
+                          var obj ={
+                              ApprovalCriteriaID:this.approvals[i].ApprovalCriteriaID,
+                              Weight:this.newWeightCount++,
+                              CompanyID:this.approvals[i].CompanyID
+                          }  
+                           this.approvalListForUpdate.splice(this.approvalListForUpdate.length, 0, obj);
+                    }
+
+                     this.approvalCriteriaService.updateApprovers(this.approvalListForUpdate).then(result => {
+       
+                        });
+
+            }
+   }
+
+
 }

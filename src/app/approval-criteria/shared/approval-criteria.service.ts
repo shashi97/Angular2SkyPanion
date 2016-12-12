@@ -59,6 +59,21 @@ export class ApprovalCriteriaService {
       .catch(error => error);
   }
 
+    updateApprovers(approvers) {
+    var data = JSON.stringify(approvers);
+    let options = new RequestOptions();
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/json');
+
+    return this.http
+      .post(ApiUrl.baseUrl + "api/approvalcriteria/newOrUpdate", data, options)
+      .toPromise()
+      .then(response =>
+        response)
+      .catch(error => error);
+  }
+
+
   public handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return error;
