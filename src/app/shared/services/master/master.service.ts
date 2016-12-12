@@ -19,12 +19,12 @@ export class MasterService {
     return list;
   }
 
-  public unlockDocument(attachemntID, userID, documentType) {
+  public unlockDocument(attachemntID, userID, documentType): Promise<any> {
     return this.http
       .get(ApiUrl.baseUrl + "api/invoices/getRemoveDocumentLock/" + attachemntID + "/" + userID + "/" + documentType)
-      .map((res: Response) => res.json());
+      .toPromise()
+      .then(response => response.json())
   }
-
   public checkDocumentLocking(attachemntID, documentType) {
     return this.http.get(ApiUrl.baseUrl + "api/invoices/getDocumentLockStatus/" + attachemntID + "/" + documentType)
       .toPromise()
@@ -32,15 +32,12 @@ export class MasterService {
       .catch(error => error);
   }
 
-  public checkLockedDocumentState(documentLockingID, documentType, attachemntID) {
-    let urlString = ApiUrl.baseUrl + "api/invoices/getcheckLockedDocumentState/"
-      + documentLockingID + "/"
-      + documentType + "/"
-      + attachemntID;
-    return this.http.get(urlString)
+  public checkLockedDocumentState(documentLockingID, documentType, attachemntID): Promise<any> {
+    return this.http
+      .get(ApiUrl.baseUrl + "api/invoices/getcheckLockedDocumentState/" + documentLockingID + "/" + documentType + "/" + attachemntID)
       .toPromise()
       .then(response => response.json())
-      .catch(error => error);
+
   }
 
 }

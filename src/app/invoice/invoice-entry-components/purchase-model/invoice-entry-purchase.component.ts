@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,Pipe, OnInit, ViewChildren, QueryList} from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -6,31 +6,52 @@ import { BaseComponent } from '../../../base.component';
 import { UserService } from '../../../user/shared/user.service';
 import {CurrentPageArguments} from '../../../pagination/pagination.component';
 import { CrumbBarComponent } from '../../../shared/others/crumb-bar/crumb-bar.component';
+import { InvoiceEntryService } from '../../../invoice/invoice-entry/shared/invoice-entry.service';
+import { PurchaseOrder } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
 // import { CompanyDropdownComponent } from '../shared/dropdown/company/company-dropdown.component';
-import {
-    TableOptions,
-    TableColumn,
-    ColumnMode
-} from 'angular2-data-table';
+// import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
+// import { BSModalContext } from 'angular2-modal/plugins/bootstrap/index';
+import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
+import { FilterPipe } from '../../../shared/pipe/orderby.ts';
+
+
+export class InvoiceEntryPurchaseModalContext extends BSModalContext {
+	constructor() {
+		super();
+	}
+}
+
+
 
 @Component({
 	selector: 'sp-invoice-entry-purchase',
 	templateUrl: 'invoice-entry-purchase.component.html'
 })
-
-export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
-
+export class InvoiceEntryPurchaseComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoiceEntryPurchaseModalContext>, OnInit {
+	// export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
+	private purchaseOrder: Array<PurchaseOrder>
+	context: InvoiceEntryPurchaseModalContext;
+	public wrongAnswer: boolean;
+	private POSearchText:string = '';
+	private PuchaseOrderID:number = 0;
+	// @ViewChild('templateRef') public templateRef: TemplateRef<any>;
 	constructor(private activatedRoute: ActivatedRoute,
 		private userService: UserService,
+		private invoiceEntryService: InvoiceEntryService,
 		localStorageService: LocalStorageService,
-		router: Router) {
+		router: Router,
+		public dialog: DialogRef<InvoiceEntryPurchaseModalContext>) {
 		super(localStorageService, router);
-
+		this.context = dialog.context;
+		dialog.setCloseGuard(this);
+		this.getPurchaseOrders()
+        
 	}
 	ngOnInit() {
 		this.sessionDetails = this.userService.getSessionDetails();
 		if (this.sessionDetails.userId != null) {
-			// this.getAttachments();
+          this.getPurchaseOrders()
 			// this.getAccountName();
 		} else {
 			let link = ['/login'];
@@ -39,19 +60,21 @@ export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnIn
 	}
 
 
-	// private getAttachments(): void {
-	// 	this.attachmentService
-	// 		.getAttachments(this.companyID, this.status, this.pageNumber, this.rowsPerPage)
-	// 		.then(result => {
-	// 			if (result) {
-    //                 this.model = result;
-    //                 this.AttachmentCount = this.model[0].AttachmentCount;
-    //             }
+	public getPurchaseOrders(): void {
+		this.invoiceEntryService
+			.getPurchaseOrders()
+			.then(result => {
+				if (result) {
+                    this.purchaseOrder = result;
+                }
 
-	// 		});
+			});
 
-	// }
-
+	}
+	GetSelectedPurchaseOrder(PuchaseOrderID): void{
+     this.dialog.close(PuchaseOrderID);
+		//	this.PuchaseOrderID = PuchaseOrderID;
+	}
 
 
 }

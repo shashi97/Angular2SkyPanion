@@ -1,13 +1,13 @@
-<div class="popover-list" id="divLedegrAccPopOver">
+<div class="popover-list" id="divVendorPopOver">
   <div class="popover-content" style="padding: 0px; margin: 0px">
-    <h3 class="popover-title">{{LedgerAccountsCount}}</h3>
+    <h3 class="popover-title"><b>All vendors</b></h3>
     <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
       <div class="navbar-inner">
         <div class="navbar-search navbar-form search_form" action="#" role="search">
           <div class="form-group">
             <div class="input-group">
-              <input class="modal_search_input form-control" type="text" placeholder="Search" #listFilter (keyup)="0" id="outer3" ledger-search-close
-                exclude-class="excludeddd759" />
+              <input class="modal_search_input form-control" type="text" placeholder="Search" #listFilter (keyup)="0"
+                id="outer2" />
               <div class="input-group-addon clear_search_field" ng-click="resetSearch()">
                 <i class="fa fa-times-circle-o"></i>
               </div>
@@ -16,11 +16,11 @@
         </div>
       </div>
     </div>
-    <div class="popover_content_wrap">
+     <div class="popover_content_wrap">
       <ul class="popover_list">
-        <li class="presentation" *ngFor="let ledgerAccount of ledgerAccounts | Filter:listFilter.value" search-popover-close>
-          <a class="vendor_link link_button" data-dismiss="modal" (click)="GetSelectedAccountOrder(ledgerAccount)">
-                                        {{ledgerAccount.LedgerAccount}}
+        <li class="presentation" *ngFor="let vendor of vendors | Filter:listFilter.value" search-popover-close>
+          <a class="vendor_link link_button" data-dismiss="modal" (click)="GetSelectedVendor(vendor.VendorID)">
+                                        {{vendor.VandorName}}
                                     </a>
         </li>
       </ul>

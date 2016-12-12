@@ -1,44 +1,29 @@
-<div class="page-content">
-    <div class="page-heading">
-        <h1>invoice-entry-vendors</h1>
-        <div class="options">
-
-            <div class="form-inline" id="filter_form">
-                <div class="filter_field_wrap form-group">
-                    <!--<ui-select ng-model="selectedCompanyFilter.selected"
-                               theme="select2"
-                               style="width: 250px"
-                               data-ng-change="getCompanyID(selectedCompanyFilter.selected.CompanyID)">
-                        <ui-select-match placeholder="Select a Company">
-                            <span>{{selectedCompanyFilter.selected.CompanyName}}</span>
-                            <a class="btn btn-link pull-right"><i class="fa fa-remove transparent" data-ng-click="removeSelectedCompanyItem()"></i></a>
-                        </ui-select-match>
-                        <ui-select-choices repeat="company in companies| filter: $select.search">
-                            {{company.CompanyName}}
-                        </ui-select-choices>
-                    </ui-select>-->
-                </div>
-
-                <div class="form-group">
-                    <button class="btn btn-primary" name="commit" type="button" data-ng-click="searchURL()">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                        Filter
-                    </button>
-
-                    <button class="btn btn-warning" data-ng-click="searchURLReset()">
-                        <i class="fa fa-refresh" aria-hidden="true"></i>
-                        Reset
-                    </button>
-                </div>
-
+<div class="popover-list" id="divPoPopOver">
+  <div class="popover-content" style="padding: 0px; margin: 0px">
+    <h3 class="popover-title">All Purchase Orders</h3>
+    <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
+      <div class="navbar-inner">
+        <div class="navbar-search navbar-form search_form">
+          <div class="form-group">
+            <div class="input-group">
+              <input class="modal_search_input form-control" type="text" placeholder="Search"  #listFilter (keyup)="0" id="outer" search-popover-close
+                exclude-class="exclude234" />
+              <div class="input-group-addon clear_search_field" ng-click="resetSearch()">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-
-    <ol class="breadcrumb">
-        <li><a href="#accounts/{{account.AccountID}}">{{account.AccountName}}</a></li>
-        <li class="active">Uploaded PDFs</li>
-    </ol>
-    
+    <div class="popover_content_wrap">
+      <ul class="popover_list">
+        <li class="presentation" *ngFor="let purchase of purchaseOrder | Filter:listFilter.value" search-popover-close>
+          <a class="vendor_link link_button" data-dismiss="modal" (click)="GetSelectedPurchaseOrder(purchase.PuchaseOrderID)">
+                                        {{purchase.NumberKey}}
+                                    </a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>
-<!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->

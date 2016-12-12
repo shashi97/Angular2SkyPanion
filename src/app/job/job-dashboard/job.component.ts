@@ -92,10 +92,10 @@ export class JobComponent extends BaseComponent implements OnInit {
     this.jobsService
       .getJobs(this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)
       .then(result => {
-        if (result.status === 404) {
+        if (result) {
           this.jobs = [];
           this.totalItems = 0;
-        } else if (result.status === 500) {
+        } else if (result) {
         } else {
           this.jobs = result;
           if (this.jobs && this.jobs.length > 0) {

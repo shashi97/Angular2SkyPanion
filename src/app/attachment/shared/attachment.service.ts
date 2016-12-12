@@ -19,7 +19,7 @@ export class AttachmentService {
       .get(ApiUrl.baseUrl + 'api/attachments/' + companyID + "/" + status + "/" + pageNumber + "/" + rowsPerPage)
       .toPromise()
       .then(response => response.json() as AttachmentObject[])
-      .catch(error => error);
+      .catch(this.handleError);
   }
 
   private handleError(error: any): Promise<any> {

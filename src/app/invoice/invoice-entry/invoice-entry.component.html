@@ -1,82 +1,121 @@
 <div class="page-content">
-  <div class="page-heading" data-ng-show="invoiceID==0">
-    <!--<h1><strong>Proccessing Invoice:</strong> {{invoiceDetail.AttachmentName}}</h1>-->
-    <h1><strong>Proccessing Invoice:</strong> </h1>
+  <div class="page-heading" [hidden]="InvoiceID==0">
+    <h1><strong>Editing:</strong> {{invoiceDetail.VendorKey}} - {{invoiceNumber}}</h1>
     <div class="options">
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#dgInvcoiceRemove" data-ng-click="ShowRejectionPopup()">
+      <div class="btn-toolbar">
+        <button type="button" class="btn btn-default" (click)="checklockingStatusForExit(invoiceBackLink)">
+                        <i class="fa fa-arrow-left"></i>
+                        Back
+                    </button>
+        <a *ngIf="invoiceDetail.InvoiceStatusID != 5 && invoiceDetail.InvoiceStatusID != 6 && invoiceDetail.InvoiceStatusID != 7"
+          class="reject_invoice_link btn btn-danger" data-remote="true" style="color: white!important; margin-top: 0px;" data-toggle="modal"
+          data-target="#dgInvcoiceReject" data-ng-click="getInvoiceReject()"><i class="fa fa-remove"></i>Reject Invoice</a>
+        <a href="#invoices" class="btn btn-default"><i class="fa fa-fw fa-arrow-circle-left"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="page-heading" *ngIf="InvoiceID==0">
+    <h1><strong>Proccessing Invoice:</strong>{{invoiceDetail.AttachmentName}}</h1>
+    <div class="options">
+      <button type="button" class="btn btn-danger" data-toggle="modal" (click)="ShowRejectionPopup()">
                     Invalid/Remove
                 </button>
-      <button type="button" class="btn btn-default" data-ng-show="$scope.invoiceDetail.LockedByID == $scope.userID" data-ng-click="checklockingStatusForExit(attachmentBackLink)">
+      <button type="button" class="btn btn-default" *ngIf="invoiceDetail.LockedByID == sessionDetails.userId" (click)="checklockingStatusForExit(attachmentBackLink)">
                     <i class="fa fa-arrow-left"></i>
                     Back
                 </button>
     </div>
   </div>
+  <ol class="breadcrumb">
+    <li>
+      <a href="#invoicesList/-1/{{searchParameters}}" *ngIf="InvoiceID!=0">All Invoices</a>
+      <a href="#attachmentsList/{{pageSizeFilter}}/{{searchParameters}}" *ngIf="InvoiceID==0">Pending Invoices</a>
+    </li>
+    <li class="active" *ngIf="InvoiceID!=0">
+      <a href="#invoicesDetails/{{invoiceDetail.InvoiceID}}">{{invoiceNumber}}</a>
+    </li>
+    <li class="active" *ngIf="InvoiceID!=0">Edit</li>
+    <li class="active" *ngIf="InvoiceID==0">Process Invoice</li>
+  </ol>
   <div id="form_fields" class="col-md-4">
+    <!--<div data-ng-class="displayValue">
+      <div id="error_explanation" data-ng-show="errors.length>0">
+        <h3>{{errorHeader}}</h3>
+        <ul>
+          <li data-ng-repeat="error in errors">{{error.ErrorName}}</li>
+        </ul>
+      </div>
+    </div>-->
     <div class="field form-group">
-      <label class="control-label col-md-4" for="invoice_company_id">{{invoiceDetail}}</label>
+      <label class="control-label col-md-4" for="invoice_company_id">{{invoiceDetail.type}}</label>
       <div class="col-md-4" style="padding-top: 6px">
-        <i ng-class="{'fa fa-book': invoiceDetail=='Skypanion::Fund', 'fa fa-building': invoiceDetail=='Skypanion::Property'}"></i>
-        <a href="#company/{{invoiceDetail}}" tooltip-placement="top" uib-tooltip-html="companyTooltip">
-                                        {{invoiceDetail}}
+        <i ng-class="{'fa fa-book': invoiceDetail.type=='Skypanion::Fund', 'fa fa-building': invoiceDetail.type=='Skypanion::Property'}"></i>
+        <a href="#company/{{invoiceDetail.CompanyID}}" tooltip-placement="top" uib-tooltip-html="companyTooltip">
+                                        {{invoiceDetail.CompanyName}}
                                     </a>
       </div>
-      <div class="col-md-4 input-group" style="padding: 0 !important;margin: 0 !important;" data-ng-if="invoiceDetail.InvoiceStatusID == 5 && sessionDetails.IsSuperUser == true">
-        <!--<ui-select ng-model="selectedCompany.selected"
-                                               theme="select2"
-                                               style="width:200px"
-                                               data-ng-change="onCompanyDropperChange(selectedCompany.selected.CompanyID , selectedCompany.selected.Number)">
-                                        <ui-select-match placeholder="Select a Company">{{selectedCompany.selected.CompanyName}}</ui-select-match>
-                                        <ui-select-choices repeat="company in companies| filter: $select.search">
-                                            {{company.CompanyName}}
-                                        </ui-select-choices>
-                                    </ui-select>-->
+      <div class="col-md-4 input-group" style="padding: 0 !important;margin: 0 !important;" *ngIf="invoiceDetail.InvoiceStatusID == 5 && sessionDetails.IsSuperUser == true">
+        <!--<ui-select ng-model="selectedCompany.selected" theme="select2" style="width:200px" data-ng-change="onCompanyDropperChange(selectedCompany.selected.CompanyID , selectedCompany.selected.Number)">
+          <ui-select-match placeholder="Select a Company">{{selectedCompany.selected.CompanyName}}</ui-select-match>
+          <ui-select-choices repeat="company in companies| filter: $select.search">
+            {{company.CompanyName}}
+          </ui-select-choices>
+        </ui-select>-->
+      </div>
+    </div>
+    <div class="field form-group ">
+      <div class="control-label col-md-4 " for="invoice_InvoiceNumber ">
+        Invoice Number
+      </div>
+      <div class="col-md-8 tooltip-class input-group ">
+        <input [(ngModel)]="invoiceDetail.InvoiceNumber " focus-name="1 " class="filtered_field form-control
+                " data-html="true " data-trigger="focus " uib-tooltip="This field only accepts letters, numbers, spaces, and the following grammatical characters: -#&@.
+                " id="invoice_InvoiceNumber " data-toggle="tooltip " placeholder="Enter Invoice Number " size="30 " title=" "
+          type="text " tabindex="1" (blur)="checkInvoiceNumberExists($event) ">
       </div>
     </div>
     <div class="field form-group">
-      <label class="control-label col-md-4" for="invoice_InvoiceNumber">
-                                    Invoice Number
-                                </label>
-      <div class="col-md-8 tooltip-class input-group">
-        <input data-ng-model="invoiceDetail.InvoiceNumber" focus-name="1" class="filtered_field form-control" data-html="true" data-trigger="focus"
-          uib-tooltip="This field only accepts letters, numbers, spaces, and the following grammatical characters: -#&@." id="invoice_InvoiceNumber"
-          data-toggle="tooltip" placeholder="Enter Invoice Number" size="30" title="" type="text" tabindex="1" ng-blur="checkInvoiceNumberExists($event)">
+      <label class="control-label col-md-4">PO Number</label>
+      <div class="col-md-8  input-group">
+        <div class='input-group'>
+          <input type="text" class="filtered_field form-control" focus-name="2" tabindex="2" [(ngModel)]="poNum" (blur)="checkPONumber(poNum ,$event)"
+          />
+          <span class="input-group-addon" (click)="openPurchaseModal()" data-toggle="modal ">
+                                            <span class="caret" ></span>
+          </span>
+        </div>
       </div>
     </div>
     <div class="field form-group">
       <label class="control-label col-md-4">
-                                    PO Number
+                                   Vendor
                                 </label>
       <div class="col-md-8  input-group">
         <div class='input-group'>
-          <input type="text" class="filtered_field form-control" focus-name="2" tabindex="2" data-ng-model="poNum" ng-blur="checkPONumber(poNum ,$event)"
+          <input type="text" class="filtered_field form-control" focus-name="2" tabindex="2" [(ngModel)]="vendorKey" (blur)="checkVendorKey(vendorKey ,$event)"
           />
-          <!--<span class="input-group-addon" dropdown-toggle " data-toggle="modal " data-target="#dgPoNumbers ">
-                                          
-                                            <span class="caret "></span>
-                                          
-                                        </span>-->
+          <span class="input-group-addon" (click)="openVendorModal()" data-toggle="modal ">
+                                            <span class="caret" ></span>
+          </span>
         </div>
       </div>
     </div>
-    <sp-vendor-dropdown></sp-vendor-dropdown>
-    <div id="vendor_field_wrap " class="form-group ">
-      <label id="vendor_field_label " class="control-label col-md-4 ">
+    <div id="vendor_field_wrap" class="form-group">
+      <label id="vendor_field_label" class="control-label col-md-4">
                                 </label>
-      <div class="col-md-8 input-group ">
-        <input id="invoice_vendor_id " type="hidden">
-        <div id="vendor_info_wrap " class="panel panel-default ">
-          <div class="panel-body ">
-            <b>{{invoiceDetail}}</b>
-            <br> {{invoiceDetail}}
+      <div class="col-md-8 input-group">
+        <input id="invoice_vendor_id" name="invoice[vendor_id]" type="hidden" value="15000">
+        <div id="vendor_info_wrap" class="panel panel-default">
+          <div class="panel-body">
+            <b>{{invoiceDetail.VendorName}}</b>
+            <br> {{invoiceDetail.VendorAddress}}
             <br>
-            <i class="icon icon-warning-sign "></i>
-            <span data-ng-show="invoiceDetail.VendorName!=null " class="text-error
-          " style="font-weight: bold ">Ach not configured</span>
+            <i class="icon icon-warning-sign"></i>
+            <span *ngIf="invoiceDetail.VendorName!=null" class="text-error" style="font-weight: bold">Ach not configured</span>
             <br>
-            <a data-ng-show="invoiceDetail!=null " href="#company/{{invoiceDetail}}/invoices/{{invoiceDetail}}
-          " target="_blank ">
-              <i class="fa fa-list-alt "></i><b>Invoice History</b>
+            <a *ngIf="invoiceDetail.VendorName!=null" href="#company/{{invoiceDetail.CompanyID}}/invoices/{{invoiceDetail.VendorID}}"
+              target="_blank">
+              <i class="fa fa-list-alt"></i><b>Invoice History</b>
             </a>
           </div>
         </div>
@@ -86,15 +125,12 @@
       <label class="control-label col-md-4 " for="invoice_InvoiceNumber ">
                                     Invoice Date
                                 </label>
-      <div class="col-md-8 input-group ">
-        <div class='input-group date' id='datetimepicker_invoiceDate'>
-          <input type='text' class="form-control " focus-name="4 " tabindex="4
-          " data-ng-model="invoiceDate " placeholder="Click to select date " ng-blur="setDueDateByInvoiceDate(invoiceDate) "
-            date-time-picker />
-          <span class="input-group-addon ">
-
-                                         
-                                            <span class="caret "></span>
+      <div class="col-md-8 input-group">
+        <div class="input-group date">
+          <input [(ngModel)]="invoiceDate" class="form-control" id="Invoice_date" name="Invoice_date" #Invoice_date="ngModel" placeholder="Invoice Date From"
+            size="12" type="text" value="">
+          <span class="input-group-addon">
+          <span class="caret" ></span>
           </span>
         </div>
       </div>
@@ -108,18 +144,17 @@
           <span class="input-group-addon ">
                                             <i class="fa fa-usd "></i>
                                         </span>
-          <input data-ng-model="invoiceDetail.InvoiceAmount " focus-name="5 " tabindex="5
-          " class="form-control " id="invoice_Amount " placeholder="Enter invoice amount " size="30 " type="text
-          " nks-only-number decimal-upto="2 " ng-blur="processInvAmtToDistribution(invoiceDetail.InvoiceAmount) ">
+          <input [(ngModel)]="invoiceDetail.InvoiceAmount " focus-name="5 " tabindex="5 " class="form-control " id="invoice_Amount
+                " placeholder="Enter invoice amount " size="30 " type="text " nks-only-number decimal-upto="2 " (blur)="processInvAmtToDistribution(invoiceDetail.InvoiceAmount) ">
         </div>
       </div>
     </div>
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="invoice_Description ">Description</label>
       <div class="col-md-8 input-group ">
-        <input data-ng-model="invoiceDetail.Description " focus-name="6 " tabindex="6
-          " class="filtered_field form-control " data-trigger="focus " id="invoice_Description " maxlength="50 " name="invoice[Description]
-          " placeholder="Describe this invoice. " rows="1 " size="50 " title=" " type="text ">
+        <input [(ngModel)]="invoiceDetail.Description " focus-name="6 " tabindex="6 " class="filtered_field form-control
+                " data-trigger="focus " id="invoice_Description " maxlength="50 " name="invoice[Description] " placeholder="Describe this invoice."
+          rows="1 " size="50 " title=" " type="text ">
       </div>
     </div>
     <div class="field form-group ">
@@ -127,146 +162,253 @@
                                     Due Date
                                 </label>
       <div class="col-md-8 input-group ">
-        <div class='input-group date' id='datetimepicker_dueDate'>
-          <input type='text' class="form-control " focus-name="7 " tabindex="7
-          " placeholder="Click to select date " data-ng-model="dueDate " date-time-picker accept=" " ng-blur="setDueDate() "
-          />
+        <div class='input-group date'>
+          <input class="form-control" [(ngModel)]="dueDate" placeholder="Click to select date" size="12" type="text" value="" />
+          <!--<input type='text' class="form-control " focus-name="7 " tabindex="7 " placeholder="Click to select date" [(ngModel)]="dueDate "
+            date-time-picker accept=" " (blur)="setDueDate() " />-->
           <span class="input-group-addon ">
-                                            <span class="caret"></span>
+                                            <span class="caret "></span>
           </span>
         </div>
       </div>
     </div>
-     <sp-invoice-entry-accounts></sp-invoice-entry-accounts>
-      <sp-invoice-entry-distributions></sp-invoice-entry-distributions>
+    <div class="form-group">
+      <div id="distributions_panel" class="panel panel-default">
+        <div class="panel-body">
+          <!----here new distribution starts--->
+          <div id="purchase_order_field_wrap" class="">
+            <label id="purchase_order_field_label" class="control-label col-md-12 pull-right">
+                                                <a (click)="addAccount()" focus-name="8" tabindex="8"><i class="fa fa-plus"></i>Add Account</a>
+                                            </label>
+          </div>
+          <div>
+            <div id="invoices_index_filters_form" *ngIf="isAddAccount">
+              <div class="form-group col-md-offset-3 col-md-9 " style="margin-left:29% ">
+                <div class="input-group ">
+                  <input type="text " class="form-control ng-pristine ng-untouched ng-valid " focus-me="fcs_AccountNum
+              " [(ngModel)]="glAccountObject.glAccountNumber" (blur)="checkglAccountNumber(glAccountObject.glAccountNumber,$event) "
+                    id="accountnumDD ">
+                  <span class="input-group-addon" (click)="openAccountModal()">
+                                                            <span class="caret "></span>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group col-md-offset-3 col-md-9 " style="margin-left:29% ">
+                <!--ng-focus="onTextClick($event) "-->
+                <input class="form-control " id="countPerPage " [(ngModel)]="glAccountObject.glAccountDescription" focus-me="fcs_description ">
+              </div>
+              <div class="form-group col-md-offset-3 col-md-9 " style="margin-left:29% ">
+                <input class="form-control ng-pristine ng-untouched ng-valid
+              " [(ngModel)]="glAccountObject.glAccountAmount" size="10 " type="text " nks-only-number decimal-upto="2 "
+                  focus-name="11 " tabindex="11 ">
+              </div>
+              <div class="form-group col-md-offset-3 col-md-9 " style="margin-left:29% ">
+                <button class="btn btn-primary " (click)="addGlAccount() ">Add</button>
+              </div>
+            </div>
+            <!-- end ngIf: isAddAccount -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<sp-invoice-entry-accounts></sp-invoice-entry-accounts>-->
+    <!--<sp-invoice-entry-distributions></sp-invoice-entry-distributions>-->
+    <div id="distributions_panel" class="panel panel-default">
+      <div class="panel-heading">
+        <h2>Distributions</h2>
+      </div>
+      <div class="panel-body panel-no-padding">
+        <table cellspacing="0" cellpadding="0" border="0" id="distributions_table" class="table table-striped table-bordered datatables dataTable no-footer"
+          role="grid" aria-describedby="editable_info">
+          <thead>
+            <tr role="row">
+              <th>GL Account</th>
+              <th>Amount</th>
+              <th>Comment</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of invoiceDetail.InvoiceDistributions">
+              <td class="ledger_account_identifier">{{item.AccountTitle}}</td>
+              <td class="amount_row">
+                <a href="javascript:void(0)" uib-popover-template="DistAmountPopoverUrl" popover-placement="top" popover-is-open="item.isAmtOpen"
+                  (click)="openPopover($index, 'amount')" style="border-bottom-style: dashed; border-width: 1px;">{{item.DistributionAmount}}</a>
+                <script id="DistAmountPopover.html" type="text/ng-template">
 
-       <div class="field form-group">
-                                <label class="control-label col-md-4" for="invoice_InvoiceNumber">
+                                                                <div class="popover-list" style="min-width:200px;max-width:200px;" left="60">
+                                                                    <div class="popover-content" style="padding: 0px; margin: 0px">
+                                                                        <h3 class="popover-title">Enter distribution amount</h3>
+                                                                        <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
+                                                                            <div class="navbar-inner">
+                                                                                <div class="navbar-search navbar-form search_form" action="#" role="search">
+                                                                                    <div class="control-group form-group">
+                                                                                        <div class="editable-input" style="position: relative;">
+                                                                                            <input type="text" class="form-control input-sm" style="padding-right: 24px;"
+                                                                                                   [(ngModel)]="item.DistributionAmount" dist-close exclude-class="{{$index+255}}" index-no="A{{$index}}" valid-number decimal-upto="2"><span class="editable-clear-x"></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </script>
+              </td>
+              <td class="comment_row">
+                <a href="javascript:void(0)" uib-popover-template="DistCommentPopoverUrl" popover-placement="top" popover-is-open="item.isComOpen"
+                  (click)="openPopover($index, 'comment')" style="border-bottom-style: dashed; border-width: 1px;"><span>{{item.DistributionComment}}</span></a>
+                <script id="DistCommentPopover.html" type="text/ng-template">
+
+                                                                <div class="popover-list" id="divDistCommentPopover" style="min-width:200px;max-width:200px;" left="130">
+                                                                    <div class="popover-content" style="padding: 0px; margin: 0px">
+                                                                        <h3 class="popover-title">Enter distribution comment</h3>
+                                                                        <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
+                                                                            <div class="navbar-inner">
+                                                                                <div class="navbar-search navbar-form search_form" action="#" role="search">
+                                                                                    <div class="control-group form-group">
+                                                                                        <div class="editable-input" style="position: relative;">
+                                                                                            <input type="text" class="form-control input-sm" style="padding-right: 24px;" [(ngModel)]="item.DistributionComment" dist-closemm exclude-class="{{$index+741}}" index-no="B{{$index}}" /><span class="editable-clear-x"></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </script>
+              </td>
+              <td>
+                <i class="fa fa-times remove_distribution" (click)="removeInvoiceDistributions(item.DistributionID, $index)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="field form-group">
+      <label class="control-label col-md-4" for="invoice_InvoiceNumber">
                                     Post To GL Date
                                 </label>
-
-                                <div class="col-md-8  input-group">
-
-                                    <div class='input-group date' id='datetimepicker_GLDate'>
-                                        <input type='text' class="form-control" data-ng-model="postGlDate" placeholder="Click to select date" date-time-picker focus-name="12" tabindex="12" ng-blur="setPostToGLDate()" />
-                                        <span class="input-group-addon">
+      <div class="col-md-8  input-group">
+        <div class='input-group date'>
+          <input class="form-control" [(ngModel)]="postGlDate" placeholder="Click to select date" size="12" type="text" value="" />
+          <!--<input type='text' class="form-control" data-ng-model="postGlDate" placeholder="Click to select date" date-time-picker focus-name="12"
+            tabindex="12" ng-blur="setPostToGLDate()" />-->
+          <span class="input-group-addon">
 
                                             <!--<span class="glyphicon glyphicon-calendar"></span>-->
-                                            <span class="caret"></span>
-                                        </span>
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-
-
-
-
-                            <div>
-                                <div class="field form-group">
-                                    <label class="control-label col-md-4" for="invoice_CashAccount">Cash Account</label>
-                                    <div class="col-md-8" style="margin-top:7px">
-
-                                        <div class="field" data-ng-show="companyData !='Unknown'">
-
-                                            <div class="col-md-12">
-                                                <label>
-                                                    <input type="radio" data-ng-model="Accountbind" value="AcDiscription1" data-ng-show="IsAcc1show">{{companyData}}
+          <span class="caret"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="field form-group">
+      <label class="control-label col-md-4" for="invoice_CashAccount">Cash Account</label>
+      <div class="col-md-8" style="margin-top:7px">
+        <div class="field" *ngIf="companyData.CashAccount1Description !='Unknown'">
+          <div class="col-md-12">
+            <label>
+                                                    <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription1"  *ngIf="IsAcc1show">{{companyData.CashAccount1Description}}
                                                 </label>
-                                            </div>
+          </div>
+        </div>
+        <div class="field" *ngIf="companyData.CashAccount2Description !='Unknown'">
+          <div class="col-md-12">
+            <label>
+                                                    <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription2"  *ngIf="IsAcc2show">{{companyData.CashAccount2Description}}
+                                                </label>
+          </div>
+        </div>
+        <div class="field" *ngIf="companyData.CashAccount3Description !='Unknown'">
+          <div class="col-md-12">
+            <label>
+                                                    <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription3"  *ngIf="IsAcc3show">{{companyData.CashAccount3Description}}
+                                                </label>
+          </div>
+        </div>
+        <div class="field" *ngIf="companyData.CashAccount4Description !='Unknown'">
+          <div class="col-md-12">
+            <label>
+                                                    <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription4"  *ngIf="IsAcc4show">{{companyData.CashAccount4Description}}
+                                                </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="field form-group">
+      <label class="control-label col-md-4" for="invoice_PayUsingAch">Pay Using</label>
+      <div class="col-md-8 input-group">
+        <p-dropdown [options]="paymentMethods" [disabled]="selectedPaymentMethod.selected.ID==0" [(ngModel)]="selectedPaymentMethod.selected.Name"
+          [filter]="true" [autoWidth]="true" [style]="{'width':'260px'}" (ngModelChange)="updateInvoiceRole(selectedViewInvoicesRole, 'view')"></p-dropdown>
+        <p>{{selectedPaymentMethod.selected.Name}}</p>
+      </div>
+    </div>
+    <div class="field form-group ">
+      <label class="control-label col-md-4 " for="job_id_Job ">Job</label>
+      <div class="col-md-8 input-group ">
+        <p-dropdown [options]="jobs" [(ngModel)]="selectedJob.selected.Description" [filter]="true" [autoWidth]="true" [style]="{'width':'260px'}"
+          (ngModelChange)="updateInvoiceRole(selectedViewInvoicesRole, 'view')"></p-dropdown>
+        <p>{{selectedJob.selected.Description}}</p>
+      </div>
+    </div>
+    <div class="field form-group ">
+      <label class="control-label col-md-4 " for="job_category_id_Job Category ">Job category</label>
+      <div class="col-md-8 input-group ">
+        <p-dropdown [options]="jobCategory" [(ngModel)]="selectedJobCategory.selected.Category" [filter]="true" [autoWidth]="true"
+          [style]="{'width':'260px'}" (ngModelChange)="updateInvoiceRole(selectedViewInvoicesRole, 'view')"></p-dropdown>
+      </div>
+    </div>
+    <div class="field form-group ">
+      <label class="control-label col-md-4 " for="invoice_Comment ">Notes</label>
+      <div class="col-md-8 input-group ">
+        <textarea class="form-control " cols="40 " id="invoice_Comment " focus-name="15 " tabindex="15 " maxlength="250
+              " [(ngModel)]="invoiceDetail.Comment " placeholder="Enter a note for this invoice. " rows="3 "></textarea>
+        <span class="text-warning ">**This field is for SkyPanion only.  It will not be synced with Skyline.</span>
+      </div>
+    </div><br><br>
+  </div>
+  <div class="col-md-8" id="form_right_wrap" style="width: 65%; float: left;margin-left:15px">
+    <input id="invoice_attachment_id" [(ngModel)]="invoiceDetail.attachment_id" type="hidden" value="568">
+    <div class="row">
+      <iframe id="pdf_frame" height="800" class="col-md-12" [src]="pdfsrc" style="border: 0; position: inherit"></iframe>
+      <!--src="http://localhost/abc/api/getpdf?a=1"-->
+    </div>
+    <div class="row">
+      <div class="col-md-12" style="padding-top:30px" *ngIf="invoiceDetail.InvoiceID != 0">
+        <span class="pull-right">
+                                        <div class="checkbox-inline" *ngIf="invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.IsApprovalRequired == true">
+                                            <label>
+                                                <input checked="checked" id="xyz" name="status" type="checkbox" value="5">
+                                                Continue after save&nbsp;
+                                            </label>
+
                                         </div>
 
-                                        <div class="field" data-ng-show="companyData.CashAccount2Description !='Unknown'">
+                                        <input class="btn btn-success" id="submit_for_approval" value="Submit for Approval" type="button" (click)="SubmitInvoiceForApproval(invoiceDetail)" *ngIf="(invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.InvoiceStatusID == 1 ||invoiceDetail.InvoiceStatusID == 5)  && invoiceDetail.InvoiceAmount != 0" />
+                                        <input class="btn btn-info" id="expedite_invoice" type="button" value="Expedite" (click)="submitInvoiceExpedite(invoiceDetail)" *ngIf="(invoiceDetail.IsExpeditedable == true || invoiceDetail.InvoiceStatusID ==1 || invoiceDetail.IsSubmitForApprovalRequired == true ||invoiceDetail.InvoiceStatusID == 5)  && invoiceDetail.InvoiceAmount != 0" />
+                                        <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('isSaveAfterEdit','')" *ngIf="invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.IsApprovalRequired == true || invoiceDetail.InvoiceStatusID == 2 || invoiceDetail.InvoiceStatusID == 5" />
+                                        <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('getInvoiceGrid','')" *ngIf="(sessionDetails.IsSuperUser == true && (invoiceDetail.InvoiceStatusID == 4 ||invoiceDetail.InvoiceStatusID == 6))" />
 
-                                            <div class="col-md-12">
-                                                <label>
-                                                    <input type="radio" data-ng-model="Accountbind" value="AcDiscription2" data-ng-show="IsAcc2show">{{companyData}}
-                                                </label>
-                                            </div>
-                                        </div>
+                                        <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('isSave','saveInvoiceAfterEditFromBatch')" *ngIf="invoiceDetail.IsBatche == true && invoiceDetail.InvoiceStatusID == 3" />
 
-
-                                        <div class="field" data-ng-show="companyData.CashAccount3Description !='Unknown'">
-
-                                            <div class="col-md-12">
-                                                <label>
-                                                    <input type="radio" data-ng-model="Accountbind" value="AcDiscription3" data-ng-show="IsAcc3show">{{companyData}}
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div class="field" data-ng-show="companyData.CashAccount4Description !='Unknown'">
-
-                                            <div class="col-md-12">
-                                                <label>
-                                                    <input type="radio" data-ng-model="Accountbind" value="AcDiscription4" data-ng-show="IsAcc4show">{{companyData}}
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            <div class="field form-group">
-                                <label class="control-label col-md-4" for="invoice_PayUsingAch">Pay Using</label>
-                                <div class="col-md-8 input-group">
-                                    <!--<ui-select ng-model="selectedPaymentMethod.selected"
-                                               theme="select2"
-                                               style="width: 100%"
-                                               data-ng-disabled="selectedPaymentMethod.selected.ID==0">
-                                        <ui-select-match placeholder="Select a Pay Using">{{selectedPaymentMethod}}</ui-select-match>
-                                        <ui-select-choices repeat="payment in paymentMethods| filter: $select.search">
-                                            {{payment}}
-                                        </ui-select-choices>
-                                    </ui-select>-->
-                                </div>
-                            </div>
-
-                            <div class="field form-group">
-                                <label class="control-label col-md-4" for="job_id_Job">Job</label>
-                                <div class="col-md-8 input-group">
-                                    <!--<ui-select ng-model="selectedJob.selected"
-                                               theme="select2"
-                                               focus-name="13" tabindex="13"
-                                               style="width: 100%"
-                                               data-ng-change="getJobCategory(selectedJob.selected.JobID)">
-                                        <ui-select-match placeholder="Select a Job">{{selectedJob}}</ui-select-match>
-                                        <ui-select-choices repeat="job in jobs| filter: $select.search">
-                                            {{job.Description}}
-                                        </ui-select-choices>
-                                    </ui-select>-->
-                                </div>
-                            </div>
-
-                            <div class="field form-group">
-                                <label class="control-label col-md-4" for="job_category_id_Job Category">Job category</label>
-                                <div class="col-md-8 input-group">
-                                    <!--<ui-select ng-model="selectedJobCategory.selected"
-                                               theme="select2"
-                                               focus-name="14" tabindex="14"
-                                               style="width: 100%"
-                                               data-ng-change="SelectJobCategory(selectedJobCategory.selected.JobCategoryID)">
-                                        <ui-select-match placeholder="Select a Job category">{{selectedJobCategory.selected.Category}}</ui-select-match>
-                                        <ui-select-choices repeat="jobCat in jobCategory| filter: $select.search">
-                                            {{jobCat.Category}}
-                                        </ui-select-choices>
-                                    </ui-select>-->
-                                </div>
-                            </div>
-
-                            <div class="field form-group">
-                                <label class="control-label col-md-4" for="invoice_Comment">Notes</label>
-                                <div class="col-md-8 input-group">
-                                    <textarea class="form-control" cols="40" id="invoice_Comment" focus-name="15" tabindex="15" maxlength="250" data-ng-model="invoiceDetail.Comment" placeholder="Enter a note for this invoice." rows="3"></textarea>
-                                    <span class="text-warning">**This field is for SkyPanion only.  It will not be synced with Skyline.</span>
-                                </div>
-                            </div><br>
-    <!--<div>Displaying attachments <b>{{pageNumber}}-{{rowsPerPage}}</b> of <b>{{AttachmentCount}}</b> in total</div><br>-->
+                                    </span>
+        <br class="clearfix">
+        <br>
+        <br>
+      </div>
+      <div class="col-md-12" *ngIf="invoiceDetail.IsSubmitForApprovalRequired == false && ( invoiceDetail.InvoiceStatusID == null ) && invoiceDetail.InvoiceID == 0">
+        <hr>
+        <span class="" style="float: right">
+                                        <button class="btn btn-default" focus-name="16" tabindex="16" (click)="saveInvoice('isSave','')">Process</button>
+                                        <button class="btn btn-primary" focus-name="17" tabindex="17" (click)="saveInvoice('isSaveAndContinue' ,'')">Process and Continue</button>
+                                    </span>
+        <br class="clearfix">
+        <br>
+        <br>
+      </div>
+    </div>
   </div>
 </div>
 <!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->

@@ -6,6 +6,7 @@ import { BaseComponent } from '../base.component';
 import { UserService } from '../user/shared/user.service';
 import { AttachmentObject } from '../attachment/shared/attachment.model';
 import { AttachmentService } from '../attachment/shared/attachment.service';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 
 import { AccountService } from '../account/shared/account.service';
@@ -33,13 +34,14 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 	private pageNumber: number = 1;
 	private rowsPerPage: number = 25;
 	private status: string = 'all';
-	private AttachmentCount;
+	private AttachmentCount:number = 0;
+	
 	constructor(private activatedRoute: ActivatedRoute,
 		private userService: UserService,
 		private attachmentService: AttachmentService,
 		private accountService: AccountService,
 		localStorageService: LocalStorageService,
-		router: Router) {
+		router: Router, public modal: Modal) {
 		super(localStorageService, router);
         this.model = new Array<AttachmentObject>();
         this.account = new AccountModel();
@@ -69,6 +71,16 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 			});
 
 	}
+	CreateModal() {
+		this.modal.alert()
+			.size('lg')
+			.isBlocking(true)
+			.showClose(true)
+			.keyboard(27)
+			.title('Hello World')
+			.body('A Customized Modal')
+			.open();
+	}
 	private getAccountName(): void {
 		this.accountService
 			.getAccountName()
@@ -80,7 +92,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 			});
 
 	}
-
+ 
 
 }
 

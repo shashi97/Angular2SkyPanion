@@ -49,35 +49,35 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private activatedRoute: ActivatedRoute) {
     super(localStorageService, router);
-    this.getSessionDetails();
+    this.getParameterValues();
   }
 
   ngOnInit() {
-  }
-
-  private getSessionDetails(): void {
-    this.user = this.userService.getSessionDetails();
-    if (this.user.userId) {
-      this.getParameterValues();
-    }
   }
 
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
       this.invoiceId = params['invoiceId'];
       this.invoiceArgs.invoiceId = this.invoiceId;
-      this.getUserDetails();
+      this.getSessionDetails();
     });
   }
 
-  private getUserDetails(): void {
+  private getSessionDetails() {
+    this.user = this.userService.getSessionDetails();
+    if (this.user.userId) {
+      this.getUserDetails();
+    }
+  }
+
+  private getUserDetails() {
     this.userService.getUserById(this.user.userId).then(result => {
       this.userDetail = result;
       this.getInvoiceId();
     });
   }
 
-  private getInvoiceId(): void {
+  private getInvoiceId() {
 
     let invSearchObject: Object = {
       invoiceId: this.invoiceId,
@@ -89,16 +89,15 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
     }
 
     this.invoiceService.getInvoiceId(invSearchObject).then(result => {
-      if (result.status === 404) {
+      if (result.status == 404) {
         this.getInvoiceDetail();
       } else {
-        this.getInvoiceDetail();
       }
-
+      this.getInvoiceDetail();
     });
   }
 
-  private getInvoiceDetail(): void {
+  private getInvoiceDetail() {
     let roleExistCount: number = 0;
     this.invoiceService.getInvoiceDetail(this.invoiceId, 0, false).then(result => {
 
@@ -110,41 +109,40 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
         this.invoiceDetail.docType = 10;
       }
 
-      // this.pdfsrc1 = apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber +
-      // '/' + this.invoiceDetail.AttachmentName;
+      // this.pdfsrc1 = apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber + '/' + this.invoiceDetail.AttachmentName;
       // this.pdfsrc = $sce.trustAsResourceUrl(this.pdfsrc1);
 
       if (this.invoiceDetail.InvoiceStatusID == 0) {
         this.invoiceArgs.invType = 'duplicates';
       }
 
-      this.companiesService.getCompanyDetail(this.invoiceDetail.CompanyID).then(response => {
+      this.companiesService.getCompanyDetail(this.invoiceDetail.CompanyID).then(result => {
 
-        this.companyDetail = response;
+        this.companyDetail = result;
 
         let link = ['/company'];
-        if (this.user.IsSuperUser === false && this.companyDetail.view_invoice_role_id !== 0) {
+        if (this.user.IsSuperUser == false && this.companyDetail.view_invoice_role_id != 0) {
           if (this.userDetail.selectedRoles.length > 0) {
             this.userDetail.selectedRoles.forEach(element => {
-              if (this.companyDetail.view_invoice_role_id === element.RoleID) {
+              if (this.companyDetail.view_invoice_role_id == element.RoleID) {
                 roleExistCount = roleExistCount + 1;
               }
             });
           } else {
             this.router.navigate(link);
           }
-          if (roleExistCount === 0) {
+          if (roleExistCount == 0) {
             this.router.navigate(link);
           }
         }
 
         let invSearchData = { invoiceNumber: this.invoiceDetail.InvoiceNumber, CompanyId: this.invoiceDetail.CompanyID };
 
-        this.invoiceService.getInvoicesCheckDetailsByInvoiceNumber(invSearchData).then(res => {
-          if (res.status === 404) {
-          } else if (res.status === 500) {
+        this.invoiceService.getInvoicesCheckDetailsByInvoiceNumber(invSearchData).then(result => {
+          if (result.status == 404) {
+          } else if (result.status == 500) {
           } else {
-            this.checkDetails = res;
+            this.checkDetails = result;
           }
         });
       });

@@ -75,7 +75,7 @@ const APP_ROUTES: Routes = [
   { path: 'attachments', component: AttachmentComponent },
   { path: 'attachments/:SearchParameters', component: AttachmentComponent },
 
-  { path: 'attachments/invoicesNew', component: InvoiceEntryComponent },
+  { path: 'attachments/invoicesNew/:AttachmentID', component: InvoiceEntryComponent },
 
 
   { path: 'syncBatches/:pageSizeFilter/:searchParameters', component: SyncBatchComponent },

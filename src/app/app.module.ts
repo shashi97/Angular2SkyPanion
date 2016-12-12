@@ -63,11 +63,13 @@ import { AttachmentService } from './attachment/shared/attachment.service';
 
 import { SyncBatchService } from './sync-batch/shared/sync-batch.service';
 
-
+import { InvoiceEntryService } from './invoice/invoice-entry/shared/invoice-entry.service';
 
 /*pipes */
-import { OrderByPipe } from './shared/pipe/orderby';
+import { OrderByPipe, FilterPipe } from './shared/pipe/orderby';
+import {  Modal } from 'angular2-modal';
 
+import { ModalComponent, CloseGuard } from 'angular2-modal';
 /* sp-app components */
 
 import { UserComponent } from './user/user-dashboard/user.component';
@@ -110,7 +112,7 @@ import { JobComponent } from './job/job-dashboard/job.component';
 import { JobDetailComponent } from './job/job-detail/job-detail.component';
 import { JobAttributeComponent } from './job/job-detail/attribute.component';
 import { JobCategoryComponent } from './job/job-detail/category.component';
-
+import { JobsService } from './job/shared//jobs.service';
 import { ApprovalCriteriaComponent } from './approval-criteria/approval-dashboard/approval-criteria.component';
 import { ApprovalsViewComponent } from './approval-criteria/approval-dashboard/approvals-view.component';
 import { ApprovalFilterComponent } from './approval-criteria/approval-dashboard/filter-bar.component';
@@ -144,6 +146,7 @@ import { InvoiceDetailAttributeComponent } from './invoice/invoice-detail/attrib
 import { InvoiceDetailDistributeComponent } from './invoice/invoice-detail/distribution.component';
 import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.component';
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
+import { InvoiceEntryVendorComponent } from './invoice/invoice-entry-components/vendors-model/invoice-entry-vendor.component';
 import { AttachmentComponent } from './attachment/attachment.component';
 
 
@@ -159,10 +162,10 @@ import { SyncBatchDetailInvoiceComponent } from './sync-batch/sync-batch-detail/
 import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
 
 import { InvoiceEntryAccountsComponent }
-  from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
+from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
 
 import { InvoiceEntryDistributionsComponent }
-  from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
+from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
 
 import { InvoiceEntryPurchaseComponent } from './invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
 
@@ -281,16 +284,21 @@ let localStorageServiceConfig = {
     RoleFilterComponent,
     SyncModelComponent,
     CustomModal,
+    InvoiceEntryVendorComponent,
+    FilterPipe,
     ApprovalModalComponent
   ],
-   entryComponents: [
+  entryComponents: [
     CustomModal,
     ApprovalModalComponent,
-    SyncModelComponent
+    SyncModelComponent,
+    InvoiceEntryPurchaseComponent,
+    InvoiceEntryVendorComponent,
+    InvoiceEntryAccountsComponent
 
 
   ],
-   imports: [
+  imports: [
     UiSwitchModule,
     BrowserModule,
     FormsModule,
@@ -327,6 +335,8 @@ let localStorageServiceConfig = {
     AchSetupService,
     CompanyService,
     AttachmentService,
+    InvoiceEntryService,
+    JobsService,
     SyncBatchService,
     {
       provide: Http,

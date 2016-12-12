@@ -1,11 +1,10 @@
-  <div class="page-content">
- <div class="page-heading">
-        <h1>All Attachments</h1>
-        <div class="options">
-
-            <div class="form-inline" id="filter_form">
-                <div class="filter_field_wrap form-group">
-                    <!--<ui-select ng-model="selectedCompanyFilter.selected"
+<div class="page-content">
+  <div class="page-heading">
+    <h1>All Attachments</h1>
+    <div class="options">
+      <div class="form-inline" id="filter_form">
+        <div class="filter_field_wrap form-group">
+          <!--<ui-select ng-model="selectedCompanyFilter.selected"
                                theme="select2"
                                style="width: 250px"
                                data-ng-change="getCompanyID(selectedCompanyFilter.selected.CompanyID)">
@@ -17,57 +16,51 @@
                             {{company.CompanyName}}
                         </ui-select-choices>
                     </ui-select>-->
-                </div>
-
-                <div class="form-group">
-                    <button class="btn btn-primary" name="commit" type="button" data-ng-click="searchURL()">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" name="commit" type="button" data-ng-click="searchURL()">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         Filter
                     </button>
-
-                    <button class="btn btn-warning" data-ng-click="searchURLReset()">
+          <button class="btn btn-warning" (click)="CreateModal()">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                         Reset
                     </button>
-                    </div>
-
-                </div>
         </div>
+      </div>
     </div>
- 
- <ol class="breadcrumb">
-        <li><a href="#accounts/{{account.AccountID}}">{{account.AccountName}}</a></li>
-        <li class="active">Uploaded PDFs</li>
-    </ol>
-    <div>Displaying attachments <b>{{pageNumber}}-{{rowsPerPage}}</b> of <b>{{AttachmentCount}}</b> in total</div><br>
-    <!--<sp-vendor-filter-bar (filtered)="onFiltered($event)" [filteredValue]="filteredValue"></sp-vendor-filter-bar>-->
-
-    <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+  </div>
+  <ol class="breadcrumb">
+    <li><a href="#accounts/{{account.AccountID}}">{{account.AccountName}}</a></li>
+    <li class="active">Uploaded PDFs</li>
+  </ol>
+  <div>Displaying attachments <b>{{pageNumber}}-{{rowsPerPage}}</b> of <b>{{AttachmentCount}}</b> in total</div><br>
+  <!--<sp-vendor-filter-bar (filtered)="onFiltered($event)" [filteredValue]="filteredValue"></sp-vendor-filter-bar>-->
+  <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
     <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>-->
-    <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th style="width: 12%">Info</th>
-                <th style="width: 22%">Fund/Property</th>
-                <th style="width: 22%">Name</th>
-                <th style="width: 14%">Uploaded</th>
-                <th style="width: 10%">Locked By</th>
-                <th style="width: 10%"></th>
-                <th style="width: 10%"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of model">
-                <td>{{item.Info}}</td>
-                <td>{{item.CompanyName}}</td>
-                <td>{{item.Name}}</td>
-                <td>{{item.Uploaded}}</td>
-                <td>{{item.LockedBy}}</td>
-                <td><a routerLink="vendorDetail/{{item.VendorID}}">unlock</a></td>
-                 <td><a routerLink="invoicesNew">Process</a></td>
-            </tr>
-        </tbody>
-
-    </table>
-     </div>
-    <!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->
+  <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th style="width: 12%">Info</th>
+        <th style="width: 22%">Fund/Property</th>
+        <th style="width: 22%">Name</th>
+        <th style="width: 14%">Uploaded</th>
+        <th style="width: 10%">Locked By</th>
+        <th style="width: 10%"></th>
+        <th style="width: 10%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of model">
+        <td>{{item.Info}}</td>
+        <td>{{item.CompanyName}}</td>
+        <td>{{item.Name}}</td>
+        <td>{{item.Uploaded}}</td>
+        <td>{{item.LockedBy}}</td>
+        <td><a *ngIf="item.LockedBy"  routerLink="vendorDetail/{{item.VendorID}}">unlock</a></td>
+        <td><a routerLink="invoicesNew/{{item.AttachmentID}}">Process</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->

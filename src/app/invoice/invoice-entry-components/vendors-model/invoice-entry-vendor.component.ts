@@ -7,47 +7,55 @@ import { UserService } from '../../../user/shared/user.service';
 import { CurrentPageArguments } from '../../../pagination/pagination.component';
 import { CrumbBarComponent } from '../../../shared/others/crumb-bar/crumb-bar.component';
 import { InvoiceEntryService } from '../../../invoice/invoice-entry/shared/invoice-entry.service';
-import { LedgerAccounts } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
+import { PurchaseOrder } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
+import { Vendors,InvoiceDetail } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
 // import { CompanyDropdownComponent } from '../shared/dropdown/company/company-dropdown.component';
-import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
+// import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
+// import { BSModalContext } from 'angular2-modal/plugins/bootstrap/index';
+import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
+import { FilterPipe } from '../../../shared/pipe/orderby.ts';
 
 
-
-export class InvoiceEntryAccountModalContext extends BSModalContext {
+export class InvoiceEntryVendorModalContext extends BSModalContext {
 	constructor() {
 		super();
 	}
 }
 
-@Component({
-	selector: 'sp-invoice-entry-accounts',
-	templateUrl: 'invoice-entry-accounts.component.html'
-})
 
-export class InvoiceEntryAccountsComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoiceEntryAccountModalContext>, OnInit {
-	private ledgerAccounts: Array<LedgerAccounts>
-	context: InvoiceEntryAccountModalContext;
+
+@Component({
+	selector: 'sp-invoice-entry-vendor',
+	templateUrl: 'invoice-entry-vendor.component.html'
+})
+export class InvoiceEntryVendorComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoiceEntryVendorModalContext>, OnInit {
+	// export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
+	context: InvoiceEntryVendorModalContext;
 	public wrongAnswer: boolean;
-	private LedgerAccountsCount;
-	private CompanyID: number = 39;
+	private CompanyID: number = 0;
+	private vendors:Array<Vendors>;
+	// @ViewChild('templateRef') public templateRef: TemplateRef<any>;
 	constructor(private activatedRoute: ActivatedRoute,
 		private userService: UserService,
+
 		private invoiceEntryService: InvoiceEntryService,
 		localStorageService: LocalStorageService,
 		router: Router,
-		public dialog: DialogRef<InvoiceEntryAccountModalContext>) {
+		public dialog: DialogRef<InvoiceEntryVendorModalContext>) {
 		super(localStorageService, router);
 		this.context = dialog.context;
 		dialog.setCloseGuard(this);
-		this.wrongAnswer = true;
-		this.getLedgerAccounts();
+		this.vendors = new Array<Vendors>();
+
+
 	}
 	ngOnInit() {
 		this.sessionDetails = this.userService.getSessionDetails();
 		if (this.sessionDetails.userId != null) {
-			// this.getAttachments();
+			this.getVendors();
 			// this.getAccountName();
+			
 		} else {
 			let link = ['/login'];
 			this.router.navigate(link);
@@ -55,24 +63,22 @@ export class InvoiceEntryAccountsComponent extends BaseComponent implements Clos
 	}
 
 
-	public getLedgerAccounts(): void {
+	public getVendors(): void {
 		this.invoiceEntryService
-			.getLedgerAccountDDOsAccountTypeWise(this.CompanyID)
+			.getVendorById(this.CompanyID)
 			.then(result => {
 				if (result) {
-                    this.ledgerAccounts = result;
-					this.LedgerAccountsCount = 'Available properties';
-                }
+                    this.vendors = result;
 
+                }
+                
 			});
 
 	}
-	GetSelectedAccountOrder(LedgerAccount): void {
-		this.dialog.close(LedgerAccount);
-
+	GetSelectedVendor(VendorID): void{
+     this.dialog.close(VendorID);
+		
 	}
-
-
 
 
 }

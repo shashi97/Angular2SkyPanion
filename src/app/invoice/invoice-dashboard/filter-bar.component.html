@@ -5,34 +5,28 @@
     <div class="form-inline" id="invoices_index_filters_form">
 
       <div class="form-group">
-        <input class="form-control" id="invoice_FromDate" [(ngModel)]="invoiceFilteredValue.invFromDate" placeholder="Invoice Date From"
-          size="12" type="text" value="" />
-
-        <!--<mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen"
-          (dayClicked)="dayClicked($event.day)">
-        </mwl-calendar-month-view>-->
-      </div>
-
-      <div class="form-group">
-        <input class="form-control" id="invToDate" [(ngModel)]="invoiceFilteredValue.invToDate" placeholder="Invoice Date To"
+        <input class="form-control" id="invoice_FromDate" data-ng-model="invFromDate" date-picker placeholder="Invoice Date From"
           size="12" type="text" value="" />
       </div>
 
       <div class="form-group">
-        <input class="form-control" id="invoice_desc" name="invoice_desc" placeholder="Enter invoice description" type="text" [(ngModel)]="invoiceFilteredValue.invoiceDesc"
+        <input class="form-control" id="invToDate" data-ng-model="invToDate" date-picker placeholder="Invoice Date To" size="12"
+          type="text" value="" />
+      </div>
+
+      <div class="form-group">
+        <input class="form-control" id="invoice_desc" name="invoice_desc" placeholder="Enter invoice description" type="text" data-ng-model="invoiceDesc"
         />
       </div>
 
       <div class="form-group">
-        <input class="form-control" id="invoice_number" name="invoice_number" placeholder="Enter an invoice number" type="text" [(ngModel)]="invoiceFilteredValue.invoiceNumber"
+        <input class="form-control" id="invoice_number" name="invoice_number" placeholder="Enter an invoice number" type="text" data-ng-model="invoiceNumber"
         />
       </div>
 
-      <sp-company-dropdown [companyFilteredArg]='companyFilteredArg' (companyFiltered)="onCompanyFiltered($event)">
-      </sp-company-dropdown>
+      <sp-vendor-dropdown></sp-vendor-dropdown>
 
-      <sp-vendor-dropdown [vendorFilteredArg]='vendorFilteredArg' (vendorFiltered)="onVendorFiltered($event)">
-      </sp-vendor-dropdown>
+      <sp-company-dropdown></sp-company-dropdown>
 
       <div class="form-group">
         <div class="btn-group">
@@ -41,23 +35,20 @@
             <span class="caret"></span>
           </a>
           <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-            <li><a role="menuitem" *ngFor="let st of status" (click)="onSelectStatus(st.statusId,st.statusName)">{{st.statusName}}</a></li>
+            <li><a role="menuitem" *ngFor="let st of status" (click)="selectStatus(st.statusId)">{{st.statusName}}</a></li>
           </ul>
         </div>
       </div>
 
-      <sp-user-dropdown 
-       [userFilteredArg]='userFilteredArg' 
-       (userFiltered)="onUserFiltered($event)">
-     </sp-user-dropdown>
+      <sp-user-dropdown></sp-user-dropdown>
 
       <div class="filter_field_wrap form-group">
-        <button class="btn btn-primary" name="commit" type="button" (click)="searchUrl()">
+        <button class="btn btn-primary" name="commit" type="button" data-ng-click="searchURL()">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         Filter
                     </button>
 
-        <button class="btn btn-warning" (click)="searchUrlReset()">
+        <button class="btn btn-warning" data-ng-click="searchURLReset()">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                         Reset
                     </button>
