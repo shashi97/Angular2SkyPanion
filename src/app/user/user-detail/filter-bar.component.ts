@@ -15,7 +15,7 @@ export class UserDetailFilterComponent extends BaseComponent implements OnInit {
   @Input() userDetail: UserModel;
   constructor(
     localStorageService: LocalStorageService,
-    router: Router,
+    router: Router
   ) {
     super(localStorageService, router);
   }

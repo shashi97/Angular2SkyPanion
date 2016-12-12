@@ -36,10 +36,12 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of Invoices">
-
+          <tooltip-content #myTooltip>
+            <div [innerHTML]="item.DistributionMessage">
+            </div>
+          </tooltip-content>
           <td>
-            <input type="checkbox" [(ngModel)]="item.IsInoiveSelected"
-            style="margin-left:17px;margin-top:5px;height:15px;width:15px;"
+            <input type="checkbox" [(ngModel)]="item.IsInoiveSelected" style="margin-left:17px;margin-top:5px;height:15px;width:15px;"
               class="gridCellIcon" />
           </td>
 
@@ -82,11 +84,12 @@
             </div>
 
             <div>
-              <a *ngIf="item.Distributions!='None' && item.LedgerAccountID==0">
+              <a *ngIf="item.Distributions!='None' && item.LedgerAccountID==0" [tooltip]="myTooltip" [tooltipDisabled]="false" [tooltipAnimation]="true"
+                tooltipPlacement="top">
                   {{item.Distributions}}
               </a>
             </div>
-            
+
           </td>
 
           <td>
@@ -129,7 +132,7 @@
         </tr>
       </tbody>
     </table>
-
+    <sp-pagination [dataSource]='Invoices' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
   </div>
 
 </div>

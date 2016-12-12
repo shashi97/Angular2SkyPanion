@@ -21,13 +21,15 @@ export class ApprovalCriteriaService {
       .catch(error => error);
   }
 
-  deleteApprovalCriteria(approvalCriteriaID) {
-
+  deleteApprovalCriteria(approvalCriteriaID): Promise<any> {
+  let options = new RequestOptions();
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/json; charset=utf-8');
     return this.http
-      .post(ApiUrl.baseUrl + 'api/approvalcriteria/delete/' + approvalCriteriaID, {})
+      .post(ApiUrl.baseUrl + 'api/approvalcriteria/delete/' + approvalCriteriaID, options)
       .toPromise()
       .then(response =>
-        response)
+        response as any)
       .catch(error => error);
   }
 

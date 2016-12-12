@@ -23,9 +23,11 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of users">
+
+
             <td>
               <div [hidden]="item.IsSuperUser != true">
-                <a uib-tooltip="This is a superuser" tooltip-append-to-body="true" tooltip-placement="top">
+                <a tooltip="This is a superuser" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">
                   {{item.UserName}}
                 </a>
               </div>
@@ -54,7 +56,11 @@
                 {{item.Roles}}
               </div>
               <div *ngIf="item.PortalMemberRoles.length > 1">
-                <a uib-tooltip-html="item.RoleNames" tooltip-append-to-body="true" tooltip-placement="top">
+                <tooltip-content #myTooltip1>
+                  <div [innerHTML]="item.RoleNames">
+                  </div>
+                </tooltip-content>
+                <a [tooltip]="myTooltip1" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">
                   {{item.Roles}}
                 </a>
               </div>
@@ -65,24 +71,29 @@
                 {{item.Approvers}}
               </div>
               <div *ngIf="item.PortalMemberApprovers.length > 1">
-                <a uib-tooltip-html="item.ApproverNames" tooltip-append-to-body="true" tooltip-placement="top">
+                <tooltip-content #myTooltip>
+                  <div [innerHTML]="item.ApproverNames">
+                  </div>
+                </tooltip-content>
+                <a [tooltip]="myTooltip" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">
                   {{item.Approvers}}
                 </a>
               </div>
             </td>
 
             <td>
+
               <div>
                 <a href="#/userDetail/25/{{item.UserID}}">Show</a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <a [hidden]="item.IsEdit != true" href="#/userEntry/{{item.UserID}}">
                   Edit
                 </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a [hidden]="item.IsDelete != true" (click)="grid.appScope.checkUserExistInInvoiceApproval(item.UserID , item.UserName ,item.DisableLink)">
+                <a [hidden]="item.IsDelete != true" (click)="checkUserExistInInvoiceApproval(item.UserID , item.UserName ,item.DisableLink)">
                   {{item.DisableLink}}
                 </a>
               </div>
             </td>
-            
+
           </tr>
         </tbody>
 

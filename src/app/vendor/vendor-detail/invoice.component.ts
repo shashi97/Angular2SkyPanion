@@ -12,10 +12,10 @@ import { VendorModel } from '../shared/vendor.model';
 
 export class VendorDetailInvoiceComponent extends BaseComponent implements OnInit {
   @Input() vendorDetail: VendorModel;
-  private totalItems: number = 0;
+  @Input() totalItems: number;
   constructor(
     localStorageService: LocalStorageService,
-    router: Router,
+    router: Router
   ) {
     super(localStorageService, router);
     // this.test();

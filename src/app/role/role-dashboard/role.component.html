@@ -1,5 +1,5 @@
 <div id="slider" class="page-content">
-    <sp-role-filter-bar [roleName]="roleName"></sp-role-filter-bar>
+    <sp-role-filter-bar [rolefilteredValue]="rolefilteredValue" (filtered)='onRoleFiltered($event)'></sp-role-filter-bar>
     <!--<div class="page-heading">
         <h1>All Roles</h1>
 

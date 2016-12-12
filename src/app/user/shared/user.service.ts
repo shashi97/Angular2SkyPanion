@@ -107,6 +107,30 @@ export class UserService {
       .catch(error => error);
   }
 
+  public checkUserExistInInvoiceApproval(userID) {
+    let options = new RequestOptions();
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/json, charset=utf-8');
+    return this
+      .http
+      .post(ApiUrl.baseUrl + 'api/users/chkUserExistinInvoiceApproval/' + userID, options)
+      .toPromise()
+      .then((result) => result)
+      .catch(error => error);
+  }
+
+  public disableUser(userID) {
+    let options = new RequestOptions();
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/json, charset=utf-8');
+    return this
+    .http
+    .post(ApiUrl.baseUrl + 'api/users/disable/' + userID, options)
+    .toPromise()
+    .then( (result) => result)
+    .catch(error => error);
+  }
+
   public handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);

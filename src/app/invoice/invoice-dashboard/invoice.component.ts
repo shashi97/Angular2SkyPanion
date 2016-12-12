@@ -53,6 +53,14 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
+    this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+      + this.invoiceFilteredValue.invFromDate + ','
+      + this.invoiceFilteredValue.invToDate + ','
+      + this.invoiceFilteredValue.invoiceDesc + ','
+      + this.invoiceFilteredValue.invoiceNumber + ','
+      + this.invoiceFilteredValue.companyId + ','
+      + this.invoiceFilteredValue.vendorId + ','
+      + this.invoiceFilteredValue.userId;
     this.getInvoices();
   }
 
@@ -133,7 +141,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
 
   getInvoices() {
 
-    this.location.replaceState('invoices/' + this.searchString);
+
 
     let searchFields = {
       invoiceNumber: this._currentInvoiceArgs.invoiceNumber,
@@ -147,7 +155,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       invToDate: this._currentInvoiceArgs.invToDate,
       invoiceDesc: this._currentInvoiceArgs.invoiceDesc,
     };
-
+    this.location.replaceState('invoices/' + this.searchString);
     this.invoiceService.getInvoices(searchFields).then(result => {
       this.Invoices = result;
       if (this.Invoices[0] && this.Invoices[0].InvoiceCount) {

@@ -16,6 +16,7 @@ import { AccountService } from '../../account/shared/account.service';
 import { UserService } from '../../user/shared/user.service';
 
 import { CurrentPageArguments } from '../../pagination/pagination.component';
+import { ConfirmService } from '../../shared/services/otherServices/confirmService';
 
 @Component({
   selector: 'sp-user',
@@ -39,7 +40,8 @@ export class UserComponent extends BaseComponent implements OnInit {
     router: Router,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private location: Location
+    private location: Location,
+    private confirmService: ConfirmService
   ) {
     super(localStorageService, router);
     this.getSessionDetails();
@@ -148,6 +150,42 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   public onCurrentPageChanged(newValue: CurrentPageArguments) {
     this.currentPageFiltered = newValue;
+  }
+
+  public checkUserExistInInvoiceApproval(userID, UserName, DisableLink): void {
+    if (DisableLink === 'Disable') {
+      this.userService.checkUserExistInInvoiceApproval(userID).then( (result) => {
+        let message;
+        if (Number(result) > 0) {
+          message = 'Are you Sure you' + 'd like to Disable Portal::Member:' + UserName + ' ?' + '\\n' +
+            'WARNING:' + UserName + 's Approval is still needed on ' + result.data + ' invoices.';
+          //  r = this.confirmService.confermMessage(message);
+        } else {
+          message = 'Are you Sure you' + 'd like to Disable Portal::Member:' + UserName + ' ?';
+          // r = this.confirmService.confermMessage(message);
+        }
+        if (this.confirmService.confermMessage(message)) {
+          this.disableUser(userID);
+        }
+
+      });
+    } else {
+      let message = 'Are you Sure you' + 'd like to enable Portal::Member:' + UserName + ' ?';
+      if (this.confirmService.confermMessage(message)) {
+        this.disableUser(userID);
+      }
+    }
+  }
+
+  public disableUser(userID): void {
+    this.userService.disableUser(userID).then( (result) => {
+      if (result.status === 404) {
+      } else if (result.status === 500) {
+      } else {
+        this.getUsers();
+      }
+    });
+
   }
 
 }

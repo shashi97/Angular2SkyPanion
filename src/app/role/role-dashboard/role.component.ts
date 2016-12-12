@@ -9,6 +9,8 @@ import {CurrentPageArguments} from '../../pagination/pagination.component';
 import { AccountService } from '../../account/shared/account.service';
 import { RoleService } from '../shared/role.service';
 import { RoleModel } from '../shared/role.model';
+import { RoleFilterArgument } from './filter-bar.component';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import {
     TableOptions,
@@ -30,6 +32,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
     private _currentPage: CurrentPageArguments = new CurrentPageArguments();
     private pageName: string = 'roles';
     private parameterValue: any;
+    private _filterRow: RoleFilterArgument = new RoleFilterArgument();
     constructor(
         public localStorageService: LocalStorageService,
         public router: Router,
@@ -37,7 +40,8 @@ export class RoleComponent extends BaseComponent implements OnInit {
         private accountService: AccountService,
         private roleService: RoleService,
         private route: ActivatedRoute,
-        private confirmService: ConfirmService
+        private confirmService: ConfirmService,
+        public toastr: ToastsManager
     ) {
         super(localStorageService, router);
         this.roles = new Array<RoleModel>();
@@ -50,6 +54,13 @@ export class RoleComponent extends BaseComponent implements OnInit {
     private set currentPageFiltered(newValue: CurrentPageArguments) {
         this._currentPage = newValue;
         this.getRoles();
+    }
+    private get rolefilteredValue(): RoleFilterArgument {
+        return this._filterRow;
+    }
+
+    private set rolefilteredValue(newValue: RoleFilterArgument) {
+        this._filterRow = newValue;
     }
     private getSessionDetails(): void {
         this.sessionDetails = this.userService.getSessionDetails();
@@ -66,7 +77,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
             this.parameterValue = ((params) ? params : 1);
             if (this.parameterValue.SearchParameters) {
                 let parameterArray: Array<string> = this.parameterValue.SearchParameters.split(',');
-                this.roleName = parameterArray[1];
+                this.rolefilteredValue.roleName = parameterArray[0];
             }
             this.getAccountName();
         });
@@ -96,7 +107,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
         // }
 
         this.roleService.getRoleList(
-            this.roleName,
+            this.rolefilteredValue.roleName,
             this.currentPageFiltered.pageNo,
             this.currentPageFiltered.pageSizeFilter
         ).then((result) => {
@@ -123,8 +134,10 @@ export class RoleComponent extends BaseComponent implements OnInit {
         if (this.confirmService.confermMessage(message, roleName)) {
             this.roleService.deleteRole(roleId).then((result) => {
                 if (result.status === 404 || result.status === 500) {
+                    this.toastr.error(result.data.ExceptionMessage, 'Oops!');
                     // messageService.showMsgBox("Error", result.data.ExceptionMessage, "error");
                 } else {
+                    this.toastr.success('Role successfully deleted.', 'Success!');
                     // messageService.showMsgBox("Success", "Role successfully deleted.", "success");
                     this.getRoles();
                 }
@@ -132,6 +145,10 @@ export class RoleComponent extends BaseComponent implements OnInit {
 
         }
 
+    }
+
+    public onRoleFiltered(filteredValue: RoleFilterArgument): void {
+        this.rolefilteredValue = filteredValue;
     }
 
 }

@@ -1,4 +1,4 @@
-import { Http, Response } from '@angular/http';
+import { Http, Response, RequestOptions, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'Rxjs/Rx';
 
@@ -76,13 +76,15 @@ export class RoleService {
   }
 
   public deleteRole(roleId): Promise<any> {
-
+ let options = new RequestOptions();
+    options.headers = new Headers();
+    options.headers.append('Content-Type', 'application/json; charset=utf-8');
     return this.http
       .post(ApiUrl.baseUrl
       + 'api/roles/delete/'
-      , roleId)
+      + roleId, options)
       .toPromise()
-      .then((Response) => Response.json() as any)
+      .then((Response) => Response as any)
        .catch(error => error);
   }
 

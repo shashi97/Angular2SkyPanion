@@ -5,8 +5,7 @@
             <div class="btn-toolbar form-inline">
 
                 <div class="form-group">
-                    <input class="form-control" id="roleName" placeholder="Role" size="15" type="text" [(ngModel)]="roleName" my-enter="getRoles()"
-                    />
+                    <input class="form-control" id="roleName" placeholder="Role" size="15" type="text" [(ngModel)]="rolefilteredValue.roleName" />
                 </div>
 
                 <button class="btn btn-primary" name="commit" type="button" (click)="searchURL()">

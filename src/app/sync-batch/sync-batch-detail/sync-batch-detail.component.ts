@@ -42,10 +42,10 @@ export class SyncBatchDetailComponent extends BaseComponent implements OnInit {
   getSyncBatcheDetail() {
 
     this.syncBatchService.getSyncBatcheDetail(this.syncBatcheId).then(result => {
-      if (result.status == 404) {
+      if (result.status === 404) {
         // messageService.showMsgBox("Sync Batche Detail", "Invalid sync batche.", "error");
         // $location.path('/syncbatchesList/' + $scope.pageSizeFilter + "/" + $scope.searchParameters);
-      } else if (result.status == 500) {
+      } else if (result.status === 500) {
       } else {
         this.syncBatcheDetail = result;
         if (this.syncBatcheDetail) {

@@ -79,7 +79,7 @@ const APP_ROUTES: Routes = [
 
 
   { path: 'syncBatches/:pageSizeFilter/:searchParameters', component: SyncBatchComponent },
-  { path: 'syncBatches/syncBatchDetail/:syncBatchId', component: SyncBatchDetailComponent },
+  { path: 'syncBatchDetail/:syncBatchId', component: SyncBatchDetailComponent },
   { path: 'syncBatcheNew', component: SyncBatchEntryComponent },
   { path: 'syncBatcheNew/:searchParameters', component: SyncBatchEntryComponent },
 
