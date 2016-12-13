@@ -7,7 +7,7 @@
         <a (click)="getApprovalCriteria('RangeApproval')" class="btn btn-default" [ngClass]="{active: filteredValue.type=='RangeApproval'}">Range Approvals</a>
         <a (click)="getApprovalCriteria('LedgerAccountApproval')" class="btn btn-default" [ngClass]="{active: filteredValue.type=='LedgerAccountApproval'}">Ledger Account Approvals</a>
       </div>
-      <div class="btn-group" [hidden]="!companyId!=0">
+      <div class="btn-group" *ngIf="!companyId!=0">
         <!--<a class="btn btn-primary" href="#company/{{CompanyId}}/approvals">
                         <i class="fa fa-plus"></i> Create Approval
                     </a>

@@ -47,6 +47,7 @@ const APP_ROUTES: Routes = [
   { path: 'jobDetail/:jobId', component: JobDetailComponent },
 
   { path: 'vendor/:pageSizeFilter/:searchParameters', component: VendorComponent },
+  { path: 'companyVendors/:companyId/vendor', component: VendorComponent },
   { path: 'vendorDetail/:pageSizeFilter/:searchParameters/:vendorId', component: VendorDetailComponent },
   { path: 'vendorDetail/:vendorId', component: VendorDetailComponent },
 
@@ -85,13 +86,11 @@ const APP_ROUTES: Routes = [
 
   // { path: 'modal', component: CustomModal },
 
-  { path: 'role', component: RoleComponent },
-  { path: 'role/:SearchParameters', component: RoleComponent },
-  { path: 'roles/:SearchParameters/:RoleId', component: RoleViewComponent },
-  { path: 'roles/:SearchParameters/:roleId/edit', component: RoleEntryComponent },
+
+  { path: 'role/:pageSizeFilter/:searchParameters', component: RoleComponent },
+  { path: 'roles/:searchParameters/:roleId', component: RoleViewComponent },
+  { path: 'roles/:searchParameters/:roleId/edit', component: RoleEntryComponent },
   { path: 'rolesAdd/:roleId/new', component: RoleEntryComponent },
-
-
 
   { path: 'users/:pageSizeFilter/:searchParameters', component: UserComponent },
   { path: 'userDetail/:pageSizeFilter/:userId', component: UserDetailComponent },

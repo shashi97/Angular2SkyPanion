@@ -52,21 +52,22 @@ export class SyncBatchService {
             .catch(error => error);
     }
 
-    getSyncBatcheDetail(syncBatcheId) {
+    public getSyncBatcheDetail(syncBatcheId): Promise<any> {
         return this.http.get(ApiUrl.baseUrl + 'api/syncbatches/' + syncBatcheId)
             .toPromise()
             .then(response => response.json())
             .catch(error => error);
     }
 
-    rejectInvoice(invoiceID, companyID, invAmount, rejectionComment) {
+    public rejectInvoice(invoiceID, companyID, invAmount, rejectionComment): Promise<any> {
         return this.http.get(ApiUrl.baseUrl + 'api/invoices/reject/'
             + invoiceID + '/'
             + companyID + '/'
             + invAmount + '/'
-            + rejectionComment)
+            + rejectionComment + '/'
+            + 0)
             .toPromise()
-            .then((response) => response.json())
+            .then((response) => response)
             .catch(error => error);
 
 

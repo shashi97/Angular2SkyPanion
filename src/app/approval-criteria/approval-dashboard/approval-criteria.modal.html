@@ -11,7 +11,7 @@
                             <button aria-hidden="true" class="close" type="button" >×</button>
                             <h3>{{errorHeader}}</h3>
                             <ul>
-                                <li data-ng-repeat="error in errors">{{error.ErrorName}}</li>
+                                <li *ngFor="let error of errors">{{error.ErrorName}}</li>
                             </ul>
                         </div>
 

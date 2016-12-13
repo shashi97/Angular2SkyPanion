@@ -20,7 +20,7 @@ export class VendorFilterArguments {
 
 export class VendorFilterComponent extends BaseComponent implements OnInit {
 
-  @Input() vendorDetail: VendorModel;
+   @Input() vendorDetail: VendorModel;
   @Output() filtered: EventEmitter<VendorFilterArguments> = new EventEmitter<VendorFilterArguments>();
   @Input() filteredValue: VendorFilterArguments = new VendorFilterArguments();
   private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();

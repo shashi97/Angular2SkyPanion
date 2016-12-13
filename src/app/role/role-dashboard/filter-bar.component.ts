@@ -4,7 +4,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
 export class RoleFilterArgument {
-roleName: string= null;
+roleName: string= '';
 }
 @Component({
     selector: 'sp-role-filter-bar',
@@ -31,7 +31,7 @@ export class RoleFilterComponent extends BaseComponent implements OnInit {
 
     private searchURL(): void {
         this.filtered.emit(this.rolefilteredValue);
-        this.router.navigate(['/role/' + this.rolefilteredValue.roleName]);
+      //  this.router.navigate(['/role/' + this.rolefilteredValue.roleName]);
     }
 
     private searchURLReset (): void {

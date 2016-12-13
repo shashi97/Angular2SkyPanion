@@ -36,6 +36,7 @@
     "ng2-click-outside": "^1.3.2",
     "ng2-dragula": "^1.2.1",
     "ng2-modal": "0.0.22",
+    "ng2-select": "^1.1.2",
     "ng2-toastr": "^1.3.2",
     "ng2-tooltip": "0.0.5",
     "primeng": "^1.0.0",

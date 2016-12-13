@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { UserService } from '../../user/shared/user.service';
 import { BaseComponent } from '../../base.component';
@@ -26,12 +27,12 @@ import {
 export class RoleComponent extends BaseComponent implements OnInit {
 
     private account: Object;
-    private roleName: string = null;
     private totalItems: number;
     private roles: Array<RoleModel>;
     private _currentPage: CurrentPageArguments = new CurrentPageArguments();
     private pageName: string = 'roles';
     private parameterValue: any;
+    private searchString: string = '';
     private _filterRow: RoleFilterArgument = new RoleFilterArgument();
     constructor(
         public localStorageService: LocalStorageService,
@@ -41,7 +42,8 @@ export class RoleComponent extends BaseComponent implements OnInit {
         private roleService: RoleService,
         private route: ActivatedRoute,
         private confirmService: ConfirmService,
-        public toastr: ToastsManager
+        public toastr: ToastsManager,
+        public location: Location
     ) {
         super(localStorageService, router);
         this.roles = new Array<RoleModel>();
@@ -53,6 +55,8 @@ export class RoleComponent extends BaseComponent implements OnInit {
     }
     private set currentPageFiltered(newValue: CurrentPageArguments) {
         this._currentPage = newValue;
+        this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+            + this.rolefilteredValue.roleName;
         this.getRoles();
     }
     private get rolefilteredValue(): RoleFilterArgument {
@@ -61,7 +65,11 @@ export class RoleComponent extends BaseComponent implements OnInit {
 
     private set rolefilteredValue(newValue: RoleFilterArgument) {
         this._filterRow = newValue;
+        this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+            + this.rolefilteredValue.roleName;
+        this.getRoles();
     }
+
     private getSessionDetails(): void {
         this.sessionDetails = this.userService.getSessionDetails();
         if (this.sessionDetails.userId != null) {
@@ -74,11 +82,17 @@ export class RoleComponent extends BaseComponent implements OnInit {
 
     private getParameterValues(): void {
         this.route.params.subscribe(params => {
-            this.parameterValue = ((params) ? params : 1);
-            if (this.parameterValue.SearchParameters) {
-                let parameterArray: Array<string> = this.parameterValue.SearchParameters.split(',');
+            let pageSizeFilter = params['pageSizeFilter'];
+            let searchParameters = params['searchParameters'];
+            if (searchParameters !== '-1') {
+                let parameterArray: Array<string> = searchParameters.split(',');
                 this.rolefilteredValue.roleName = parameterArray[0];
             }
+            if (pageSizeFilter !== '-1') {
+                this.currentPageFiltered.pageSizeFilter = pageSizeFilter;
+            }
+            this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+                + this.rolefilteredValue.roleName;
             this.getAccountName();
         });
     }
@@ -105,6 +119,7 @@ export class RoleComponent extends BaseComponent implements OnInit {
         // {
         //     $scope.roleName = null;
         // }
+        this.location.replaceState('role/' + this.searchString);
 
         this.roleService.getRoleList(
             this.rolefilteredValue.roleName,
@@ -134,11 +149,15 @@ export class RoleComponent extends BaseComponent implements OnInit {
         if (this.confirmService.confermMessage(message, roleName)) {
             this.roleService.deleteRole(roleId).then((result) => {
                 if (result.status === 404 || result.status === 500) {
-                    this.toastr.error(result.data.ExceptionMessage, 'Oops!');
+                    this.toastr.error(result._body, 'Oops!');
                     // messageService.showMsgBox("Error", result.data.ExceptionMessage, "error");
                 } else {
-                    this.toastr.success('Role successfully deleted.', 'Success!');
-                    // messageService.showMsgBox("Success", "Role successfully deleted.", "success");
+                    if (result._body === 'success') {
+                        this.toastr.success('Role successfully deleted.', 'Success!');
+                    } else {
+                        this.toastr.error(result._body, 'Oops!');
+                    }
+
                     this.getRoles();
                 }
             });

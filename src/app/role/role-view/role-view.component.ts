@@ -16,7 +16,7 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
 
     private roleId: number;
     private parameterValue: any;
-    private SearchParameters: number;
+    private searchParameters: number;
     public role: RoleModel;
     constructor(
         public localStorageService: LocalStorageService,
@@ -48,8 +48,8 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
         this.route.params.subscribe(params => {
             this.parameterValue = ((params) ? params : 1);
             if (this.parameterValue) {
-                this.SearchParameters = Number(this.parameterValue.SearchParameters);
-                this.roleId = Number(this.parameterValue.RoleId);
+                this.searchParameters = Number(this.parameterValue.searchParameters);
+                this.roleId = Number(this.parameterValue.roleId);
             }
         });
             this.roleService.getMemberRoleDetail(this.roleId).then((result) => {
