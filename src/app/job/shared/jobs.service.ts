@@ -10,7 +10,7 @@ export class JobsService {
   constructor(private http: Http) {
 
   }
-  public getJobs(pageNumber: number, rowsPerPage: number): Promise<JobModel[]> {
+  public getJobs(pageNumber: number, rowsPerPage: number): Promise<any> {
     return this
       .http
       .get(ApiUrl.baseUrl
@@ -20,8 +20,8 @@ export class JobsService {
       + rowsPerPage
       )
       .toPromise()
-      .then(response => response.json() as JobModel[])
-      .catch(this.handleError);
+      .then(response => response.json())
+      .catch(error => error);
   }
 
   public getJobsByCompanyId(CompanyID: number): Promise<JobModel[]> {
@@ -33,7 +33,7 @@ export class JobsService {
       )
       .toPromise()
       .then(response => response.json() as JobModel[])
-      .catch(this.handleError);
+      .catch(error => error);
   }
 
 
@@ -46,7 +46,7 @@ export class JobsService {
       )
       .toPromise()
       .then(response => response.json() as JobCategory[])
-      .catch(this.handleError);
+      .catch(error => error);
   }
   public getJobById(jobId: number, currentPage: number, pageSize: number): Promise<JobModel> {
     return this
@@ -61,7 +61,7 @@ export class JobsService {
       )
       .toPromise()
       .then(response => response.json() as JobModel)
-      .catch(this.handleError);
+      .catch(error => error);
 
   }
 

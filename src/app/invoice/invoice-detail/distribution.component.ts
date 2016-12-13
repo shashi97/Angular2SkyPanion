@@ -22,6 +22,5 @@ export class InvoiceDetailDistributeComponent extends BaseComponent implements O
   }
 
   ngOnInit() {
-    console.log(this.invoiceDetail);
   }
 }
