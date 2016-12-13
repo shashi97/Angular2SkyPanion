@@ -2,45 +2,46 @@
   <h1>{{invoiceDetail.InvoiceNumber}}</h1>
   <div class="options">
     <div class="btn-toolbar">
-      <div class="invoice_state_message" style="margin-top: -15px;">
+      <div class="invoice_state_message">
         <h4 class="text-danger" [hidden]="invoiceDetail.InvoiceStatusID != 5">Rejected by <a href="#user/{{invoiceDetail.RejectedByID}}">{{invoiceDetail.RejectedBy}}</a></h4>
         <h4 class="text-info" [hidden]="invoiceDetail.InvoiceStatusID != 4">Waiting for upload to Skyline</h4>
         <h4 class="text-warning" [hidden]="invoiceDetail.InvoiceState != 2">Waiting for approval by <a href="#user/{{invoiceDetail.ApproverID}}">{{invoiceDetail.ApproverName}}</a></h4>
       </div>
 
 
-      <a data-ng-click="getInvoiceDetailsByID()" [hidden]="( invoiceDetail.InvoiceStatusID != null 
-      || invoiceDetail.InvoiceStatusID != 1 
-      ||invoiceDetail.InvoiceStatusID != 5 
-      ||invoiceDetail.InvoiceStatusID != 2 
-      ||(sessionDetails.IsSuperUser == true && (invoiceDetail.InvoiceStatusID != 4 ||invoiceDetail.InvoiceStatusID != 6)))"
-        class="edit_invoice_link btn btn-default remote_href" style="margin-top: 0px;"><i class="fa fa-edit"></i>Edit</a>
+      <a (click)="getInvoiceDetailsByID()" *ngIf="( invoiceDetail.InvoiceStatusID == null 
+      || invoiceDetail.InvoiceStatusID == 1 
+      ||invoiceDetail.InvoiceStatusID == 5 
+      ||invoiceDetail.InvoiceStatusID == 2 
+      ||(user.IsSuperUser == true && (invoiceDetail.InvoiceStatusID == 4 
+      ||invoiceDetail.InvoiceStatusID == 6)))" class="edit_invoice_link btn btn-default remote_href" style="margin-top: 0px;"><i class="fa fa-edit"></i>Edit</a>
 
       <!--&& invoiceDetail.InvoiceAmount > 0-->
-      <a [hidden]="invoiceDetail.IsSubmitForApprovalRequired != true && invoiceDetail.InvoiceAmount == 0" data-remote="true"
-        style="color: white!important; margin-top: 0px;" class="btn btn-success" data-toggle="modal" data-ng-click="SubmitInvoiceForApproval(invoiceDetail)"><i class="fa fa-check"></i>&nbsp;Submit For Approval</a>
+      <a *ngIf="invoiceDetail.IsSubmitForApprovalRequired == true && invoiceDetail.InvoiceAmount != 0" style="color: white!important; margin-top: 0px;"
+        class="btn btn-success" (click)="SubmitInvoiceForApproval(invoiceDetail)"><i class="fa fa-check"></i>&nbsp;Submit For Approval</a>
 
       <!-- && invoiceDetail.InvoiceAmount > 0-->
-      <a [hidden]="(invoiceDetail.IsExpedited != true || invoiceDetail.InvoiceStatusID !=1 || invoiceDetail.IsSubmitForApprovalRequired != true) 
-      && invoiceDetail.InvoiceAmount == 0"
-        data-remote="true" data-toggle="modal" class="btn btn-info" data-ng-click="submitInvoiceExpedite(invoiceDetail)" style="color: white!important"><i class="fa fa-exchange"></i>&nbsp;Expedite</a>
+      <a *ngIf="(invoiceDetail.IsExpedited == true 
+      || invoiceDetail.InvoiceStatusID ==1 
+      || invoiceDetail.IsSubmitForApprovalRequired == true) && invoiceDetail.InvoiceAmount != 0" data-remote="true" data-toggle="modal"
+        class="btn btn-info" (click)="submitInvoiceExpedite(invoiceDetail)" style="color: white!important"><i class="fa fa-exchange"></i>&nbsp;Expedite</a>
 
 
-      <a [hidden]="invoiceDetail.InvoiceStatusID == 5 && invoiceDetail.InvoiceStatusID == 6 && invoiceDetail.InvoiceStatusID == 7"
+      <a *ngIf="invoiceDetail.InvoiceStatusID != 5 && invoiceDetail.InvoiceStatusID != 6 && invoiceDetail.InvoiceStatusID != 7"
         class="reject_invoice_link btn btn-danger" data-remote="true" style="color: white!important; margin-top: 0px;" data-toggle="modal"
-        data-target="#dgInvcoiceReject" data-ng-click="getInvoiceReject()"><i class="fa fa-remove"></i>Reject Invoice</a>
+        data-target="#dgInvcoiceReject" (click)="getInvoiceReject()"><i class="fa fa-remove"></i>Reject Invoice</a>
 
-      <a [hidden]="invoiceDetail.InvoiceStatusID != 2 && invoiceDetail.IsApprovalRequired != true" class="btn btn-success"
-        data-toggle="modal" data-target="#dgInvcoiceForApproval" data-ng-click="openInvoiceApproval(invoiceDetail.InvoiceID ,invoiceDetail.InvoiceAmount, invoiceDetail.CompanyID ,invoiceDetail.InvoiceNumber)"
+      <a *ngIf="invoiceDetail.InvoiceStatusID == 2 && invoiceDetail.IsApprovalRequired == true" class="btn btn-success" data-toggle="modal"
+        data-target="#dgInvcoiceForApproval" (click)="openInvoiceApproval(invoiceDetail.InvoiceID ,invoiceDetail.InvoiceAmount, invoiceDetail.CompanyID ,invoiceDetail.InvoiceNumber)"
         style="color: white!important"><i class="fa fa-check"></i>&nbsp;Approve Invoice</a>
 
 
 
 
-      <div id="next_last_wrap" class="btn-group pull-right" data-ng-disabled="invoiceIDs == ''">
-        <a data-ng-click="getNextInvoice(invoiceIDs.PreviousInvoiceID)" data-ng-disabled="invoiceIDs.PreviousInvoiceID == invoiceDetail.InvoiceID || invoiceIDs.PreviousInvoiceID == null"
+      <div id="next_last_wrap" class="btn-group pull-right" (disabled)="invoiceIDs == ''" style="margin-left: 8px;">
+        <a (click)="getNextInvoice(invoiceIDs.PreviousInvoiceID)" (disabled)="invoiceIDs.PreviousInvoiceID == invoiceDetail.InvoiceID || invoiceIDs.PreviousInvoiceID == null"
           class="btn btn-default aTooltip" data-html="true"><i class="fa fa-arrow-left"></i></a>
-        <a data-ng-click="getNextInvoice(invoiceIDs.NextInvoiceID)" data-ng-disabled="invoiceIDs.NextInvoiceID == invoiceDetail.InvoiceID || invoiceIDs.NextInvoiceID == null"
+        <a (click)="getNextInvoice(invoiceIDs.NextInvoiceID)" (disabled)="invoiceIDs.NextInvoiceID == invoiceDetail.InvoiceID || invoiceIDs.NextInvoiceID == null"
           class="btn btn-default aTooltip" data-html="true"><i class="fa fa-arrow-right"></i></a>
       </div>
     </div>

@@ -14,8 +14,7 @@
           <h3>No Distributions!</h3>
           <p>There are no distributions for this invoice.....</p>
         </div>
-        <table id="invoice_distributions_table" class="table table-striped table-bordered datatables dataTable no-footer" 
-        [hidden]="invoiceDetail.InvoiceDistributions.length == 0">
+        <table id="invoice_distributions_table" class="table table-striped table-bordered datatables dataTable no-footer" [hidden]="invoiceDetail.InvoiceDistributions.length == 0">
           <thead>
             <tr>
               <th></th>
@@ -26,24 +25,33 @@
           <tbody>
             <tr *ngFor="let invDistribution of invoiceDetail.InvoiceDistributions">
               <td>
-                <!--<a class="comment_tooltip" uib-tooltip="{{invDistribution.DistributionComment}}" tooltip-placement="right" [hidden]="invDistribution.DistributionComment=='N/A'">
+                <tooltip-content #myTooltip>
+                  <div *ngIf="invDistribution.DistributionComment!='N/A'">
+                    {{invDistribution.DistributionComment}}
+                  </div>
+                  <div *ngIf="invDistribution.DistributionComment=='N/A'">
+                    {{invDistribution.DistributionComment}}
+                  </div>
+                </tooltip-content>
+                <a class="comment_tooltip" [tooltip]="myTooltip" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top"
+                  [hidden]="invDistribution.DistributionComment=='N/A'">
                   <i class="fa fa-info-circle"></i> Comment
                 </a>
-                <a class="comment_tooltip text-warning" uib-tooltip="No comment available for this distribution" tooltip-placement="right"
+                <a class="comment_tooltip text-warning" [tooltip]="myTooltip" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top"
                   [hidden]="invDistribution.DistributionComment != 'N/A'">
                   <i class="fa fa-exclamation-circle"></i> No Comment
-                </a>-->
+                </a>
               </td>
               <td>
                 <a href="#ledgeraccounts/{{invDistribution.LedgerAccountID}}">{{invDistribution.AccountDestribution}}</a>
               </td>
-              <td>${{invDistribution.DistributionAmount | number: 2}}</td>
+              <td>${{invDistribution.DistributionAmount}}</td>
             </tr>
             <tr>
               <td style="text-align: right" colspan="2">
                 <b>Total:</b>
               </td>
-              <!--<td>${{invoiceDetail.TotalDistributionAmount | number: 2}}</td>-->
+              <td>${{invoiceDetail.TotalDistributionAmount}}</td>
             </tr>
           </tbody>
         </table>
