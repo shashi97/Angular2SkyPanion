@@ -8,16 +8,17 @@
     <div class="modal-body">
       <form accept-charset="UTF-8" class="" id="attachment_duplicate_form" method="post">
         <div class="form-group">
-          <div id="invalidationErrors" class="alert alert-danger" *ngIf="errorsRemoveInv.length>0" [ngStyle]="showHideErrorLog">
+          <div id="invalidationErrors" class="alert alert-danger" *ngIf="errorsRemoveInv" [ngStyle]="showHideErrorLog">
             <h3>{{errorHeaderRemoveInv}}</h3>
             <ul>
-              <li data-ng-repeat="error in errorsRemoveInv">{{error.ErrorName}}</li>
+              <li *ngFor="let error of errorsRemoveInv">{{error}}</li>
+              <!--<li data-ng-repeat="error in errorsRemoveInv">{{error.ErrorName}}</li>-->
             </ul>
           </div>
         </div>
         <div class="form-group">
           <label class="control-label" for="attachment_RejectionMemo"><b>Rejection Memo</b></label>
-          <textarea class="form-control" cols="40" id="attachment_RejectionMemo" maxlength="250" [(ngModel)]="RejectionComment" placeholder="Enter rejection memo."
+          <textarea class="form-control" cols="40" id="attachment_RejectionMemo" maxlength="250" [(ngModel)]="RejectionComment" [ngModelOptions]="{standalone: true}" placeholder="Enter rejection memo."
             rows="2"></textarea>
         </div>
       </form>
