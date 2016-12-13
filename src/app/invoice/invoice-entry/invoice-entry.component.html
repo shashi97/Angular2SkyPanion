@@ -17,7 +17,7 @@
   <div class="page-heading" *ngIf="InvoiceID==0">
     <h1><strong>Proccessing Invoice:</strong>{{invoiceDetail.AttachmentName}}</h1>
     <div class="options">
-      <button type="button" class="btn btn-danger" data-toggle="modal" (click)="ShowRejectionPopup()">
+      <button type="button" class="btn btn-danger" data-toggle="modal" (click)="openInvalidateModal()">
                     Invalid/Remove
                 </button>
       <button type="button" class="btn btn-default" *ngIf="invoiceDetail.LockedByID == sessionDetails.userId" (click)="checklockingStatusForExit(attachmentBackLink)">
@@ -29,7 +29,7 @@
   <ol class="breadcrumb">
     <li>
       <a href="#invoicesList/-1/{{searchParameters}}" *ngIf="InvoiceID!=0">All Invoices</a>
-      <a href="#attachmentsList/{{pageSizeFilter}}/{{searchParameters}}" *ngIf="InvoiceID==0">Pending Invoices</a>
+      <a href="#attachments/{{pageSizeFilter}}/{{searchParameters}}" *ngIf="InvoiceID==0">Pending Invoices</a>
     </li>
     <li class="active" *ngIf="InvoiceID!=0">
       <a href="#invoicesDetails/{{invoiceDetail.InvoiceID}}">{{invoiceNumber}}</a>
@@ -130,6 +130,7 @@
         <div class="input-group date">
           <input [(ngModel)]="invoiceDate" class="form-control" id="Invoice_date" name="btn" #Invoice_date="ngModel" placeholder="Invoice Date From"
             size="12" type="text" value="">
+            <!--(blur)="setDueDateByInvoiceDate(invoiceDate)"-->
           <span class="input-group-addon">
           <span class="caret" ></span>
           </span>

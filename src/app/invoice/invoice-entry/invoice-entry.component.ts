@@ -26,6 +26,7 @@ import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { InvoiceEntryPurchaseModalContext, InvoiceEntryPurchaseComponent } from '../../invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
 import { InvoiceEntryVendorModalContext, InvoiceEntryVendorComponent } from '../../invoice/invoice-entry-components/vendors-model/invoice-entry-vendor.component';
 import { InvoiceEntryAccountModalContext, InvoiceEntryAccountsComponent } from '../../invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
+import { InvoiceRejectModalContext, InvoiceRejectModalComponent } from '../../invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
 
 import {
     TableOptions,
@@ -140,7 +141,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 		this.activatedRoute.params.subscribe(params => {
 			this.attachmentId = +params['AttachmentID']; // (+) converts string 'id' to a number
 		});
-		this.getUserDetails();
+		this.getCompanies();
 		if (this.sessionDetails.userId != null) {
 		} else {
 			let link = ['/login'];
@@ -183,8 +184,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
 			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
 			.then(result => {
-				alert(result)
-				this.GetSelectedPurchaseOrder(result);
+			 if(result != null) {
+               this.GetSelectedPurchaseOrder(result);
+			 }
+				
 
 			});
 
@@ -204,9 +207,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
 			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
 			.then(result => {
-				alert(result)
+			 if(result != null) {
 				this.GetSelectedVendors(result);
-
+			 }
 			});
 	}
 
@@ -225,9 +228,29 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
 			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
 			.then(result => {
-				alert(result)
+			 if(result != null) {
 				this.addGlAccountByPopup(result);
+			 }
+			});
+	}
+	openInvalidateModal() {
+		const builder = new BSModalContextBuilder<InvoiceRejectModalContext>(
+            { num1: 2, num2: 3 } as any,
+            undefined,
+            InvoiceRejectModalContext
+		);
 
+		let overlayConfig: OverlayConfig = {
+			context: builder.toJSON()
+		};
+
+		return this.modal.open(InvoiceRejectModalComponent, overlayConfig)
+			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
+			.then(result => {
+				 if(result != null) {
+				this.addGlAccountByPopup(result);
+				 }
 			});
 	}
 
@@ -930,7 +953,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
 	private setDueDateByInvoiceDate(): void {
 
-		if (this.invoiceDate != '' && this.invoiceDate != null && (moment(this.invoiceDate, 'MM/DD/YY', true).isValid())) {
+		if (this.invoiceDate != '' && (moment(this.invoiceDate, 'MM/DD/YY', true))) {
 
 			this.invoiceDate = moment(this.invoiceDate).format('MM/DD/YYYY');
 			var date = new Date(this.invoiceDate);
