@@ -35,7 +35,7 @@
             <span class="caret"></span>
           </a>
           <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-            <li><a role="menuitem" *ngFor="let st of status" (click)="selectStatus(st.statusId)">{{st.statusName}}</a></li>
+            <li><a role="menuitem" *ngFor="let st of status" (click)="onStatusChange(st)">{{st.statusName}}</a></li>
           </ul>
         </div>
       </div>

@@ -52,8 +52,8 @@
 
           <dt>Purchase Order</dt>
           <dd>
-            <span style="color: grey;" class="italic-font" ng-show="invoiceDetail.PurchaseOrder=='None'">{{invoiceDetail.PurchaseOrder}}</span>
-            <a href="#purchaseordersDetails/{{invoiceDetail.PurchaseOrderID}}" ng-show="invoiceDetail.PurchaseOrder!='None'">{{invoiceDetail.PurchaseOrder}}</a>
+            <span style="color: grey;" class="italic-font" *ngIf="invoiceDetail.PurchaseOrder=='None'">{{invoiceDetail.PurchaseOrder}}</span>
+            <a href="#purchaseordersDetails/{{invoiceDetail.PurchaseOrderID}}" *ngIf="invoiceDetail.PurchaseOrder!='None'">{{invoiceDetail.PurchaseOrder}}</a>
           </dd>
 
           <dt>Invoice Date</dt>

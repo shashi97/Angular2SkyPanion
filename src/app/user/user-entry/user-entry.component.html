@@ -24,14 +24,14 @@
         <div class="col-md-12">
           <form accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data" id="edit_member_52" role="form">
 
-            <!--<div data-ng-class="displayValue">
-              <div id="error_explanation" *ngIf="errors.length>0">
+            <div [ngClass]="displayValue" class="alert alert-danger" *ngIf="errors.length>0">
+              <div id="error_explanation">
                 <h2>{{errorHeader}}</h2>
                 <ul>
                   <li *ngFor="let error of errors">{{error.ErrorName}}</li>
                 </ul>
               </div>
-            </div>-->
+            </div>
 
             <div class="form-group field">
               <label class="control-label col-md-3" for="member_account_id">Account</label>
@@ -228,13 +228,13 @@
 
                 <div class="ms-container" id="ms-multi-select2">
                   <div class="ms-selectable col-md-5" style="overflow-y:auto;height:200px;padding: 0;">
-                    <ul class="ms-list" tabindex="-1">
+                    <ul class="ms-list" tabindex="-1" style="padding:0;text-indent:10px;">
                       <li class="ms-elem-selectable ms-selected" id="19-selectable" *ngFor="let item of roles | orderby" (click)="setSelectedList(item)"><span>{{item.Name}}</span></li>
                     </ul>
                   </div>
                   <div class="col-md-2"></div>
                   <div class="ms-selection col-md-5" style="overflow-y:auto;height:200px;padding: 0;">
-                    <ul class="ms-list" tabindex="-1">
+                    <ul tabindex="-1" style="padding:0">
                       <li class="ms-elem-selectable ms-selected" id="19-selection" *ngFor="let item of userDetail.selectedRoles| orderby" (click)="removeFromSelectedList(item)"><span>{{item.Name}}</span></li>
                     </ul>
                   </div>
@@ -310,8 +310,7 @@
               <label class="control-label col-md-3" for="member_PictureFile">Profile Picture</label>
               <div class="col-md-9">
                 <span style="color: gray">{{userDetail.imageName}}</span><br>
-                <input id="member_PictureFile" name="member[PictureFile]" type="file" onchange="angular.element(this).scope().setFile(this)"
-                  accept="image/*">
+                <input id="member_PictureFile" name="member[PictureFile]" type="file" #input (change)="fileUpload(input)" accept="image/*">
               </div>
             </div>
             <hr>

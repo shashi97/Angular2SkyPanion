@@ -90,7 +90,7 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
         this.syncBatchFilteredValue.syncFromDate = parameterArray[0];
         this.syncBatchFilteredValue.syncToDate = parameterArray[1];
         this.syncBatchFilteredValue.batchNumber = parameterArray[2];
-        this.syncBatchFilteredValue.userId = parseInt(parameterArray[2]);
+        this.syncBatchFilteredValue.userId = parseInt(parameterArray[3]);
       }
 
       if (pageSizeFilter !== '-1') {
@@ -120,7 +120,7 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
 
   getSyncBatches() {
 
-    this.location.replaceState('syncBatcheNew/' + this.searchString);
+    this.location.replaceState('syncBatches/' + this.searchString);
 
     let searchCriteriaSyncBatches = {
       syncFromDate: this._currentSyncBatchArgs.syncFromDate,

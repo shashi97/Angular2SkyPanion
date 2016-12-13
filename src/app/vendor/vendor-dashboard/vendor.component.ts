@@ -109,7 +109,7 @@ export class VendorComponent extends BaseComponent implements OnInit {
         this.filteredValue.vendorName = parameterArray[2];
       }
 
-      if (pageSizeFilter != '-1') {
+      if (pageSizeFilter !== '-1') {
         this.currentPageFiltered.pageSizeFilter = pageSizeFilter;
       }
 

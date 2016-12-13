@@ -68,6 +68,9 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
+    this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
+      + this.filteredValue.roleId + ','
+      + this.filteredValue.userTypeId;
     this.getUsers();
   }
 
@@ -154,7 +157,7 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   public checkUserExistInInvoiceApproval(userID, UserName, DisableLink): void {
     if (DisableLink === 'Disable') {
-      this.userService.checkUserExistInInvoiceApproval(userID).then( (result) => {
+      this.userService.checkUserExistInInvoiceApproval(userID).then((result) => {
         let message;
         if (Number(result) > 0) {
           message = 'Are you Sure you' + 'd like to Disable Portal::Member:' + UserName + ' ?' + '\\n' +
@@ -178,7 +181,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   public disableUser(userID): void {
-    this.userService.disableUser(userID).then( (result) => {
+    this.userService.disableUser(userID).then((result) => {
       if (result.status === 404) {
       } else if (result.status === 500) {
       } else {

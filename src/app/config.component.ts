@@ -1,7 +1,6 @@
 
 export class ApiUrl {
 
-  static baseUrl: String = 'http://192.168.1.60:8009/';
-
+  static baseUrl: String = 'http://192.168.1.183:5009/';
 }
 

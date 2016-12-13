@@ -59,6 +59,7 @@ const APP_ROUTES: Routes = [
 
   { path: 'invoices/:pageSizeFilter/:searchParameters', component: InvoiceComponent },
   { path: 'invoiceDetail/:pageSizeFilter/:searchParameters/:invoiceId', component: InvoiceDetailComponent },
+  { path: 'invoiceDetail/:invoiceId', component: InvoiceDetailComponent },
 
   { path: 'purchaseOrder/:pageSizeFilter/:searchParameters', component: PurchaseOrderComponent },
   { path: 'purchaseOrderDetail/:purchaseOrderId', component: PurchaseOrderDetailComponent },
@@ -79,7 +80,7 @@ const APP_ROUTES: Routes = [
 
 
   { path: 'syncBatches/:pageSizeFilter/:searchParameters', component: SyncBatchComponent },
-  { path: 'syncBatchDetail/:syncBatchId', component: SyncBatchDetailComponent },
+  { path: 'syncBatchDetail/:pageSizeFilter/:searchParameters/:syncBatchId', component: SyncBatchDetailComponent },
   { path: 'syncBatcheNew', component: SyncBatchEntryComponent },
   { path: 'syncBatcheNew/:searchParameters', component: SyncBatchEntryComponent },
 
