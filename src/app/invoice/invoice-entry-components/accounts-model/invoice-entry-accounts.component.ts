@@ -73,7 +73,10 @@ export class InvoiceEntryAccountsComponent extends BaseComponent implements Clos
 	}
 
 
+	closeModal(): void {
+		this.dialog.close();
 
+	}
 
 }
 
