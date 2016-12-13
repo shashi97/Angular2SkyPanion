@@ -79,7 +79,7 @@ export class CustomModal implements CloseGuard, ModalComponent<CustomModalContex
         }
     }
 
-    public saveSelectedfilePath(path): void {
+     public saveSelectedfilePath(path): void {
         this.ErrorsHeaders = "";
         this.Errors = new Array<any>();
         this.context.Serverfiles.filepathObject.path = path;
