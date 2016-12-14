@@ -89,9 +89,9 @@ const APP_ROUTES: Routes = [
 
 
   { path: 'role/:pageSizeFilter/:searchParameters', component: RoleComponent },
-  { path: 'roles/:searchParameters/:roleId', component: RoleViewComponent },
-  { path: 'roles/:searchParameters/:roleId/edit', component: RoleEntryComponent },
-  { path: 'rolesAdd/:roleId/new', component: RoleEntryComponent },
+  { path: 'roleView/:pageSizeFilter/:roleId', component: RoleViewComponent },
+  { path: 'roleEntry/:pageSizeFilter/:searchParameters/:roleId', component: RoleEntryComponent },
+  { path: 'roleEntry/:roleId', component: RoleEntryComponent },
 
   { path: 'users/:pageSizeFilter/:searchParameters', component: UserComponent },
   { path: 'userDetail/:pageSizeFilter/:userId', component: UserDetailComponent },

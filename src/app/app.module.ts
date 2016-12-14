@@ -284,7 +284,6 @@ let localStorageServiceConfig = {
     RoleEntryComponent,
     RoleFilterComponent,
     SyncModelComponent,
-    CustomModal,
     InvoiceEntryVendorComponent,
     FilterPipe,
     ApprovalModalComponent,

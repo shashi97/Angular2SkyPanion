@@ -36,7 +36,7 @@ export class GlobalPermissionsModel {
     ProcessScannedRoleID: number = 0;
     ReviewInvoiceRoleID: number = 0;
     SyncBatchestoSkylineRoleID: number = 0;
-}
+}   
 
 export class filepathObjectModel {
     path: string = '';
