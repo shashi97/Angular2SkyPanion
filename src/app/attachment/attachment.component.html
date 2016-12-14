@@ -57,8 +57,8 @@
         <td>{{item.Name}}</td>
         <td>{{item.Uploaded}}</td>
         <td>{{item.LockedBy}}</td>
-        <td><a *ngIf="item.LockedBy"  routerLink="vendorDetail/{{item.VendorID}}">unlock</a></td>
-        <td><a routerLink="invoicesNew/{{item.AttachmentID}}">Process</a></td>
+        <td><a *ngIf="item.IsLocked == true && sessionDetails.IsSuperUser ==true" (click)="unlockDocumentByAdmin(item.AttachmentID)">unlock</a></td>
+        <td><a (click)="GetAttachmentDetails(item.AttachmentID)">Process</a></td>
       </tr>
     </tbody>
   </table>

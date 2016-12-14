@@ -23,7 +23,7 @@ export class MasterService {
     return this.http
       .get(ApiUrl.baseUrl + "api/invoices/getRemoveDocumentLock/" + attachemntID + "/" + userID + "/" + documentType)
       .toPromise()
-      .then(response => response.json())
+      .then(response => response)
   }
   public checkDocumentLocking(attachemntID, documentType) {
     return this.http.get(ApiUrl.baseUrl + "api/invoices/getDocumentLockStatus/" + attachemntID + "/" + documentType)

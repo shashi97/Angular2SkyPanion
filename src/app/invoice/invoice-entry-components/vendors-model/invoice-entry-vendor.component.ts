@@ -82,7 +82,6 @@ export class InvoiceEntryVendorComponent extends BaseComponent implements CloseG
 
 	closeModal(): void {
 		this.dialog.close();
-	
 	}
 }
 
