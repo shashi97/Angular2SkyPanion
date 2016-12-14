@@ -54,7 +54,6 @@ const APP_ROUTES: Routes = [
   { path: 'ledgerAccount/:pageSizeFilter/:searchParameters', component: LedgerAccountComponent },
   { path: 'ledgerAccountDetail/:pageSizeFilter/:searchParameters/:id', component: LedgerAccountDetailComponent },
 
-
   { path: 'achSetups/:pageSizeFilter/:companyId', component: AchSetupComponent },
   { path: 'achSetupDetail/:pageSizeFilter/:id', component: AchSetupDetailComponent },
 
