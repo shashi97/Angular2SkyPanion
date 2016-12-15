@@ -12,16 +12,16 @@ export class SyncModalContext extends BSModalContext {
 }
 
 export class ShowDashboardDetail {
-    showMessage: boolean;
-    dashboardMessage: string;
-    status: boolean;
+    showMessage: boolean = false;
+    dashboardMessage: string = '';
+    status: boolean = false;
 }
 
 /**
  * A Sample of how simple it is to create a new window, with its own injects.
  */
 @Component({
-    selector: 'modal',
+    selector: 'sync-modal',
     templateUrl: './sync-modal.component.html',
 })
 
@@ -44,7 +44,7 @@ export class SyncModelComponent implements CloseGuard, ModalComponent<SyncModalC
         dialog.setCloseGuard(this);
     }
     private closeModal(): void {
-        this.dialog.close();
+        this.dialog.close(this.showDashboardDetail);
     }
 
     private rejectInvoice(): boolean {
@@ -72,15 +72,6 @@ export class SyncModelComponent implements CloseGuard, ModalComponent<SyncModalC
                     this.showDashboardDetail.showMessage = true;
                     this.showDashboardDetail.status = true;
                     this.dialog.close(this.showDashboardDetail);
-                    // thishowDashboardDetail.showMessage = this.showdashboardMessage;
-                    // this.sho.dashboardMessage = this.dashboardMessage;
-                    // showDashboardDetail.status = true;
-                    // this.dialog.close(showDashboardDetail);
-                    // var elementText1 = angular.element('#dgRejectInvoice');
-                    // elementText1.modal("hide");
-                    // $scope.getSyncBatcheInvoices()
-                    // $scope.dashboardMessage = "Invoice Number " + $scope.InvoiceNumber + "  rejected Successfully"; need to be conferm
-                    // this.showdashboardMessage = true; need to be conferm 
                 }
             });
     }

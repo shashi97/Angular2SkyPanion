@@ -27,7 +27,9 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
   @Input() approvals: Array<ApprovalCriteriaModel>;
   @Input() companyId: number;
   @Input() approvers: Array<any>;
+  @Input() approversCount: number;
   @Output() approvalCreteriaChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Input() cmpName: string;
   private approvalListForUpdate: Array<any> = [];
   private newWeightCount: number = 0;
 
@@ -74,9 +76,10 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
         data: data,
         type: typeData,
         isNew: isNew,
-        approvals: this.approvals,
         companyId: this.companyId,
-        approvers: this.approvers
+        approvers: this.approvers,
+        approversCount: this.approversCount,
+        cmpName : this.cmpName
       } as any,
       undefined,
       ApprovalContext
@@ -126,7 +129,7 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
           ApprovalCriteriaID: this.approvals[i].ApprovalCriteriaID,
           Weight: this.newWeightCount++,
           CompanyID: this.approvals[i].CompanyID
-        }
+        };
         this.approvalListForUpdate.splice(this.approvalListForUpdate.length, 0, obj);
       }
 

@@ -39,4 +39,5 @@ export class LedgerAccountModel {
     invoice_id: number = 0;
     ledger_account_id: number = 0;
     vendor_id: number = 0;
+    LedgerAccountID: number = 0;
 }

@@ -37,7 +37,6 @@ export class WaitingInvoiceComponent extends BaseComponent implements OnInit {
     }
      private openRejectionPopup(invoiceId, invAmount, companyId, rejectionComment) {
 
-         
      }
 
 

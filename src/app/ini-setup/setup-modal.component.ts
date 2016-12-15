@@ -8,16 +8,15 @@ import { IniSetupModel } from './shared/ini-setup.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 
-export class CustomModalContext extends BSModalContext {
+export class SetupModalContext extends BSModalContext {
     Serverfiles: IniSetupModel = new IniSetupModel();
-    iniSetupModel: Object;
 }
 
 /**
  * A Sample of how simple it is to create a new window, with its own injects.
  */
 @Component({
-    selector: 'modal',
+    selector: 'sp-setup-modal',
     //styleUrls: ['./bootstrap.min.css'],
     //TODO: [ngClass] here on purpose, no real use, just to show how to workaround ng2 issue #4330.
     // Remove when solved.
@@ -25,8 +24,8 @@ export class CustomModalContext extends BSModalContext {
     templateUrl: './setup-modal.component.html',
 })
 
-export class CustomModal implements CloseGuard, ModalComponent<CustomModalContext> {
-    context: CustomModalContext;
+export class SetupModalComponent implements CloseGuard, ModalComponent<SetupModalContext> {
+    context: SetupModalContext;
     private Errors: Array<any> = [];
     private ErrorsHeaders: string = "";
     private iniSetupComponent: IniSetupComponent;
@@ -43,7 +42,7 @@ export class CustomModal implements CloseGuard, ModalComponent<CustomModalContex
     // @Output()
     // public currentFileChanged: EventEmitter<any> = new EventEmitter<any>();
 
-    constructor(public dialog: DialogRef<CustomModalContext>,
+    constructor(public dialog: DialogRef<SetupModalContext>,
         private iniSetupService: IniSetupService,
         public toastr: ToastsManager) {
         this.context = dialog.context;

@@ -69,7 +69,7 @@ export class ApprovalCriteriaService {
       .post(ApiUrl.baseUrl + "api/approvalcriteria/newOrUpdate", data, options)
       .toPromise()
       .then(response =>
-        response)
+        response.json())
       .catch(error => error);
   }
 

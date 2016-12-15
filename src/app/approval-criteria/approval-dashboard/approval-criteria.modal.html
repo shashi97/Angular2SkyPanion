@@ -8,7 +8,7 @@
                     <form role="form" class="form-horizontal">
 
                         <div id="error_explanation" class="alert alert-danger" *ngIf="errors.length > 0" [ngStyle]="showHideErrorLog">
-                            <button aria-hidden="true" class="close" type="button" >×</button>
+                            <button class="close" data-dismiss="alert">×</button>
                             <h3>{{errorHeader}}</h3>
                             <ul>
                                 <li *ngFor="let error of errors">{{error.ErrorName}}</li>
@@ -18,15 +18,15 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label ">Company </label>
                             <div class="col-md-8">
-                                <input class="form-control" disabled="disabled" type="text" [(ngModel)]="companyName" name="first">
+                                <input class="form-control" disabled="disabled" type="text" [value]="companyName" (input)="companyName = $event.target.value" >
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-4 control-label ">Approver </label>
                             <div class="col-md-8">
-                                <input class="form-control" disabled="disabled" type="text" *ngIf="context.companyId==0" [(ngModel)]="userName" name="first">
+                                <input class="form-control" disabled="disabled" type="text" *ngIf="context.companyId==0" [value]="userName" (input)="userName = $event.target.value" name="second">
                                
-                                 <p-dropdown [options]="approvers" 
+                                 <p-dropdown [options]="context.approvers" 
                                   style="width: 100%"
                                   *ngIf="context.companyId!=0"
                                   [(ngModel)]="selectedApprover" 
@@ -34,16 +34,10 @@
                                   [autoWidth]="true"
                                   [style]="{'width':'150px'}"
                                   name = "first"
-                                 ></p-dropdown>
-                                <!--<ui-select ng-model="selectedApprover.selected"
-                                           theme="select2"
-                                           *ngIf="companyID!=0"
-                                           style="width: 100%">
-                                    <ui-select-match placeholder="Select a Approver">{{selectedApprover.selected.username}}</ui-select-match>
-                                    <ui-select-choices repeat="user in approvers| filter: $select.search">
-                                        {{user.username}}
-                                    </ui-select-choices>
-                                </ui-select>-->
+                                 >
+                                 </p-dropdown>
+                              
+                             
                             </div>
                         </div>
                         <div class="form-group" *ngIf="type=='ledger' || ledgerAccountID != null">
@@ -89,7 +83,7 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-usd"></i>
                                     </span>
-                                    <input class="form-control" placeholder="Enter the end of the range" type="text" valid-number [(ngModel)]="rangeEnd" ng-change="checkRangeAmount()" name="four">
+                                    <input class="form-control" placeholder="Enter the end of the range" type="text" valid-number [(ngModel)]="rangeEnd" (ngModelChange)="checkRangeAmount()" name="four">
                                 </div>
                             </div>
                         </div>

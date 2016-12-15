@@ -31,11 +31,13 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   private companyId: number = 0;
   private totalItems: number = 0;
   private account: Object;
+  private cmpName: string;
   private approvals: Array<ApprovalCriteriaModel>;
   private ledgerAccounts: Array<any> = [];
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private _filteredValue: ApprovalFilterArguments = new ApprovalFilterArguments;
   private approvers: Array<any> = [];
+  private approversCount: number;
 
   constructor(
     localStorageService: LocalStorageService,
@@ -106,15 +108,15 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   private getCompanyName(): void {
     this.location.replaceState('approvals/' + this.companyId);
     this.companiesService.getCompanyName(this.companyId).then(result => {
+     this.cmpName = result._body.replace(/"/g, '');
       this.getApprovers();
-      // this.cmpName = result.data.replace(/"/g, '');
     });
   }
 
   private getApprovers(): void {
     this.userService.getApproverUserDDOs(this.companyId).then(result => {
        this.approvers = result;
-      // this.ApproversCount = this.approvers.length;
+        this.approversCount = this.approvers.length;
       // this.selectedApprover = [];
       // this.selectedApprover.selected = [];  
       this.getLedgerAccounts();
@@ -123,7 +125,7 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
 
   private getLedgerAccounts(): void {
     this.ledgerAccountService.getLedgerAccountDDOsAccountTypeWise(this.companyId).then(result => {
-      //this.ledgerAccounts = result;
+      // this.ledgerAccounts = result;
       // this.selectedLedgerAccount.selected = [];
       this.getApprovalCriteria('all');
     });

@@ -18,14 +18,16 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
   @Input() companyId: number;
   @Input() company: CompanyModel;
   private roleModel: RoleModel;
+  private value: any = {};
   private roles: Array<any> = [];
-  public selectedViewInvoicesRole: any;
-  public selectedProcessRole: any;
-  public selectedReviewRole: any;
-  public selectedApproveRole: any;
-  public selectedBatchRole: any;
-  public selectedDeleteRole: any;
-  public selectedApproverRole: any;
+  public selectedViewInvoicesRole: RoleModel;
+  public selectedProcessRole: RoleModel;
+  public selectedReviewRole: RoleModel;
+  public selectedApproveRole: RoleModel;
+  public selectedBatchRole: RoleModel;
+  public selectedDeleteRole: RoleModel;
+  public selectedApproverRole: RoleModel;
+  public items: Array<any> = [{ text: 'Amsterdam' }, { text: 'Kolkata' }];
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -40,7 +42,7 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.getRoles();
   }
-   private getRoles(): void {
+  private getRoles(): void {
     this.roleService.getRoles().then(result => {
       //  if (result.status === 404) {
       //  } else if (result.status === 500) {
@@ -49,6 +51,9 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
       this.roles = result;
       let defaultRole = { RoleID: 0, AccountID: 0, Name: 'None', Description: 'None' };
       this.roles.splice(0, 0, defaultRole);
+      this.roles.map((role: any) => {
+        role.text = role.Name;
+      });
 
       let temp =  this.roles;
        this.roles = [];
@@ -68,6 +73,13 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
       }
     });
   }
+
+  public refreshValue(value: any): void {
+    this.value = value;
+  }
+
+
+
 
   private getCompanyDetails(): void {
     // this.companyService.getCompanyDetails(this.companyId).then(result => {
@@ -105,12 +117,19 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
     //   }
     // });
   }
+  // public refreshValue(value: any): void {
+
+  // }
 
   public updateInvoiceRole(selectedRole: RoleModel, key: string): void {
     this.companyService.updateCompanyInvoiceRole(selectedRole.RoleID, key, this.companyId).then((result) => {
 
     });
 
+  }
+
+   public selected(value:any):void {
+    console.log('Selected value is: ', value);
   }
 
 }

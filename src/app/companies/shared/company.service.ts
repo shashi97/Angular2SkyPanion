@@ -90,7 +90,10 @@ export class CompanyService {
       + 'api/company/name/'
       + companyId)
       .toPromise()
-      .then(response => response.json() as CompanyModel[])
+      .then(
+
+       response => response
+      )
       .catch(error => error);
   }
 

@@ -23,7 +23,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr *ngFor="let item of companies">
+					<tr  *ngFor="let item of companies">
 						<td>
 							<a tooltip="{{item.ToolTipTypeText}}" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">
 								<i [ngClass]="{'fa fa-book':
@@ -67,6 +67,7 @@
       </tr>
     </tfoot>-->
 			</table>
+			 
 			<sp-pagination [dataSource]='companies' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
 		</div>
 	</div>

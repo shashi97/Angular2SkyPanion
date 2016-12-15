@@ -10,7 +10,7 @@ import { UserService } from '../user/shared/user.service';
 import { AccountService } from '../account/shared/account.service';
 import { IniSetupService } from './shared/ini-setup.service';
 import { RoleService } from '../role/shared/role.service';
-import { CustomModal, CustomModalContext } from './setup-modal.component';
+import { SetupModalComponent, SetupModalContext } from './setup-modal.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
@@ -150,7 +150,6 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
         // messageService.showMsgBox("Success", "Ini Setup successfully saved.", "success");
       }
     });
-          
   }
 
   public getDirectories(filepath, category) {
@@ -169,10 +168,10 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
     }
   }
   public getDirectoryDetail(Serverfiles) {
-    const builder = new BSModalContextBuilder<CustomModalContext>(
+    const builder = new BSModalContextBuilder<SetupModalContext>(
       { Serverfiles: Serverfiles } as any,
       undefined,
-      CustomModalContext
+      SetupModalContext
     );
 
     let overlayConfig: OverlayConfig = {
@@ -187,7 +186,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
 
     //    })
 
-    return this.modal.open(CustomModal, overlayConfig)
+    return this.modal.open(SetupModalComponent, overlayConfig)
       .catch (err => alert('ERROR'))
       .then(dialog => dialog.result)
       .then(result => {

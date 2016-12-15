@@ -47,7 +47,7 @@
                                                         <span *ngIf="files.Category.Value == 0 || files.Category.Value == 14 || files.Category.Value == 10" style="width: 20px"><i class="fa fa-folder"></i></span>
                                                         <span *ngIf="files.Category.Value == 1" Style="width: 20px"><i class="fa fa-file-o"></i></span>
                                                         <span (click)="getDirectories(files.FullPath ,files.Category.Value)"  style="padding-left: 10px">{{files.Name}}</span>
-                                                        <div  Style=" float: right; padding-left: 20px" *ngIf="files.Category.Value == 1" (click)="saveSelectedfilePath(files.FullPath)"><a>Select File</a></div>
+                                                        <div showOnRowHover  Style=" float: right; padding-left: 20px" *ngIf="files.Category.Value == 1" (click)="saveSelectedfilePath(files.FullPath)"><a>Select File</a></div>
                                                     </td>
                                                 </tr>
 

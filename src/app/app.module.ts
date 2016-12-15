@@ -29,7 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TooltipModule } from 'ng2-tooltip';
 
 /* for dropdown */
-import { SelectModule } from 'angular2-select';
+import { SelectModule } from 'ng2-select';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { ClickOutsideModule } from 'ng2-click-outside';
 
@@ -107,6 +107,7 @@ import { LedgerAccountDistributionComponent } from './ledger-account/ledger-acco
 
 
 import { IniSetupComponent } from './ini-setup/ini-setup.component';
+import { ShowOnRowHover } from './shared/directive/showOnRowHover';
 
 import { JobComponent } from './job/job-dashboard/job.component';
 import { JobDetailComponent } from './job/job-detail/job-detail.component';
@@ -116,6 +117,7 @@ import { JobsService } from './job/shared//jobs.service';
 import { ApprovalCriteriaComponent } from './approval-criteria/approval-dashboard/approval-criteria.component';
 import { ApprovalsViewComponent } from './approval-criteria/approval-dashboard/approvals-view.component';
 import { ApprovalFilterComponent } from './approval-criteria/approval-dashboard/filter-bar.component';
+import { ApprovalCriteriaModalService } from './approval-criteria/shared/approval-criteria-modal.service';
 
 import { PurchaseOrderComponent } from './purchase-order/purchase-order-dashboard/purchase-order.component';
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
@@ -181,7 +183,7 @@ import { FilterInvoiceComponent } from './sync-batch/sync-batch-entry/filter-inv
 /* for role entry */
 import { RoleComponent } from './role/role-dashboard/role.component';
 
-import {  CustomModal } from './ini-setup/setup-modal.component';
+import {  SetupModalComponent } from './ini-setup/setup-modal.component';
 import { RoleViewComponent } from './role/role-view/role-view.component';
 import { RoleMemberComponent } from './role/role-view/role-member.component';
 import { RoleAttributeComponent } from './role/role-view/role-attribute.component';
@@ -276,7 +278,6 @@ let localStorageServiceConfig = {
     ReleaseInvoiceComponent,
     WaitingInvoiceComponent,
     FilterInvoiceComponent,
-    CustomModal,
     RoleComponent,
     RoleViewComponent,
     RoleMemberComponent,
@@ -284,14 +285,15 @@ let localStorageServiceConfig = {
     RoleEntryComponent,
     RoleFilterComponent,
     SyncModelComponent,
-    CustomModal,
+    SetupModalComponent,
     InvoiceEntryVendorComponent,
     FilterPipe,
     ApprovalModalComponent,
-    InvoiceRejectModalComponent
+    InvoiceRejectModalComponent,
+    ShowOnRowHover
   ],
   entryComponents: [
-    CustomModal,
+    SetupModalComponent,
     ApprovalModalComponent,
     SyncModelComponent,
     InvoiceEntryPurchaseComponent,
@@ -341,6 +343,7 @@ let localStorageServiceConfig = {
     InvoiceEntryService,
     JobsService,
     SyncBatchService,
+    ApprovalCriteriaModalService,
     {
       provide: Http,
       useFactory: (xhrBackend: XHRBackend,

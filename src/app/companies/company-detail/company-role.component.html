@@ -73,6 +73,14 @@
   <option *ngFor="let role of roles" [value]="role.RoleID">{{role.Name}}</option>
 
 </select>-->
+<!--<div style="width: 150px; margin-bottom: 20px;">
+  <ng-select  [allowClear]="true"
+              [items]="roles"
+              [disabled]="disabled"
+              (data)="refreshValue($event)"
+              placeholder="No city selected">
+  </ng-select>
+  </div>-->
                   <p-dropdown [options]="roles" 
                     [(ngModel)]="selectedViewInvoicesRole" 
                     [filter]="true"
@@ -383,7 +391,7 @@
           </dl>
 
         </div>
-    
+
         <div id="tab-1-4" class="tab-pane ">
           <div class="list-group">
             <a href="#/ledgerAccount/-1/-1" class="list-group-item">
