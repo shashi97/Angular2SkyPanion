@@ -1,0 +1,81 @@
+<div id="slider" class="page-content">
+    <div class="page-heading">
+        <h1>Dashboard</h1>
+        <div class="options">
+        </div>
+    </div>
+
+
+      <div class="col-md-12 col-xs-12">
+           <!-- state-tab component--->
+           
+            <sp-dashboard-state-filter *ngIf="dashboardData && dashboardPermissions" (filtered)="onFiltered($event)" [dashboardStatefilterItems]="dashboardData.InvStateCount" [dashboardPermissions]="dashboardPermissions"></sp-dashboard-state-filter>
+             <div class="clearfix"></div>
+                    <hr>
+                    <div id="invoice_dashboard_wrap">
+                        <div class="row" >
+                            <div class="col-md-12">
+                                  <!-- release button tab--->
+
+                                   <span *ngIf="totalItems==1">Displaying <b>{{totalItems}}</b> invoice</span>
+                                    <span *ngIf="totalItems>1">Displaying <b>all {{totalItems}}</b> invoices</span>
+
+                                     <div id="Div2SS" class="pull-right" *ngIf ="dashboardPermissions && dashboardData">
+
+                                    <span style="margin-left: 6px">
+                                        <a class="edit_invoice_link btn btn-default remote_href" *ngIf="dashboardPermissions.UserPermissions.IsSuperUser" href="#attachments">To Process({{dashboardData.InvStateCount.toProcessInvCount}})</a>
+
+                                    </span>
+                                    <span style="margin-left: 6px">
+                                        <a class="edit_invoice_link btn btn-default remote_href" href="#syncBatcheNew/0,-1" *ngIf="dashboardPermissions.UserPermissions.IsSuperUser || dashboardPermissions.UserPermissions.IsSyncBatching">To Sync({{dashboardData.InvStateCount.toSyncInvCount}})</a>
+
+                                    </span>
+
+                                    <span style="margin-left: 6px">
+                                        <a class="edit_invoice_link btn btn-default remote_href" (click)="releaseAllInvoicesForBatch()" *ngIf="totalItems > 0 && dashboardData.InvStateCount.relevantInvoiceState == 3">Release All</a>
+                                    </span>
+
+                                    <span style="margin-left: 6px">
+                                        <a class="edit_invoice_link btn btn-default remote_href" (click)="releaseAllInvoicesForApprove()" *ngIf="invoiceForValidApprovalCount > 0">Release All</a>
+                                    </span>
+
+                                </div>
+
+
+                                    <br>
+                                   <br>
+
+                                      <!-- dashboard invoices component--->
+                                <div id="invoices_accordion" class="panel-group panel-default" data-ng-show="dashboardData.length>0">
+                                     <sp-dashboard-invoice *ngIf="invoices" (invoiceStateChange)="onFilteronInvoiceStateChangeed($event)" [invoices]="invoices" [dashboardStatefilterItems]="dashboardData.InvStateCount" [dashboardPermissions]="dashboardPermissions"></sp-dashboard-invoice>
+
+                                     <div *ngIf = "totalItems == 0">
+                                        <div class="alert alert-info">
+                                            There are no invoices here!
+                                        </div>
+                                    </div>
+                                 </div>
+
+                            </div>
+                         </div>
+
+                           <div *ngIf="dashboardPermissions"> 
+                            <div class="alert alert-info" *ngIf="dashboardPermissions.UserPermissions.IsGlobalReviewer == false &&
+                                                                    dashboardPermissions.UserPermissions.IsGlobalOverride == false &&
+                                                                    dashboardPermissions.UserPermissions.IsGlobalBatch == false &&
+                                                                    dashboardPermissions.UserPermissions.IsGlobalDelete == false &&
+                                                                    dashboardPermissions.UserPermissions.IsGlobalApprover == false &&
+                                                                    sessionDetails.IsSuperUser == false">
+                            There are no permission to access for this user !
+                        </div>
+                        </div>
+
+
+                    </div> 
+
+
+                     
+
+       </div>   
+    
+</div>

@@ -20,7 +20,7 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit, O
   @Input() companyFilteredArg: CompanyFilterArguments = new CompanyFilterArguments();
 
   private companies: Array<any> = [];
-  private selectedCompanyArray: any;
+  private selectedCompany: any;
 
   constructor(
     localStorageService: LocalStorageService,
@@ -35,7 +35,7 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit, O
   }
 
   ngOnChanges() {
-    this.selectedCompanyArray = this.companyFilteredArg;
+    this.selectedCompany = this.companyFilteredArg;
   }
 
   private getSkypanionsCompanies(): void {
@@ -55,9 +55,10 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit, O
           { label: item.CompanyName, value: item });
       });
     });
+   //  this.selectedCompany = this.companies[3].value;
   }
 
-  private selectedCompany(selectedCompany): void {
+  private getSelectedCompany(selectedCompany): void {
     this.companyFilteredArg.companyId = selectedCompany.CompanyID;
     this.companyFiltered.emit(this.companyFilteredArg);
   }

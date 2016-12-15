@@ -107,6 +107,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 	private invoiceDetail: InvoiceDetail;
 	private purchaseOrders: Array<PurchaseOrder>;
     private invoiceNumber;
+	private invoiceBackLink;
 	private invoiceExistItems: InvoiceExistItems;
 	private User: UserModel;
 	private jobCategory: Array<JobCategory>;
@@ -135,11 +136,12 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 		this.jobCategory = new Array<JobCategory>();
 		this.pageSizeFilter = 25;
 		this.searchParameters = -1;
+		this.invoiceBackLink = '/invoicesList/' + this.pageSizeFilter + '/' + this.searchParameters;
 	}
 	ngOnInit() {
 		this.sessionDetails = this.userService.getSessionDetails();
 		this.activatedRoute.params.subscribe(params => {
-			this.attachmentId = +params['AttachmentID']; // (+) converts string 'id' to a number
+			this.attachmentId = +params['attachmentId']; // (+) converts string 'id' to a number
 		});
 		this.getCompanies();
 		if (this.sessionDetails.userId != null) {
@@ -184,10 +186,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
 			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
 			.then(result => {
-			 if(result != null) {
-               this.GetSelectedPurchaseOrder(result);
-			 }
-				
+				if (result != null) {
+					this.GetSelectedPurchaseOrder(result);
+				}
+
 
 			});
 
@@ -207,9 +209,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
 			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
 			.then(result => {
-			 if(result != null) {
-				this.GetSelectedVendors(result);
-			 }
+				if (result != null) {
+					this.GetSelectedVendors(result);
+				}
 			});
 	}
 
@@ -228,14 +230,21 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
 			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
 			.then(result => {
-			 if(result != null) {
-				this.addGlAccountByPopup(result);
-			 }
+				if (result != null) {
+					this.addGlAccountByPopup(result);
+				}
 			});
 	}
 	openInvalidateModal() {
 		const builder = new BSModalContextBuilder<InvoiceRejectModalContext>(
-            { num1: 2, num2: 3 } as any,
+            {
+				DocumentLockingID: this.DocumentLockingID,
+				doctype: this.doctype,
+				DocumentID: this.DocumentID,
+				attachmentId: this.attachmentId,
+				pageSizeFilter: this.pageSizeFilter,
+				searchParameters: this.searchParameters
+			} as any,
             undefined,
             InvoiceRejectModalContext
 		);
@@ -248,24 +257,24 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
 			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
 			.then(result => {
-				 if(result != null) {
-				this.addGlAccountByPopup(result);
-				 }
+				if (result != null) {
+					this.unlockDocument(result);
+				}
 			});
 	}
 
 	private getCompanies(): void {
-		this.companiesService.getCompanyDDOs().then(result => {
-			if (result) {
-			} else {
-				this.companies = result;
-				var obj = { CompanyID: 0, Number: 'None', CompanyName: 'None', Type: 'None', account_id: 0 };
-				// this.companies.splice(0, 0, obj);
-				// this.selectedCompany.selected = obj;
-			}
-			this.getUserDetails();
+		// this.companiesService.getCompanyDDOs().then(result => {
+		// 	if (result) {
+		// 	} else {
+		// 		this.companies = result;
+		// 		var obj = { CompanyID: 0, Number: 'None', CompanyName: 'None', Type: 'None', account_id: 0 };
+		// 		// this.companies.splice(0, 0, obj);
+		// 		// this.selectedCompany.selected = obj;
+		// 	}
+		this.getUserDetails();
 
-		});
+		// });
 	}
 	private getUserDetails(): void {
 		this.userService.getUserById(this.sessionDetails.userId).then(result => {
@@ -944,7 +953,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 		if (this.invoiceDetail.LockedByID == this.sessionDetails.userID) {
 			this.unlockDocument(linkString)
 		} else {
-			this.router.navigate(['/attachments']);
+			this.router.navigate([linkString]);
 		}
 
 
@@ -1122,7 +1131,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 				//     $interval.cancel($rootScope.intervalPromise);
 				// }
 			}
-			this.router.navigate(linkString);
+			this.router.navigate([linkString]);
 
 		});
 	}

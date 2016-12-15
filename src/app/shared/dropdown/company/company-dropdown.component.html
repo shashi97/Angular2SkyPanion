@@ -10,11 +10,11 @@
             </li>
         </ul>-->                
         <p-dropdown [options]="companies" 
-          [(ngModel)]="selectedCompanyArray" 
+          [(ngModel)]="selectedCompany" 
           [filter]="true"
           [autoWidth]="true"
           [style]="{'width':'180px'}"
-          (ngModelChange)="selectedCompany(selectedCompanyArray)"
+          (ngModelChange)="getSelectedCompany(selectedCompany)"
           ></p-dropdown>
     </div>
 </div>

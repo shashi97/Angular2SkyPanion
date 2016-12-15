@@ -1,0 +1,306 @@
+
+     <div class="panel panel-default" *ngFor="let invoice of invoices">
+                                      
+                                        <div>
+                                            <div class="panel-heading">
+                                                <div>
+                                                    <a href="#collapse-{{invoice.CssID}}" data-toggle="collapse">
+                                                        <h2 style="margin-left: 10px">
+                                                            <strong>{{invoice.CompanyName}}</strong> - {{invoice.VendorKey}}
+                                                        </h2>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                              <div class="collapse in" id="collapse-{{invoice.CssID}}">
+                                               
+                                               <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <dl class="dl-horizontal">
+                                                            <dt>Invoice Details</dt>
+                                                            <dd>
+                                                                <a href="#invoicesDetails/{{invoice.InvoiceID}}" class="badge badge-info"><i class="fa fa-info"></i>View Details</a>
+                                                            </dd>
+
+                                                            <dt>Invoice Number</dt>
+                                                            <dd>
+                                                                {{invoice.InvoiceNumber}}
+                                                            </dd>
+
+                                                            <dt>Status</dt>
+                                                            <dd>
+
+                                                                <span class="text-success" *ngIf="invoice.InvoiceState == 1">
+                                                                    {{invoice.Status}}
+                                                                    <a href="#userDetails/-1/{{invoice.ReviewerId}}/details">{{invoice.CompanyReviewerName}}</a>
+                                                                </span>
+                                                                <span class="text-info" *ngIf="invoice.InvoiceState == 2">
+                                                                    {{invoice.Status}}
+                                                                    <a href="#userDetails/-1/{{invoice.approver_id}}/details">{{invoice.InvoiceApproverName}}</a>
+                                                                </span>
+                                                                <span class="text-info" *ngIf="invoice.InvoiceState == 3">
+                                                                    {{invoice.Status}}
+                                                                    <a href="#userDetails/-1/{{invoice.batched_by_id}}/details">{{invoice.BatchUserName}}</a>
+                                                                </span>
+                                                                <span class="text-danger" *ngIf="invoice.InvoiceState == 5">
+                                                                    <b>{{invoice.Status}}</b> by
+                                                                    <a href="#userDetails/-1/{{invoice.rejected_by_id}}/details">{{invoice.RejectedByName}}</a>
+                                                                </span>
+                                                                <span class="text-danger" *ngIf="invoice.InvoiceState == 6">
+                                                                    <b>{{invoice.Status}}</b>
+                                                                </span>
+                                                                <span class="text-danger" *ngIf="invoice.InvoiceState == 7">
+                                                                    <b>{{invoice.Status}}</b>
+                                                                </span>
+                                                            </dd>
+
+                                                            <dt *ngIf="invoice.InvoiceState == 5">Rejection Comment</dt>
+                                                            <dd *ngIf="invoice.InvoiceState == 5">
+                                                                <p style="color:red;font-size:15px">{{invoice.RejectionComment}}</p>
+                                                            </dd>
+
+                                                            <dt>Company</dt>
+                                                            <dd>
+                                                                <a href="#company/{{invoice.company_id}}" target="_blank"><i [ngClass]="{'fa fa-book': invoice.type=='Skypanion::Fund', 'fa fa-building': invoice.type=='Skypanion::Property'}"></i>{{invoice.CompanyName}}</a>
+                                                            </dd>
+
+                                                            <dt>Vendor</dt>
+                                                            <dd>
+                                                                <a href="#vendorsDetails/{{invoice.vendor_id}}">{{invoice.VendorName}}</a>
+                                                                <!--<br>
+                                                                <a href="#companyVendors/{{invoice.company_id}}/vendors?vendor_id={{invoice.vendor_id}}" target="_blank"><i class="fa fa-list-alt"></i>&nbsp;Vendor History </a>-->
+                                                            </dd>
+
+                                                            <dt>Invoice Date</dt>
+                                                            <dd>{{invoice.InvoiceDate}}</dd>
+
+                                                        </dl>
+                                                    </div>
+                                                     
+                                                       <div class="col-md-4">
+                                                        <dl class="dl-horizontal">
+
+                                                            <dt>Due Date</dt>
+                                                            <dd>{{invoice.DueDate}}</dd>
+
+                                                            <dt>Amount</dt>
+                                                            <dd>${{invoice.Amount}}</dd>
+
+                                                            <dt>Cash Account</dt>
+                                                            <dd>
+                                                                <span [ngClass]="{'text-warning': invoice.CashAccount=='Unknown'}">{{invoice.CashAccount}}</span>
+                                                            </dd>
+
+                                                            <dt>Distributions</dt>
+                                                            <dd>
+                                                                <ul class="distributions_list">
+                                                                    <li class="distribution_list_item" *ngFor="let dectribution of invoice.InvoiceDestributions" >
+                                                                        <span *ngIf="dectribution.Distributions=='No Distributions'">{{dectribution.Distributions}}</span>
+                                                                        <a href="#ledgeraccounts/-1/-1/{{dectribution.ledger_account_id}}" *ngIf="dectribution.Distributions!='No Distributions'">{{dectribution.Distributions}}</a>
+                                                                        <blockquote style="font-size:15px;font-style:normal" *ngIf="dectribution.FundCompanyID>0"> <strong>Fund:</strong><span>{{dectribution.FundCompanyNumber}}</span></blockquote> 
+                                                                        <blockquote class="no_comment" [ngClass]="{'text-warning': dectribution.DestributionComment=='No Comment'}" (click)="updateDistributionComments(dectribution)">
+                                                                            {{dectribution.DestributionComment}}
+                                                                        </blockquote>
+                                                                    </li>
+                                                                </ul>
+                                                            </dd>
+                                                        </dl>
+                                                    </div> 
+
+
+                                                     <div class="col-md-4">
+                                                        <dl class="dl-horizontal">
+
+                                                            <dt>Job</dt>
+                                                            <dd>
+                                                                <a href="#jobs/{{invoice.job_id}}" *ngIf="invoice.job_id!=null">{{invoice.Job}}</a>
+                                                                <span style="color: gray;" *ngIf="invoice.job_id==null">{{invoice.Job}}</span>
+                                                            </dd>
+
+                                                            <dt>Job Category</dt>
+                                                            <dd>
+                                                                <span style="color: gray;" [ngClass]="{'italic-font': invoice.Job=='N/A'}">{{invoice.JobCategory}}</span>
+                                                            </dd>
+
+                                                            <dt>Clerk</dt>
+                                                            <dd>
+                                                                <a href="#userDetails/-1/{{invoice.clerk_id}}/details">{{invoice.ClerkName}}</a>
+                                                            </dd>
+
+                                                            <dt>Updated By</dt>
+                                                            <dd>
+                                                                <a href="#userDetails/-1/{{invoice.updated_by_id}}/details">{{invoice.UpdatedByName}}</a>
+                                                            </dd>
+
+                                                            <dt>Description</dt>
+                                                            <dd>
+                                                                <span [ngClass]="{'italic-font': invoice.Description=='None supplied'}">{{invoice.Description}}</span>
+                                                            </dd>
+
+                                                            <dt>Comment</dt>
+                                                            <dd>
+                                                                <p style="color:red;font-size:15px">{{invoice.Comment}}</p>
+                                                            </dd>
+
+                                                            <dt *ngIf="invoice.IsApproversCommentExists== true">Approvers Comment</dt>
+                                                            <dd *ngIf="invoice.IsApproversCommentExists== true">
+                                                                <ul class="distributions_list">
+                                                                    <li class="distribution_list_item"  *ngFor="let approversComment of invoice.InvoiceApproverList" >
+                                                                        <a href="#userDetails/-1/{{approversComment.UserID}}/details" *ngIf="approversComment.ApproverComment != 'No Comments' && approversComment.ApproverComment != 'null'  && approversComment.ApproverComment != null ">{{approversComment.ApprovarName}}</a>
+                                                                        <blockquote class="no_comment" [ngClass]="{'text-warning': approversComment.ApproverComment=='No Comment'}" *ngIf="approversComment.ApproverComment != 'No Comments'&& approversComment.ApproverComment != 'null'  && approversComment.ApproverComment != null " style="color:red;font-size:14px">
+                                                                            {{approversComment.ApproverComment}}
+                                                                        </blockquote>
+                                                                    </li>
+                                                                </ul>
+                                                            </dd>
+
+
+                                                        </dl>
+                                                    </div>  
+
+
+                                                
+                                                 </div>
+
+                                                   <div class="row invoice_buttons_wrap">
+                                                    <div class="col-md-12">
+                                                        <hr style="margin-top: 10px; margin-bottom: 10px">
+                                                        <div class="pull-left">
+
+                                                            <!--  This section is for To review -->
+
+                                                            <div *ngIf="invoice.IsSubmitForApprovalRequired == true && invoice.InvoiceState ==1 &&  dashboardStatefilterItems.relevantInvoiceState ==1">
+                                                                <span style="margin-left: 6px">
+                                                                    <a class="btn btn-success" *ngIf="invoice.Amount != 0" data-toggle="modal" (click)="SubmitInvoiceForApproval(invoice)" style="color: white!important"><i class="fa fa-check"></i>&nbsp;Submit For Approval</a>
+                                                                </span>
+
+                                                                <span style="margin-left: 6px" *ngIf=" dashboardPermissions.UserPermissions.IsSuperUser  == true">
+                                                                    <a class="reject_invoice_link btn btn-danger" data-toggle="modal" data-target="#dgRejectInvoice" (click)="rejectInvoice(invoice)" style="color: white!important"><i class="fa fa-remove"></i>&nbsp;Reject Invoice</a>
+                                                                </span>
+
+                                                            </div>
+
+                                                            <!--  This section is for To review  End-->
+                                                            <!--  This section is for To Approve -->
+
+                                                            <div *ngIf="invoice.IsApprovalRequired == true && invoice.InvoiceState ==2  && dashboardStatefilterItems.relevantInvoiceState ==2 && dashboardStatefilterItems.isApprove == true">
+                                                                <span style="margin-left: 6px" >
+                                                                    <a class="btn btn-success" data-toggle="modal" data-target="#dgInvcoiceForApproval" (click)="ApproveInvoice(invoice)" style="color: white!important"><i class="fa fa-check"></i>&nbsp;Approve Invoice</a>
+                                                                </span>
+
+                                                                <span style="margin-left: 6px" *ngIf="dashboardPermissions.UserPermissions.IsSuperUser== true">
+                                                                    <a class="reject_invoice_link btn btn-danger" data-toggle="modal" data-target="#dgRejectInvoice" (click)="rejectInvoice(invoice)" style="color: white!important"><i class="fa fa-remove"></i>&nbsp;Reject Invoice</a>
+                                                                </span>
+
+                                                            </div>
+
+                                                            <!--  This section is for To Approve  End-->
+                                                            <!--  This section is for To Override -->
+                                                            <div *ngIf="invoice.InvoiceState ==2 &&  invoice.IsInvoiceOverride == true && dashboardStatefilterItems.relevantInvoiceState ==2 &&  dashboardStatefilterItems.isApprove == false">
+                                                                <span style="margin-left: 6px" *ngIf="dashboardPermissions.UserPermissions.IsSuperUser == true">
+                                                                    <a class="reject_invoice_link btn btn-danger" data-toggle="modal" data-target="#dgRejectInvoice" (click)="rejectInvoice(invoice)" style="color: white!important"><i class="fa fa-remove"></i>&nbsp;Reject Invoice</a>
+                                                                </span>
+
+                                                            </div>
+
+                                                            <!--  This section is for To Override End-->
+                                                            <!--  This section is for To Batch-->
+                                                            <div *ngIf="invoice.InvoiceState ==3 &&  invoice.IsBatche == true && dashboardStatefilterItems.relevantInvoiceState ==3">
+
+                                                                <span style="margin-left: 6px" *ngIf="dashboardPermissions.UserPermissions.IsSuperUser == true">
+                                                                    <a class="reject_invoice_link btn btn-danger" data-toggle="modal" data-target="#dgRejectInvoice" (click)="rejectInvoice(invoice)" style="color: white!important"><i class="fa fa-remove"></i>&nbsp;Reject Invoice</a>
+                                                                </span>
+
+                                                            </div>
+
+
+                                                            <!--  This section is for To Batch End-->
+                                                            <!--  This section is for To Delete-->
+                                                            <!--  This section is for To Delete End-->
+
+
+
+                                                        </div> 
+
+
+                                                        <div id="Div2" class="pull-right">
+
+                                                            <!--  This section is for To Review-->
+
+                                                            <div *ngIf="invoice.InvoiceState ==1 && dashboardStatefilterItems.relevantInvoiceState ==1">
+
+                                                                <span class="left_align">
+                                                                    <a (click)="getInvoiceDetailsByID(invoice)" class="edit_invoice_link btn btn-default remote_href"><i class="fa fa-edit"></i>Edit</a>
+                                                                </span>
+
+                                                                <span style="margin-left: 6px" *ngIf="invoice.IsSubmitForApprovalRequired == true && invoice.InvoiceState < 3" >
+                                                                    <a class="btn btn-info" (click)="submitInvoiceExpedite(invoice)" style="color: white!important"><i class="fa fa-exchange"></i>&nbsp;Expedite</a>
+                                                                </span>
+
+                                                            </div>
+
+
+                                                            <!--  This section is for To Review End-->
+                                                            <!--  This section is for To Approve-->
+
+                                                            <div *ngIf="invoice.IsApprovalRequired == true && invoice.InvoiceState ==2  && dashboardStatefilterItems.relevantInvoiceState ==2 && dashboardStatefilterItems.isApprove == true">
+                                                                <span style="margin-left: 6px">
+                                                                    <a (click)="getInvoiceDetailsByID(invoice)" class="edit_invoice_link btn btn-default remote_href"><i class="fa fa-edit"></i>Edit</a>
+                                                                </span>
+                                                            </div>
+
+
+
+                                                            <!--  This section is for To Approve End-->
+                                                            <!--  This section is for To Override-->
+
+                                                            <div *ngIf="invoice.InvoiceState ==2 && invoice.IsInvoiceOverride == true && dashboardStatefilterItems.relevantInvoiceState ==2 &&  dashboardStatefilterItems.isApprove == false">
+
+                                                                <span style="margin-left: 6px" *ngIf="invoice.InvoiceState > 0 && invoice.InvoiceState < 3 && invoice.IsExpdite == true">
+                                                                    <a class="btn btn-info" (click)="submitInvoiceExpedite(invoice)" style="color: white!important"><i class="fa fa-exchange"></i>&nbsp;Expedite</a>
+                                                                </span>
+                                                            </div>
+
+
+                                                            <!--  This section is for To Override End-->
+                                                            <!--  This section is for To Batch-->
+
+                                                            <div *ngIf="invoice.IsBatche == true && invoice.InvoiceState == 3 && dashboardStatefilterItems.relevantInvoiceState ==3">
+
+                                                                <span style="margin-left: 6px">
+                                                                    <a (click)="getInvoiceDetailsByID(invoice)" class="edit_invoice_link btn btn-default remote_href"><i class="fa fa-edit"></i>Edit</a>
+                                                                </span>
+
+                                                                <span style="margin-left: 6px">
+                                                                    <a class="btn btn-info"  (click)="submitInvoicebatch(invoice)" style="color: white!important"><i class="fa fa-exchange"></i>&nbsp;Batch</a>
+                                                                </span>
+                                                            </div>
+
+                                                            <!--  This section is for To Batch End-->
+                                                            <!--  This section is for To Delete-->
+
+                                                            <div *ngIf="invoice.IsDeleteInvoice == true && invoice.InvoiceState == 5 && dashboardStatefilterItems.relevantInvoiceState ==5">
+                                                                <span style="margin-left: 6px">
+                                                                    <a (click)="getInvoiceDetailsByID(invoice)" class="edit_invoice_link btn btn-default remote_href"><i class="fa fa-edit"></i>Edit</a>
+                                                                </span>
+
+                                                                <span style="margin-left: 6px">
+                                                                    <button class="btn btn-danger" (click)="deleteInvoice(invoice)">
+                                                                        <i class="fa fa-remove"></i>&nbsp;Delete
+                                                                    </button>
+                                                                </span>
+
+                                                            </div>
+
+                                                            <!--  This section is for To Delete End-->
+
+                                                            <br class="clear_both">
+                                                        </div>
+                                                    </div>
+                                                   </div> 
+                                               </div> 
+                                        </div>
+   </div>  
+

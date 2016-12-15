@@ -34,6 +34,7 @@ import { UserComponent } from './user/user-dashboard/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserEntryComponent } from './user/user-entry/user-entry.component';
 
+import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -54,7 +55,6 @@ const APP_ROUTES: Routes = [
   { path: 'ledgerAccount/:pageSizeFilter/:searchParameters', component: LedgerAccountComponent },
   { path: 'ledgerAccountDetail/:pageSizeFilter/:searchParameters/:id', component: LedgerAccountDetailComponent },
 
-
   { path: 'achSetups/:pageSizeFilter/:companyId', component: AchSetupComponent },
   { path: 'achSetupDetail/:pageSizeFilter/:id', component: AchSetupDetailComponent },
 
@@ -74,10 +74,10 @@ const APP_ROUTES: Routes = [
 
 
 
-  { path: 'attachments', component: AttachmentComponent },
-  { path: 'attachments/:SearchParameters', component: AttachmentComponent },
+  
+  { path: 'attachmentsList/:pageSizeFilter/:SearchParameters', component: AttachmentComponent },
 
-  { path: 'attachments/invoicesNew/:AttachmentID', component: InvoiceEntryComponent },
+  { path: 'invoices/:pageSizeFilter/:SearchParameters/:InvoiceID/new/:attachmentId', component: InvoiceEntryComponent },
 
 
   { path: 'syncBatches/:pageSizeFilter/:searchParameters', component: SyncBatchComponent },
@@ -89,13 +89,15 @@ const APP_ROUTES: Routes = [
 
 
   { path: 'role/:pageSizeFilter/:searchParameters', component: RoleComponent },
-  { path: 'roles/:searchParameters/:roleId', component: RoleViewComponent },
-  { path: 'roles/:searchParameters/:roleId/edit', component: RoleEntryComponent },
-  { path: 'rolesAdd/:roleId/new', component: RoleEntryComponent },
+  { path: 'roleView/:pageSizeFilter/:roleId', component: RoleViewComponent },
+  { path: 'roleEntry/:pageSizeFilter/:searchParameters/:roleId', component: RoleEntryComponent },
+  { path: 'roleEntry/:roleId', component: RoleEntryComponent },
 
   { path: 'users/:pageSizeFilter/:searchParameters', component: UserComponent },
   { path: 'userDetail/:pageSizeFilter/:userId', component: UserDetailComponent },
-  { path: 'userEntry/:userId', component: UserEntryComponent }
+  { path: 'userEntry/:userId', component: UserEntryComponent },
+
+  { path: 'dashboard', component: DashboardViewComponent },
 
 ];
 

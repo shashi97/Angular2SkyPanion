@@ -38,9 +38,9 @@ export class InvoiceService {
       .catch(error => error);
   }
 
-  public getInvoiceDetail(invoiceId, attachmentId, isFromEditWindow) {
+  public getInvoiceDetail(invoiceId, attachmentId) {
     return this.http
-      .get(ApiUrl.baseUrl + 'api/invoices/' + invoiceId + '/' + attachmentId + '/' + isFromEditWindow)
+      .get(ApiUrl.baseUrl + 'api/invoices/' + invoiceId + '/' + attachmentId + '/' + true)
       .toPromise()
       .then(response => response.json())
       .catch(error => error);
@@ -72,6 +72,12 @@ export class InvoiceService {
 
   public submitInvoiceForApproval(invoiceID) {
     return this.http.get(ApiUrl.baseUrl + 'api/invoices/InvoiceForApproval/' + invoiceID)
+      .toPromise()
+      .then(response => response.json())
+      .catch(error => error);
+  }
+   public rejectAttachment(attachmentID, rejectionComment) {
+    return this.http.get(ApiUrl.baseUrl + "api/invoices/rejectAttachment/" + attachmentID + "/" + rejectionComment)
       .toPromise()
       .then(response => response.json())
       .catch(error => error);
@@ -113,6 +119,38 @@ export class InvoiceService {
       .then(response => response.json())
       .catch(error => error);
   }
+
+  deleteInvoice(invoiceID){
+    return this.http
+      .get(ApiUrl.baseUrl + "api/invoices/getInvoiceDelete/" + invoiceID)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+
+   submitInvoicebatch(invoiceID){
+    return this.http
+      .get(ApiUrl.baseUrl + "api/invoices/getInvoicebatch/" + invoiceID)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+
+//  submitInvoiceExpedite(invoiceID){
+//     return this.http
+//       .get(ApiUrl.baseUrl + "api/invoices/getInvoiceExpedite/" + invoiceID)
+//       .toPromise()
+//       .then(response => response)
+//       .catch(error => error);
+//   }
+
+  //  submitInvoiceForApproval(invoiceID){
+  //   return this.http
+  //     .get(ApiUrl.baseUrl + "api/invoices/InvoiceForApproval/" + invoiceID)
+  //     .toPromise()
+  //     .then(response => response)
+  //     .catch(error => error);
+  // }
 
   public handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

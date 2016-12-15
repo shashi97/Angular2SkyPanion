@@ -17,7 +17,7 @@ export class InvoiceFilteredArgs {
   invoiceNumber: string = '';
   companyId: number = 0;
   vendorId: number = 0;
-  statusId: number = 0;
+  statusId: number = -1;
   userId: number = 0;
 }
 
@@ -28,38 +28,23 @@ export class InvoiceFilteredArgs {
 
 export class InvoiceFilterComponent extends BaseComponent implements OnInit {
 
+  @Input() invoiceFilteredValue: InvoiceFilteredArgs = new InvoiceFilteredArgs();
+  @Output() filteredInvoice: EventEmitter<InvoiceFilteredArgs> = new EventEmitter<InvoiceFilteredArgs>();
   private statusName: string = 'Invoice Status';
   private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
   private _vendorFilteredValue: VendorFilterArguments = new VendorFilterArguments();
   private _userFilteredValue: UserFilterArguments = new UserFilterArguments();
-  @Input() invoiceFilteredValue: InvoiceFilteredArgs;
-  @Output() filteredInvoice: EventEmitter<InvoiceFilteredArgs> = new EventEmitter<InvoiceFilteredArgs>();
-
-
   private status: Array<any> =
   [{ statusId: null, StatusName: 'None' },
-  { statusId: 0, statusName: 'Static' },
-  { statusId: 1, statusName: 'Waiting for Review' },
-  { statusId: 2, statusName: 'Waiting for Approval' },
-  { statusId: 3, statusName: 'Waiting for Batch' },
-  { statusId: 4, statusName: 'Waiting for Sync' },
-  { statusId: 6, statusName: 'Synced' },
-  { statusId: 5, statusName: 'Rejected' },
-  { statusId: 7, statusName: 'Deleted' }
+    { statusId: 0, statusName: 'Static' },
+    { statusId: 1, statusName: 'Waiting for Review' },
+    { statusId: 2, statusName: 'Waiting for Approval' },
+    { statusId: 3, statusName: 'Waiting for Batch' },
+    { statusId: 4, statusName: 'Waiting for Sync' },
+    { statusId: 6, statusName: 'Synced' },
+    { statusId: 5, statusName: 'Rejected' },
+    { statusId: 7, statusName: 'Deleted' }
   ];
-
-  constructor(
-    localStorageService: LocalStorageService,
-    router: Router
-  ) {
-    super(localStorageService, router);
-  }
-
-  ngOnInit() {
-    jQuery('#invoice_FromDate').datepicker();
-    jQuery('#invToDate').datepicker();
-  }
-
   private get companyFilteredArg(): CompanyFilterArguments {
     return this._companyFilteredValue;
   }
@@ -85,6 +70,18 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
     this._userFilteredValue = newValue;
   }
 
+  constructor(
+    localStorageService: LocalStorageService,
+    router: Router
+  ) {
+    super(localStorageService, router);
+  }
+
+  ngOnInit() {
+    jQuery('#invoice_FromDate').datepicker();
+    jQuery('#invToDate').datepicker();
+  }
+
   private searchUrl(): void {
     let dateFrom = jQuery('#invoice_FromDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
     this.invoiceFilteredValue.invFromDate = dateFrom.val();
@@ -101,14 +98,18 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
     jQuery('#invoice_FromDate').val('');
     jQuery('#invToDate').val('');
     this.statusName = 'Invoice Status';
-    this.userFilteredArg = new UserFilterArguments();
+   // this.userFilteredArg = new UserFilterArguments();
     this.vendorFilteredArg = new VendorFilterArguments();
-    this.companyFilteredArg = new CompanyFilterArguments();
+    // let companyArray = { companyId: 0 };
+     this.companyFilteredArg = new CompanyFilterArguments();
+     this.userFilteredArg = new UserFilterArguments();
+    // let vendorArray = { vendorId: 0 };
+    //  this.vendorFilteredArg = vendorArray;
     this.filteredInvoice.emit(this.invoiceFilteredValue);
   }
 
   private onStatusChange(selectedStatus) {
-    this.invoiceFilteredValue.statusId = selectedStatus;
+    this.invoiceFilteredValue.statusId = selectedStatus.statusId;
     this.statusName = selectedStatus.statusName;
   }
 

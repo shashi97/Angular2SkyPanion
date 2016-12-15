@@ -5,28 +5,34 @@
     <div class="form-inline" id="invoices_index_filters_form">
 
       <div class="form-group">
-        <input class="form-control" id="invoice_FromDate" data-ng-model="invFromDate" date-picker placeholder="Invoice Date From"
+        <input class="form-control" id="invoice_FromDate" [(ngModel)]="invFromDate" date-picker placeholder="Invoice Date From"
           size="12" type="text" value="" />
       </div>
 
       <div class="form-group">
-        <input class="form-control" id="invToDate" data-ng-model="invToDate" date-picker placeholder="Invoice Date To" size="12"
+        <input class="form-control" id="invToDate" [(ngModel)]="invToDate" date-picker placeholder="Invoice Date To" size="12"
           type="text" value="" />
       </div>
 
       <div class="form-group">
-        <input class="form-control" id="invoice_desc" name="invoice_desc" placeholder="Enter invoice description" type="text" data-ng-model="invoiceDesc"
+        <input class="form-control" id="invoice_desc" name="invoice_desc" placeholder="Enter invoice description" type="text" [(ngModel)]="invoiceFilteredValue.invoiceDesc"
         />
       </div>
 
       <div class="form-group">
-        <input class="form-control" id="invoice_number" name="invoice_number" placeholder="Enter an invoice number" type="text" data-ng-model="invoiceNumber"
+        <input class="form-control" id="invoice_number" name="invoice_number" placeholder="Enter an invoice number" type="text" [(ngModel)]="invoiceFilteredValue.invoiceNumber"
         />
       </div>
 
-      <sp-vendor-dropdown></sp-vendor-dropdown>
+      <sp-vendor-dropdown
+          [vendorFilteredArg]="vendorFilteredArg"
+          (vendorFiltered)="onVendorFiltered($event)"
+       ></sp-vendor-dropdown>
 
-      <sp-company-dropdown></sp-company-dropdown>
+     <sp-company-dropdown
+        [companyFilteredArg]='companyFilteredArg'
+        (companyFiltered)="onCompanyFiltered($event)">
+      </sp-company-dropdown>
 
       <div class="form-group">
         <div class="btn-group">
@@ -40,15 +46,18 @@
         </div>
       </div>
 
-      <sp-user-dropdown></sp-user-dropdown>
+      <sp-user-dropdown
+          [userFilteredArg]="userFilteredArg"
+          (userFiltered)="onUserFiltered($event)"
+      ></sp-user-dropdown>
 
       <div class="filter_field_wrap form-group">
-        <button class="btn btn-primary" name="commit" type="button" data-ng-click="searchURL()">
+         <button class="btn btn-primary" name="commit" type="button" (click)="searchUrl()">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         Filter
                     </button>
 
-        <button class="btn btn-warning" data-ng-click="searchURLReset()">
+					<button class="btn btn-warning" (click)="searchUrlReset()">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                         Reset
                     </button>

@@ -50,7 +50,7 @@
       <label class="control-label col-md-4" for="invoice_company_id">{{invoiceDetail.type}}</label>
       <div class="col-md-4" style="padding-top: 6px">
         <i ng-class="{'fa fa-book': invoiceDetail.type=='Skypanion::Fund', 'fa fa-building': invoiceDetail.type=='Skypanion::Property'}"></i>
-        <a href="#company/-1/-1/{{invoiceDetail.CompanyID}}" tooltip-placement="top" uib-tooltip-html="companyTooltip">{{invoiceDetail.CompanyName}}</a>
+        <a href="#" tooltip-placement="top" uib-tooltip-html="companyTooltip">{{invoiceDetail.CompanyName}}</a>
       </div>
       <div class="col-md-4 input-group">
         <div style="padding: 0 !important;margin: 0 !important;" *ngIf="invoiceDetail.InvoiceStatusID == 5 && sessionDetails.IsSuperUser == true">
@@ -114,7 +114,7 @@
             <i class="icon icon-warning-sign"></i>
             <span *ngIf="invoiceDetail.VendorName!=null" class="text-error" style="font-weight: bold">Ach not configured</span>
             <br>
-            <a *ngIf="invoiceDetail.VendorName!=null" href="#company/-1/-1/{{invoiceDetail.CompanyID}}/invoices/{{invoiceDetail.VendorID}}"
+            <a *ngIf="invoiceDetail.VendorName!=null" href="#vendors/25/-1/{{invoiceDetail.VendorID}}"
               target="_blank">
               <i class="fa fa-list-alt"></i><b>Invoice History</b>
             </a>
