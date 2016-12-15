@@ -157,7 +157,9 @@ import { SyncBatchDetailFilterComponent } from './sync-batch/sync-batch-detail/f
 import { SyncBatchDetailAttributeComponent } from './sync-batch/sync-batch-detail/attribute.component';
 import { SyncBatchDetailInvoiceComponent } from './sync-batch/sync-batch-detail/invoices.component';
 
-
+import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
+import { DashboardStateFilterComponent } from './dashboard/dashboard-view/dashboard-state-filter.component';
+import { DashboardInvoicesComponent } from './dashboard/dashboard-view/dashboard-invoices.component';
 
 import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
 
@@ -285,6 +287,9 @@ let localStorageServiceConfig = {
     SyncModelComponent,
     CustomModal,
     InvoiceEntryVendorComponent,
+    DashboardViewComponent,
+    DashboardStateFilterComponent,
+    DashboardInvoicesComponent,
     FilterPipe,
     ApprovalModalComponent
   ],

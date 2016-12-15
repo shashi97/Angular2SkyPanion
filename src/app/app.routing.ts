@@ -34,6 +34,7 @@ import { UserComponent } from './user/user-dashboard/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserEntryComponent } from './user/user-entry/user-entry.component';
 
+import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -95,7 +96,9 @@ const APP_ROUTES: Routes = [
 
   { path: 'users/:pageSizeFilter/:searchParameters', component: UserComponent },
   { path: 'userDetail/:pageSizeFilter/:userId', component: UserDetailComponent },
-  { path: 'userEntry/:userId', component: UserEntryComponent }
+  { path: 'userEntry/:userId', component: UserEntryComponent },
+
+  { path: 'dashboard', component: DashboardViewComponent },
 
 ];
 

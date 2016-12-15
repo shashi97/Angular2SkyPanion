@@ -106,6 +106,38 @@ export class InvoiceService {
         .catch(error => error);
   }
 
+  deleteInvoice(invoiceID){
+    return this.http
+      .get(ApiUrl.baseUrl + "api/invoices/getInvoiceDelete/" + invoiceID)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+
+   submitInvoicebatch(invoiceID){
+    return this.http
+      .get(ApiUrl.baseUrl + "api/invoices/getInvoicebatch/" + invoiceID)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+
+ submitInvoiceExpedite(invoiceID){
+    return this.http
+      .get(ApiUrl.baseUrl + "api/invoices/getInvoiceExpedite/" + invoiceID)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+
+   submitInvoiceForApproval(invoiceID){
+    return this.http
+      .get(ApiUrl.baseUrl + "api/invoices/InvoiceForApproval/" + invoiceID)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+
   public handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
