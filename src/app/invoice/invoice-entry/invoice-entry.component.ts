@@ -264,17 +264,17 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 	}
 
 	private getCompanies(): void {
-		this.companiesService.getCompanyDDOs().then(result => {
-			if (result) {
-			} else {
-				this.companies = result;
-				var obj = { CompanyID: 0, Number: 'None', CompanyName: 'None', Type: 'None', account_id: 0 };
-				// this.companies.splice(0, 0, obj);
-				// this.selectedCompany.selected = obj;
-			}
-			this.getUserDetails();
+		// this.companiesService.getCompanyDDOs().then(result => {
+		// 	if (result) {
+		// 	} else {
+		// 		this.companies = result;
+		// 		var obj = { CompanyID: 0, Number: 'None', CompanyName: 'None', Type: 'None', account_id: 0 };
+		// 		// this.companies.splice(0, 0, obj);
+		// 		// this.selectedCompany.selected = obj;
+		// 	}
+		this.getUserDetails();
 
-		});
+		// });
 	}
 	private getUserDetails(): void {
 		this.userService.getUserById(this.sessionDetails.userId).then(result => {

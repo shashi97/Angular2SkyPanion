@@ -50,7 +50,7 @@
       <label class="control-label col-md-4" for="invoice_company_id">{{invoiceDetail.type}}</label>
       <div class="col-md-4" style="padding-top: 6px">
         <i ng-class="{'fa fa-book': invoiceDetail.type=='Skypanion::Fund', 'fa fa-building': invoiceDetail.type=='Skypanion::Property'}"></i>
-        <a href="#company/{{invoiceDetail.CompanyID}}" tooltip-placement="top" uib-tooltip-html="companyTooltip">{{invoiceDetail.CompanyName}}</a>
+        <a href="#" tooltip-placement="top" uib-tooltip-html="companyTooltip">{{invoiceDetail.CompanyName}}</a>
       </div>
       <div class="col-md-4 input-group">
         <div style="padding: 0 !important;margin: 0 !important;" *ngIf="invoiceDetail.InvoiceStatusID == 5 && sessionDetails.IsSuperUser == true">

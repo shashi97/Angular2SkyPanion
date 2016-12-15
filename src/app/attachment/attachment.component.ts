@@ -62,16 +62,16 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 		});
 		if (this.sessionDetails.userId != null) {
 			this.getAttachments();
-			//this.getAccountName();
+			this.getAccountName();
 		} else {
 			let link = ['/login'];
-			this.router.navigate(link);
+			this.router.navigate([link]);
 		}
 		if (this.pageSizeFilter == -1) {
             this.pageSizeFilter = 25;
         }
-		
-         
+
+
 	}
 
 
@@ -111,18 +111,57 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 
 		});
 	}
-    
-	 private unlockDocumentByAdmin (attachemntID):void {
-           this.masterService.unlockDocument(attachemntID, this.sessionDetails.userId, 5).then(result=> {
-                if (result) {
-                    alert("Attachment unlock successfully");
-                    this.getAttachments();
-                }
+
+	private unlockDocumentByAdmin(attachemntID): void {
+		this.masterService.unlockDocument(attachemntID, this.sessionDetails.userId, 5).then(result => {
+			if (result) {
+				alert("Attachment unlock successfully");
+				this.getAttachments();
+			}
 
 
-            });
-        }
+		});
+	}
 
+	private deleteAttachement(attachemntID): void {
+		this.masterService.checkDocumentLocking(attachemntID, 5).then(result => {
+			if (result.IsLocked == 0) {
+				alert("This attachment is locked by " + result.data.LockBy);
+				return;
+			} else {
+				this.attachmentService.deleteAttachement(attachemntID).then(result => {
+					if (result) {
+					//}
+					// else if (result.status == 500) {
+					//     messageService.showMsgBox("error", result.data.ExceptionMessage, "error");
+					//     $scope.getAttachments();
+					// }
+					//else {
+						alert('Attachment has been deleted successfully');
+						this.unlockDocument(attachemntID);
+					}
+
+				});
+			}
+
+		});
+	}
+
+	private unlockDocument(attachemntID): void {
+		this.masterService.unlockDocument(attachemntID, this.sessionDetails.userId, 5).then(result => {
+			if (result) {
+			//}
+			//else {
+
+				this.getAttachments();
+			}
+		});
+	}
+
+
+    private GetInvoiceDetails(AttachedToID): void {
+		//this.router.navigate[('/invoices/' + AttachedToID).search({ invoiceNumber: 0, vendor: 0, company: 0, status: 0, user: 0 })];
+	}
 
 	private getAccountName(): void {
 		this.accountService
