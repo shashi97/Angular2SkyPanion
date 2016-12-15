@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../../user/shared/user.service';
 export class UserFilterArguments {
   UserID: number = -1;
-  userName: string= 'Select Clerk';
+  userName: string = 'Select Clerk';
 }
 @Component({
   selector: 'sp-user-dropdown',
@@ -15,8 +15,8 @@ export class UserDropdownComponent extends BaseComponent implements OnInit {
   @Output() public userFiltered: EventEmitter<UserFilterArguments> = new EventEmitter<UserFilterArguments>();
   @Input() userFilteredArg: UserFilterArguments = new UserFilterArguments();
   private users: Array<any> = [];
- // private selectedUser: any;
- // private userName: string = 'Select Creater';
+  // private selectedUser: any;
+  // private userName: string = 'Select Creater';
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -25,13 +25,13 @@ export class UserDropdownComponent extends BaseComponent implements OnInit {
     super(localStorageService, router);
     this.getSkypanionsUsers();
   }
-   ngOnInit() {
+  ngOnInit() {
   }
   private getSkypanionsUsers() {
     this.userService.getUserDDOs().then(result => {
       this.users = result;
-       let obj = { UserID: 0, username: 'None', ImagePathName: 'None' };
-       this.users.splice(0, 0, obj);
+      let obj = { UserID: 0, username: 'None', ImagePathName: 'None' };
+      this.users.splice(0, 0, obj);
     });
   }
   private selectUser(selectedUser): void {

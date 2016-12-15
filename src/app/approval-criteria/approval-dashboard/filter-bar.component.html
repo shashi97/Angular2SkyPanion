@@ -7,13 +7,15 @@
         <a (click)="getApprovalCriteria('RangeApproval')" class="btn btn-default" [ngClass]="{active: filteredValue.type=='RangeApproval'}">Range Approvals</a>
         <a (click)="getApprovalCriteria('LedgerAccountApproval')" class="btn btn-default" [ngClass]="{active: filteredValue.type=='LedgerAccountApproval'}">Ledger Account Approvals</a>
       </div>
-      <div class="btn-group" [hidden]="!companyId!=0">
-        <!--<a class="btn btn-primary" href="#company/{{CompanyId}}/approvals">
-                        <i class="fa fa-plus"></i> Create Approval
-                    </a>
-                    <a data-toggle="dropdown" class="btn btn-primary dropdown-toggle" href="#">
-                        <span class="caret"></span>
-                    </a>-->
+
+      <div class="btn-group" *ngIf="companyId != 0">
+        <a class="btn btn-primary">
+          <i class="fa fa-plus"></i> Create Approval
+        </a>
+        <a data-toggle="dropdown" class="btn btn-primary dropdown-toggle" href="#">
+          <span class="caret"></span>
+        </a>
+
         <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
           <li>
             <a data-toggle="modal" data-target="#appCriteriaModel" (click)="showApprovalCriteria(null, 'range' ,1)" data-remote="true"

@@ -68,7 +68,7 @@ export class CustomModal implements CloseGuard, ModalComponent<CustomModalContex
             }
         });
     }
-
+                
     public getParentDirectory(): void {
         var path = this.context.Serverfiles.filepathObject.path.substr(0, (this.context.Serverfiles.filepathObject.path.lastIndexOf("/") + 1))
         if (path.match(/\//g).length == 1) {
@@ -79,7 +79,7 @@ export class CustomModal implements CloseGuard, ModalComponent<CustomModalContex
         }
     }
 
-    public saveSelectedfilePath(path): void {
+     public saveSelectedfilePath(path): void {
         this.ErrorsHeaders = "";
         this.Errors = new Array<any>();
         this.context.Serverfiles.filepathObject.path = path;

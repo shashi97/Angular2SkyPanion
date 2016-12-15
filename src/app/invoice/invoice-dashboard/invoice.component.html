@@ -19,7 +19,7 @@
     <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
       <thead>
         <tr>
-           <th style="width: 3%"></th>
+          <th style="width: 3%"></th>
           <th style="width: 8%">Status</th>
           <th style="width: 5%">Company</th>
           <th style="width: 8%">Inv. Number</th>
@@ -28,8 +28,8 @@
           <th style="width: 7%">Invoice Amount</th>
           <th style="width: 7%">Paid Status</th>
           <th style="width: 7%">Processed</th>
-          <th style="width: 8%">Description</th>
-          <th style="width: 5%">Locked By</th>
+          <th style="width:11%">Description</th>
+          <th style="width: 8%">Locked By</th>
           <th style="width: 5%"></th>
           <th style="width: 5%"></th>
         </tr>
@@ -40,24 +40,73 @@
             <input type="checkbox" [(ngModel)]="item.IsInoiveSelected" style="margin-left:17px;margin-top:5px;height:15px;width:15px;"
               class="gridCellIcon" />
           </td>
-          <td>{{item.InvoiceStatus}}</td>
-          <td>{{item.CompanyNumber}}</td>
+          <td>
+            <div [ngClass]="{'text-warning': item.InvoiceStatus=='Waiting For Sync',
+             'text-warning1': item.InvoiceStatus=='Waiting For Approval', 
+             'text-success': item.InvoiceStatus=='Synced',
+             'text-danger': item.InvoiceStatus=='Rejected',
+             'text-warning': item.InvoiceStatus=='Waiting For Review'}">
+              {{item.InvoiceStatus}}
+            </div>
+          </td>
+          <td>
+            <div>
+              <a href="#/companyDetail/{{item.CompanyID}}">
+                <i [ngClass]="{'fa fa-book': item.Type=='Skypanion::Fund', 
+                              'fa fa-building': item.Type=='Skypanion::Property'}">
+                </i> &nbsp;{{item.CompanyNumber}}
+              </a>
+            </div>
+          </td>
           <td>{{item.InvoiceNumber}}</td>
-          <td>{{item.VendorKey}}</td>
-          <td>{{item.Distributions}}</td>
-          <td>{{item.InvoiceAmount}}</td>
-          <td>{{item.PaidStatus}}</td>
-          <td>{{item.Processed}}</td>
+          <td>
+            <div>
+              <a href="#/vendorDetail/{{item.VendorID}}" class="remote_href" data-remote="true">
+              {{item.VendorKey}}&nbsp;
+              </a>{{item.VendorName}}
+            </div>
+          </td>
+          <td>
+            <div class="italic-font text-warning" *ngIf="item.Distributions=='None' && item.LedgerAccountID==0">
+              {{item.Distributions}}
+            </div>
+            <div *ngIf="item.Distributions!='None' && item.LedgerAccountID!=0">
+              <a href="#/ledgerAccountDetail/-1/-1/{{item.LedgerAccountID}}">
+              {{item.Distributions}}
+              </a>
+            </div>
+            <div>
+              <a *ngIf="item.Distributions!='None' && item.LedgerAccountID==0">
+                {{item.Distributions}}
+             </a>
+            </div>
+          </td>
+          <td>
+            <div>${{item.InvoiceAmount}}</div>
+          </td>
+          <td>
+            <div [ngClass]="{'text-success': item.PaidStatus=='Full Paid', 
+                            'text-danger': item.PaidStatus=='Not Paid' ,
+                            'text-warning': item.PaidStatus=='Partial Paid'}">
+              {{item.PaidStatus}}
+            </div>
+          </td>
+          <td>
+            <div [ngClass]="{'italic-font': item.Processed=='Not Applicable'}">
+              {{item.Processed}}
+            </div>
+          </td>
           <td>{{item.InvoiceDescription}}</td>
           <td>{{item.LockedBy}}</td>
           <td>
-            <div class="ui-grid-cell-contents" *ngIf="item.IsLocked || item.IsSuperUser">
-              <a (click) ="unlockInvoice(row)">
+            <div *ngIf="item.IsLocked || item.IsSuperUser">
+              <a (click)="unlockInvoice(row)">
                 <i class="glyphicon"></i>unlock
-               </a>
+              </a>
             </div>
-           </td>
-          <td><a routerLink="invoiceDetail/{{item.InvoiceID}}">Details</a></td>
+          </td>
+          <td>
+            <a href="#/invoiceDetail/{{searchString}}/{{item.InvoiceID}}">Details</a></td>
         </tr>
       </tbody>
       <tfoot>

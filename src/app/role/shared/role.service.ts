@@ -31,6 +31,7 @@ export class RoleService {
   }
 
   public getRoleList(roleName, pageNumber, rowsPerPage): Promise<any> {
+     roleName = (roleName === '') ? null : roleName;
     return this.http
       .get(ApiUrl.baseUrl
       + 'api/roles/'

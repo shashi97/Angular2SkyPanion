@@ -8,7 +8,7 @@ import { CurrentPageArguments } from '../../../pagination/pagination.component';
 import { CrumbBarComponent } from '../../../shared/others/crumb-bar/crumb-bar.component';
 import { InvoiceEntryService } from '../../../invoice/invoice-entry/shared/invoice-entry.service';
 import { PurchaseOrder } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
-import { Vendors,InvoiceDetail } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
+import { Vendors, InvoiceDetail } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
 // import { CompanyDropdownComponent } from '../shared/dropdown/company/company-dropdown.component';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
@@ -34,7 +34,7 @@ export class InvoiceEntryVendorComponent extends BaseComponent implements CloseG
 	context: InvoiceEntryVendorModalContext;
 	public wrongAnswer: boolean;
 	private CompanyID: number = 0;
-	private vendors:Array<Vendors>;
+	private vendors: Array<Vendors>;
 	// @ViewChild('templateRef') public templateRef: TemplateRef<any>;
 	constructor(private activatedRoute: ActivatedRoute,
 		private userService: UserService,
@@ -55,7 +55,7 @@ export class InvoiceEntryVendorComponent extends BaseComponent implements CloseG
 		if (this.sessionDetails.userId != null) {
 			this.getVendors();
 			// this.getAccountName();
-			
+
 		} else {
 			let link = ['/login'];
 			this.router.navigate(link);
@@ -71,16 +71,18 @@ export class InvoiceEntryVendorComponent extends BaseComponent implements CloseG
                     this.vendors = result;
 
                 }
-                
+
 			});
 
 	}
-	GetSelectedVendor(VendorID): void{
-     this.dialog.close(VendorID);
-		
+	GetSelectedVendor(VendorID): void {
+		this.dialog.close(VendorID);
+
 	}
 
-
+	closeModal(): void {
+		this.dialog.close();
+	}
 }
 
 

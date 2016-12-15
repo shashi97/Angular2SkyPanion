@@ -73,11 +73,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
       keyboard: true,
       from_shadow: true
     });
-
-    // let slider = jQuery('#example_id').data('ionRangeSlider');
-    // console.log(slider.old_from + '-------' + slider.old_to);
   }
-
 
   private getSessionDetails(): void {
     this.user = this.userService.getSessionDetails();
@@ -418,6 +414,25 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
         this.router.navigate(link);
       }
     });
+  }
+
+
+  private fileUpload(image: any) {
+
+    let imageUrl: any;
+    let imageObject = image.files[0];
+    this.userDetail.imageName = imageObject.name;
+    this.userDetail.imageType = imageObject.type;
+    let reader = new FileReader();
+    reader.readAsDataURL(imageObject);
+    reader.onload = function () {
+      imageUrl = reader.result;
+    };
+
+    setTimeout(() => {
+      this.userDetail.imageSource = imageUrl;
+    }, 10);
+
   }
 
   private onSelectedDigest(item) {

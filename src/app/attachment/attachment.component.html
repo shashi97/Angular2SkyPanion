@@ -52,15 +52,22 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of model">
-        <td>{{item.Info}}</td>
+        <td *ngIf="item.Info != 'Rejected'" [ngClass]="{'italic-font': item.Info=='N/A', 'text-success':item.Info=='Processed'}">{{item.Info}}</td>
+        <td *ngIf="item.Info == 'Rejected'" [ngClass]="{'text-rejected': item.Info=='Rejected'}"><b>!</b>{{item.Info}}</td>
         <td>{{item.CompanyName}}</td>
         <td>{{item.Name}}</td>
         <td>{{item.Uploaded}}</td>
         <td>{{item.LockedBy}}</td>
-        <td><a *ngIf="item.LockedBy"  routerLink="vendorDetail/{{item.VendorID}}">unlock</a></td>
-        <td><a routerLink="invoicesNew/{{item.AttachmentID}}">Process</a></td>
+        <td><a *ngIf="item.IsLocked == true && sessionDetails.IsSuperUser ==true" (click)="unlockDocumentByAdmin(item.AttachmentID)">unlock</a></td>
+        <td>
+          <a *ngIf="item.ViewInvoiceLink =='View Invoice'" (click)="GetInvoiceDetails(item.AttachedTo_id,item.IsLocked)"><i class="glyphicon glyphicon-chevron-right"></i>{{item.ViewInvoiceLink}}</a>
+          <a *ngIf="item.ViewInvoiceLink =='Delete'" (click)="deleteAttachement(item.AttachmentID)"><i class="glyphicon glyphicon-chevron-right"></i>{{item.ViewInvoiceLink}}</a>
+          <a style="margin-left:10px;" *ngIf="item.ViewInvoiceLink =='Delete'  && sessionDetails.IsSuperUser == true" (click)="editAttachment(item)"><i class="glyphicon glyphicon-chevron-right"></i>Edit</a>
+          <a *ngIf="item.ViewInvoiceLink =='Process' && item.IsProcessLinkDisbale == true" (click)="GetAttachmentDetails(item.AttachmentID)"><i class="glyphicon glyphicon-chevron-right"></i>{{item.ViewInvoiceLink}}</a>
+          <p *ngIf="item.ViewInvoiceLink =='Process' && item.IsProcessLinkDisbale == false">{{item.ViewInvoiceLink}}</p>
+        </td>
       </tr>
     </tbody>
   </table>
-</div>
-<!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->
+  </div>
+  <!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->

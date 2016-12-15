@@ -48,18 +48,19 @@ const APP_ROUTES: Routes = [
   { path: 'jobDetail/:jobId', component: JobDetailComponent },
 
   { path: 'vendor/:pageSizeFilter/:searchParameters', component: VendorComponent },
+  { path: 'companyVendors/:companyId/vendor', component: VendorComponent },
   { path: 'vendorDetail/:pageSizeFilter/:searchParameters/:vendorId', component: VendorDetailComponent },
   { path: 'vendorDetail/:vendorId', component: VendorDetailComponent },
 
   { path: 'ledgerAccount/:pageSizeFilter/:searchParameters', component: LedgerAccountComponent },
   { path: 'ledgerAccountDetail/:pageSizeFilter/:searchParameters/:id', component: LedgerAccountDetailComponent },
 
-
   { path: 'achSetups/:pageSizeFilter/:companyId', component: AchSetupComponent },
   { path: 'achSetupDetail/:pageSizeFilter/:id', component: AchSetupDetailComponent },
 
   { path: 'invoices/:pageSizeFilter/:searchParameters', component: InvoiceComponent },
   { path: 'invoiceDetail/:pageSizeFilter/:searchParameters/:invoiceId', component: InvoiceDetailComponent },
+  { path: 'invoiceDetail/:invoiceId', component: InvoiceDetailComponent },
 
   { path: 'purchaseOrder/:pageSizeFilter/:searchParameters', component: PurchaseOrderComponent },
   { path: 'purchaseOrderDetail/:purchaseOrderId', component: PurchaseOrderDetailComponent },
@@ -73,26 +74,24 @@ const APP_ROUTES: Routes = [
 
 
 
-  { path: 'attachments', component: AttachmentComponent },
-  { path: 'attachments/:SearchParameters', component: AttachmentComponent },
+  
+  { path: 'attachmentsList/:pageSizeFilter/:SearchParameters', component: AttachmentComponent },
 
-  { path: 'attachments/invoicesNew/:AttachmentID', component: InvoiceEntryComponent },
+  { path: 'invoices/:pageSizeFilter/:SearchParameters/:InvoiceID/new/:attachmentId', component: InvoiceEntryComponent },
 
 
   { path: 'syncBatches/:pageSizeFilter/:searchParameters', component: SyncBatchComponent },
-  { path: 'syncBatchDetail/:syncBatchId', component: SyncBatchDetailComponent },
+  { path: 'syncBatchDetail/:pageSizeFilter/:searchParameters/:syncBatchId', component: SyncBatchDetailComponent },
   { path: 'syncBatcheNew', component: SyncBatchEntryComponent },
   { path: 'syncBatcheNew/:searchParameters', component: SyncBatchEntryComponent },
 
   // { path: 'modal', component: CustomModal },
 
-  { path: 'role', component: RoleComponent },
-  { path: 'role/:SearchParameters', component: RoleComponent },
-  { path: 'roles/:SearchParameters/:RoleId', component: RoleViewComponent },
-  { path: 'roles/:SearchParameters/:roleId/edit', component: RoleEntryComponent },
-  { path: 'rolesAdd/:roleId/new', component: RoleEntryComponent },
 
-
+  { path: 'role/:pageSizeFilter/:searchParameters', component: RoleComponent },
+  { path: 'roleView/:pageSizeFilter/:roleId', component: RoleViewComponent },
+  { path: 'roleEntry/:pageSizeFilter/:searchParameters/:roleId', component: RoleEntryComponent },
+  { path: 'roleEntry/:roleId', component: RoleEntryComponent },
 
   { path: 'users/:pageSizeFilter/:searchParameters', component: UserComponent },
   { path: 'userDetail/:pageSizeFilter/:userId', component: UserDetailComponent },

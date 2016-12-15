@@ -1,0 +1,31 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">
+        <img src="https://maxcdn.icons8.com/Color/PNG/24/User_Interface/close_window-24.png" title="Close Window" width="24"></span></button>
+      <h3>Invalidate Pdf</h3>
+    </div>
+    <div class="modal-body">
+      <form accept-charset="UTF-8" class="" id="attachment_duplicate_form" method="post">
+        <div class="form-group">
+          <div id="invalidationErrors" class="alert alert-danger" *ngIf="errorsRemoveInv" [ngStyle]="showHideErrorLog">
+            <h3>{{errorHeaderRemoveInv}}</h3>
+            <ul>
+              <li *ngFor="let error of errorsRemoveInv">{{error}}</li>
+              <!--<li data-ng-repeat="error in errorsRemoveInv">{{error.ErrorName}}</li>-->
+            </ul>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="attachment_RejectionMemo"><b>Rejection Memo</b></label>
+          <textarea class="form-control" cols="40" id="attachment_RejectionMemo" maxlength="250" [(ngModel)]="RejectionComment" [ngModelOptions]="{standalone: true}" placeholder="Enter rejection memo."
+            rows="2"></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <a id="close_duplicate_modal" class="btn btn-default closeButton" (click)="closeModal()">Cancel</a>
+      <a id="mark_as_duplicate_link" class="btn btn-danger" (click)="InvalidateInvoice()">Invalidate Invoice</a>
+    </div>
+  </div>
+</div>

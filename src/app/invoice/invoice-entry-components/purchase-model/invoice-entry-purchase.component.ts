@@ -1,4 +1,4 @@
-import { Component,Pipe, OnInit, ViewChildren, QueryList} from '@angular/core';
+import { Component, Pipe, OnInit, ViewChildren, QueryList} from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -33,8 +33,8 @@ export class InvoiceEntryPurchaseComponent extends BaseComponent implements Clos
 	private purchaseOrder: Array<PurchaseOrder>
 	context: InvoiceEntryPurchaseModalContext;
 	public wrongAnswer: boolean;
-	private POSearchText:string = '';
-	private PuchaseOrderID:number = 0;
+	private POSearchText: string = '';
+	private PuchaseOrderID: number = 0;
 	// @ViewChild('templateRef') public templateRef: TemplateRef<any>;
 	constructor(private activatedRoute: ActivatedRoute,
 		private userService: UserService,
@@ -46,12 +46,12 @@ export class InvoiceEntryPurchaseComponent extends BaseComponent implements Clos
 		this.context = dialog.context;
 		dialog.setCloseGuard(this);
 		this.getPurchaseOrders()
-        
+
 	}
 	ngOnInit() {
 		this.sessionDetails = this.userService.getSessionDetails();
 		if (this.sessionDetails.userId != null) {
-          this.getPurchaseOrders()
+			this.getPurchaseOrders()
 			// this.getAccountName();
 		} else {
 			let link = ['/login'];
@@ -71,12 +71,15 @@ export class InvoiceEntryPurchaseComponent extends BaseComponent implements Clos
 			});
 
 	}
-	GetSelectedPurchaseOrder(PuchaseOrderID): void{
-     this.dialog.close(PuchaseOrderID);
+	GetSelectedPurchaseOrder(PuchaseOrderID): void {
+		this.dialog.close(PuchaseOrderID);
 		//	this.PuchaseOrderID = PuchaseOrderID;
 	}
 
-
+	closeModal(): void {
+		this.dialog.close();
+		
+	}
 }
 
 

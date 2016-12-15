@@ -147,6 +147,7 @@ import { InvoiceDetailDistributeComponent } from './invoice/invoice-detail/distr
 import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.component';
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
 import { InvoiceEntryVendorComponent } from './invoice/invoice-entry-components/vendors-model/invoice-entry-vendor.component';
+import { InvoiceRejectModalComponent } from './invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
 import { AttachmentComponent } from './attachment/attachment.component';
 
 
@@ -285,13 +286,13 @@ let localStorageServiceConfig = {
     RoleEntryComponent,
     RoleFilterComponent,
     SyncModelComponent,
-    CustomModal,
     InvoiceEntryVendorComponent,
     DashboardViewComponent,
     DashboardStateFilterComponent,
     DashboardInvoicesComponent,
     FilterPipe,
-    ApprovalModalComponent
+    ApprovalModalComponent,
+    InvoiceRejectModalComponent
   ],
   entryComponents: [
     CustomModal,
@@ -299,7 +300,8 @@ let localStorageServiceConfig = {
     SyncModelComponent,
     InvoiceEntryPurchaseComponent,
     InvoiceEntryVendorComponent,
-    InvoiceEntryAccountsComponent
+    InvoiceEntryAccountsComponent,
+    InvoiceRejectModalComponent
 
 
   ],

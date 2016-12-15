@@ -17,6 +17,7 @@ export class ApprovalFilterComponent extends BaseComponent implements OnInit {
 
   @Output() filtered: EventEmitter<ApprovalFilterArguments> = new EventEmitter<ApprovalFilterArguments>();
   @Input() filteredValue: ApprovalFilterArguments = new ApprovalFilterArguments();
+  @Input() companyId: number;
 
   constructor(
     localStorageService: LocalStorageService,

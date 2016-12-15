@@ -1,30 +1,5 @@
 <div id="slider" class="page-content">
     <sp-role-filter-bar [rolefilteredValue]="rolefilteredValue" (filtered)='onRoleFiltered($event)'></sp-role-filter-bar>
-    <!--<div class="page-heading">
-        <h1>All Roles</h1>
-
-        <div class="options">
-            <div class="btn-toolbar form-inline">
-
-                <div class="form-group">
-                    <input class="form-control" id="roleName" placeholder="Role" size="15" type="text" [(ngModel)]="roleName" my-enter="getRoles()"
-                    />
-                </div>
-
-                <button class="btn btn-primary" name="commit" type="button" (click)="searchURL()">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                    Filter
-                </button>
-
-                <button class="btn btn-warning" (click)="searchURLReset()">
-                    <i class="fa fa-refresh" aria-hidden="true"></i>
-                    Reset
-                </button>
-            </div>
-        </div>
-
-
-    </div>-->
     <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
     <div class="container-fluid">
        
@@ -41,8 +16,8 @@
                 <tr *ngFor="let item of roles">
                     <td>{{item.Name}}</td>
                     <td>{{item.Description}}</td>
-                    <td><a href="#/roles/-1/{{item.RoleID}}"><i class="fa fa-search"></i>View</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="#/roles/-1/{{item.RoleID}}/edit"><i class="fa fa-edit"></i>Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td><a href="#/roleView/{{currentPageFiltered.pageSizeFilter}}/{{item.RoleID}}"><i class="fa fa-search"></i>View</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="#/roleEntry/{{searchString}}/{{item.RoleID}}"><i class="fa fa-edit"></i>Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a (click)="deleteRole(item.RoleID, item.Name)"><i class="fa fa-remove"></i>Destroy</a>
                     </td>
                 </tr>

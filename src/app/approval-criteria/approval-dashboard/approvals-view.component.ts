@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewContainerRef, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef, Output, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -9,54 +9,54 @@ import { ConfirmService } from '../../shared/services/otherServices/confirmServi
 import { ApprovalCriteriaService } from '../shared/approval-criteria.service';
 import { ApprovalCriteriaModel } from '../shared/approval-criteria.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { DragulaModule } from  'ng2-dragula/ng2-dragula';
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 
 import 'jquery';
-declare var jQuery: any;
+declare let jQuery: any;
 
 
 @Component({
-    selector: 'sp-approvals-view',
-    templateUrl: './approvals-view.component.html',
+  selector: 'sp-approvals-view',
+  templateUrl: './approvals-view.component.html',
 })
 
 export class ApprovalsViewComponent extends BaseComponent implements OnInit {
 
-    @Input() approvals: Array<ApprovalCriteriaModel>;
-    @Input() companyId: number;
-    @Input() approvers: Array<any>;
-    @Output() approvalCreteriaChanged: EventEmitter<any> = new EventEmitter<any>();
-    private approvalListForUpdate : Array<any> = [];
-    private newWeightCount : number = 0;
+  @Input() approvals: Array<ApprovalCriteriaModel>;
+  @Input() companyId: number;
+  @Input() approvers: Array<any>;
+  @Output() approvalCreteriaChanged: EventEmitter<any> = new EventEmitter<any>();
+  private approvalListForUpdate: Array<any> = [];
+  private newWeightCount: number = 0;
 
-    constructor(
-        localStorageService: LocalStorageService,
-        router: Router,
-        vcRef: ViewContainerRef,
-        overlay: Overlay,
-        public modal: Modal,
+  constructor(
+    localStorageService: LocalStorageService,
+    router: Router,
+    vcRef: ViewContainerRef,
+    overlay: Overlay,
+    public modal: Modal,
 
-        public confirmService: ConfirmService,
-        public approvalCriteriaService: ApprovalCriteriaService,
-        public toastr: ToastsManager,
-        private dragulaService: DragulaService
-       
-    ) {
-        super(localStorageService, router);
-            dragulaService.drag.subscribe((value) => {
-            console.log(`drag: ${value[0]}`);
-            this.onDrag(value.slice(1));
-            });
-        dragulaService.drop.subscribe((value) => {
-        console.log(`drop: ${value[0]}`);
-        this.onDrop(value.slice(1));
-        });
-    }
+    public confirmService: ConfirmService,
+    public approvalCriteriaService: ApprovalCriteriaService,
+    public toastr: ToastsManager,
+    private dragulaService: DragulaService
 
-     private onDrag(args) {
-        let [e, el] = args;
+  ) {
+    super(localStorageService, router);
+    dragulaService.drag.subscribe((value) => {
+      console.log(`drag: ${value[0]}`);
+      this.onDrag(value.slice(1));
+    });
+    dragulaService.drop.subscribe((value) => {
+      console.log(`drop: ${value[0]}`);
+      this.onDrop(value.slice(1));
+    });
+  }
+
+  private onDrag(args) {
+    let [e, el] = args;
   }
 
   private onDrop(args) {
@@ -65,77 +65,77 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
   }
 
 
-    ngOnInit() {
-    }
-    private showApprovalCriteria(data, typeData, isNew) {
+  ngOnInit() {
+  }
+  private showApprovalCriteria(data, typeData, isNew) {
 
-        const builder = new BSModalContextBuilder<ApprovalContext>(
-            {
-                data: data,
-                type: typeData,
-                isNew: isNew,
-                approvals: this.approvals,
-                companyId: this.companyId,
-                approvers: this.approvers
-            } as any,
-            undefined,
-            ApprovalContext
-        );
+    const builder = new BSModalContextBuilder<ApprovalContext>(
+      {
+        data: data,
+        type: typeData,
+        isNew: isNew,
+        approvals: this.approvals,
+        companyId: this.companyId,
+        approvers: this.approvers
+      } as any,
+      undefined,
+      ApprovalContext
+    );
 
-        let overlayConfig: OverlayConfig = {
-            context: builder.toJSON()
-        };
+    let overlayConfig: OverlayConfig = {
+      context: builder.toJSON()
+    };
 
-        return this.modal.open(ApprovalModalComponent, overlayConfig)
-            .catch(err => alert('ERROR'))
-            .then(dialog => dialog.result)
-            .then(result => {
-                if (result != null) {
-                    this.approvalCreteriaChanged.emit();
-                    //  this.getApprovalCriteria(this.type); need to emit for parnt call
-                }
-                //  this.getIniSetupDetails();
-            });
-    }
-
-
-    private deleteApprovalCriteria(ApprovalCriteriaID): void {
-        let message = 'Are you sure you' + 'd like to destroy this approval criteria?';
-        if (this.confirmService.confermMessage(message)) {
-            this.approvalCriteriaService.deleteApprovalCriteria(ApprovalCriteriaID).then((result) => {
-                if (result.status === 404 || result.status === 500) {
-                    this.toastr.error(result.data.ExceptionMessage, 'Oops!');
-                    // messageService.showMsgBox("Error", result.data.ExceptionMessage, "error");
-                } else {
-                    this.toastr.success('Approval criteria successfully destroyed.', 'Success!');
-                     this.approvalCreteriaChanged.emit();
-                    // messageService.showMsgBox("Success", "Role successfully deleted.", "success");
-                }
-            });
-
+    return this.modal.open(ApprovalModalComponent, overlayConfig)
+      .catch(err => alert('ERROR'))
+      .then(dialog => dialog.result)
+      .then(result => {
+        if (result != null) {
+          this.approvalCreteriaChanged.emit();
+          //  this.getApprovalCriteria(this.type); need to emit for parnt call
         }
+        //  this.getIniSetupDetails();
+      });
+  }
+
+
+  private deleteApprovalCriteria(ApprovalCriteriaID): void {
+    let message = 'Are you sure you' + 'd like to destroy this approval criteria?';
+    if (this.confirmService.confermMessage(message)) {
+      this.approvalCriteriaService.deleteApprovalCriteria(ApprovalCriteriaID).then((result) => {
+        if (result.status === 404 || result.status === 500) {
+          this.toastr.error(result.data.ExceptionMessage, 'Oops!');
+          // messageService.showMsgBox("Error", result.data.ExceptionMessage, "error");
+        } else {
+          this.toastr.success('Approval criteria successfully destroyed.', 'Success!');
+          this.approvalCreteriaChanged.emit();
+          // messageService.showMsgBox("Success", "Role successfully deleted.", "success");
+        }
+      });
 
     }
 
-       private sortApprovalCriteriaList (): void {
-            if(this.approvals){
-                this.newWeightCount = 0;
-                this.approvalListForUpdate = [];
-                    for(var i = 0 ; i <this.approvals.length ; i++){
-                          var obj ={
-                              ApprovalCriteriaID:this.approvals[i].ApprovalCriteriaID,
-                              Weight:this.newWeightCount++,
-                              CompanyID:this.approvals[i].CompanyID
-                          }  
-                           this.approvalListForUpdate.splice(this.approvalListForUpdate.length, 0, obj);
-                    }
+  }
 
-                     this.approvalCriteriaService.updateApprovers(this.approvalListForUpdate).then(result => {
-       
-                        });
+  private sortApprovalCriteriaList(): void {
+    if (this.approvals) {
+      this.newWeightCount = 0;
+      this.approvalListForUpdate = [];
+      for (let i = 0; i < this.approvals.length; i++) {
+        let obj = {
+          ApprovalCriteriaID: this.approvals[i].ApprovalCriteriaID,
+          Weight: this.newWeightCount++,
+          CompanyID: this.approvals[i].CompanyID
+        }
+        this.approvalListForUpdate.splice(this.approvalListForUpdate.length, 0, obj);
+      }
 
-            }
-   }
+      this.approvalCriteriaService.updateApprovers(this.approvalListForUpdate).then(result => {
+
+      });
+
+    }
+  }
 
 
 }

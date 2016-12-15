@@ -18,7 +18,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class RoleEntryComponent extends BaseComponent implements OnInit {
 
-    private SearchParameters: number = -1;
+    private searchParameters: number = -1;
     private roleId: number = 0;
     private parameterValue: any;
     private pageHeader: string;
@@ -54,7 +54,7 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
             this.parameterValue = ((params) ? params : false);
             if (this.parameterValue) {
                // let parameterArray: Array<string> = this.parameterValue.SearchParameters.split(',');
-                this.SearchParameters = Number(this.parameterValue.SearchParameters);
+                this.searchParameters = Number(this.parameterValue.searchParameters);
                 this.roleId = Number(this.parameterValue.roleId);
             }
             this.showRoles();
@@ -118,7 +118,7 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
                     this.toastr.success('Role saved successfully', 'Success!');
                    // messageService.showMsgBox("Success", "Role saved successfully", "success");
                     // $location.path('/roles/' + $scope.searchParameters + '/' + result.data)
-                     let link = ['/roles/' + this.SearchParameters + '/' + result];
+                     let link = ['/roles/' + this.searchParameters + '/' + result];
                      this.router.navigate(link);
                 }
             });

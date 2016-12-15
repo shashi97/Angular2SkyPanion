@@ -140,7 +140,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
       // messageService.showMsgBox("Error", "please select ini file to uplaod first", "error");
       return false;
     }
-    this.iniSetupService.saveIniSetupDetails(this.iniSetupModel).then((result) => {
+     this.iniSetupService.saveIniSetupDetails(this.iniSetupModel).then((result) => {
       if (result.status === 404) {
       } else if (result.status === 500) {
       } else {
@@ -150,7 +150,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
         // messageService.showMsgBox("Success", "Ini Setup successfully saved.", "success");
       }
     });
-
+          
   }
 
   public getDirectories(filepath, category) {

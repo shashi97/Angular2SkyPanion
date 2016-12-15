@@ -84,7 +84,7 @@
             <td>
 
               <div>
-                <a href="#/userDetail/25/{{item.UserID}}">Show</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="#/userDetail/{{currentPageFiltered.pageSizeFilter}}/{{item.UserID}}">Show</a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <a [hidden]="item.IsEdit != true" href="#/userEntry/{{item.UserID}}">
                   Edit
                 </a>&nbsp;&nbsp;&nbsp;&nbsp;

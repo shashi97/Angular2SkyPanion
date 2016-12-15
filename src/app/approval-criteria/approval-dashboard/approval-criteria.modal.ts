@@ -18,7 +18,7 @@ export class ApprovalContext extends BSModalContext {
 }
 
 @Component({
-    selector: 'modal',
+    selector: 'sp-approval-modal',
     // styleUrls: ['./bootstrap.min.css'],
     // TODO: [ngClass] here on purpose, no real use, just to show how to workaround ng2 issue #4330.
     // Remove when solved.
@@ -60,7 +60,8 @@ export class ApprovalModalComponent implements CloseGuard, ModalComponent<Approv
          });
          this.showApprovalCriteria( this.context.data,this.context.type,this.context.isNew);
     
-    }
+     }
+  
      public showApprovalCriteria(data, type, isNew): void  {
             if ( this.context.companyId == 0) {
                 this.ledgerAccountService.getLedgerAccountDDOsAccountTypeWise(data.CompanyID).then( (result) => {

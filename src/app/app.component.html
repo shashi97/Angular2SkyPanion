@@ -1,4 +1,3 @@
- 
 <div id="headerbar">
   <div class="container-fluid">
     <div class="row">
@@ -158,7 +157,7 @@
                   </ul>
                 </li>
 
-                <li><a routerLink="attachments"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>
+            <li><a routerLink="attachmentsList/-1/-1"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>
 
                 <li>
                   <a href="javascript:;"><i class="fa fa-refresh"></i><span>Sync Center</span></a>
@@ -167,7 +166,7 @@
                     <li><a routerLink="syncBatcheNew/-1">New Sync Batch</a></li>
                   </ul>
                 </li>
-                     
+
                 <li><a routerLink="iniSetup"><i class="fa fa-cogs"></i><span>Setup</span></a></li>
 
                 <li data-ng-if="sessionDetails.IsSuperUser">
@@ -175,8 +174,8 @@
                   <ul class="acc-menu">
                     <li><a routerLink="users/-1/-1">All Members</a></li>
                     <li><a routerLink="userEntry/0">Create Member</a></li>
-                    <li><a routerLink="role">All Roles</a></li>
-                      <li><a routerLink="rolesAdd/0/new">New Role</a></li>
+                    <li><a routerLink="role/-1/-1">All Roles</a></li>
+                    <li><a routerLink="roleEntry/0">New Role</a></li>
                   </ul>
                 </li>
               </ul>
@@ -190,7 +189,7 @@
       <div class="static-content">
         <div id="body">
           <div>
-              <span defaultOverlayTarget></span>
+            <span defaultOverlayTarget></span>
             <router-outlet></router-outlet>
           </div>
         </div>

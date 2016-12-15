@@ -10,13 +10,15 @@ import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.compo
 import { Overlay, OverlayConfig } from 'angular2-modal';
 import { InvoiceModel } from '../../invoice/shared/invoice.model';
 import { InvoiceDetail, invSearchObject, PurchaseOrder, CompanyData, Vendors,
-	     LedgerAccounts, GlAccountObject, InvoiceExistItems, JobCategory } from '../../invoice/invoice-entry/shared/invoice-entry.model';
+	LedgerAccounts, GlAccountObject, InvoiceExistItems, JobCategory } from '../../invoice/invoice-entry/shared/invoice-entry.model';
 import { JobModel } from '../../job/shared/job.model';
-import { UserModel } from '../../user/shared/user.model.ts';
+import { UserModel } from '../../user/shared/user.model';
 import { JobsService } from '../../job/shared//jobs.service';
-import { InvoiceService } from '../../invoice/shared/invoice.service.ts';
+import { InvoiceService } from '../../invoice/shared/invoice.service';
 import { ApiUrl } from '../../config.component';
 import * as moment from 'moment';
+import { CompanyModel } from '../../companies/shared/company.model';
+import { CompanyService } from '../../companies/shared/company.service';
 import {BrowserModule} from '@angular/platform-browser';
 import { MasterService } from '../../shared/services/master/master.service';
 import {DomSanitizer} from "@angular/platform-browser";
@@ -24,6 +26,7 @@ import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { InvoiceEntryPurchaseModalContext, InvoiceEntryPurchaseComponent } from '../../invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
 import { InvoiceEntryVendorModalContext, InvoiceEntryVendorComponent } from '../../invoice/invoice-entry-components/vendors-model/invoice-entry-vendor.component';
 import { InvoiceEntryAccountModalContext, InvoiceEntryAccountsComponent } from '../../invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
+import { InvoiceRejectModalContext, InvoiceRejectModalComponent } from '../../invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
 
 import {
     TableOptions,
@@ -38,7 +41,7 @@ declare let jQuery: any;
 
 })
 
-export class InvoiceEntryComponent extends BaseComponent implements OnInit ,AfterViewInit{
+export class InvoiceEntryComponent extends BaseComponent implements OnInit, AfterViewInit {
 
 	private attachmentId: number = 0;
 	private invoiceID: number = 0;
@@ -51,7 +54,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
     private IsAcc3show;
     private IsAcc4show;
     private roleExistCount: number = 0;
-	private docType:number =0;
+	private docType: number = 0;
     private DocumentLockingID: number = 0;
     private DocumentID: number = 0;
 	private vendorKey;
@@ -60,6 +63,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 	private invSearchObject: invSearchObject;
 	private vendors: Array<Vendors>;
     private jobs: Array<JobModel>;
+	private companies: Array<CompanyModel>;
 	private selectedJob = {
 		selected: []
 	}
@@ -69,7 +73,12 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 	private selectedPaymentMethod = {
 		selected: {}
 	}
+	private selectedCompany = {
+		selected: {}
+
+	}
 	private errors;
+	private displayValue: string = '';
 	private errorHeader;
 	private pdfsrc1;
 	private pdfsrc;
@@ -98,9 +107,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 	private invoiceDetail: InvoiceDetail;
 	private purchaseOrders: Array<PurchaseOrder>;
     private invoiceNumber;
+	private invoiceBackLink;
 	private invoiceExistItems: InvoiceExistItems;
 	private User: UserModel;
-	private xyz;
 	private jobCategory: Array<JobCategory>;
 	private ledgerAccounts: Array<LedgerAccounts>;
 	constructor(private activatedRoute: ActivatedRoute,
@@ -109,6 +118,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 		localStorageService: LocalStorageService,
 		router: Router,
 		private jobsService: JobsService,
+		private companiesService: CompanyService,
 		private masterService: MasterService,
 		private invoiceEntryService: InvoiceEntryService,
 		private invoiceService: InvoiceService,
@@ -124,20 +134,16 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 		this.purchaseOrders = new Array<PurchaseOrder>();
 		this.invSearchObject = new invSearchObject();
 		this.jobCategory = new Array<JobCategory>();
-		this.pageSizeFilter =25;
-		this.searchParameters =-1;
+		this.pageSizeFilter = 25;
+		this.searchParameters = -1;
+		this.invoiceBackLink = '/invoicesList/' + this.pageSizeFilter + '/' + this.searchParameters;
 	}
 	ngOnInit() {
 		this.sessionDetails = this.userService.getSessionDetails();
 		this.activatedRoute.params.subscribe(params => {
-			this.attachmentId = +params['AttachmentID']; // (+) converts string 'id' to a number
+			this.attachmentId = +params['attachmentId']; // (+) converts string 'id' to a number
 		});
-		// jQuery('#invoice_InvDate').datepicker();
-		// jQuery('#invoice_DueDate').datepicker();
-		// jQuery('#invoice_PoestGlDate').datepicker();
-
-		//this.getInvoiceDetail();
-		this.getUserDetails();
+		this.getCompanies();
 		if (this.sessionDetails.userId != null) {
 		} else {
 			let link = ['/login'];
@@ -146,12 +152,24 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 	}
 
 	ngAfterViewInit() {
-		jQuery('#Invoice_date').datepicker({
-			//... your datepicker attributes
-		}).change(function () {
-			this.invoiceDate = jQuery('#Invoice_date').val();
+		jQuery("#Invoice_date").datepicker({
+			dateFormat: 'dd/mm/yy',
+			onClose: dateText => {
+				this.invoiceDate = dateText;
+			}
 		});
-
+		jQuery("#Due_date").datepicker({
+			dateFormat: 'dd/mm/yy',
+			onClose: dateText => {
+				this.dueDate = dateText;
+			}
+		});
+		jQuery("#Gl_date").datepicker({
+			dateFormat: 'dd/mm/yy',
+			onClose: dateText => {
+				this.postGlDate = dateText;
+			}
+		});
 	}
 	openPurchaseModal() {
 		const builder = new BSModalContextBuilder<InvoiceEntryPurchaseModalContext>(
@@ -168,8 +186,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
 			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
 			.then(result => {
-				alert(result)
-				this.GetSelectedPurchaseOrder(result);
+				if (result != null) {
+					this.GetSelectedPurchaseOrder(result);
+				}
+
 
 			});
 
@@ -189,9 +209,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
 			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
 			.then(result => {
-				alert(result)
-				this.GetSelectedVendors(result);
-
+				if (result != null) {
+					this.GetSelectedVendors(result);
+				}
 			});
 	}
 
@@ -210,12 +230,52 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
 			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
 			.then(result => {
-				alert(result)
-				this.addGlAccountByPopup(result);
+				if (result != null) {
+					this.addGlAccountByPopup(result);
+				}
+			});
+	}
+	openInvalidateModal() {
+		const builder = new BSModalContextBuilder<InvoiceRejectModalContext>(
+            {
+				DocumentLockingID: this.DocumentLockingID,
+				doctype: this.doctype,
+				DocumentID: this.DocumentID,
+				attachmentId: this.attachmentId,
+				pageSizeFilter: this.pageSizeFilter,
+				searchParameters: this.searchParameters
+			} as any,
+            undefined,
+            InvoiceRejectModalContext
+		);
 
+		let overlayConfig: OverlayConfig = {
+			context: builder.toJSON()
+		};
+
+		return this.modal.open(InvoiceRejectModalComponent, overlayConfig)
+			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
+			.then(result => {
+				if (result != null) {
+					this.unlockDocument(result);
+				}
 			});
 	}
 
+	private getCompanies(): void {
+		// this.companiesService.getCompanyDDOs().then(result => {
+		// 	if (result) {
+		// 	} else {
+		// 		this.companies = result;
+		// 		var obj = { CompanyID: 0, Number: 'None', CompanyName: 'None', Type: 'None', account_id: 0 };
+		// 		// this.companies.splice(0, 0, obj);
+		// 		// this.selectedCompany.selected = obj;
+		// 	}
+		this.getUserDetails();
+
+		// });
+	}
 	private getUserDetails(): void {
 		this.userService.getUserById(this.sessionDetails.userId).then(result => {
 			if (result) {
@@ -588,7 +648,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 
 		if (this.invoiceDetail.InvoiceNumber > 0 && this.invoiceDetail.InvoiceNumber != null) {
 			this.invoiceAlert = '';
-
 			this.invoiceExistItems = {
 				InvoiceNumber: this.invoiceDetail.InvoiceNumber,
 				VendorID: this.invoiceDetail.VendorID,
@@ -894,7 +953,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 		if (this.invoiceDetail.LockedByID == this.sessionDetails.userID) {
 			this.unlockDocument(linkString)
 		} else {
-			this.router.navigate(['/attachments']);
+			this.router.navigate([linkString]);
 		}
 
 
@@ -903,7 +962,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 
 	private setDueDateByInvoiceDate(): void {
 
-		if (this.invoiceDate != '' && this.invoiceDate != null && (moment(this.invoiceDate, 'MM/DD/YY', true).isValid())) {
+		if (this.invoiceDate != '' && (moment(this.invoiceDate, 'MM/DD/YY', true))) {
 
 			this.invoiceDate = moment(this.invoiceDate).format('MM/DD/YYYY');
 			var date = new Date(this.invoiceDate);
@@ -1012,13 +1071,13 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 								// if ($rootScope.intervalPromise != undefined) {
 								//     $interval.cancel($rootScope.intervalPromise);
 								// }
-								// this.displayValue = 'none';
-								// this.invoiceAlert = '';
+								this.displayValue = 'none';
+								this.invoiceAlert = '';
 
 								if (value == 'isSaveAndContinue') {
 									if (result1.data == null || result1.data == 0 || result1.data == "" || result1.data == "0" || result1.data == "null") {
 										alert("Invoice saved successfully");
-										//this.unlockDocument('/attachmentsList/' + this.pageSizeFilter + '/-1');
+										this.unlockDocument('/attachmentsList/' + this.pageSizeFilter + '/-1');
 									}
 									else {
 										alert("Invoice saved successfully");
@@ -1050,7 +1109,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 		});
 	}
 
-	private unlockDocument (linkString):void {
+	private unlockDocument(linkString): void {
 		this.documentType = 5;
 		this.doctype = 'Attachment';
 		this.documentID = 0;
@@ -1072,7 +1131,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 				//     $interval.cancel($rootScope.intervalPromise);
 				// }
 			}
-			this.router.navigate(linkString);
+			this.router.navigate([linkString]);
 
 		});
 	}
@@ -1182,7 +1241,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit ,Afte
 
 
 		if (this.errors.length > 0) {
-			//this.displayValue = 'alert alert-danger';
+			this.displayValue = 'alert alert-danger';
 			this.errorHeader = this.errors.length + ' errors prohibited this inovice from being saved:';
 			//$(window).scrollTop(0);
 			return;
