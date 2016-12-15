@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Pipe, ViewContainerRef, ViewEncapsulation, AfterViewInit} from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { BaseComponent } from '../base.component';
 import { UserService } from '../user/shared/user.service';
-import { AttachmentObject } from '../attachment/shared/attachment.model';
+import { AttachmentObject, attachmentdata } from '../attachment/shared/attachment.model';
 import { AttachmentService } from '../attachment/shared/attachment.service';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
 
+import { AttachmentEditModalContext, AttachmentEditComponent } from '../attachment/attachment-edit-model/attachment-edit-model.component';
 import { MasterService } from '../shared/services/master/master.service';
 import { AccountService } from '../account/shared/account.service';
-
-import {CurrentPageArguments} from '../pagination/pagination.component';
-
+import { CompanyService } from '../companies/shared/company.service';
+import { CurrentPageArguments } from '../pagination/pagination.component';
+import { CompanyModel } from '../companies/shared/company.model';
 import { AccountModel } from '../account/shared/account.model';
 import { CrumbBarComponent } from '../shared/others/crumb-bar/crumb-bar.component';
+import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
+import { Overlay, OverlayConfig } from 'angular2-modal';
+import {BrowserModule} from '@angular/platform-browser';
 // import { CompanyDropdownComponent } from '../shared/dropdown/company/company-dropdown.component';
 import {
     TableOptions,
@@ -40,19 +43,28 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 	private DocumentLockingID;
 	private searchParameters;
 	private LockIntervalTime;
-
+	private attachmentObject: attachmentdata;
+    private companies: Array<CompanyModel>;
+	private selectedCompany = {
+	        selected:{}
+	}
+	private newCompanyID;
+	private newCompanyNumber;
 	constructor(private activatedRoute: ActivatedRoute,
 		private userService: UserService,
 		private attachmentService: AttachmentService,
 		private accountService: AccountService,
+		private companiesService: CompanyService,
 		localStorageService: LocalStorageService,
 		private masterService: MasterService,
+		overlay: Overlay, vcRef: ViewContainerRef,
 		router: Router, public modal: Modal) {
 		super(localStorageService, router);
         this.model = new Array<AttachmentObject>();
         this.account = new AccountModel();
 		this.searchParameters = null;
-
+		this.companies = new Array<CompanyModel>();
+		this.attachmentObject = new attachmentdata();
 	}
 	ngOnInit() {
 		this.sessionDetails = this.userService.getSessionDetails();
@@ -63,6 +75,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 		if (this.sessionDetails.userId != null) {
 			this.getAttachments();
 			this.getAccountName();
+			this.getCompanies();
 		} else {
 			let link = ['/login'];
 			this.router.navigate([link]);
@@ -73,6 +86,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 
 
 	}
+
 
 
 	private getAttachments(): void {
@@ -131,12 +145,12 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 			} else {
 				this.attachmentService.deleteAttachement(attachemntID).then(result => {
 					if (result) {
-					//}
-					// else if (result.status == 500) {
-					//     messageService.showMsgBox("error", result.data.ExceptionMessage, "error");
-					//     $scope.getAttachments();
-					// }
-					//else {
+						//}
+						// else if (result.status == 500) {
+						//     messageService.showMsgBox("error", result.data.ExceptionMessage, "error");
+						//     $scope.getAttachments();
+						// }
+						//else {
 						alert('Attachment has been deleted successfully');
 						this.unlockDocument(attachemntID);
 					}
@@ -150,8 +164,8 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 	private unlockDocument(attachemntID): void {
 		this.masterService.unlockDocument(attachemntID, this.sessionDetails.userId, 5).then(result => {
 			if (result) {
-			//}
-			//else {
+				//}
+				//else {
 
 				this.getAttachments();
 			}
@@ -174,6 +188,98 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 			});
 
 	}
+
+	private getCompanies() {
+		this.companiesService.getCompanyDDOs().then(result => {
+			if (result) {
+				this.companies = result;
+
+				var obj = { CompanyID: 0, Number: 'All Companies', CompanyName: 'All Companies', Type: 'None', AccountID: 0 };
+
+				// this.companies.splice(0, 0, obj);
+				// this.selectedCompany.selected = obj;
+				// this.selectedCompanyFilter.selected = obj;
+
+				// this.companies.forEach(function (item) {
+				// 	if (item.CompanyID ==this.companyID) {
+				// 		this.selectedCompanyFilter.selected = item;
+				// 	}
+				// });
+
+			}
+			this.getAttachments();
+
+		});
+	}
+
+
+	private editAttachment(row) {
+		this.masterService.checkDocumentLocking(row.AttachmentID, 5).then(result => {
+			if (result.IsLocked == 0) {
+				alert("This Invoice is locked by " + result.LockBy);
+				return;
+			} else {
+
+				// var elementText1 = angular.element('#dgEditAttachment');
+				// elementText1.modal("show");
+				this.attachmentObject = {
+					status: row.Info,
+					type: row.type,
+					companyName: row.CompanyNameOnly,
+					attachmentID: row.AttachmentID,
+					accountID: row.account_id,
+					uploaded: row.Uploaded,
+					fileName: row.Filename,
+					companyID: row.CompanyID,
+					companyNumber: row.CompanyNumber,
+					rejectionMemo: row.RejectionMemo
+				};
+
+ 
+				this.companies.forEach(item => {
+					if (item.CompanyID == this.attachmentObject.companyID) {
+						this.selectedCompany.selected = item;
+						this.newCompanyID = item.CompanyID;
+						//this.newCompanyNumber = item.Number;
+					}
+				});
+                 
+				 this.openAttachmentEditModal(this.attachmentObject);
+
+			}
+		});
+
+	}
+
+
+		private openAttachmentEditModal(row) {
+		const builder = new BSModalContextBuilder<AttachmentEditModalContext>(
+            {
+				Row:row
+				// doctype: this.doctype,
+				// DocumentID: this.DocumentID,
+				// attachmentId: this.attachmentId,
+				// pageSizeFilter: this.pageSizeFilter,
+				// searchParameters: this.searchParameters
+			} as any,
+            undefined,
+            AttachmentEditModalContext
+		);
+
+		let overlayConfig: OverlayConfig = {
+			context: builder.toJSON()
+		};
+
+		return this.modal.open(AttachmentEditComponent, overlayConfig)
+			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
+			.then(result => {
+				if (result != null) {
+					this.unlockDocument(result);
+				}
+			});
+	}
+
 
 
 }

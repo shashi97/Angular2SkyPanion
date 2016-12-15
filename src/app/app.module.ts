@@ -169,6 +169,7 @@ from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.c
 
 import { InvoiceEntryDistributionsComponent }
 from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
+import { AttachmentEditComponent } from './attachment/attachment-edit-model/attachment-edit-model.component';
 
 import { InvoiceEntryPurchaseComponent } from './invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
 
@@ -293,7 +294,8 @@ let localStorageServiceConfig = {
     FilterPipe,
     ApprovalModalComponent,
     InvoiceRejectModalComponent,
-    ShowOnRowHover
+    ShowOnRowHover,
+    AttachmentEditComponent
   ],
   entryComponents: [
     SetupModalComponent,
@@ -302,7 +304,8 @@ let localStorageServiceConfig = {
     InvoiceEntryPurchaseComponent,
     InvoiceEntryVendorComponent,
     InvoiceEntryAccountsComponent,
-    InvoiceRejectModalComponent
+    InvoiceRejectModalComponent,
+    AttachmentEditComponent
 
 
   ],

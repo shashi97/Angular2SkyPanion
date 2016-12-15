@@ -1,0 +1,68 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" (click)="closeModal()">×</span></button>
+      <div style="font-size:20px;font-weight:bold">Edit Attachment</div>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div id="panel-advancedoptions">
+          <div accept-charset="UTF-8" class="form-horizontal" id="invoice_form">
+            <div class="row">
+              <div id="form_fields">
+                <div class="field form-group">
+                  <div class="control-label col-md-4"><strong>Proccessing Invoice:</strong></div>
+                  <div class="col-md-8" style="padding-top: 6px">
+                    <span> {{attachmentObject.fileName}}</span>
+                  </div>
+                </div>
+                <div class="field form-group">
+                  <div class="control-label col-md-4"><strong>Status:</strong></div>
+                  <div class="col-md-8" style="padding-top: 6px">
+                    <i ng-class="{'italic-font': attachmentObject.status=='N/A', 'text-rejected': attachmentObject.status=='Rejected'}">
+                                                    {{attachmentObject.status}}
+                                                </i>
+                  </div>
+                </div>
+                <div class="field form-group">
+                  <div class="control-label col-md-4"><strong>Uploaded:</strong></div>
+                  <div class="col-md-8" style="padding-top: 6px">
+                    <span> {{attachmentObject.uploaded}}</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-4"><strong>Rejection Memo</strong></label>
+                  <div class="col-md-8" style="padding-top: 6px">
+                    <span style="display:block;word-wrap:break-word;"> {{attachmentObject.rejectionMemo}}</span>
+                    <!--   <textarea class="form-control" cols="40" id="Textarea1" maxlength="250" data-ng-model="attachmentObject.rejectionMemo" rows="2" data-ng-disabled="true"></textarea>-->
+                  </div>
+                </div>
+                <div class="field form-group">
+                  <div class="control-label col-md-4"><strong>{{attachmentObject.type}}</strong></div>
+                  <div class="col-md-4" style="padding-top: 6px">
+                    <i ng-class="{'fa fa-book': attachmentObject.type=='Skypanion::Fund', 'fa fa-building': attachmentObject.type=='Skypanion::Property'}"></i>
+                    <a href="#company/{{attachmentObject.companyID}}" tooltip-placement="top" uib-tooltip-html="companyTooltip">
+                                                    {{attachmentObject.companyName}}
+                                                </a>
+                  </div>
+                  <div class="col-md-4 input-group" style="padding: 0 !important;margin: 0 !important;" data-ng-if="attachmentObject.status == 'Rejected'">
+                    <!--<ui-select ng-model="selectedCompany.selected" theme="select2" style="width:200px" data-ng-change="onCompanyDropperChange(selectedCompany.selected.CompanyID , selectedCompany.selected.Number)">
+                      <ui-select-match placeholder="Select a Company">{{selectedCompany.selected.CompanyName}}</ui-select-match>
+                      <ui-select-choices repeat="company in companies| filter: $select.search">
+                        {{company.CompanyName}}
+                      </ui-select-choices>
+                    </ui-select>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a id="A1" class="btn btn-default closeButton" (click)="closeModal()">Cancel</a>
+      <a id="A2" class="btn btn-success" data-ng-click="updateAttachment()">Save Pdf</a>
+    </div>
+  </div>
+</div>
