@@ -55,7 +55,6 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit, O
           { label: item.CompanyName, value: item });
       });
     });
-   //  this.selectedCompany = this.companies[3].value;
   }
 
   private getSelectedCompany(selectedCompany): void {

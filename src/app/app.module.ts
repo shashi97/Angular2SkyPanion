@@ -28,8 +28,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 /* for tooltip */
 import { TooltipModule } from 'ng2-tooltip';
 
-/* for dropdown */
-import { SelectModule } from 'ng2-select';
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
 import { ClickOutsideModule } from 'ng2-click-outside';
 
@@ -117,7 +115,7 @@ import { JobsService } from './job/shared//jobs.service';
 import { ApprovalCriteriaComponent } from './approval-criteria/approval-dashboard/approval-criteria.component';
 import { ApprovalsViewComponent } from './approval-criteria/approval-dashboard/approvals-view.component';
 import { ApprovalFilterComponent } from './approval-criteria/approval-dashboard/filter-bar.component';
-import { ApprovalCriteriaModalService } from './approval-criteria/shared/approval-criteria-modal.service';
+
 
 import { PurchaseOrderComponent } from './purchase-order/purchase-order-dashboard/purchase-order.component';
 import { PurchaseOrderDetailComponent } from './purchase-order/purchase-order-detail/purchase-order-detail.component';
@@ -319,7 +317,6 @@ let localStorageServiceConfig = {
     AlertModule,
     DataTableModule,
     DropdownModule,
-    SelectModule,
     NgbModule.forRoot(),
     ModalModule.forRoot(),
     BootstrapModalModule,
@@ -348,7 +345,6 @@ let localStorageServiceConfig = {
     InvoiceEntryService,
     JobsService,
     SyncBatchService,
-    ApprovalCriteriaModalService,
     {
       provide: Http,
       useFactory: (xhrBackend: XHRBackend,
