@@ -20,3 +20,17 @@ export class ApprovalCriteriaModel {
     UserName: string = '';
     Weight: number = 0;
 }
+
+export class ApproversModel {
+AccountName: string= '';
+DisabledAt: number= 0;
+name: string = '';
+Picture: string= '';
+UserID: number =  0;
+UserType: string= '';
+account_id: number = 0;
+email: string= '';
+owner_id: number= 0;
+username: string= '';
+label: string= '';
+}

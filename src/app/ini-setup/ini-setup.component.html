@@ -12,7 +12,7 @@
         <div class="options">
             <div class="form-inline" id="invoices_index_filters_form">
                 <div class="form-group">
-                    <button class="btn btn-primary" id="btnGetDrivespopup" type="button" data-toggle="modal" data-target="#dgDrivesAndFileList"
+                    <button class="btn btn-primary"  type="button" 
                         (click)="getDirectories(null , 14)">Select InI file</button>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>
+                                </div>  
                                 <div id="tab-1-2" class="tab-pane">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
@@ -136,7 +136,7 @@
                                                             [filter]="true" 
                                                             [autoWidth]="true" 
                                                             [style]="{'width':'190px','padding-bottom': '2%'}"
-                                                            (ngModelChange)="updateInvoiceRole(selectedProcessScannedRole, 'process')"></p-dropdown>
+                                                          ></p-dropdown>
                                                         <!--<ui-select ng-model="selectedProcessScannedRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedProcessScannedRole.selected.RoleID, 'process')">
                                                             <ui-select-match>{{selectedProcessScannedRole.selected.Name}}</ui-select-match>
                                                             <ui-select-choices repeat="role in roles| filter: $select.search">
@@ -154,7 +154,7 @@
                                                             [filter]="true" 
                                                             [autoWidth]="true" 
                                                             [style]="{'width':'190px'}"
-                                                            (ngModelChange)="updateInvoiceRole(selectedReviewRole, 'review')"></p-dropdown>
+                                                            ></p-dropdown>
                                                         <!--<ui-select ng-model="selectedReviewRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedReviewRole.selected.RoleID, 'review')">
                                                             <ui-select-match>{{selectedReviewRole.selected.Name}}</ui-select-match>
                                                             <ui-select-choices repeat="role in roles| filter: $select.search">
@@ -172,7 +172,7 @@
                                                             [filter]="true" 
                                                             [autoWidth]="true" 
                                                             [style]="{'width':'190px'}"
-                                                            (ngModelChange)="updateInvoiceRole(selectedApproveRole, 'approve')"></p-dropdown>
+                                                           ></p-dropdown>
                                                         <!--<ui-select ng-model="selectedApproveRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedApproveRole.selected.RoleID, 'approve')">
                                                             <ui-select-match>{{selectedApproveRole.selected.Name}}</ui-select-match>
                                                             <ui-select-choices repeat="role in roles| filter: $select.search">
@@ -190,7 +190,7 @@
                                                             [filter]="true" 
                                                             [autoWidth]="true" 
                                                             [style]="{'width':'190px'}"
-                                                            (ngModelChange)="updateInvoiceRole(selectedBatchRole, 'batch')"></p-dropdown>
+                                                          ></p-dropdown>
                                                         <!--<ui-select ng-model="selectedBatchRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedBatchRole.selected.RoleID, 'batch')">
                                                             <ui-select-match>{{selectedBatchRole.selected.Name}}</ui-select-match>
                                                             <ui-select-choices repeat="role in roles| filter: $select.search">
@@ -208,7 +208,7 @@
                                                             [filter]="true" 
                                                             [autoWidth]="true" 
                                                             [style]="{'width':'190px'}"
-                                                            (ngModelChange)="updateInvoiceRole(selectedDeleteRole, 'delete')"></p-dropdown>
+                                                            ></p-dropdown>
                                                         <!--<ui-select ng-model="selectedDeleteRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedDeleteRole.selected.RoleID, 'delete')">-->
                                                         <!--<ui-select-match>{{selectedDeleteRole.selected.Name}}</ui-select-match>
                                                             <ui-select-choices repeat="role in roles| filter: $select.search">
@@ -226,7 +226,7 @@
                                                             [filter]="true" 
                                                             [autoWidth]="true" 
                                                             [style]="{'width':'190px'}"
-                                                            (ngModelChange)="updateInvoiceRole(selectedApproverOverrideRole, 'approver')"></p-dropdown>
+                                                            ></p-dropdown>
                                                         <!--<ui-select ng-model="selectedApproverOverrideRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedApproverOverrideRole.selected.RoleID, 'approver')">
                                                             <ui-select-match>{{selectedApproverOverrideRole.selected.Name}}</ui-select-match>
                                                             <ui-select-choices repeat="role in roles| filter: $select.search">
@@ -245,7 +245,7 @@
                                                             [filter]="true" 
                                                             [autoWidth]="true" 
                                                             [style]="{'width':'190px'}"
-                                                            (ngModelChange)="updateInvoiceRole(selectedSyncBatchestoSkylineRole, 'approver')"></p-dropdown>
+                                                           ></p-dropdown>
                                                         <!--<ui-select ng-model="selectedSyncBatchestoSkylineRole.selected" theme="select2" style="width: 100%" ng-change="updateInvoiceRole(selectedSyncBatchestoSkylineRole.selected.RoleID, 'approver')">
                                                             <ui-select-match>{{selectedSyncBatchestoSkylineRole.selected.Name}}</ui-select-match>
                                                             <ui-select-choices repeat="role in roles| filter: $select.search">

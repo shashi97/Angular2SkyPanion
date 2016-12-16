@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { ApprovalCriteriaModel } from '../shared/approval-criteria.model';
+import { ApprovalCriteriaModel, ApproversModel } from '../shared/approval-criteria.model';
 import { LedgerAccountService } from '../../ledger-account/shared/ledger-account.service';
 import { ApprovalCriteriaService } from '../shared/approval-criteria.service';
 import { LedgerAccountModel } from '../../ledger-account/shared/ledger-account.model';
@@ -45,7 +45,7 @@ export class ApprovalModalComponent implements CloseGuard, ModalComponent<Approv
     private ledgerAccounts: Array<any> = [];
     private approvers: Array<any> = [];
     private selectedLedgerAccount: LedgerAccountModel;
-    private selectedApprover: ApprovalCriteriaModel;
+    private selectedApprover: ApproversModel = new ApproversModel();
     private showHideErrorLog: Object = { 'display': 'none' };
     constructor(public dialog: DialogRef<ApprovalContext>,
         public ledgerAccountService: LedgerAccountService,
@@ -161,6 +161,10 @@ export class ApprovalModalComponent implements CloseGuard, ModalComponent<Approv
                 }
             }
         }
+    }
+
+    private changeApprover(selectedApprover): void {
+        console.log(selectedApprover);
     }
 
     private saveApprovalCriteria(): void {

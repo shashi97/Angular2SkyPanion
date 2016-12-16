@@ -20,7 +20,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { ConfirmService } from './shared/services/otherServices/confirmService';
 
-import { DropdownModule } from 'primeng/primeng';
+import { DropdownModule, MultiSelectModule } from 'primeng/primeng';
 
 /* for pagination */
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -284,8 +284,9 @@ let localStorageServiceConfig = {
     RoleAttributeComponent,
     RoleEntryComponent,
     RoleFilterComponent,
-    SyncModelComponent,
     SetupModalComponent,
+    SyncModelComponent,
+
     InvoiceEntryVendorComponent,
     DashboardViewComponent,
     DashboardStateFilterComponent,
@@ -317,6 +318,7 @@ let localStorageServiceConfig = {
     AlertModule,
     DataTableModule,
     DropdownModule,
+    MultiSelectModule,
     NgbModule.forRoot(),
     ModalModule.forRoot(),
     BootstrapModalModule,

@@ -71,10 +71,6 @@ const APP_ROUTES: Routes = [
   // { path: 'approvals', component: ApprovalCriteriaComponent },
 
   { path: 'approvals/:companyId', component: ApprovalCriteriaComponent },
-
-
-
-  
   { path: 'attachmentsList/:pageSizeFilter/:SearchParameters', component: AttachmentComponent },
 
   { path: 'invoices/:pageSizeFilter/:SearchParameters/:InvoiceID/new/:attachmentId', component: InvoiceEntryComponent },

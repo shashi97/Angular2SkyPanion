@@ -12,6 +12,7 @@ import { IniSetupService } from './shared/ini-setup.service';
 import { RoleService } from '../role/shared/role.service';
 import { SetupModalComponent, SetupModalContext } from './setup-modal.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { RoleModel } from '../role/shared/role.model';
 
 @Component({
   selector: 'sp-ini-setup',
@@ -24,13 +25,13 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
   private account: Object;
   private roles: Array<any> = [];
 
-  private selectedProcessScannedRole: any;
-  private selectedReviewRole: any;
-  private selectedApproveRole: any;
-  private selectedBatchRole: any;
-  private selectedDeleteRole: any;
-  private selectedApproverOverrideRole: any;
-  private selectedSyncBatchestoSkylineRole: any;
+  private selectedProcessScannedRole: RoleModel= new RoleModel();
+  private selectedReviewRole: RoleModel= new RoleModel();
+  private selectedApproveRole: RoleModel= new RoleModel();
+  private selectedBatchRole: RoleModel= new RoleModel();
+  private selectedDeleteRole: RoleModel= new RoleModel();
+  private selectedApproverOverrideRole: RoleModel= new RoleModel();
+  private selectedSyncBatchestoSkylineRole: RoleModel= new RoleModel();
 
   constructor(
     vcRef: ViewContainerRef,
@@ -47,7 +48,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
     super(localStorageService, router);
     this.iniSetupModel = new IniSetupModel();
     this.getSessionDetails();
-    overlay.defaultViewContainer = vcRef;
+   // overlay.defaultViewContainer = vcRef;
   }
 
   ngOnInit() {

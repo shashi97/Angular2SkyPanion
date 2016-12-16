@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { LoginModel } from './shared/login.model';
 import { UserService } from '../user/shared/user.service';
 import { AuthService } from '../shared/services/otherServices/auth.service';
 import { BaseComponent } from '../base.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
+
+
 
 @Component({
   selector: 'sp-login',
@@ -22,9 +25,13 @@ export class LoginComponent extends BaseComponent implements OnInit {
   constructor(private userService: UserService,
     private authService: AuthService,
     localStorageService: LocalStorageService,
-    router: Router) {
+    router: Router,
+    
+    private location: Location) {
     super(localStorageService, router);
     this.loginModel = new LoginModel();
+
+    console.log('my test module');
   }
 
   ngOnInit() {
@@ -43,7 +50,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
   }
 
   private getResetLink(): void {
-    if (this.loginModel.email == '') {
+    if (this.loginModel.email === '') {
       this.message = 'Please enter your email to reset your password';
       this.emailFocus = true;
       return;
@@ -67,41 +74,31 @@ export class LoginComponent extends BaseComponent implements OnInit {
     // messageService.showPleaseWait();
     this.authService.login(this.loginModel).then((response) => {
       // console.log(self.loginModel);
-      if (this.loginModel.useRefreshTokens) {
-        this.localStorageService.set('authorization', 'Bearer ' + response.access_token);
-        this.localStorageService.set('sessionData',
-          {
-            AccountID: response.AccountID, ImageName: response.ImageName,
-            IsSuperUser: JSON.parse(response.IsSuperUser), userId: (response.userId),
-            Name: response.Name, userName: response.userName,
-            IsResetPasswordRequired: JSON.parse(response.IsResetPasswordRequired)
-          });
-      } else {
-        this.localStorageService.set('authorization', 'Bearer ' + response.access_token);
-        this.localStorageService.set('sessionData',
-          { AccountID: '', ImageName: '', IsSuperUser: '', userId: '', Name: '', userName: '' });
-      }
+      this.localStorageService.set('authorization', 'Bearer ' + response.access_token);
+      let isResetPasswordRequired = JSON.parse(response.IsResetPasswordRequired);
+      this.localStorageService.set('sessionData',
+        {
+          AccountID: response.AccountID, ImageName: response.ImageName,
+          IsSuperUser: JSON.parse(response.IsSuperUser), userId: (response.userId),
+          Name: response.Name, userName: response.userName,
+          IsResetPasswordRequired: JSON.parse(response.IsResetPasswordRequired)
+        });
 
-      this.sessionDetails = this.userService.getSessionDetails();
-      if (this.sessionDetails.userId != null && this.sessionDetails.userId !== undefined) {
-        if (this.sessionDetails.IsResetPasswordRequired === true) {
-          // messageService.hidePleaseWait();
-          let link = ['/resetpassword'];
-          this.router.navigate(link);
-          // $location.path('resetpassword');
-        } else {
-          this.userService.updateUserDetail(this.loginModel.userName).then((result) => {
-            // messageService.hidePleaseWait();
-            let link = ['/company/-1/-1'];
-            this.router.navigate(link);
-          });
-        }
+      if (isResetPasswordRequired) {
+
+        let link = ['/resetpassword'];
+        this.router.navigate(link);
+
+      } else {
+        this.userService.updateUserDetail(this.loginModel.userName).then((result) => {
+          this.location.replaceState('/company/-1/-1');
+          window.location.reload();
+        });
       }
     },
       (err) => {
         // messageService.hidePleaseWait();
         this.message = err.error_description;
-
         if (this.message === undefined) {
           this.message = 'Login failed for this user';
         }

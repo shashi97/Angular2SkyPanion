@@ -108,15 +108,28 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   private getCompanyName(): void {
     this.location.replaceState('approvals/' + this.companyId);
     this.companiesService.getCompanyName(this.companyId).then(result => {
-     this.cmpName = result._body.replace(/"/g, '');
+      this.cmpName = result._body.replace(/"/g, '');
       this.getApprovers();
     });
   }
 
   private getApprovers(): void {
     this.userService.getApproverUserDDOs(this.companyId).then(result => {
-       this.approvers = result;
-        this.approversCount = this.approvers.length;
+      this.approvers = result;
+      let defaultApprover = {
+        AccountName: '',
+        DisabledAt: null,
+        Name: '',
+        Picture: null,
+        UserID: null,
+        UserType: '',
+        account_id: null,
+        email: '',
+        owner_id: null,
+        username: 'select approver'
+      };
+      this.approvers.splice(0, 0, defaultApprover);
+      this.approversCount = this.approvers.length;
       // this.selectedApprover = [];
       // this.selectedApprover.selected = [];  
       this.getLedgerAccounts();
