@@ -182,16 +182,16 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			context: builder.toJSON()
 		};
 
-		return this.modal.open(InvoiceEntryPurchaseComponent, overlayConfig)
-			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-			.then(result => {
-				if (result != null) {
-					this.GetSelectedPurchaseOrder(result);
-				}
-
-
-			});
+		const dialog = this.modal.open(InvoiceEntryPurchaseComponent, overlayConfig)
+		dialog.then((resultPromise) => {
+            return resultPromise.result.then((result) => {
+            // alert(result.status);
+               if (result !=null) {
+               this.GetSelectedPurchaseOrder(result);
+                }
+            }, () => console.log(' Error In Purchase modal '));
+        });
+			
 
 	}
 	openVendorModal() {
@@ -205,14 +205,16 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			context: builder.toJSON()
 		};
 
-		return this.modal.open(InvoiceEntryVendorComponent, overlayConfig)
-			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-			.then(result => {
-				if (result != null) {
-					this.GetSelectedVendors(result);
-				}
-			});
+		const dialog = this.modal.open(InvoiceEntryVendorComponent, overlayConfig)
+		 dialog.then((resultPromise) => {
+            return resultPromise.result.then((result) => {
+            // alert(result.status);
+               if (result !=null) {
+                 this.GetSelectedVendors(result);
+                }
+            }, () => console.log(' Error In Vendor modal '));
+        });
+		
 	}
 
 	openAccountModal() {
@@ -226,14 +228,16 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			context: builder.toJSON()
 		};
 
-		return this.modal.open(InvoiceEntryAccountsComponent, overlayConfig)
-			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-			.then(result => {
-				if (result != null) {
-					this.addGlAccountByPopup(result);
-				}
-			});
+		const dialog = this.modal.open(InvoiceEntryAccountsComponent, overlayConfig)
+			 dialog.then((resultPromise) => {
+            return resultPromise.result.then((result) => {
+            // alert(result.status);
+               if (result !=null) {
+                   this.addGlAccountByPopup(result);
+                }
+            }, () => console.log(' Error In Attachment Edit modal '));
+        });
+		
 	}
 	openAttachmentEditModal() {
 		const builder = new BSModalContextBuilder<InvoiceRejectModalContext>(
@@ -253,14 +257,17 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 			context: builder.toJSON()
 		};
 
-		return this.modal.open(InvoiceRejectModalComponent, overlayConfig)
-			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-			.then(result => {
-				if (result != null) {
-					this.unlockDocument(result);
-				}
-			});
+		const dialog = this.modal.open(InvoiceRejectModalComponent, overlayConfig)
+
+		 dialog.then((resultPromise) => {
+            return resultPromise.result.then((result) => {
+            // alert(result.status);
+               if (result !=null) {
+                    this.unlockDocument(result);
+                }
+            }, () => console.log(' Error In Attachment Edit modal '));
+        });
+		
 	}
 
 	private getCompanies(): void {

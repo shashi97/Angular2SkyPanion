@@ -31,6 +31,15 @@ export class AttachmentService {
       .catch(this.handleError);
   }
 
+   changeAttachmentProperty(attachmentID, companyID, newCompanyNumber, oldCompanyNumber, attachmentName) {
+    return this
+      .http
+      .get(ApiUrl.baseUrl  + "api/attachments/getChangeAttachmentProperty/" + attachmentID + "/" + companyID + "/" + newCompanyNumber + "/" + oldCompanyNumber + "/" + attachmentName)
+      .toPromise()
+      .then(response => response)
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
