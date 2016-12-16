@@ -29,8 +29,19 @@ export class AttachmentObject {
     ViewInvoiceLink: string = '';
     type: string = '';
 
+}
+export class attachmentdata{
+    status:string = '';
+    type:string = '';
+    companyName:string = '';
+    attachmentID:string = '';
+    accountID:string = '';
+    uploaded:string = '';
+    rejectionMemo:string = '';
+    companyID:number = 0;
+     fileName:string = '';
+    companyNumber:number = 0;
+    
 
 }
-
-
 

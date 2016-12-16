@@ -235,7 +235,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 				}
 			});
 	}
-	openInvalidateModal() {
+	openAttachmentEditModal() {
 		const builder = new BSModalContextBuilder<InvoiceRejectModalContext>(
             {
 				DocumentLockingID: this.DocumentLockingID,
