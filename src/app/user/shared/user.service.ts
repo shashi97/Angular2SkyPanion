@@ -28,12 +28,12 @@ export class UserService {
 
 
   public sendResetPasswordEmail(email: string) {
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('email', email);
+    // let params: URLSearchParams = new URLSearchParams();
+    // params.set('email', email);
     return this.http
-      .get(ApiUrl.baseUrl + 'api/resetpassword/sendmail/', { search: params })
+      .get(ApiUrl.baseUrl + 'api/resetpassword/sendmail/' + email)
       .toPromise()
-      .then(response => response.json())
+      .then(response => response)
       .catch(error => error);
   }
 

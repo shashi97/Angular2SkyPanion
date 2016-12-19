@@ -35,6 +35,7 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserEntryComponent } from './user/user-entry/user-entry.component';
 
 import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const APP_ROUTES: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -94,6 +95,10 @@ const APP_ROUTES: Routes = [
   { path: 'userEntry/:userId', component: UserEntryComponent },
 
   { path: 'dashboard', component: DashboardViewComponent },
+
+  // routing for reset password
+  { path: 'resetPassword', component: ResetPasswordComponent },
+
 
 ];
 

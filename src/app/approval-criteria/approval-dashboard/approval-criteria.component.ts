@@ -108,8 +108,11 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   private getCompanyName(): void {
     this.location.replaceState('approvals/' + this.companyId);
     this.companiesService.getCompanyName(this.companyId).then(result => {
-      this.cmpName = result._body.replace(/"/g, '');
-      this.getApprovers();
+      if (result.status === 404) { } else if (result.status === 500) {
+      } else {
+        this.cmpName = result._body.replace(/"/g, '');
+        this.getApprovers();
+      }
     });
   }
 
@@ -129,7 +132,7 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
         username: 'select approver'
       };
       this.approvers.splice(0, 0, defaultApprover);
-      this.approversCount = this.approvers.length;
+      this.approversCount = this.approvers.length - 1;
       // this.selectedApprover = [];
       // this.selectedApprover.selected = [];  
       this.getLedgerAccounts();

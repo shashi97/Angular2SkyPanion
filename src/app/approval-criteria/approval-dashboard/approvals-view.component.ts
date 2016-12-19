@@ -79,26 +79,23 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
         companyId: this.companyId,
         approvers: this.approvers,
         approversCount: this.approversCount,
-        cmpName : this.cmpName
+        cmpName: this.cmpName
       } as any,
       undefined,
       ApprovalContext
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
-
-    return this.modal.open(ApprovalModalComponent, overlayConfig)
-      .catch(err => alert('ERROR'))
-      .then(dialog => dialog.result)
-      .then(result => {
+    const dialog = this.modal.open(ApprovalModalComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
         if (result != null) {
           this.approvalCreteriaChanged.emit();
-          //  this.getApprovalCriteria(this.type); need to emit for parnt call
         }
-        //  this.getIniSetupDetails();
-      });
+      }, () => console.log(' Error In approval form modal '));
+    });
   }
 
 

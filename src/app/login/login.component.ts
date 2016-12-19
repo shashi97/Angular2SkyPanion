@@ -6,7 +6,7 @@ import { AuthService } from '../shared/services/otherServices/auth.service';
 import { BaseComponent } from '../base.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 
 @Component({
@@ -26,8 +26,8 @@ export class LoginComponent extends BaseComponent implements OnInit {
     private authService: AuthService,
     localStorageService: LocalStorageService,
     router: Router,
-    
-    private location: Location) {
+    private location: Location,
+    private toastr: ToastsManager) {
     super(localStorageService, router);
     this.loginModel = new LoginModel();
 
@@ -61,6 +61,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
       if (result.status === 404 || result.status === 500) {
         this.message = 'Email not found, Please enter correct email';
       } else {
+        this.toastr.success('Reset Password link successfully send to your email ' + this.loginModel.email, 'Success!');
         // alert('Reset Password link successfully send to your email ' + $scope.email);
         // messageService.showMsgBox('Success', 'Reset Password link successfully send to your email ' + this.loginModel.email, 'success');
 
@@ -104,5 +105,4 @@ export class LoginComponent extends BaseComponent implements OnInit {
         }
       });
   }
-
 }

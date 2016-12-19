@@ -15,8 +15,7 @@ import { CurrentPageArguments } from '../../pagination/pagination.component';
 
 @Component({
   selector: 'sp-jobs',
-  templateUrl: './job.component.html',
-  providers: [JobsService, AccountService]
+  templateUrl: './job.component.html'
 })
 export class JobComponent extends BaseComponent implements OnInit {
   private account: Object;

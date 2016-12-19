@@ -102,7 +102,7 @@
           </a>
         </li>
         <li *ngIf="user">
-          <a *ngIf="user.IsSuperUser == true" href="#/accounts/{{user.AccountID}}">
+          <a *ngIf="user.IsSuperUser == true" href="#/account/{{user.AccountID}}">
             <span class="pull-left">Account Settings</span>
             <i class="pull-right fa fa-cogs"></i>
           </a>
@@ -152,36 +152,44 @@
                 <li><a routerLink="dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
                 <li>
                   <a href="javascript:;"><i class="fa fa-database"></i><span>Content</span></a>
-                  <ul class="acc-menu">
+                  <ul class="acc-menu" *ngIf="user">
 
                     <li *ngIf="user.IsSuperUser"><a routerLink="company/-1/-1">All Companies</a></li>
                     <li><a routerLink="vendor/-1/-1">All Vendors</a></li>
                     <li *ngIf="user.IsSuperUser"><a routerLink="job/-1">All Jobs</a></li>
                     <li *ngIf="user.IsSuperUser"><a routerLink="purchaseOrder/-1/-1">Purchase Orders</a></li>
-                    <li><a routerLink="invoices/-1/-1">Invoice History</a></li>
+                    <li><a routerLink="invoice/-1/-1">Invoice History</a></li>
                     <li *ngIf="user.IsSuperUser"><a routerLink="ledgerAccount/-1/-1">Ledger Accounts</a></li>
-                    <li *ngIf="user.IsSuperUser"><a routerLink="achSetups/-1/0">Ach Setups</a></li>
-                    <li *ngIf="user.IsSuperUser"><a routerLink="approvals/0">Approval Criteria</a></li>
+                    <li *ngIf="user.IsSuperUser"><a routerLink="achSetup/0/-1">Ach Setups</a></li>
+                    <li *ngIf="user.IsSuperUser"><a routerLink="approval/0">Approval Criteria</a></li>
 
                   </ul>
                 </li>
 
-                <li><a routerLink="attachments"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>
+                <li><a routerLink="attachment"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>
 
-                <li *ngIf="user.IsSuperUser">
-                  <a href="javascript:;"><i class="fa fa-refresh"></i><span>Sync Center</span></a>
-                  <ul class="acc-menu">
-                    <li><a routerLink="syncBatches/-1/-1">Sync Batches</a></li>
-                    <li><a routerLink="syncBatcheNew/-1">New Sync Batch</a></li>
+                <li *ngIf="user">
+                  <a href="javascript:;" *ngIf="user.IsSuperUser"><i class="fa fa-refresh"></i><span>Sync Center</span></a>
+                  <ul class="acc-menu" *ngIf="user.IsSuperUser">
+                    <li><a routerLink="syncBatch/-1/-1">Sync Batches</a></li>
+                    <li><a routerLink="syncBatchNew/-1">New Sync Batch</a></li>
                   </ul>
                 </li>
 
-                <li *ngIf="user.IsSuperUser"><a routerLink="iniSetup"><i class="fa fa-cogs"></i><span>Setup</span></a></li>
+                <li *ngIf="user">
+                  <a routerLink="iniSetup" *ngIf="user.IsSuperUser">
+                    <i class="fa fa-cogs"></i>
+                    <span>Setup</span>
+                  </a>
+                </li>
 
-                <li *ngIf="user.IsSuperUser">
-                  <a href="javascript:;"><i class="fa fa-random"></i><span>Administration</span></a>
-                  <ul class="acc-menu">
-                    <li><a routerLink="users/-1/-1">All Members</a></li>
+                <li *ngIf="user">
+                  <a href="javascript:;" *ngIf="user.IsSuperUser">
+                    <i class="fa fa-random"></i>
+                    <span>Administration</span>
+                  </a>
+                  <ul class="acc-menu" *ngIf="user.IsSuperUser">
+                    <li><a routerLink="user/-1/-1">All Members</a></li>
                     <li><a routerLink="userEntry/0">Create Member</a></li>
                     <li><a routerLink="role/-1/-1">All Roles</a></li>
                     <li><a routerLink="roleEntry/0">New Role</a></li>

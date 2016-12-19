@@ -53,16 +53,26 @@ export class WaitingInvoiceComponent extends BaseComponent implements OnInit {
         );
 
         let overlayConfig: OverlayConfig = {
-            context: builder.toJSON()
+            context: builder.isBlocking(false).toJSON()
         };
 
-        return this.modal.open(SyncModelComponent, overlayConfig)
-            .catch(err => alert('ERROR'))
-            .then(dialog => dialog.result)
-            .then(result => {
-                if (result.status === true) {
+
+    const dialog = this.modal.open(SyncModelComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+            return resultPromise.result.then((result) => {
+            // alert(result.status);
+               if (result.status === true) {
                     this.invoceRemoved.emit(result);
                 }
-            });
+            }, () => console.log(' Error In invoice modal '));
+        });
+        // return this.modal.open(SyncModelComponent, overlayConfig)
+        //     .catch(err => alert('ERROR'))
+        //     .then(dialog => dialog.result)
+        //     .then(result => {
+        //         if (result.status === true) {
+        //             this.invoceRemoved.emit(result);
+        //         }
+        //     });
     }
 }

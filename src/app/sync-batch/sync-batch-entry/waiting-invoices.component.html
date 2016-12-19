@@ -123,7 +123,7 @@
                     <dl class="dl-horizontal">
                       <dt>Invoice Details</dt>
                       <dd>
-                        <a href="#invoices/-1/{{invoice.InvoiceID}}" class="badge badge-info"><i class="fa fa-info"></i>View Details</a>
+                        <a href="#invoiceDetail/{{invoice.InvoiceID}}" class="badge badge-info"><i class="fa fa-info"></i>View Details</a>
                       </dd>
 
                       <dt>Invoice Number</dt>
@@ -144,6 +144,8 @@
                       <dt>Vendor</dt>
                       <dd>
                         <a href="#vendorDetail/{{invoice.vendor_id}}">{{invoice.VendorName}}</a>
+                        <br>
+                           <a href="#company/{{invoice.company_id}}/vendors?vendor_id={{invoice.vendor_id}}" target="_blank"><i class="fa fa-list-alt"></i>&nbsp;Vendor History </a>
                       </dd>
 
                       <dt>Invoice Date</dt>
@@ -169,7 +171,7 @@
                         <ul class="distributions_list">
                           <li class="distribution_list_item" *ngFor="let dectribution of invoice.InvoiceDestributions">
                             <span *ngIf="dectribution.Distributions=='No Distributions'">{{dectribution.Distributions}}</span>
-                            <a href="#/ledgerAccountDetail/-1/-1/{{dectribution.ledger_account_id}}" *ngIf="dectribution.Distributions!='No Distributions'">{{dectribution.Distributions}}</a>
+                            <a href="#/ledgerAccount/-1/{{dectribution.ledger_account_id}}," *ngIf="dectribution.Distributions!='No Distributions'">{{dectribution.Distributions}}</a>
                             <blockquote class="no_comment" [ngClass]="{'text-warning': dectribution.DestributionComment=='No Comment'}">
                               {{dectribution.DestributionComment}}
                             </blockquote>

@@ -29,7 +29,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TooltipModule } from 'ng2-tooltip';
 
 import {ToastModule} from 'ng2-toastr/ng2-toastr';
-import { ClickOutsideModule } from 'ng2-click-outside';
 
 /* for drag and drop grid rows */
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
@@ -192,6 +191,9 @@ import { RoleEntryComponent } from './role/role-entry/role-entry.component';
 import { RoleFilterComponent } from './role/role-dashboard/filter-bar.component';
 import { SyncModelComponent } from './sync-batch/sync-batch-entry/sync-modal.component';
 
+/* for Reset Password */
+import { ResetPasswordService } from './reset-password/shared/reset-password.service';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 let localStorageServiceConfig = {
   prefix: 'my-app',
@@ -296,7 +298,8 @@ let localStorageServiceConfig = {
     ApprovalModalComponent,
     InvoiceRejectModalComponent,
     ShowOnRowHover,
-    AttachmentEditComponent
+    AttachmentEditComponent,
+    ResetPasswordComponent
   ],
   entryComponents: [
     SetupModalComponent,
@@ -326,8 +329,7 @@ let localStorageServiceConfig = {
     ModalModule.forRoot(),
     BootstrapModalModule,
     TooltipModule,
-    ToastModule,
-    ClickOutsideModule
+    ToastModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -350,6 +352,7 @@ let localStorageServiceConfig = {
     InvoiceEntryService,
     JobsService,
     SyncBatchService,
+    ResetPasswordService,
     {
       provide: Http,
       useFactory: (xhrBackend: XHRBackend,

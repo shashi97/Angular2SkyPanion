@@ -14,7 +14,7 @@ export class ApprovalContext extends BSModalContext {
     isNew: number;
     companyId: number;
     approvers: Array<any>;
-    approversCount: number;
+    approversCount: number = 0;
     cmpName: string;
 }
 
@@ -58,28 +58,29 @@ export class ApprovalModalComponent implements CloseGuard, ModalComponent<Approv
             this.context.approvers.push(
                 { label: item.username, value: item });
         });
+        //  this.selectedApprover=this.context.approvers[0];
         this.showApprovalCriteria(this.context.data, this.context.type, this.context.isNew);
 
     }
 
     public showApprovalCriteria(data, type, isNew): void {
-        if (this.context.companyId == 0) {
-            this.ledgerAccountService.getLedgerAccountDDOsAccountTypeWise(data.CompanyID).then((result) => {
-                this.ledgerAccounts = result;
-                let temp = this.ledgerAccounts;
-                this.ledgerAccounts = [];
-                temp.map((item: any) => {
-                    this.ledgerAccounts.push(
-                        { label: item.LedgerAccount, value: item });
-                });
-                // this.selectedLedgerAccount = [];
-                // this.selectedLedgerAccount.selected = [];
-                this.showApprovalCriteriaReport(data, type, isNew);
+        //let companyId=this.context.companyId;
+        // if (this.context.companyId == 0) {
+        //     companyId = data.CompanyID;
+        // }
+        let companyId = this.context.companyId == 0 ? data.CompanyID : this.context.companyId;
+        this.ledgerAccountService.getLedgerAccountDDOsAccountTypeWise(companyId).then((result) => {
+            this.ledgerAccounts = result;
+            let temp = this.ledgerAccounts;
+            this.ledgerAccounts = [];
+            temp.map((item: any) => {
+                this.ledgerAccounts.push(
+                    { label: item.LedgerAccount, value: item });
             });
-        }
-        else {
+            // this.selectedLedgerAccount = [];
+            // this.selectedLedgerAccount.selected = [];
             this.showApprovalCriteriaReport(data, type, isNew);
-        }
+        });
     }
 
     private showApprovalCriteriaReport(result, type, isNew): void {
@@ -253,12 +254,12 @@ export class ApprovalModalComponent implements CloseGuard, ModalComponent<Approv
     }
 
     private checkRangeAmount(): void {
-
-        if (parseFloat(this.rangeStart) > parseFloat(this.rangeEnd)) {
-            this.rangeAmtError = true;
-        } else {
-            this.rangeAmtError = false;
-        }
+        this.rangeAmtError = (parseFloat(this.rangeStart) > parseFloat(this.rangeEnd)) ? true : false;
+        // if (parseFloat(this.rangeStart) > parseFloat(this.rangeEnd)) {
+        //     this.rangeAmtError = true;
+        // } else {
+        //     this.rangeAmtError = false;
+        // }
     }
 
     public closeModel(): void {

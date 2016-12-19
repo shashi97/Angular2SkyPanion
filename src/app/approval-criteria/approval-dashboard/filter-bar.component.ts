@@ -61,18 +61,25 @@ export class ApprovalFilterComponent extends BaseComponent implements OnInit {
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
 
-    return this.modal.open(ApprovalModalComponent, overlayConfig)
-      .catch(err => alert('ERROR'))
-      .then(dialog => dialog.result)
-      .then(result => {
-        if (result != null) {
-         // this.approvalCreteriaChanged.emit();
-          //  this.getApprovalCriteria(this.type); need to emit for parnt call
-        }
-        //  this.getIniSetupDetails();
-      });
+    // return this.modal.open(ApprovalModalComponent, overlayConfig)
+    //   .catch(err => alert('ERROR'))
+    //   .then(dialog => dialog.result)
+    //   .then(result => {
+    //     if (result != null) {
+    //      // this.approvalCreteriaChanged.emit();
+    //       //  this.getApprovalCriteria(this.type); need to emit for parnt call
+    //     }
+    //     //  this.getIniSetupDetails();
+    //   });
+
+    const dialog = this.modal.open(ApprovalModalComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+            return resultPromise.result.then((result) => {
+             // this.getIniSetupDetails();
+            }, () => console.log(' Error In init-setup form modal '));
+        });
   }
 }

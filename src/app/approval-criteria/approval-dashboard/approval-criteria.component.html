@@ -29,7 +29,8 @@
       </div>
     </div>
   </div>-->
-  <sp-approval-filter-bar (filtered)="onFiltered($event)" [filteredValue]="filteredValue" [approversCount]="approversCount" [companyId]="companyId" [approvals]="approvals" [approvers]="approvers" [cmpName]="cmpName">
+  <sp-approval-filter-bar (filtered)="onFiltered($event)" [filteredValue]="filteredValue" [approversCount]="approversCount"
+    [companyId]="companyId" [approvals]="approvals" [approvers]="approvers" [cmpName]="cmpName">
   </sp-approval-filter-bar>
 
   <!--<ol class="breadcrumb" *ngIf="account">
@@ -45,7 +46,8 @@
         <div class="col-md-12">
 
           <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
-          <sp-approvals-view *ngIf="approvals" [approvals]="approvals" [approversCount]="approversCount" [companyId]="companyId" [approvers]="approvers" (approvalCreteriaChanged)="getApprovalCriteria('all')" [cmpName]="cmpName"></sp-approvals-view>
+          <sp-approvals-view *ngIf="approvals" [approvals]="approvals" [approversCount]="approversCount" [companyId]="companyId" [approvers]="approvers"
+            (approvalCreteriaChanged)="getApprovalCriteria('all')" [cmpName]="cmpName"></sp-approvals-view>
 
           <div class="text-center">
             <sp-pagination [dataSource]='companies' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>

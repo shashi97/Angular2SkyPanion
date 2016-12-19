@@ -176,7 +176,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
     // return this.modal.open(InvoiceEntryAccountsComponent, overlayConfig)
     //   .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
@@ -187,11 +187,18 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
 
     //    })
 
-    return this.modal.open(SetupModalComponent, overlayConfig)
-      .catch (err => alert('ERROR'))
-      .then(dialog => dialog.result)
-      .then(result => {
-        this.getIniSetupDetails();
-      });
+    // return this.modal.open(SetupModalComponent, overlayConfig)
+    //   .catch (err => alert('ERROR'))
+    //   .then(dialog => dialog.result)
+    //   .then(result => {
+    //     this.getIniSetupDetails();
+    //   });
+
+    const dialog = this.modal.open(SetupModalComponent, overlayConfig);
+     dialog.then((resultPromise) => {
+            return resultPromise.result.then((result) => {
+              this.getIniSetupDetails();
+            }, () => console.log(' Error In init-setup form modal '));
+        });
   }
 }
