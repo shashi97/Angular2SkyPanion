@@ -102,7 +102,7 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
       } else if (result.status === 500) {
       } else {
         this.toastr.success('Role saved successfully', 'Success!');
-        let link = ['/roles/' + this.searchParameters + '/' + result];
+        let link = ['/role/view/' + result + '/' + this.searchParameters];
         this.router.navigate(link);
       }
     });
