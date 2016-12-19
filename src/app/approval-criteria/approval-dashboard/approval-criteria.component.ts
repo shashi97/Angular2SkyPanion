@@ -12,14 +12,13 @@ import { CompanyService } from '../../companies/shared/company.service';
 import { AccountService } from '../../account/shared/account.service';
 import { LedgerAccountService } from '../../ledger-account/shared/ledger-account.service';
 
-import { ApprovalCriteriaModel } from '../shared/approval-criteria.model';
-
 import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
 
 import { ApprovalFilterArguments } from './filter-bar.component';
 
-import { CurrentPageArguments } from '../../pagination/pagination.component';
+import { ApprovalCriteriaModel, ApproversModel } from '../shared/approval-criteria.model';
 
+import { CurrentPageArguments } from '../../pagination/pagination.component';
 
 @Component({
   selector: 'sp-approval-criteria',
@@ -35,7 +34,7 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   private approvals: Array<ApprovalCriteriaModel>;
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private _filteredValue: ApprovalFilterArguments = new ApprovalFilterArguments;
-  private approvers: Array<any> = [];
+  private approvers: Array<ApproversModel> = [];
   private approversCount: number;
 
   constructor(
@@ -110,18 +109,7 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   private getApprovers(): void {
     this.userService.getApproverUserDDOs(this.companyId).then(result => {
       this.approvers = result;
-      let defaultApprover = {
-        AccountName: '',
-        DisabledAt: null,
-        Name: '',
-        Picture: null,
-        UserID: null,
-        UserType: '',
-        account_id: null,
-        email: '',
-        owner_id: null,
-        username: 'select approver'
-      };
+      let defaultApprover = new ApproversModel();
       this.approvers.splice(0, 0, defaultApprover);
       this.approversCount = this.approvers.length;
       this.getLedgerAccounts();

@@ -22,7 +22,7 @@ import { CurrentPageArguments } from '../../pagination/pagination.component';
 export class JobComponent extends BaseComponent implements OnInit {
 
   private account: Object;
-  private jobs: Array<any>;
+  private jobs: Array<JobModel>;
   private job: JobModel;
   private totalItems: number;
 
@@ -39,7 +39,7 @@ export class JobComponent extends BaseComponent implements OnInit {
     private location: Location
   ) {
     super(localStorageService, router);
-    this.jobs = new Array<any>();
+    this.jobs = new Array<JobModel>();
     this.job = new JobModel();
   }
 
@@ -91,7 +91,7 @@ export class JobComponent extends BaseComponent implements OnInit {
       .getJobs(this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)
       .then(result => {
         if (result.status === 404) {
-          this.jobs = [];
+          this.jobs = new Array<JobModel>();
           this.totalItems = 0;
         } else if (result.status === 500) {
         } else {

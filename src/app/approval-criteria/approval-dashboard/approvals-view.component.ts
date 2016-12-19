@@ -58,11 +58,11 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
   }
 
   private onDrag(args) {
-    let [e, el] = args;
+    // let [e, el] = args;
   }
 
   private onDrop(args) {
-    let [e, el] = args;
+    // let [e, el] = args;
     this.sortApprovalCriteriaList();
   }
 

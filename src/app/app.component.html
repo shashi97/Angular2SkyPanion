@@ -34,6 +34,7 @@
           </div>
         </a>
       </div>
+
       <div class="col-xs-6 col-sm-2">
         <a href="#" class="shortcut-tiles tiles-inverse">
           <div class="tiles-body">
@@ -77,7 +78,7 @@
   </a>
   <!--<div class="yamm navbar-left navbar-collapse collapse in">
     <ul class="nav navbar-nav">
-      <li class="dropdown" data-ng-show="showLoading">
+      <li class="dropdown" >
         <div class="loading">Loading&#8230;</div>
       </li>
     </ul>
@@ -87,12 +88,8 @@
 
     <li class="dropdown">
       <a href="#" class="dropdown-toggle username" data-toggle="dropdown" *ngIf="user">
-
-
-        <span class="hidden-xs">{{user.UserName}}</span>
-
+        <span class="hidden-xs">{{user.Name}}</span>
         <img class="img-circle" [src]="user.ImageName" alt="Dangerfield" />
-
       </a>
       <ul class="dropdown-menu userinfo">
         <li *ngIf="user">
@@ -132,7 +129,7 @@
               <div class="tabular-row">
                 <div class="tabular-cell welcome-avatar">
                   <a routerLink="#dashboard">
-                    <img class="avatar" />
+                    <img [src]="user.ImageName" class="avatar" />
                   </a>
                 </div>
                 <div class="tabular-cell welcome-options">
@@ -168,7 +165,7 @@
 
                 <li><a routerLink="attachment"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>
 
-                <li><a routerLink="attachmentsList/-1/-1"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>
+                <!--<li><a routerLink="attachmentsList/-1/-1"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>-->
 
 
                 <li *ngIf="user">

@@ -8,7 +8,6 @@ import { ConfirmService } from '../../shared/services/otherServices/confirmServi
 import { Overlay, OverlayConfig } from 'angular2-modal';
 import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { SyncModelComponent, SyncModalContext } from './sync-modal.component';
-import { ApprovalContext, ApprovalModalComponent } from '../../approval-criteria/approval-dashboard/approval-criteria.modal';
 
 
 @Component({

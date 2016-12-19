@@ -23,9 +23,8 @@ export class PurchaseOrderDetailComponent extends BaseComponent implements OnIni
   private purchaseOrderDetail: PurchaseOrderModel;
   private currentPage: number = 1;
   private pageSize: number = 25;
-
-
   selectedCity: any;
+
   constructor(
     private route: ActivatedRoute,
     private accountService: AccountService,

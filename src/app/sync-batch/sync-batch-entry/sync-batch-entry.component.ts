@@ -22,9 +22,7 @@ import { SyncBatchEntryFilterArguments } from './filter-invoice.component';
 export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
 
   private syncBatcheInvoices: Array<SyncBatchEntryModel>;
-  private parameterValue: any;
   private totalItems: number = 0;
-  private rejectionComment: string = '';
   private dashboardMessage: string;
   private showdashboardMessage: boolean = false;
 
