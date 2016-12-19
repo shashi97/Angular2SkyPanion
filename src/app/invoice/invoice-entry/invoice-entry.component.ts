@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, ViewContainerRef, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, AfterViewInit } from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -23,18 +23,25 @@ import { CompanyModel } from '../../companies/shared/company.model';
 import { CompanyService } from '../../companies/shared/company.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { MasterService } from '../../shared/services/master/master.service';
-import { DomSanitizer } from "@angular/platform-browser";
+import { DomSanitizer } from '@angular/platform-browser';
 import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
-import { InvoiceEntryPurchaseModalContext, InvoiceEntryPurchaseComponent } from '../../invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
-import { InvoiceEntryVendorModalContext, InvoiceEntryVendorComponent } from '../../invoice/invoice-entry-components/vendors-model/invoice-entry-vendor.component';
-import { InvoiceEntryAccountModalContext, InvoiceEntryAccountsComponent } from '../../invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
-import { InvoiceRejectModalContext, InvoiceRejectModalComponent } from '../../invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
-
 import {
-  TableOptions,
-  TableColumn,
-  ColumnMode
-} from 'angular2-data-table';
+  InvoiceEntryPurchaseModalContext,
+  InvoiceEntryPurchaseComponent
+} from '../../invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
+import {
+  InvoiceEntryVendorModalContext,
+  InvoiceEntryVendorComponent
+} from '../../invoice/invoice-entry-components/vendors-model/invoice-entry-vendor.component';
+import {
+  InvoiceEntryAccountModalContext,
+  InvoiceEntryAccountsComponent
+} from '../../invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
+import {
+  InvoiceRejectModalContext,
+  InvoiceRejectModalComponent
+} from '../../invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
+
 
 declare let jQuery: any;
 @Component({
@@ -89,7 +96,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private dueDays;
   private achAcctName = '';
   private AccountNumber: string = '';
-  private invoiceDate: string = "";
+  private invoiceDate: string = '';
   private dueDate: string = '';
   private postGlDate: string = '';
   private poNum;
@@ -114,6 +121,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private User: UserModel;
   private jobCategory: Array<JobCategory>;
   private ledgerAccounts: Array<LedgerAccounts>;
+
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private domSanitizer: DomSanitizer,
@@ -140,13 +148,13 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.searchParameters = -1;
     this.invoiceBackLink = '/invoicesList/' + this.pageSizeFilter + '/' + this.searchParameters;
   }
+
   ngOnInit() {
-    this.sessionDetails = this.userService.getSessionDetails();
-    this.activatedRoute.params.subscribe(params => {
-      this.attachmentId = +params['id']; // (+) converts string 'id' to a number
-    });
-    this.getCompanies();
-    if (this.sessionDetails.userId != null) {
+    if (this.user.userId != null) {
+      this.activatedRoute.params.subscribe(params => {
+        this.attachmentId = +params['attachmentId']; // (+) converts string 'id' to a number
+        this.getCompanies();
+      });
     } else {
       let link = ['/login'];
       this.router.navigate(link);
@@ -154,19 +162,19 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   ngAfterViewInit() {
-    jQuery("#Invoice_date").datepicker({
+    jQuery('#Invoice_date').datepicker({
       dateFormat: 'dd/mm/yy',
       onClose: dateText => {
         this.invoiceDate = dateText;
       }
     });
-    jQuery("#Due_date").datepicker({
+    jQuery('#Due_date').datepicker({
       dateFormat: 'dd/mm/yy',
       onClose: dateText => {
         this.dueDate = dateText;
       }
     });
-    jQuery("#Gl_date").datepicker({
+    jQuery('#Gl_date').datepicker({
       dateFormat: 'dd/mm/yy',
       onClose: dateText => {
         this.postGlDate = dateText;
@@ -184,16 +192,16 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       context: builder.toJSON()
     };
 
-    return this.modal.open(InvoiceEntryPurchaseComponent, overlayConfig)
-      .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-      .then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-      .then(result => {
+    const dialog = this.modal.open(InvoiceEntryPurchaseComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
         if (result != null) {
           this.GetSelectedPurchaseOrder(result);
         }
+      }, () => console.log(' Error In Purchase modal '));
+    });
 
-
-      });
 
   }
   openVendorModal() {
@@ -207,14 +215,16 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       context: builder.toJSON()
     };
 
-    return this.modal.open(InvoiceEntryVendorComponent, overlayConfig)
-      .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-      .then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-      .then(result => {
+    const dialog = this.modal.open(InvoiceEntryVendorComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
         if (result != null) {
           this.GetSelectedVendors(result);
         }
-      });
+      }, () => console.log(' Error In Vendor modal '));
+    });
+
   }
 
   openAccountModal() {
@@ -228,14 +238,16 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       context: builder.toJSON()
     };
 
-    return this.modal.open(InvoiceEntryAccountsComponent, overlayConfig)
-      .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-      .then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-      .then(result => {
+    const dialog = this.modal.open(InvoiceEntryAccountsComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
         if (result != null) {
           this.addGlAccountByPopup(result);
         }
-      });
+      }, () => console.log(' Error In Attachment Edit modal '));
+    });
+
   }
   openAttachmentEditModal() {
     const builder = new BSModalContextBuilder<InvoiceRejectModalContext>(
@@ -255,14 +267,17 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       context: builder.toJSON()
     };
 
-    return this.modal.open(InvoiceRejectModalComponent, overlayConfig)
-      .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-      .then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-      .then(result => {
+    const dialog = this.modal.open(InvoiceRejectModalComponent, overlayConfig);
+
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
         if (result != null) {
           this.unlockDocument(result);
         }
-      });
+      }, () => console.log(' Error In Attachment Edit modal '));
+    });
+
   }
 
   private getCompanies(): void {
@@ -270,7 +285,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     // 	if (result) {
     // 	} else {
     // 		this.companies = result;
-    // 		var obj = { CompanyID: 0, Number: 'None', CompanyName: 'None', Type: 'None', account_id: 0 };
+    // 		let obj = { CompanyID: 0, Number: 'None', CompanyName: 'None', Type: 'None', account_id: 0 };
     // 		// this.companies.splice(0, 0, obj);
     // 		// this.selectedCompany.selected = obj;
     // 	}
@@ -308,7 +323,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
 
     this.paymentMethods.forEach(item => {
-      if (item.ID == 0) {
+      if (item.ID === 0) {
         this.selectedPaymentMethod.selected = item;
       }
     });
@@ -339,26 +354,27 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
         if (this.invoiceDetail.InvoiceID == 0) {
           this.docType = 5;
-          this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
+          this.DocumentLockingID = this.invoiceDetail.DocumentLockingID;
           this.DocumentID = this.invoiceDetail.AttachmentID;
         } else {
           this.docType = 10;
-          this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
+          this.DocumentLockingID = this.invoiceDetail.DocumentLockingID;
           this.DocumentID = this.invoiceDetail.InvoiceID;
         }
 
 
 
         this.vendorKey = this.invoiceDetail.VendorKey;
-        var apiServiceBase = ApiUrl.baseUrl;
-        this.pdfsrc1 = apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber + '/' + this.invoiceDetail.AttachmentName;
+        let apiServiceBase = ApiUrl.baseUrl;
+        this.pdfsrc1 = apiServiceBase + 'api/invoices/getPdf/'
+          + this.invoiceDetail.CompanyNumber + '/' + this.invoiceDetail.AttachmentName;
         this.pdfsrc = this.domSanitizer.bypassSecurityTrustResourceUrl(this.pdfsrc1);
         if (this.invoiceDetail.CashAccount != null) {
           this.cashAccount = this.invoiceDetail.SLCashAccount;
         }
 
         this.invoiceNumber = this.invoiceDetail.InvoiceNumber;
-        if (this.invoiceID != 0) {
+        if (this.invoiceID !== 0) {
           this.invoiceDate = this.invoiceDetail.InvoiceDate;
           this.postGlDate = this.invoiceDetail.PostDate;
           this.dueDate = this.invoiceDetail.DueDate;
@@ -367,15 +383,15 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
         if (this.purchaseOrders) {
           this.purchaseOrders.forEach(item => {
-            if (item.PuchaseOrderID == this.invoiceDetail.PurchaseOrderID) {
+            if (item.PuchaseOrderID === this.invoiceDetail.PurchaseOrderID) {
               this.poVendorKey = item.NumberKey;
               this.poNum = item.PONum;
               this.poInvDesc = item.InvoiceDescription;
-              this.invoiceEntryService.getVendorById(this.invoiceDetail.CompanyID).then(result => {
-                if (result) {
-                  this.vendors = result;
+              this.invoiceEntryService.getVendorById(this.invoiceDetail.CompanyID).then(res => {
+                if (res) {
+                  this.vendors = res;
                   this.vendors.forEach(item1 => {
-                    if (item1.VendorID == this.invoiceDetail.VendorID) {
+                    if (item1.VendorID === this.invoiceDetail.VendorID) {
                       this.invoiceDetail.VendorName = item1.VendorName1;
                       this.invoiceDetail.VendorAddress = item1.VendorAddress;
                       this.invoiceDetail.VendorKey = item1.VendorKey;
@@ -384,8 +400,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
                       this.cashAccount = item1.CashAccount;
                       this.achAcctName = item1.AchAcctName;
 
-                      if (this.achAcctName != null && this.achAcctName != "") {
-                        var item = { ID: 0, Name: this.achAcctName }
+                      if (this.achAcctName != null && this.achAcctName !== '') {
+                        // let item = { ID: 0, Name: this.achAcctName }
 
                         this.paymentMethods.splice(1, 0, item);
                         // this.selectedPaymentMethod.selected = [];
@@ -407,7 +423,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           });
         }
         this.getLedgerAccounts();
-        //this.getCompanyDetail();
+        // this.getCompanyDetail();
 
       });
   }
@@ -423,7 +439,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
         //         if ($rootScope.sessionDetails.IsSuperUser == false && this.companyData.view_invoice_role_id != 0) {
         //             if (this.User.selectedRoles != null && this.User.selectedRoles != undefined && this.User.selectedRoles.length > 0) {
-        //                 for (var i = 0 ; i < this.User.selectedRoles.length ; i++) {
+        //                 for (let i = 0 ; i < this.User.selectedRoles.length ; i++) {
         //                     if (this.companyData.view_invoice_role_id == this.User.selectedRoles[i].RoleID) {
         //                         this.roleExistCount = this.roleExistCount + 1;
         //                     }
@@ -431,40 +447,37 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         //                 }
         //             }
         //             else {
-        //                 window.location.href = "#/dashboard";
+        //                 window.location.href = '#/dashboard';
         //             }
 
         //             if (this.roleExistCount == 0) {
-        //                 window.location.href = "#/dashboard";
+        //                 window.location.href = '#/dashboard';
         //             }
 
         //         }
 
 
-        if (this.cashAccount == 49 && this.companyData.CashAccount1Description != 'Unknown') {
+        if (this.cashAccount === 49 && this.companyData.CashAccount1Description !== 'Unknown') {
           this.Accountbind = 'AcDiscription1';
-
-        }
-
-        else if (this.cashAccount == 50 && this.companyData.CashAccount2Description != 'Unknown') {
+        } else if (this.cashAccount === 50 && this.companyData.CashAccount2Description !== 'Unknown') {
           this.Accountbind = 'AcDiscription2';
-        }
-
-        else if (this.cashAccount == 51 && this.companyData.CashAccount3Description != 'Unknown') {
+        } else if (this.cashAccount === 51 && this.companyData.CashAccount3Description !== 'Unknown') {
           this.Accountbind = 'AcDiscription3';
 
-        }
-
-        else if (this.cashAccount == 52 && this.companyData.CashAccount4Description != 'Unknown') {
+        } else if (this.cashAccount === 52 && this.companyData.CashAccount4Description !== 'Unknown') {
           this.Accountbind = 'AcDiscription4';
-        }
-        else {
-          if (this.companyData.CashAccount1Description != 'Unknown') {
+        } else {
+          if (this.companyData.CashAccount1Description !== 'Unknown') {
             this.Accountbind = 'AcDiscription1';
           }
         }
 
-        //     this.companyTooltip = $sce.trustAsHtml("<b>Ledger Accounts:</b> " + this.companyData.LedgerAccountCount + "<br /><b>Invoices:</b> " + this.companyData.InvoiceCount + "<br /><b>Vendors:</b> " + this.companyData.VendorCount + "<br /><b>PDFs:</b> " + this.companyData.PDFCount + "<br /><b>Purchase Orders:</b> " + this.companyData.PurchaseOrderCount + "<br /><b>Approval Criteria:</b> " + this.companyData.ApprovalCriteriaCount + "<br /><b>Posts:</b> " + this.companyData.FundCount + "<br />");
+        //     this.companyTooltip = $sce.trustAsHtml('<b>Ledger Accounts:</b> ' +
+        // this.companyData.LedgerAccountCount + '<br /><b>Invoices:</b> ' + this.companyData.InvoiceCount +
+        // '<br /><b>Vendors:</b> ' + this.companyData.VendorCount + '<br /><b>PDFs:</b> ' + 
+        // this.companyData.PDFCount + '<br /><b>Purchase Orders:</b> ' + this.companyData.PurchaseOrderCount + 
+        // '<br ><b>Approval Criteria:</b> ' + this.companyData.ApprovalCriteriaCount + 
+        // '<br /><b>Posts:</b> ' + this.companyData.FundCount + '<br />');
         // }
         this.getVendorByCompanyID();
       });
@@ -472,7 +485,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private getVendorByCompanyID(): void {
-    var companyID = 0;
+    let companyID = 0;
     if (this.invoiceDetail.CompanyID != null) {
       companyID = this.invoiceDetail.CompanyID;
     }
@@ -487,13 +500,13 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
   private getJobs(CompanyID): void {
     this.jobsService.getJobsByCompanyId(CompanyID).then(result => {
-      if (result)
+      if (result) {
         this.jobs = result;
-
-      if (this.invoiceDetail.JobID != null && this.invoiceDetail.JobID != 0) {
+      }
+      if (this.invoiceDetail.JobID != null && this.invoiceDetail.JobID !== 0) {
         this.selectedJob.selected = [];
         this.jobs.forEach(function (item) {
-          if (item.JobID == this.invoiceDetail.JobID) {
+          if (item.JobID === this.invoiceDetail.JobID) {
             this.selectedJob.selected = item;
             this.JobID = item.JobID;
             this.getJobCategory(this.JobID);
@@ -506,7 +519,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       //     this.confirmLock();
       // }, 1 * 60000);
 
-      //this.getInvoiceApprovals(this.invoiceDetail.InvoiceID, this.invoiceDetail.InvoiceAmount, this.invoiceDetail.CompanyID);
+      // this.getInvoiceApprovals(this.invoiceDetail.InvoiceID, this.invoiceDetail.InvoiceAmount, this.invoiceDetail.CompanyID);
 
 
     });
@@ -519,7 +532,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         this.jobCategory = result;
         this.invoiceDetail.JobID = jobID;
         this.jobCategory.forEach(item => {
-          if (item.JobCategoryID == this.invoiceDetail.JobCategoryID) {
+          if (item.JobCategoryID === this.invoiceDetail.JobCategoryID) {
             this.selectedJobCategory.selected = item;
 
           }
@@ -530,14 +543,14 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private addGlAccountByPopup(led) {
-    this.invoiceDetail.InvoiceDistributions
+    // this.invoiceDetail.InvoiceDistributions
 
     this.glAccountObject.glAccountNumber = led.LedgerAccountName;
     this.glAccountObject.glAccountDescription = this.invoiceDetail.Description;
-    let fcs_description = true;
+    // let fcs_description = true;
 
     if (this.invoiceDetail.InvoiceAmount == 0 || this.invoiceDetail.InvoiceAmount == null) {
-      alert("Invoice Amount can not be Zero");
+      alert('Invoice Amount can not be Zero');
       return;
     }
 
@@ -546,11 +559,12 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
     else if (this.invoiceDetail.InvoiceDistributions.length > 0) {
       let totalDistAmount: number = this.glAccountObject.glAccountAmount;
-      for (var i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-        totalDistAmount = parseInt((Number(totalDistAmount) + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount)).toFixed(2));
+      for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
+        totalDistAmount = Number((Number(totalDistAmount)
+          + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount)).toFixed(2));
       }
-      if (this.invoiceDetail.InvoiceAmount != totalDistAmount) {
-        this.glAccountObject.glAccountAmount = parseInt((Number(this.invoiceDetail.InvoiceAmount) - Number(totalDistAmount)).toFixed(2));
+      if (this.invoiceDetail.InvoiceAmount !== totalDistAmount) {
+        this.glAccountObject.glAccountAmount = Number((Number(this.invoiceDetail.InvoiceAmount) - Number(totalDistAmount)).toFixed(2));
       }
     }
 
@@ -558,7 +572,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   private addGlAccount(): void {
     let isMacthed = false;
-    //this.glAccountObject = new GlAccountObject();
+    // this.glAccountObject = new GlAccountObject();
     this.invoiceEntryService
       .getLedgerAccountDDOsAccountTypeWise(this.invoiceDetail.CompanyID)
       .then(result => {
@@ -566,27 +580,26 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           this.ledgerAccounts = result;
           if (this.ledgerAccounts != null && this.ledgerAccounts.length > 0) {
             this.ledgerAccounts.forEach(item => {
-              if (item.LedgerAccountName == this.glAccountObject.glAccountNumber) {
+              if (item.LedgerAccountName === this.glAccountObject.glAccountNumber) {
                 isMacthed = true;
                 // this.glAccountNumber = item.LedgerAccountName;
-                if (this.invoiceDetail.InvoiceAmount == 0 || this.invoiceDetail.InvoiceAmount == null) {
-                  alert("Invoice Amount can not be Zero");
+                if (this.invoiceDetail.InvoiceAmount === 0 || this.invoiceDetail.InvoiceAmount == null) {
+                  alert('Invoice Amount can not be Zero');
                   return;
                 }
-                if (this.glAccountObject.glAccountAmount == 0 || this.glAccountObject.glAccountAmount == null) {
-                  alert("Distribution Amount can not be Zero");
+                if (this.glAccountObject.glAccountAmount === 0 || this.glAccountObject.glAccountAmount == null) {
+                  alert('Distribution Amount can not be Zero');
                   return;
-                }
-                else {
+                } else {
                   this.GetSelectedLedgderAccounts(item);
                 }
 
               }
             });
 
-            if (isMacthed == false) {
+            if (isMacthed === false) {
 
-              alert("No Account Number match with this Key");
+              alert('No Account Number match with this Key');
             }
 
           }
@@ -609,26 +622,26 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       AccountDestribution: 0,
       DistributionAmount: parseFloat(this.glAccountObject.glAccountAmount.toString()),
       DistributionComment: this.glAccountObject.glAccountDescription,
-      DistAmountPopoverUrl: "DistAmountPopover.html",
-      DistCommentPopoverUrl: "DistCommentPopover.html"
+      DistAmountPopoverUrl: 'DistAmountPopover.html',
+      DistCommentPopoverUrl: 'DistCommentPopover.html'
     }
 
 
 
-    if (this.invoiceDetail.InvoiceDistributions.length == 0) {
+    if (this.invoiceDetail.InvoiceDistributions.length === 0) {
       if (parseFloat(item.DistributionAmount.toString()) > parseFloat(this.invoiceDetail.InvoiceAmount.toString())) {
-        alert("Distribution amount can not be greater then Invoice amount ");
+        alert('Distribution amount can not be greater then Invoice amount ');
         return;
       }
-    }
-    else if (this.invoiceDetail.InvoiceDistributions.length > 0) {
-      var totalDistAmount = (item.DistributionAmount.toString());
-      for (var i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-        totalDistAmount = (Number(totalDistAmount) + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount)).toFixed(2);
+    } else if (this.invoiceDetail.InvoiceDistributions.length > 0) {
+      let totalDistAmount = (item.DistributionAmount.toString());
+      for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
+        totalDistAmount = (Number(totalDistAmount)
+          + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount)).toFixed(2);
       }
 
       if ((Number(this.invoiceDetail.InvoiceAmount.toString)) < Number(totalDistAmount.toString())) {
-        alert("Total Distribution amount can not be greater then Invoice amount ");
+        alert('Total Distribution amount can not be greater then Invoice amount ');
         return;
       }
     }
@@ -640,7 +653,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private processInvAmtToDistribution(amt): void {
-    if (this.invoiceDetail.InvoiceDistributions.length == 1) {
+    if (this.invoiceDetail.InvoiceDistributions.length === 1) {
       this.invoiceDetail.InvoiceDistributions[0].DistributionAmount = amt;
     }
 
@@ -661,10 +674,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       this.invoiceService
         .checkInvoiceNumberExists(this.invoiceExistItems).then(result => {
           if (result) {
-            if (this.invoiceDetail.InvoiceID == 0 || this.invoiceDetail.InvoiceID == null) {
+            if (this.invoiceDetail.InvoiceID === 0 || this.invoiceDetail.InvoiceID == null) {
               this.invoiceDetail.InvoiceNumber = 0;
             }
-            this.vendorKey = "";
+            this.vendorKey = '';
             this.invoiceDetail.VendorID = null;
             this.invoiceDetail.VendorName = '';
             this.invoiceDetail.VendorAddress = '';
@@ -673,11 +686,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
             this.cashAccount = null;
             this.achAcctName = '';
             this.AccountNumber = '';
-            this.invoiceDate = "";
+            this.invoiceDate = '';
             this.dueDate = '';
             this.postGlDate = '';
 
-            alert("This Invoice Number with same vendor and same invoice date is  already exists in this property");
+            alert('This Invoice Number with same vendor and same invoice date is  already exists in this property');
           }
         });
 
@@ -688,44 +701,40 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   private checkPONumber(poNum, $event): void {
 
-    var isMacthed = false;
-    if (this.purchaseOrders != null && this.purchaseOrders.length > 0 && (poNum != null && poNum != '')) {
+    let isMacthed = false;
+    if (this.purchaseOrders != null && this.purchaseOrders.length > 0 && (poNum != null && poNum !== '')) {
       this.purchaseOrders.forEach(item => {
-        if (item.PONum.toLowerCase() == poNum.toLowerCase()) {
+        if (item.PONum.toLowerCase() === poNum.toLowerCase()) {
           isMacthed = true;
           this.GetSelectedPurchaseOrder(item.PuchaseOrderID);
         }
       });
 
-      if (isMacthed == false) {
-        this.poNum = "";
+      if (isMacthed === false) {
+        this.poNum = '';
         this.invoiceDetail.PurchaseOrderID = null;
         this.poVendorKey = '';
         this.poInvDesc = '';
         this.invoiceDetail.InvoiceAmount = 0;
-        alert("No PO Number match with this Key");
+        alert('No PO Number match with this Key');
       }
-
     }
-
-
-
   }
 
   private checkVendorKey(vendorKey, $event): void {
-    var isMacthed = false;
-    if (this.vendors != null && this.vendors.length > 0 && (vendorKey != null && vendorKey != '')) {
+    let isMacthed = false;
+    if (this.vendors != null && this.vendors.length > 0 && (vendorKey != null && vendorKey !== '')) {
       this.vendors.forEach(item => {
-        if (item.VendorKey.toLowerCase() == vendorKey.toLowerCase()) {
+        if (item.VendorKey.toLowerCase() === vendorKey.toLowerCase()) {
           isMacthed = true;
           this.invoiceDetail.VendorID = item.VendorID;
           this.GetSelectedVendors(item.VendorID);
         }
       });
 
-      if (isMacthed == false) {
+      if (isMacthed === false) {
         $event.target.select();
-        this.vendorKey = "";
+        this.vendorKey = '';
         this.invoiceDetail.VendorID = null;
         this.invoiceDetail.VendorName = '';
         this.invoiceDetail.VendorAddress = '';
@@ -734,11 +743,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         this.cashAccount = null;
         this.achAcctName = '';
         this.AccountNumber = '';
-        alert("No Vendor Key match with this Key");
+        alert('No Vendor Key match with this Key');
       }
-
     }
-
   }
 
   private GetSelectedVendors(venID): void {
@@ -753,10 +760,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     // $rootScope.showLoading = false;
     this.invoiceService.checkInvoiceNumberExists(this.invoiceExistItems).then(result => {
       if (result) {
-        if (this.invoiceDetail.InvoiceID == 0 || this.invoiceDetail.InvoiceID == null) {
+        if (this.invoiceDetail.InvoiceID === 0 || this.invoiceDetail.InvoiceID == null) {
           this.invoiceDetail.InvoiceNumber = 0;
         }
-        this.vendorKey = "";
+        this.vendorKey = '';
         this.invoiceDetail.VendorID = null;
         this.invoiceDetail.VendorName = '';
         this.invoiceDetail.VendorAddress = '';
@@ -768,29 +775,29 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         this.dueDate = '';
         this.invoiceDate = '';
         this.postGlDate = '';
-        alert("This Invoice Number with same vendor and same invoice date is  already exists in this property");
+        alert('This Invoice Number with same vendor and same invoice date is  already exists in this property');
       } else {
 
-        if (this.AccountNumber != null && this.AccountNumber != "") {
+        if (this.AccountNumber != null && this.AccountNumber !== '') {
           if (this.invoiceDetail.InvoiceDistributions.length > 0) {
-            for (var i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-              if (this.invoiceDetail.InvoiceDistributions[i].AccountNumber == this.AccountNumber) {
-                if (this.invoiceDetail.InvoiceDistributions[i].DistributionID == 0) {
+            for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
+              if (this.invoiceDetail.InvoiceDistributions[i].AccountNumber === this.AccountNumber) {
+                if (this.invoiceDetail.InvoiceDistributions[i].DistributionID === 0) {
                   this.invoiceDetail.InvoiceDistributions.splice(i, 1);
                 }
                 else {
-                  this.invoiceService.removeInvoiceDistributions(this.invoiceDetail.InvoiceDistributions[i].DistributionID, this.invoiceDetail.InvoiceID).then(result => {
-                    this.invoiceDetail.InvoiceDistributions.splice(i, 1);
-                    this.ProcessVendor(this.invoiceDetail.InvoiceID);
-                    return;
-                  });
+                  this.invoiceService.removeInvoiceDistributions(
+                    this.invoiceDetail.InvoiceDistributions[i].DistributionID,
+                    this.invoiceDetail.InvoiceID).then(res => {
+                      this.invoiceDetail.InvoiceDistributions.splice(i, 1);
+                      this.ProcessVendor(this.invoiceDetail.InvoiceID);
+                      return;
+                    });
                 }
               }
             }
           }
         }
-
-
         this.ProcessVendor(venID);
       }
     });
@@ -799,27 +806,29 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private GetSelectedPurchaseOrder(poID): void {
     // this.$parent.searchTerm = '';
     this.purchaseOrders.forEach(item => {
-      if (item.PuchaseOrderID == poID) {
+      if (item.PuchaseOrderID === poID) {
         this.invoiceDetail.PurchaseOrderID = poID;
         this.poVendorKey = item.NumberKey;
         this.poInvDesc = item.InvoiceDescription;
         this.invoiceDetail.InvoiceAmount = item.POAmount;
         this.poNum = item.PONum;
-        var vendorID = item.VendorID;
+        let vendorID = item.VendorID;
         // check Account Number exist or not 
-        if (this.AccountNumber != null && this.AccountNumber != "") {
+        if (this.AccountNumber != null && this.AccountNumber !== '') {
           if (this.invoiceDetail.InvoiceDistributions.length > 0) {
-            for (var i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-              if (this.invoiceDetail.InvoiceDistributions[i].AccountNumber == this.AccountNumber) {
-                if (this.invoiceDetail.InvoiceDistributions[i].DistributionID == 0) {
+            for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
+              if (this.invoiceDetail.InvoiceDistributions[i].AccountNumber === this.AccountNumber) {
+                if (this.invoiceDetail.InvoiceDistributions[i].DistributionID === 0) {
                   this.invoiceDetail.InvoiceDistributions.splice(i, 1);
                 }
                 else {
-                  this.invoiceService.removeInvoiceDistributions(this.invoiceDetail.InvoiceDistributions[i].DistributionID, this.invoiceDetail.InvoiceID).then(result => {
-                    this.invoiceDetail.InvoiceDistributions.splice(i, 1);
-                    this.ProcessVendor(vendorID);
-                    return;
-                  });
+                  this.invoiceService.removeInvoiceDistributions(
+                    this.invoiceDetail.InvoiceDistributions[i].DistributionID,
+                    this.invoiceDetail.InvoiceID).then(result => {
+                      this.invoiceDetail.InvoiceDistributions.splice(i, 1);
+                      this.ProcessVendor(vendorID);
+                      return;
+                    });
                 }
               }
             }
@@ -846,7 +855,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   private ProcessVendor(vendorID): void {
     this.vendors.forEach(item1 => {
-      if (item1.VendorID == vendorID) {
+      if (item1.VendorID === vendorID) {
         this.invoiceDetail.VendorID = item1.VendorID;
         this.invoiceDetail.VendorName = item1.VendorName1;
         this.invoiceDetail.VendorAddress = item1.VendorAddress;
@@ -857,13 +866,13 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         this.achAcctName = item1.AchAcctName;
         this.AccountNumber = item1.AccountNumber;
 
-        if (this.AccountNumber != null && this.AccountNumber != "") {
+        if (this.AccountNumber != null && this.AccountNumber !== '') {
 
           this.ledgerAccounts.forEach(item2 => {
-            if (item2.AccountNumber == this.AccountNumber) {
+            if (item2.AccountNumber === this.AccountNumber) {
 
 
-              var item = {
+              let item = {
                 DistributionID: 0,
                 LedgerAccountID: item2.LedgerAccountID,
                 InvoiceID: this.invoiceID,
@@ -871,9 +880,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
                 AccountTitle: item2.LedgerAccount,
                 AccountDestribution: 0,
                 DistributionAmount: parseFloat(this.invoiceDetail.InvoiceAmount.toString()),
-                DistributionComment: "Click to Comment",
-                DistAmountPopoverUrl: "DistAmountPopover.html",
-                DistCommentPopoverUrl: "DistCommentPopover.html"
+                DistributionComment: 'Click to Comment',
+                DistAmountPopoverUrl: 'DistAmountPopover.html',
+                DistCommentPopoverUrl: 'DistCommentPopover.html'
               }
 
               if (isNaN(item.DistributionAmount) || item.DistributionAmount == null) {
@@ -896,33 +905,36 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   }
   private checkglAccountNumber(glAccountNumber, $event): void {
-    var isMacthed = false;
+    let isMacthed = false;
     // this.fcs_AccountNum = true;
-    if (this.ledgerAccounts.length > 0 && (glAccountNumber != null && glAccountNumber != '')) {
+    if (this.ledgerAccounts.length > 0 && (glAccountNumber != null && glAccountNumber !== '')) {
       this.ledgerAccounts.forEach(item => {
-        if (item.LedgerAccountValue == glAccountNumber) {
+        if (item.LedgerAccountValue === glAccountNumber) {
           glAccountNumber = glAccountNumber + '-0000';
         }
 
-        if (item.LedgerAccountName == glAccountNumber) {
-          if (parseFloat(this.invoiceDetail.InvoiceAmount.toString()) == 0 || parseFloat(this.invoiceDetail.InvoiceAmount.toString()) == null) {
-            alert("Invoice Amount can not be Zero");
+        if (item.LedgerAccountName === glAccountNumber) {
+          if (parseFloat(
+            this.invoiceDetail.InvoiceAmount.toString()) === 0
+            || parseFloat(this.invoiceDetail.InvoiceAmount.toString()) == null) {
+            alert('Invoice Amount can not be Zero');
           }
           isMacthed = true;
           this.glAccountObject.glAccountNumber = item.LedgerAccountName;
           this.glAccountObject.glAccountDescription = this.invoiceDetail.Description;
 
-          if (this.invoiceDetail.InvoiceDistributions.length == 0) {
+          if (this.invoiceDetail.InvoiceDistributions.length === 0) {
             this.glAccountObject.glAccountAmount = this.invoiceDetail.InvoiceAmount;
-          }
-          else if (this.invoiceDetail.InvoiceDistributions.length > 0) {
-            var totalDistAmount = this.glAccountObject.glAccountAmount;
-            for (var i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-              totalDistAmount = parseFloat((totalDistAmount.toString())) + parseFloat((this.invoiceDetail.InvoiceDistributions[i].DistributionAmount.toString()));
+          } else if (this.invoiceDetail.InvoiceDistributions.length > 0) {
+            let totalDistAmount = this.glAccountObject.glAccountAmount;
+            for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
+              totalDistAmount = parseFloat((totalDistAmount.toString()))
+                + parseFloat((this.invoiceDetail.InvoiceDistributions[i].DistributionAmount.toString()));
             }
 
-            if ((parseFloat(this.invoiceDetail.InvoiceAmount.toString())) != (totalDistAmount)) {
-              //this.glAccountObject.glAccountAmount = ((parseFloat(this.invoiceDetail.InvoiceAmount)).toFixed(2) - (totalDistAmount).toFixed(2));
+            if ((parseFloat(this.invoiceDetail.InvoiceAmount.toString())) !== (totalDistAmount)) {
+              // this.glAccountObject.glAccountAmount = 
+              // ((parseFloat(this.invoiceDetail.InvoiceAmount)).toFixed(2) - (totalDistAmount).toFixed(2));
             }
           }
 
@@ -930,54 +942,53 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         }
       });
 
-      if (isMacthed == false) {
+      if (isMacthed === false) {
 
         this.glAccountObject = new GlAccountObject();
 
 
-        alert("No Account Number match with this Key");
+        alert('No Account Number match with this Key');
       }
 
     }
   }
 
   private removeInvoiceDistributions(distID, $index): void {
-    if (distID == 0) {
+    if (distID === 0) {
       this.invoiceDetail.InvoiceDistributions.splice($index, 1);
-    }
-    else {
+    } else {
       this.invoiceService.removeInvoiceDistributions(distID, this.invoiceDetail.InvoiceID).then(result => {
         this.invoiceDetail.InvoiceDistributions.splice($index, 1);
       });
     }
   }
   private checklockingStatusForExit(linkString): void {
-    if (this.invoiceDetail.LockedByID == this.sessionDetails.userID) {
-      this.unlockDocument(linkString)
+    if (this.invoiceDetail.LockedByID === this.sessionDetails.userID) {
+      this.unlockDocument(linkString);
     } else {
       this.router.navigate([linkString]);
     }
 
 
-    //test
+    // test
   }
 
   private setDueDateByInvoiceDate(): void {
 
-    if (this.invoiceDate != '' && (moment(this.invoiceDate, 'MM/DD/YY', true))) {
+    if (this.invoiceDate !== '' && (moment(this.invoiceDate, 'MM/DD/YY', true))) {
 
       this.invoiceDate = moment(this.invoiceDate).format('MM/DD/YYYY');
-      var date = new Date(this.invoiceDate);
+      let date = new Date(this.invoiceDate);
       this.postGlDate = this.invoiceDate;
-      var newdate = new Date(date.toDateString());
+      let newdate = new Date(date.toDateString());
 
-      newdate.setDate(newdate.getDate() + parseInt(this.dueDays));
+      newdate.setDate(newdate.getDate() + Number(this.dueDays));
 
-      var dd = newdate.getDate();
-      var mm = newdate.getMonth() + 1;
-      var y = newdate.getFullYear();
+      let dd = newdate.getDate();
+      let mm = newdate.getMonth() + 1;
+      let y = newdate.getFullYear();
 
-      var someFormattedDate = mm + '/' + dd + '/' + y;
+      let someFormattedDate = mm + '/' + dd + '/' + y;
 
       if ((moment(someFormattedDate, 'MM/DD/YYYY', true).isValid())) {
         this.dueDate = someFormattedDate;
@@ -986,12 +997,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         this.invoiceDate = '';
         this.postGlDate = '';
       }
-
       this.checkInvoiceNumberExists(null);
-
-
-    }
-    else {
+    } else {
       this.dueDate = '';
       this.invoiceDate = '';
       this.postGlDate = '';
@@ -999,55 +1006,51 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private saveInvoice(value): void {
-    // this.xyz = jQuery().find("#invoice_InvDate").val();
+    // this.xyz = jQuery().find('#invoice_InvDate').val();
     // alert(this.xyz);
 
     this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID).then(result => {
-      if (result.IsLocked == 0) {
-        alert("This pdf is locked by " + result.LockBy);
+      if (result.IsLocked === 0) {
+        alert('This pdf is locked by ' + result.LockBy);
       } else {
 
         this.errors = [];
         this.errorHeader = '';
-        if (this.invoiceDetail.InvoiceAmount == 0 || this.invoiceDetail.InvoiceAmount == null) {
+        if (this.invoiceDetail.InvoiceAmount === 0 || this.invoiceDetail.InvoiceAmount == null) {
           this.invoiceDetail.InvoiceAmount = 0;
         }
 
         this.ValidateInvoice();
 
-        if (this.errors.length == 0) {
+        if (this.errors.length === 0) {
 
-          if (this.invoiceDate != null && this.invoiceDate != "") {
+          if (this.invoiceDate != null && this.invoiceDate !== '') {
 
             this.invoiceDetail.InvoiceDate = this.invoiceDate;
 
           }
-          if (this.dueDate != null && this.dueDate != "") {
+          if (this.dueDate != null && this.dueDate !== '') {
             this.invoiceDetail.DueDate = this.dueDate;
           }
 
-          if (this.postGlDate != null && this.postGlDate != "") {
+          if (this.postGlDate != null && this.postGlDate !== '') {
             this.invoiceDetail.PostDate = this.postGlDate;
 
           }
 
-          if (this.Accountbind == 'AcDiscription1') {
+          if (this.Accountbind === 'AcDiscription1') {
             this.invoiceDetail.SLCashAccount = 49;
             this.invoiceDetail.CashAccountID = this.companyData.cash_account_1_id;
-          }
-          else if (this.Accountbind == 'AcDiscription2') {
+          } else if (this.Accountbind === 'AcDiscription2') {
             this.invoiceDetail.SLCashAccount = 50;
             this.invoiceDetail.CashAccountID = this.companyData.cash_account_2_id;
-          }
-          else if (this.Accountbind == 'AcDiscription3') {
+          } else if (this.Accountbind === 'AcDiscription3') {
             this.invoiceDetail.SLCashAccount = 51;
             this.invoiceDetail.CashAccountID = this.companyData.cash_account_3_id;
-          }
-          else if (this.Accountbind == 'AcDiscription4') {
+          } else if (this.Accountbind === 'AcDiscription4') {
             this.invoiceDetail.SLCashAccount = 52;
             this.invoiceDetail.CashAccountID = this.companyData.cash_account_4_id;
-          }
-          else {
+          } else {
             this.invoiceDetail.SLCashAccount = 49;
             this.invoiceDetail.CashAccountID = this.companyData.cash_account_1_id;
           }
@@ -1061,13 +1064,13 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
 
           this.invoiceService.getNextAttachmentIDs(this.attachmentId).then(result1 => {
-            this.invoiceService.saveInvoice(this.invoiceDetail).then(result => {
-              if (result) {
+            this.invoiceService.saveInvoice(this.invoiceDetail).then(res => {
+              if (res) {
               }
-              // else if (result.status == 500) {
+              // else if (res.status == 500) {
               //     this.showHideErrorLog = { 'display': 'none' };
               //     this.displayValue = 'none';
-              //     alert("error", result.data.Message, "error");
+              //     alert('error', result.data.Message, 'error');
               // }
               else {
                 // if ($rootScope.intervalPromise != undefined) {
@@ -1076,31 +1079,43 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
                 this.displayValue = 'none';
                 this.invoiceAlert = '';
 
-                if (value == 'isSaveAndContinue') {
-                  if (result1.data == null || result1.data == 0 || result1.data == "" || result1.data == "0" || result1.data == "null") {
-                    alert("Invoice saved successfully");
+                if (value === 'isSaveAndContinue') {
+                  if (result1.data == null
+                    || result1.data === 0
+                    || result1.data === ''
+                    || result1.data === '0'
+                    || result1.data === 'null') {
+                    alert('Invoice saved successfully');
                     this.unlockDocument('/attachmentsList/' + this.pageSizeFilter + '/-1');
-                  }
-                  else {
-                    alert("Invoice saved successfully");
+                  } else {
+                    alert('Invoice saved successfully');
 
-                    //$anchorScroll('invoiceentryview');
+                    // $anchorScroll('invoiceentryview');
                     this.NextAttchID = result1;
-                    this.unlockDocument('/invoices/' + this.pageSizeFilter + '/' + this.searchParameters + '/' + this.invoiceID + '/new/' + parseInt(this.NextAttchID));
+                    this.unlockDocument('/invoices/'
+                      + this.pageSizeFilter + '/'
+                      + this.searchParameters + '/'
+                      + this.invoiceID + '/new/'
+                      + Number(this.NextAttchID));
                   }
                 }
-                if (value == 'isSave') {
-                  alert("Invoice saved successfully");
-                  this.unlockDocument('/invoices/' + this.pageSizeFilter + "/" + this.searchParameters + '/' + parseInt(result.data) + '/' + null + '/' + 0 + '/' + 0 + '/' + 0 + '/' + 0);
+                if (value === 'isSave') {
+                  alert('Invoice saved successfully');
+                  this.unlockDocument('/invoices/'
+                    + this.pageSizeFilter + '/'
+                    + this.searchParameters + '/'
+                    + Number(result.data) + '/'
+                    + null
+                    + '/' + 0 + '/' + 0 + '/' + 0 + '/' + 0);
 
                 }
-                if (value == 'isSaveAfterEdit' || value == 'isExpedited' || value == 'isSubmitforApproval') {
-                  alert("Invoice saved successfully");
+                if (value === 'isSaveAfterEdit' || value === 'isExpedited' || value === 'isSubmitforApproval') {
+                  alert('Invoice saved successfully');
                   this.unlockDocument('/dashboard');
                 }
 
-                if (value == 'getInvoiceGrid') {
-                  alert("Invoice saved successfully");
+                if (value === 'getInvoiceGrid') {
+                  alert('Invoice saved successfully');
                   this.unlockDocument('/invoicesList/' + +this.pageSizeFilter + '/' + this.searchParameters);
                 }
               }
@@ -1115,7 +1130,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.documentType = 5;
     this.doctype = 'Attachment';
     this.documentID = 0;
-    if (this.invoiceDetail.InvoiceID == 0) {
+    if (this.invoiceDetail.InvoiceID === 0) {
       this.documentType = 5;
       this.documentID = this.invoiceDetail.AttachmentID;
       this.doctype = 'Attachment';
@@ -1140,15 +1155,14 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private checkInvoiceStatus(invDetails, status): void {
     if (invDetails.InvoiceAmount > 0) {
       this.saveInvoice(status);
-    }
-    else {
-      if (status == 'isSubmitforApproval') {
-        alert("Invoice amount is zero.so can not submit this invoice for approval");
+    } else {
+      if (status === 'isSubmitforApproval') {
+        alert('Invoice amount is zero.so can not submit this invoice for approval');
         return;
       }
 
-      if (status == 'isExpedited') {
-        alert("Invoice amount is zero.so can not expedite this invoice");
+      if (status === 'isExpedited') {
+        alert('Invoice amount is zero.so can not expedite this invoice');
         return;
       }
     }
@@ -1156,87 +1170,99 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private ValidateInvoice(): void {
     this.errors = [];
     if (this.invoiceDetail.InvoiceNumber == null) {
-      var obj = { ErrorName: "Invoicenumber can't be blank" }
+      let obj = {
+        ErrorName: 'Invoicenumber cant be blank'
+      };
       this.invoiceAlert = { 'border': '1px solid red' };
       this.errors.splice(this.errors.length, 0, obj);
     }
 
     if (this.invoiceDetail.VendorID == null) {
-      var obj = { ErrorName: "Vendor can't be blank" }
+      let obj = {
+        ErrorName: 'Vendor cant be blank'
+      };
       this.errors.splice(this.errors.length, 0, obj);
     }
 
-    if (this.invoiceDate == "" || this.invoiceDate == null) {
-      var obj = { ErrorName: "InvoiceDate can't be blank" }
+    if (this.invoiceDate === '' || this.invoiceDate == null) {
+      let obj = {
+        ErrorName: 'InvoiceDate cant be blank'
+      };
       this.errors.splice(this.errors.length, 0, obj);
     }
 
-    if (this.invoiceDate != "" && this.invoiceDate != null) {
-      var isValid = moment(this.invoiceDate, 'MM/DD/YYYY', true).isValid()
-      if (isValid == false) {
-        var obj = { ErrorName: "Invoice Date format is wrong" }
+    if (this.invoiceDate !== '' && this.invoiceDate != null) {
+      let isValid = moment(this.invoiceDate, 'MM/DD/YYYY', true).isValid();
+      if (isValid === false) {
+        let obj = { ErrorName: 'Invoice Date format is wrong' };
         this.errors.splice(this.errors.length, 0, obj);
       }
     }
 
 
-    if (this.postGlDate == "" || this.postGlDate == null) {
-      var obj = { ErrorName: "Post GL Date can't be blank" }
+    if (this.postGlDate === '' || this.postGlDate == null) {
+      let obj = {
+        ErrorName: 'Post GL Date cant be blank'
+      };
       this.errors.splice(this.errors.length, 0, obj);
     }
 
 
-    if (this.postGlDate != "" && this.postGlDate != null) {
-      var isValid = moment(this.postGlDate, 'MM/DD/YYYY', true).isValid()
-      if (isValid == false) {
-        var obj = { ErrorName: "postGlDate format is wrong" }
+    if (this.postGlDate !== '' && this.postGlDate != null) {
+      let isValid = moment(this.postGlDate, 'MM/DD/YYYY', true).isValid();
+      if (isValid === false) {
+        let obj = { ErrorName: 'postGlDate format is wrong' };
         this.errors.splice(this.errors.length, 0, obj);
       }
     }
 
-    if (this.dueDate == "" || this.dueDate == null) {
-      var obj = { ErrorName: "DueDate can't be blank" }
+    if (this.dueDate === '' || this.dueDate == null) {
+      let obj = {
+        ErrorName: 'DueDate cant be blank'
+      };
       this.errors.splice(this.errors.length, 0, obj);
     }
 
-    if (this.dueDate != "" && this.dueDate != null) {
-      var isValid = moment(this.dueDate, 'MM/DD/YYYY', true).isValid()
-      if (isValid == false) {
-        var obj = { ErrorName: "Due Date format is wrong" }
+    if (this.dueDate !== '' && this.dueDate != null) {
+      let isValid = moment(this.dueDate, 'MM/DD/YYYY', true).isValid();
+      if (isValid === false) {
+        let obj = { ErrorName: 'Due Date format is wrong' };
         this.errors.splice(this.errors.length, 0, obj);
       }
     }
 
 
-    if (this.invoiceDetail.JobID != 0 && this.invoiceDetail.JobID != null) {
-      if (this.invoiceDetail.JobCategoryID == 0 || this.invoiceDetail.JobCategoryID == null) {
-        var obj = { ErrorName: "job category can't be blank" }
+    if (this.invoiceDetail.JobID !== 0 && this.invoiceDetail.JobID != null) {
+      if (this.invoiceDetail.JobCategoryID === 0 || this.invoiceDetail.JobCategoryID == null) {
+        let obj = {
+          ErrorName: 'job category cant be blank'
+        };
         this.errors.splice(this.errors.length, 0, obj);
       }
     }
 
-    for (var i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-      if (this.invoiceDetail.InvoiceDistributions[i].DistributionAmount == 0
-        || this.invoiceDetail.InvoiceDistributions[i].DistributionAmount == 0.00) {
-        var obj = { ErrorName: "Distributions amount can not be zero.please enter the amount" }
+    for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
+      if (this.invoiceDetail.InvoiceDistributions[i].DistributionAmount === 0
+        || this.invoiceDetail.InvoiceDistributions[i].DistributionAmount === 0.00) {
+        let obj = { ErrorName: 'Distributions amount can not be zero.please enter the amount' };
         this.errors.splice(this.errors.length, 0, obj);
       }
     }
 
 
     if (this.invoiceDetail.InvoiceAmount != null) {
-      var totalAmount = 0.00;
+      let totalAmount = 0.00;
       if (this.invoiceDetail.InvoiceDistributions.length > 0) {
-        for (var i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-          if (this.invoiceDetail.InvoiceDistributions[i].DistributionAmount == 0) {
+        for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
+          if (this.invoiceDetail.InvoiceDistributions[i].DistributionAmount === 0) {
             this.invoiceDetail.InvoiceDistributions[i].DistributionAmount = 0.00;
           }
           totalAmount = (totalAmount + this.invoiceDetail.InvoiceDistributions[i].DistributionAmount);
         }
       }
 
-      if ((Number(this.invoiceDetail.InvoiceAmount)) != (totalAmount)) {
-        var obj = { ErrorName: "Invoice amount and total distribution amount are not equal" };
+      if ((Number(this.invoiceDetail.InvoiceAmount)) !== (totalAmount)) {
+        let obj = { ErrorName: 'Invoice amount and total distribution amount are not equal' };
         this.errors.splice(this.errors.length, 0, obj);
       }
     }
@@ -1245,12 +1271,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     if (this.errors.length > 0) {
       this.displayValue = 'alert alert-danger';
       this.errorHeader = this.errors.length + ' errors prohibited this inovice from being saved:';
-      //$(window).scrollTop(0);
+      // $(window).scrollTop(0);
       return;
     }
-
-
-
   }
 }
 

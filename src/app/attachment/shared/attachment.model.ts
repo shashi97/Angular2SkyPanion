@@ -39,8 +39,9 @@ export class attachmentdata{
     uploaded:string = '';
     rejectionMemo:string = '';
     companyID:number = 0;
-     fileName:string = '';
+    fileName:string = '';
     companyNumber:number = 0;
+   
     
 
 }
