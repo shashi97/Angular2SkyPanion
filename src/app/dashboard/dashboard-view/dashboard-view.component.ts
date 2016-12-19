@@ -19,7 +19,7 @@ import { InvoiceStateFilterArguments } from './dashboard-state-filter.component'
 import { DashboardPermissionModel } from '../shared/dashboard-permissions.model';
 import { DashboardUserWisePermissionsModel } from '../shared/dashboard-permissions.model';
 import { DashboardCompanyWisePermissionsModel } from '../shared/dashboard-permissions.model';
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'sp-dashboard',
@@ -45,7 +45,8 @@ export class DashboardViewComponent extends BaseComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private dashboardService:DashboardService,
-    invoiceService:InvoiceService
+    invoiceService:InvoiceService,
+    public toastr: ToastsManager
   ) {
     super(localStorageService, router);
     this.companyId = 0;
@@ -196,8 +197,7 @@ export class DashboardViewComponent extends BaseComponent implements OnInit {
 
         }
         else {
-
-            alert("No Invoice can release to Batch");
+        this.toastr.error('No Invoice can release to Batch', 'Oops!');
         }
 
   }
@@ -221,17 +221,9 @@ export class DashboardViewComponent extends BaseComponent implements OnInit {
                   this.getInvoices();  
                 }
             });
-
-
         }
         else {
-
-            alert("No Invoice can release to Approval");
+        this.toastr.error('No Invoice can release to Approval', 'Oops!');
         }
-
   }
-
-
-
-
 }

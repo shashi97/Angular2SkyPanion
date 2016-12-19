@@ -1,0 +1,57 @@
+  #invoice_dashboard_wrap .control-label {
+        font-weight: bold;
+        width: 120px;
+    }
+
+    #invoice_dashboard_wrap .controls {
+        padding-top: 5px;
+        margin-left: 140px;
+    }
+
+    #invoice_dashboard_wrap .form-group {
+        margin-bottom: 4px !important;
+    }
+
+    #invoice_dashboard_wrap .invoice_details {
+        margin-right: 8px;
+    }
+
+    #invoice_dashboard_wrap .invoice_button_form {
+        margin-bottom: 0;
+    }
+
+    #pdf_frame {
+        position: relative;
+        z-index: 1;
+    }
+
+    .distributions_list {
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .distributions_list li {
+        border-bottom: 1px dotted lightgray;
+        padding-top: 6px;
+    }
+
+        .distributions_list li:first-child {
+            padding-top: 0;
+        }
+
+        .distributions_list li:last-child {
+            border-bottom: none;
+        }
+
+    .distribution_list_item .comment, .distribution_list_item .no_comment {
+        font-size: 12px;
+    }
+
+    .distribution_list_item .no_comment {
+        font-style: italic;
+    }
+
+    .distributions_list li blockquote {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
