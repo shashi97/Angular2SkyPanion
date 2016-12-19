@@ -32,25 +32,21 @@ export class CompanyDetailComponent extends BaseComponent implements OnInit {
     super(localStorageService, router);
   }
 
-  ngOnInit(): void {
-    this.getSessionDetails();
-  }
-
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
+  ngOnInit() {
+    if (this.user) {
       this.getParameterValue();
     } else {
       let link = ['/login'];
       this.router.navigate(link);
     }
   }
+
   private getParameterValue(): void {
     this.route.params.subscribe(params => {
-      this.companyId = +params['companyId'];
+      this.companyId = +params['id'];
       this.searchParameters = +params['SearchParameters'];
     });
-     this.getComapnyDetail();
+    this.getComapnyDetail();
   }
 
   private getComapnyDetail(): void {

@@ -3,7 +3,7 @@
   <sp-ledger-filter-bar (filtered)="onFiltered($event)" [filteredValue]="filteredValue">
   </sp-ledger-filter-bar>
 
-  <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+  <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>-->
 
   <div class="container-fluid">
     <div class="col-md-12">
@@ -22,7 +22,7 @@
             <td>{{item.AccountNumber}}</td>
             <td>{{item.AccountTitle}}</td>
             <td>{{item.invCount}}</td>
-            <td><a routerLink="/ledgerAccountDetail/{{searchString}}/{{item.id}}">Details</a></td>
+            <td><a routerLink="/ledgerAccount/detail/{{searchString}}/{{item.id}}">Details</a></td>
           </tr>
         </tbody>
         <tfoot>

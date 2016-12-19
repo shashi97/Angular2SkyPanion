@@ -12,7 +12,7 @@
     <span class="pull-right" [hidden]="invoiceDetail.InvoiceStatusID!=0">
                                 <ul id="invoice_relations_nav" class="nav nav-pills">
                                     <li class="active">
-                                        <a href="/invoices/46398?display=duplicates">Duplicates</a>
+                                        <a href="#invoice/46398?display=duplicates">Duplicates</a>
                                     </li>
                                 </ul>
                             </span>
@@ -52,12 +52,12 @@
                   <span [hidden]="approval.Condition!='None'" class="text-warning italic-font">
                       {{approval.Condition}}
                   </span>
-              <a href="#ledgeraccounts/{{approval.LedgerAccountID}}" [hidden]="approval.Condition=='None'">{{approval.Condition}}</a>
+              <a href="#ledgerAccount/{{approval.LedgerAccountID}}" [hidden]="approval.Condition=='None'">{{approval.Condition}}</a>
               </span>
             </td>
             <td class="approval_actions">
               <span class="text-warning" [hidden]="approval.Status != 'Waiting'">Waiting</span>
-              <a href="#invoiceapprovals/{{approval.InvoiceApprovalID}}" class="view_invoice_approval approved_link" data-remote="true"
+              <a href="#invoice/detail/{{approval.InvoiceApprovalID}}" class="view_invoice_approval approved_link" data-remote="true"
                 [hidden]="approval.Status == 'Waiting'">
                 <i class="icon icon-search"></i>Approved
               </a>

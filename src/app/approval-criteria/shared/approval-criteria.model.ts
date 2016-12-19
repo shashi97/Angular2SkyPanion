@@ -31,6 +31,6 @@ UserType: string= '';
 account_id: number = 0;
 email: string= '';
 owner_id: number= 0;
-username: string= '';
+username: string= 'Select approvers';
 label: string= '';
 }

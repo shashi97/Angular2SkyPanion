@@ -7,7 +7,7 @@
   <!--<sp-crumb-bar *ngIf="vendorDetail" [pageDetail]="vendorDetail"></sp-crumb-bar>-->
   <ol class="breadcrumb" *ngIf="userDetail" [hidden]="userDetail.IsSuperUser != true">
     <li>
-      <a href="#/users/{{pageSizeFilter}}/-1">All Users</a>
+      <a href="#/user/{{pageSizeFilter}}/-1">All Users</a>
     </li>
     <li class="active">{{userDetail.userName}}</li>
   </ol>

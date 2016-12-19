@@ -4,10 +4,12 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { InvoiceModel } from '../shared/invoice.model';
 
 import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
+import { MasterService } from '../../shared/services/master/master.service';
 import { InvoiceFilteredArgs } from './filter-bar.component';
 import { InvoiceService } from '../shared/invoice.service';
 import { AccountService } from '../../account/shared/account.service';
@@ -38,14 +40,21 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     private accountService: AccountService,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private toastr: ToastsManager,
+    private masterService: MasterService
   ) {
     super(localStorageService, router);
     this.Invoices = new Array<InvoiceModel>();
-    this.getSessionDetails();
   }
 
   ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
 
   private get currentPageFiltered(): CurrentPageArguments {
@@ -85,16 +94,6 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.getInvoices();
   }
 
-  private getSessionDetails(): void {
-    this.user = this.userService.getSessionDetails();
-    if (this.user.userId && this.user.IsSuperUser) {
-      this.getParameterValues();
-    } else {
-      let link = ['/company'];
-      this.router.navigate(link);
-    }
-  }
-
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
 
@@ -108,10 +107,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
         this.invoiceFilteredValue.invToDate = parameterArray[1];
         this.invoiceFilteredValue.invoiceDesc = parameterArray[2];
         this.invoiceFilteredValue.invoiceNumber = parameterArray[3];
-        this.invoiceFilteredValue.companyId = parseInt(parameterArray[4]);
-        this.invoiceFilteredValue.vendorId = parseInt(parameterArray[5]);
-        this.invoiceFilteredValue.statusId = parseInt(parameterArray[6]);
-        this.invoiceFilteredValue.userId = parseInt(parameterArray[7]);
+        this.invoiceFilteredValue.companyId = Number(parameterArray[4]);
+        this.invoiceFilteredValue.vendorId = Number(parameterArray[5]);
+        this.invoiceFilteredValue.statusId = Number(parameterArray[6]);
+        this.invoiceFilteredValue.userId = Number(parameterArray[7]);
       }
 
       if (pageSizeFilter !== '-1') {
@@ -144,7 +143,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   getInvoices() {
-    this.location.replaceState('invoices/' + this.searchString);
+    this.location.replaceState('invoice/' + this.searchString);
     let searchFields = {
       invoiceNumber: this._currentInvoiceArgs.invoiceNumber,
       vendorId: this._currentInvoiceArgs.vendorId,
@@ -162,6 +161,18 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       if (this.Invoices[0] && this.Invoices[0].InvoiceCount) {
         this.totalItems = this.Invoices[0].InvoiceCount;
       }
+    });
+  }
+
+  unlockInvoice(item) {
+    this.masterService.unlockDocument(item.InvoiceID, this.user.userId, 10).then(result => {
+      if (result.status === 404) {
+      } else if (result.status === 500) {
+      } else {
+        this.toastr.success('Invoice unlock successfully', 'Success!');
+        this.getInvoices();
+      }
+
     });
   }
 

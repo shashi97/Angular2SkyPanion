@@ -14,7 +14,7 @@ export class SyncBatchDetailInvoiceComponent extends BaseComponent implements On
 
   private totalItems: number = 0;
   @Input() syncBatcheDetail: SyncBatchModel;
-  
+
   constructor(
     localStorageService: LocalStorageService,
     router: Router,

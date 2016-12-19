@@ -136,21 +136,31 @@ export class InvoiceService {
       .catch(error => error);
   }
 
-//  submitInvoiceExpedite(invoiceID){
-//     return this.http
-//       .get(ApiUrl.baseUrl + "api/invoices/getInvoiceExpedite/" + invoiceID)
-//       .toPromise()
-//       .then(response => response)
-//       .catch(error => error);
-//   }
+  rejectInvoice(invoiceID, companyID, invAmount, rejectionComment , documentLockingID){
+    return this.http
+      .get(ApiUrl.baseUrl + "api/invoices/reject/" + invoiceID + "/" + companyID
+       + "/" + invAmount + "/" + rejectionComment + "/" + documentLockingID)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
 
-  //  submitInvoiceForApproval(invoiceID){
-  //   return this.http
-  //     .get(ApiUrl.baseUrl + "api/invoices/InvoiceForApproval/" + invoiceID)
-  //     .toPromise()
-  //     .then(response => response)
-  //     .catch(error => error);
-  // }
+   approveInvoice(invoiceID, invoiceAmount, aprovalComment, companyID){
+    return this.http
+      .get(ApiUrl.baseUrl + "api/dashboard/approveInvoice/" + invoiceID + "/" + invoiceAmount + "/" + aprovalComment + "/" + companyID )
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+
+
+    saveDistributionComment(distributionID , distributionComment){
+    return this.http
+      .get(ApiUrl.baseUrl + "api/dashboard/distributionComment/" + distributionID + "/" + distributionComment)
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
 
   public handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

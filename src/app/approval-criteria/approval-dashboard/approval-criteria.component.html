@@ -1,4 +1,5 @@
 <div class="page-content">
+
   <!--<div class="page-heading">
     <h1>Approval Criteria</h1>
     <div class="options">
@@ -38,7 +39,7 @@
         <li class="active">Approval Criteria</li>
     </ol>-->
 
-  <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+  <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>-->
 
   <div class="container-fluid">
     <div id="panel-advancedoptions">
@@ -51,14 +52,10 @@
 
           <div class="text-center">
             <sp-pagination [dataSource]='companies' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
-            <!--<dir-pagination-controls max-size="8" on-page-change="pageChangeHandler(newPageNumber)" direction-links="true" boundary-links="true"
-                                template-url="../../Scripts/Pagination/dirPagination.tpl.html"></dir-pagination-controls>-->
           </div>
 
         </div>
       </div>
     </div>
-    <!-- .container-fluid -->
   </div>
-  <!-- #page-content -->
 </div>

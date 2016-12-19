@@ -5,10 +5,10 @@
       (filteredInvoice)="onFilteredInvoice($event)">
   </sp-invoice-filter-bar>
 
-  <sp-crumb-bar 
+  <!--<sp-crumb-bar 
       *ngIf="account" 
       [pageDetail]="account">
-  </sp-crumb-bar>
+  </sp-crumb-bar>-->
 
   <div class="container-fluid">
     <div class="col-md-12" style="padding-bottom: 10px">
@@ -57,7 +57,7 @@
           </td>
           <td>
             <div>
-              <a href="#/companyDetail/{{item.CompanyID}}">
+              <a href="#/company/detail/{{item.CompanyID}}/-1/-1">
                 <i [ngClass]="{'fa fa-book': item.Type=='Skypanion::Fund', 
                               'fa fa-building': item.Type=='Skypanion::Property'}">
                 </i> &nbsp;{{item.CompanyNumber}}
@@ -67,7 +67,7 @@
           <td>{{item.InvoiceNumber}}</td>
           <td>
             <div>
-              <a href="#/vendorDetail/{{item.VendorID}}" class="remote_href" data-remote="true">
+              <a href="#/vendor/detail/{{item.VendorID}}/-1/-1" class="remote_href" data-remote="true">
               {{item.VendorKey}}&nbsp;
               </a>{{item.VendorName}}
             </div>
@@ -77,7 +77,7 @@
               {{item.Distributions}}
             </div>
             <div *ngIf="item.Distributions!='None' && item.LedgerAccountID!=0">
-              <a href="#/ledgerAccountDetail/-1/-1/{{item.LedgerAccountID}}">
+              <a href="#/ledgerAccount/detail/{{item.LedgerAccountID}}/-1/-1">
               {{item.Distributions}}
               </a>
             </div>
@@ -106,13 +106,13 @@
           <td>{{item.LockedBy}}</td>
           <td>
             <div *ngIf="item.IsLocked || item.IsSuperUser">
-              <a (click)="unlockInvoice(row)">
+              <a (click)="unlockInvoice(item)">
                 <i class="glyphicon"></i>unlock
               </a>
             </div>
           </td>
           <td>
-            <a href="#/invoiceDetail/{{searchString}}/{{item.InvoiceID}}">Details</a></td>
+            <a href="#/invoice/detail/{{item.InvoiceID}}/{{searchString}}">Details</a></td>
         </tr>
       </tbody>
       <tfoot>

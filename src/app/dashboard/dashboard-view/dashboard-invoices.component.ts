@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output,ViewContainerRef, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
-
+import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
+import { Overlay, OverlayConfig } from 'angular2-modal';
 
 import{DashboardInvoiceModel} from '../shared/dashboard-invoice.model';
 import { UserService } from '../../user/shared/user.service';
@@ -11,10 +12,19 @@ import { DashboardService } from '../shared/dashboard.service';
 import { InvoiceService } from '../../invoice/shared/invoice.service';
 import { DashboardStateModel } from '../shared/dashboard-state.model';
 import { DashboardPermissionModel } from '../shared/dashboard-permissions.model';
+import { InvoiceModelContext } from '../shared/invoice-context.model';
+import { InvoiceDistributionModelContext } from '../shared/invoice-distribution-context.model';
+import { InvoiceDistributionModel } from '../../invoice/shared/invoice-distribution.model';
+
+import {InvoiceRejectModalComponent } from '../../dashboard/invoice-modals/invoice-rejection-modal/invoice-rejection.component';
+import { InvoiceApprovalModalComponent } from '../../dashboard/invoice-modals/invoice-approval-modal/invoice-approval.component';
+import { InvoiceDistributionCommentModalComponent } from '../../dashboard/invoice-modals/invoice-distribution-comment-model/invoice-distribution-comment.component';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'sp-dashboard-invoice',
   templateUrl: './dashboard-invoices.component.html',
+   styleUrls:  ['../css/dashboard-invoices-distribution.css']
 })
 
 export class DashboardInvoicesComponent extends BaseComponent implements OnInit {
@@ -28,7 +38,9 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
     localStorageService: LocalStorageService,
     router: Router,
     private masterService:MasterService,
-    private invoiceService:InvoiceService
+    private invoiceService:InvoiceService,
+    overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal,
+     public toastr: ToastsManager
   ) {
     super(localStorageService, router);
     console.log(this.invoices);
@@ -42,13 +54,14 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
    private deleteInvoice(invoice: DashboardInvoiceModel):void{
     this.masterService.checkDocumentLocking(invoice.InvoiceID, 10).then(result1 => {
       if(result1.IsLocked == 0){
-        alert("This Invoice is locked by " + result1.LockBy);
+        this.toastr.error('This Invoice is locked by '+ result1.LockBy, 'Oops!');
       }else{
          this.invoiceService.deleteInvoice(invoice.InvoiceID).then(result2 => {
                     if (result2.Status == 500) {
                     }
                     else {
                         this.masterService.unlockDocument(invoice.InvoiceID, 0, 10).then(result3 => {
+                            this.toastr.success('Invoice number ' + invoice.InvoiceNumber + ' delete successfully', 'Success!');
                           this.invoiceStateChange.emit(true);
                         });
                     }
@@ -64,13 +77,14 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
   private submitInvoicebatch(invoice: DashboardInvoiceModel):void{
       this.masterService.checkDocumentLocking(invoice.InvoiceID, 10).then(result1 => {
       if(result1.IsLocked == 0){
-        alert("This Invoice is locked by " + result1.LockBy);
+        this.toastr.error('This Invoice is locked by '+ result1.LockBy, 'Oops!');
       }else{
             this.invoiceService.submitInvoicebatch(invoice.InvoiceID).then(result2 => {
                 if (result2.Status == 500) {
                     }
                     else {
                         this.masterService.unlockDocument(invoice.InvoiceID, 0, 10).then(result3 => {
+                            this.toastr.success('Invoice number ' + invoice.InvoiceNumber + ' batched successfully', 'Success!');                            
                            this.invoiceStateChange.emit(true);
                         });
                     }
@@ -82,13 +96,14 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
    private submitInvoiceExpedite(invoice: DashboardInvoiceModel):void{
      this.masterService.checkDocumentLocking(invoice.InvoiceID, 10).then(result1 => {
       if(result1.IsLocked == 0){
-        alert("This Invoice is locked by " + result1.LockBy);
+        this.toastr.error('This Invoice is locked by '+ result1.LockBy, 'Oops!'); 
       }else{
             this.invoiceService.submitInvoiceExpedite(invoice.InvoiceID).then(result2 => {
                 if (result2.Status == 500) {
                     }
                     else {
                         this.masterService.unlockDocument(invoice.InvoiceID, 0, 10).then(result3 => {
+                           this.toastr.success('Invoice number ' + invoice.InvoiceNumber + ' expedited successfully', 'Success!');                                                        
                            this.invoiceStateChange.emit(true);
                         });
                     }
@@ -110,7 +125,7 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
 
                             this.masterService.checkDocumentLocking(invoice.InvoiceID, 10).then(result2 => {
                                 if (result2.IsLocked == 0) {
-                                    alert("This Invoice is locked by " + result2.LockBy);
+                                     this.toastr.error('This Invoice is locked by '+ result1.LockBy, 'Oops!');
                                     return;
                                 } else {
                                     this.invoiceService.submitInvoiceForApproval(invoice.InvoiceID).then(result3 => {
@@ -118,6 +133,7 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
                                         }
                                         else {
                                             this.masterService.unlockDocument(invoice.InvoiceID, 0, 10).then(result4 =>{
+                                            this.toastr.success('Invoice number ' + invoice.InvoiceNumber + ' submit for approval successfully', 'Success!');                                                        
                                                this.invoiceStateChange.emit(true);
                                             });
                                         }
@@ -125,21 +141,93 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
                                 }
                             });
                     } else {
-                       alert("There are no approvers for this invoice");
+                         this.toastr.error('There are no approvers for this invoice', 'Oops!');
                     }
                 })
   }
 
-  private updateDistributionComments (distribution: DashboardInvoiceModel):void{
-      
-  }
 
-  private rejectInvoice (invoice: DashboardInvoiceModel):void{
-  
-  }
+openRejectInvoiceModal(invoice: DashboardInvoiceModel){
 
-  private ApproveInvoice (invoice: DashboardInvoiceModel):void{
-  
-  }
- 
+      		const builder = new BSModalContextBuilder<InvoiceModelContext>(
+            {
+            invoiceID:invoice.InvoiceID,
+            companyID:invoice.company_id,
+            invoiceAmount:invoice.Amount,
+            invoiceNumber:invoice.InvoiceNumber,
+			} as any,
+            undefined,
+            InvoiceModelContext
+		);
+
+		let overlayConfig: OverlayConfig = {
+			context: builder.toJSON()
+		};
+
+		return this.modal.open(InvoiceRejectModalComponent, overlayConfig)
+			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
+			.then(result => {
+				if (result != null) {
+					 this.invoiceStateChange.emit(true);
+				}
+			});
+}
+
+
+openApprovalInvoiceModal(invoice: DashboardInvoiceModel){
+
+      		const builder = new BSModalContextBuilder<InvoiceModelContext>(
+            {
+            invoiceID:invoice.InvoiceID,
+            companyID:invoice.company_id,
+            invoiceAmount:invoice.Amount,
+            invoiceNumber:invoice.InvoiceNumber,
+			} as any,
+            undefined,
+            InvoiceModelContext
+		);
+
+		let overlayConfig: OverlayConfig = {
+			context: builder.toJSON()
+		};
+
+		return this.modal.open(InvoiceApprovalModalComponent, overlayConfig)
+			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
+			.then(result => {
+				if (result != null) {
+					 this.invoiceStateChange.emit(true);
+				}
+			});
+}
+
+
+
+openInvoiceDistributionCommentModal(distribution:InvoiceDistributionModel, invoice: DashboardInvoiceModel){
+
+      		const builder = new BSModalContextBuilder<InvoiceDistributionModelContext>(
+            {
+           	invDistributionID: distribution.DistributionID,
+            invCompanyID:invoice.company_id,
+            invoiceID:invoice.InvoiceID,
+            invoiceNumber:invoice.InvoiceNumber
+			} as any,
+            undefined,
+            InvoiceDistributionModelContext
+		);
+
+		let overlayConfig: OverlayConfig = {
+			context: builder.toJSON()
+		};
+
+		return this.modal.open(InvoiceDistributionCommentModalComponent, overlayConfig)
+			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
+			.then(result => {
+				if (result != null) {
+					 this.invoiceStateChange.emit(true);
+				}
+			});
+    }
 }

@@ -46,12 +46,9 @@
                                                 </a>
                   </div>
                   <div class="col-md-4 input-group" style="padding: 0 !important;margin: 0 !important;" data-ng-if="attachmentObject.status == 'Rejected'">
-                    <!--<ui-select ng-model="selectedCompany.selected" theme="select2" style="width:200px" data-ng-change="onCompanyDropperChange(selectedCompany.selected.CompanyID , selectedCompany.selected.Number)">
-                      <ui-select-match placeholder="Select a Company">{{selectedCompany.selected.CompanyName}}</ui-select-match>
-                      <ui-select-choices repeat="company in companies| filter: $select.search">
-                        {{company.CompanyName}}
-                      </ui-select-choices>
-                    </ui-select>-->
+                    <!--<sp-company-dropdown></sp-company-dropdown>-->
+                    <p-dropdown [options]="companies" [(ngModel)]="selectedCompany.selected" [filter]="true" [autoWidth]="true" [style]="{'width':'180px'}"
+                      (ngModelChange)="getSelectedCompany(selectedCompany.selected)"></p-dropdown>
                   </div>
                 </div>
               </div>
@@ -62,7 +59,7 @@
     </div>
     <div class="modal-footer">
       <a id="A1" class="btn btn-default closeButton" (click)="closeModal()">Cancel</a>
-      <a id="A2" class="btn btn-success" data-ng-click="updateAttachment()">Save Pdf</a>
+      <a id="A2" class="btn btn-success" (click)="updateAttachment()">Save Pdf</a>
     </div>
   </div>
 </div>

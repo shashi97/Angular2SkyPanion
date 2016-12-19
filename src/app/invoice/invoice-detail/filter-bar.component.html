@@ -3,9 +3,9 @@
   <div class="options">
     <div class="btn-toolbar">
       <div class="invoice_state_message">
-        <h4 class="text-danger" [hidden]="invoiceDetail.InvoiceStatusID != 5">Rejected by <a href="#user/{{invoiceDetail.RejectedByID}}">{{invoiceDetail.RejectedBy}}</a></h4>
+        <h4 class="text-danger" [hidden]="invoiceDetail.InvoiceStatusID != 5">Rejected by <a href="#user/detail/{{invoiceDetail.RejectedByID}}/-1">{{invoiceDetail.RejectedBy}}</a></h4>
         <h4 class="text-info" [hidden]="invoiceDetail.InvoiceStatusID != 4">Waiting for upload to Skyline</h4>
-        <h4 class="text-warning" [hidden]="invoiceDetail.InvoiceState != 2">Waiting for approval by <a href="#user/{{invoiceDetail.ApproverID}}">{{invoiceDetail.ApproverName}}</a></h4>
+        <h4 class="text-warning" [hidden]="invoiceDetail.InvoiceState != 2">Waiting for approval by <a href="#user/detail/{{invoiceDetail.ApproverID}}/-1">{{invoiceDetail.ApproverName}}</a></h4>
       </div>
 
 

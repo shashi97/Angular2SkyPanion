@@ -26,12 +26,9 @@ export class VendorDetailFilterComponent extends BaseComponent implements OnInit
     router: Router,
   ) {
     super(localStorageService, router);
-    console.log(this.vendorDetail);
-
   }
 
   ngOnInit() {
-
   }
 
   private searchByCompany(): void {

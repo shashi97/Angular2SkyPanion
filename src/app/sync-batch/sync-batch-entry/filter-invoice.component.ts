@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
-import { SyncBatchModel, SyncBatchEntryModel } from '../shared/sync-batch-entry.model';
 import { SyncBatchService } from '../shared/sync-batch.service';
 import { ConfirmService } from '../../shared/services/otherServices/confirmService';
 import { CompanyFilterArguments } from '../../shared/dropdown/company/company-dropdown.component';

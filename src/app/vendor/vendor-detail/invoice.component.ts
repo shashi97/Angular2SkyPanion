@@ -18,13 +18,8 @@ export class VendorDetailInvoiceComponent extends BaseComponent implements OnIni
     router: Router
   ) {
     super(localStorageService, router);
-    // this.test();
   }
 
   ngOnInit() {
   }
-
-  // private test() {
-  //   this.totalItems = this.vendorDetail.VendorInvoices[0].TotalCount;
-  // }
 }

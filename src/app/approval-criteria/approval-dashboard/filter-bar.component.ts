@@ -22,7 +22,7 @@ export class ApprovalFilterComponent extends BaseComponent implements OnInit {
   @Input() filteredValue: ApprovalFilterArguments = new ApprovalFilterArguments();
   @Input() approvals: Array<ApprovalCriteriaModel>;
   @Input() companyId: number;
-  @Input() approversCount:number;
+  @Input() approversCount: number;
   @Input() approvers: Array<any>;
   @Input() cmpName: string;
 
@@ -43,6 +43,7 @@ export class ApprovalFilterComponent extends BaseComponent implements OnInit {
     this.filteredValue.type = type;
     this.filtered.emit(this.filteredValue);
   }
+
   private showApprovalCriteria(data, typeData, isNew) {
 
     const builder = new BSModalContextBuilder<ApprovalContext>(
@@ -54,7 +55,7 @@ export class ApprovalFilterComponent extends BaseComponent implements OnInit {
         companyId: this.companyId,
         approvers: this.approvers,
         approversCount: this.approversCount,
-        cmpName : this.cmpName
+        cmpName: this.cmpName
       } as any,
       undefined,
       ApprovalContext

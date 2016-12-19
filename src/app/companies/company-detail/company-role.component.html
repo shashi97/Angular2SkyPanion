@@ -25,7 +25,7 @@
         <div id="tab-1-1" class="tab-pane active">
           <div class="property_attribute">
             <label class="left_align"><b>Account</b></label>
-            <span class="right_align"><a href="#accounts/{{company.account_id}}">{{company.AccountName}}</a></span>
+            <span class="right_align"><a href="#account/{{company.account_id}}">{{company.AccountName}}</a></span>
             <br class="clear_both">
           </div>
           <hr>
@@ -399,7 +399,7 @@
                                             </span>
               <i class="fa fa-bank"></i> Ledger Accounts
             </a>
-            <a href="#/invoices/-1/null,null,null,null,{{companyId}},0,0,0" class="list-group-item">
+            <a href="#/invoice/-1/null,null,null,null,{{companyId}},0,0,0" class="list-group-item">
               <span class="badge">{{company.InvoiceCount}}
                                             </span>
               <i class="fa fa-money"></i> Invoices
@@ -409,7 +409,7 @@
                                             </span>
               <i class="fa fa-truck"></i> Vendors
             </a>
-            <a href="#/attachments/{{companyId}}" class="list-group-item">
+            <a href="#/attachment/{{companyId}}" class="list-group-item">
               <span class="badge">{{company.PDFCount}}
                                             </span>
               <i class="fa fa-file-pdf-o"></i> Uploaded PDFs
@@ -424,13 +424,13 @@
                                             </span>
               <i class="fa fa-chevron-right"></i> Fund Posts
             </a>
-            <a href="#/approvals/{{companyId}}" class="list-group-item">
+            <a href="#/approval/{{companyId}}" class="list-group-item">
               <span class="badge">{{company.ApprovalCriteriaCount }}
                                             </span>
               <i class="fa fa-thumbs-up"></i> Approval Criteria
             </a>
 
-            <a href="#/achSetups/-1/{{companyId}}" class="list-group-item">
+            <a href="#/achSetup/-1/{{companyId}}" class="list-group-item">
               <span class="badge">
                                                 {{company.AchSetupCount}}
                                             </span>

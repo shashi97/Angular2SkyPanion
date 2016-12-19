@@ -1,4 +1,4 @@
-
+  
 export class RoleModel {
   AccountID: number;
   CreatedAt ?: Date;

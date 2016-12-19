@@ -1,4 +1,4 @@
-import { Component, OnInit ,Pipe, ViewContainerRef, ViewEncapsulation, AfterViewInit} from '@angular/core';
+import { Component, OnInit, Pipe, ViewContainerRef, ViewEncapsulation, AfterViewInit} from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -46,7 +46,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 	private attachmentObject: attachmentdata;
     private companies: Array<CompanyModel>;
 	private selectedCompany = {
-	        selected:{}
+		selected: {}
 	}
 	private newCompanyID;
 	private newCompanyNumber;
@@ -235,7 +235,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 					rejectionMemo: row.RejectionMemo
 				};
 
- 
+
 				this.companies.forEach(item => {
 					if (item.CompanyID == this.attachmentObject.companyID) {
 						this.selectedCompany.selected = item;
@@ -243,8 +243,8 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 						//this.newCompanyNumber = item.Number;
 					}
 				});
-                 
-				 this.openAttachmentEditModal(this.attachmentObject);
+
+				this.openAttachmentEditModal(this.attachmentObject);
 
 			}
 		});
@@ -252,10 +252,10 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 	}
 
 
-		private openAttachmentEditModal(row) {
+	private openAttachmentEditModal(row) {
 		const builder = new BSModalContextBuilder<AttachmentEditModalContext>(
             {
-				Row:row
+				Row: row
 				// doctype: this.doctype,
 				// DocumentID: this.DocumentID,
 				// attachmentId: this.attachmentId,
@@ -270,17 +270,34 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 			context: builder.toJSON()
 		};
 
-		return this.modal.open(AttachmentEditComponent, overlayConfig)
-			.catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-			.then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-			.then(result => {
-				if (result != null) {
-					this.unlockDocument(result);
-				}
-			});
+		const dialog = this.modal.open(AttachmentEditComponent, overlayConfig)
+			 dialog.then((resultPromise) => {
+            return resultPromise.result.then((result) => {
+            // alert(result.status);
+               if (result == true) {
+                    this.unlockDocument(result);
+                }
+            }, () => console.log(' Error In Attachment Edit modal '));
+        });
 	}
 
-
+// const dialog = this.modal.open(SyncModelComponent, overlayConfig);
+//     dialog.then((resultPromise) => {
+//             return resultPromise.result.then((result) => {
+//             // alert(result.status);
+//                if (result.status === true) {
+//                     this.invoceRemoved.emit(result);
+//                 }
+//             }, () => console.log(' Error In invoice modal '));
+//         });
+//         // return this.modal.open(SyncModelComponent, overlayConfig)
+//         //     .catch(err => alert('ERROR'))
+//         //     .then(dialog => dialog.result)
+//         //     .then(result => {
+//         //         if (result.status === true) {
+//         //             this.invoceRemoved.emit(result);
+//         //         }
+//         //     });
 
 }
 

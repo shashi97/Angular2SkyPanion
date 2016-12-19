@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 import { CompanyService } from '../shared/company.service';
+import { CompanyModel } from '../shared/company.model';
 import { ConfirmService } from '../../shared/services/otherServices/confirmService';
 import { AccountService } from '../../account/shared/account.service';
 import { UserService } from '../../user/shared/user.service';
@@ -24,7 +25,7 @@ import { CurrentPageArguments } from '../../pagination/pagination.component';
 export class CompanyComponent extends BaseComponent implements OnInit {
 
   private account: Object;
-  private companies: Array<any>;
+  private companies: Array<CompanyModel>;
   private searchString: string = '';
 
   private pageName: string = 'Companies';
@@ -34,6 +35,7 @@ export class CompanyComponent extends BaseComponent implements OnInit {
   private _filteredValue: CompanyFilterArguments = new CompanyFilterArguments();
 
   private skyPanionTypeList: Array<any> = [];
+
   constructor(
     private companyService: CompanyService,
     private userService: UserService,
@@ -46,11 +48,16 @@ export class CompanyComponent extends BaseComponent implements OnInit {
   ) {
     super(localStorageService, router);
     this.skyPanionTypeList = new Array<any>();
-    this.companies = new Array<any>();
-    this.getSessionDetails();
+    this.companies = new Array<CompanyModel>();
   }
 
   ngOnInit(): void {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
 
   private get filteredValue(): CompanyFilterArguments {
@@ -78,16 +85,6 @@ export class CompanyComponent extends BaseComponent implements OnInit {
       + this.filteredValue.syncId + ','
       + this.filteredValue.syncTypeId;
     this.getCompanies();
-  }
-
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
-      this.getParameterValues();
-    } else {
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
   }
 
   private getParameterValues(): void {
@@ -137,7 +134,7 @@ export class CompanyComponent extends BaseComponent implements OnInit {
       this.currentPageFiltered.pageSizeFilter)
       .then(result => {
         if (result.status === 404) {
-          this.companies = new Array<any>();
+          this.companies = new Array<CompanyModel>();
           this.totalItems = 0;
         } else if (result.status === 500) {
         } else {
@@ -207,7 +204,7 @@ export class CompanyComponent extends BaseComponent implements OnInit {
     this.companyService
       .activateDeactiveCompany(CompanyId, isActive)
       .then((result) => {
-        this.getSessionDetails();
+        // this.getSessionDetails();
       });
   }
 

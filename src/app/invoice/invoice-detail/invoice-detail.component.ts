@@ -49,22 +49,20 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private activatedRoute: ActivatedRoute) {
     super(localStorageService, router);
-    this.getSessionDetails();
   }
 
   ngOnInit() {
-  }
-
-  private getSessionDetails(): void {
-    this.user = this.userService.getSessionDetails();
-    if (this.user.userId) {
+    if (this.user) {
       this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
     }
   }
 
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.invoiceId = params['invoiceId'];
+      this.invoiceId = params['id'];
       this.invoiceArgs.invoiceId = this.invoiceId;
       this.getUserDetails();
     });
@@ -86,7 +84,7 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
       companyId: this.companyId,
       statusId: this.statusId,
       userId: this.userId
-    }
+    };
 
     this.invoiceService.getInvoiceId(invSearchObject).then(result => {
       if (result.status === 404) {
@@ -100,11 +98,10 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
 
   private getInvoiceDetail(): void {
     let roleExistCount: number = 0;
-    // this.invoiceService.getInvoiceDetail(this.invoiceId, 0, false).then(result => {
     this.invoiceService.getInvoiceDetail(this.invoiceId, 0).then(result => {
       this.invoiceDetail = result;
 
-      if (this.invoiceDetail.InvoiceID == 0) {
+      if (this.invoiceDetail.InvoiceID === 0) {
         this.invoiceDetail.docType = 5;
       } else {
         this.invoiceDetail.docType = 10;
@@ -114,7 +111,7 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
       // '/' + this.invoiceDetail.AttachmentName;
       // this.pdfsrc = $sce.trustAsResourceUrl(this.pdfsrc1);
 
-      if (this.invoiceDetail.InvoiceStatusID == 0) {
+      if (this.invoiceDetail.InvoiceStatusID === 0) {
         this.invoiceArgs.invType = 'duplicates';
       }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'fa-other',
+  selector: 'sp-fa-other',
   templateUrl: './other.component.html',
   styleUrls: ['./other.component.css']
 })

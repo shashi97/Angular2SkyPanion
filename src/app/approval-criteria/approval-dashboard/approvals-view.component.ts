@@ -58,17 +58,18 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
   }
 
   private onDrag(args) {
-    let [e, el] = args;
+    // let [e, el] = args;
   }
 
   private onDrop(args) {
-    let [e, el] = args;
+    // let [e, el] = args;
     this.sortApprovalCriteriaList();
   }
 
 
   ngOnInit() {
   }
+
   private showApprovalCriteria(data, typeData, isNew) {
 
     const builder = new BSModalContextBuilder<ApprovalContext>(
@@ -112,9 +113,7 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
           // messageService.showMsgBox("Success", "Role successfully deleted.", "success");
         }
       });
-
     }
-
   }
 
   private sortApprovalCriteriaList(): void {
@@ -129,13 +128,8 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
         };
         this.approvalListForUpdate.splice(this.approvalListForUpdate.length, 0, obj);
       }
-
       this.approvalCriteriaService.updateApprovers(this.approvalListForUpdate).then(result => {
-
       });
-
     }
   }
-
-
 }

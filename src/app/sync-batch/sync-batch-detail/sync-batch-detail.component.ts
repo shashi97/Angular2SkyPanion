@@ -53,7 +53,7 @@ export class SyncBatchDetailComponent extends BaseComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       let pageSizeFilter = params['pageSizeFilter'];
       let searchParameters = params['searchParameters'];
-      this.syncBatcheId = parseInt(params['syncBatchId']);
+      this.syncBatcheId = Number(params['id']);
 
       this.searchString = pageSizeFilter + '/' + searchParameters + '/' + this.syncBatcheId;
 
@@ -63,7 +63,7 @@ export class SyncBatchDetailComponent extends BaseComponent implements OnInit {
 
   getSyncBatcheDetail() {
 
-    this.location.replaceState('syncBatchDetail/' + this.searchString);
+    this.location.replaceState('syncBatch/detail/' + this.searchString);
 
     this.syncBatchService.getSyncBatcheDetail(this.syncBatcheId).then(result => {
       if (result.status === 404) {

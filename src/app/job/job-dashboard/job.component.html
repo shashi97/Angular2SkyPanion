@@ -44,10 +44,10 @@
         <tbody>
           <tr *ngFor="let item of jobs">
             <td>{{item.Number}}</td>
-            <td><a href="#/companyDetail/{{item.CompanyID}}">{{item.CompanyName}}</a></td>
+            <td><a href="#/company/detail/{{item.CompanyID}}/-1/-1">{{item.CompanyName}}</a></td>
             <td>{{item.Description}}</td>
             <td>{{item.TenantId}}</td>
-            <td><a href="#/jobDetail/{{item.JobID}}">Details</a></td>
+            <td><a href="#/job/detail/{{item.JobID}}">Details</a></td>
             <!--<td>{{item.AccountNumber}}</td>
                 <td>{{item.AccountTitle}}</td>
                 <td>{{item.invCount}}</td>

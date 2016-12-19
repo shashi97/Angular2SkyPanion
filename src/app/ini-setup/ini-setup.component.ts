@@ -25,13 +25,13 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
   private account: Object;
   private roles: Array<any> = [];
 
-  private selectedProcessScannedRole: RoleModel= new RoleModel();
-  private selectedReviewRole: RoleModel= new RoleModel();
-  private selectedApproveRole: RoleModel= new RoleModel();
-  private selectedBatchRole: RoleModel= new RoleModel();
-  private selectedDeleteRole: RoleModel= new RoleModel();
-  private selectedApproverOverrideRole: RoleModel= new RoleModel();
-  private selectedSyncBatchestoSkylineRole: RoleModel= new RoleModel();
+  private selectedProcessScannedRole: RoleModel = new RoleModel();
+  private selectedReviewRole: RoleModel = new RoleModel();
+  private selectedApproveRole: RoleModel = new RoleModel();
+  private selectedBatchRole: RoleModel = new RoleModel();
+  private selectedDeleteRole: RoleModel = new RoleModel();
+  private selectedApproverOverrideRole: RoleModel = new RoleModel();
+  private selectedSyncBatchestoSkylineRole: RoleModel = new RoleModel();
 
   constructor(
     vcRef: ViewContainerRef,
@@ -47,19 +47,14 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
   ) {
     super(localStorageService, router);
     this.iniSetupModel = new IniSetupModel();
-    this.getSessionDetails();
-   // overlay.defaultViewContainer = vcRef;
   }
 
   ngOnInit() {
-  }
-
-  private getSessionDetails(): void {
-    this.user = this.userService.getSessionDetails();
-    if (this.user.userId && this.user.IsSuperUser) {
+    if (this.user) {
       this.getUserDDOs();
     } else {
-      window.location.href = '/#/dashboard';
+      let link = ['/login'];
+      this.router.navigate(link);
     }
   }
 
@@ -98,7 +93,6 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
 
       this.roles.map((item) => {
         if (item.value.RoleID === this.iniSetupModel.GlobalPermissions.ProcessScannedRoleID) {
-          // this.selectedProcessScannedRole[0].selected = item;
           this.selectedProcessScannedRole = item.value;
         }
         if (item.value.RoleID === this.iniSetupModel.GlobalPermissions.ReviewInvoiceRoleID) {
@@ -141,20 +135,17 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
       // messageService.showMsgBox("Error", "please select ini file to uplaod first", "error");
       return false;
     }
-     this.iniSetupService.saveIniSetupDetails(this.iniSetupModel).then((result) => {
+    this.iniSetupService.saveIniSetupDetails(this.iniSetupModel).then((result) => {
       if (result.status === 404) {
       } else if (result.status === 500) {
       } else {
         this.getIniSetupDetails();
-        // alert("Ini Setup successfully saved.");
         this.toastr.success('Ini Setup successfully saved.', 'Success!');
-        // messageService.showMsgBox("Success", "Ini Setup successfully saved.", "success");
       }
     });
   }
 
   public getDirectories(filepath, category) {
-    let Serverfiles: Array<any> = [];
     if (filepath === '') {
       filepath = null;
     }
@@ -178,14 +169,6 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
     let overlayConfig: OverlayConfig = {
       context: builder.isBlocking(false).toJSON()
     };
-    // return this.modal.open(InvoiceEntryAccountsComponent, overlayConfig)
-    //   .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-    //    .then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-    //    .then(result => {
-    //     alert(result)
-    //    this.addGlAccountByPopup(result);
-
-    //    })
 
     // return this.modal.open(SetupModalComponent, overlayConfig)
     //   .catch (err => alert('ERROR'))

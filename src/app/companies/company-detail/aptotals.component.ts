@@ -13,7 +13,7 @@ import { CompanyService } from '../shared/company.service';
 export class AptTotalsComponent extends BaseComponent implements OnInit {
 
   @Input() companyId: number;
-  // private searchParameters: number;
+
   private companyChartDetail: any;
   private apTotals: boolean;
   private diskUsage: boolean;
@@ -21,6 +21,7 @@ export class AptTotalsComponent extends BaseComponent implements OnInit {
   private apTotalsNoData: boolean;
   private diskUsageNoData: boolean;
   private syncInfoNoData: boolean;
+
   constructor(
     localStorageService: LocalStorageService,
     router: Router,

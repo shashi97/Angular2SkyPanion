@@ -32,17 +32,16 @@ export class UserDetailComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private location: Location) {
     super(localStorageService, router);
-    this.getParameterValues();
   }
 
   ngOnInit() {
-
+    this.getParameterValues();
   }
 
 
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.userId = params['userId'];
+      this.userId = params['id'];
       this.pageSizeFilter = params['pageSizeFilter'];
       this.pageSizeFilter = this.pageSizeFilter === -1 ? 25 : this.pageSizeFilter;
       this.searchString = this.pageSizeFilter + '/' + this.userId;
@@ -51,7 +50,7 @@ export class UserDetailComponent extends BaseComponent implements OnInit {
   }
 
   private getUserById() {
-    this.location.replaceState('userDetail/' + this.searchString);
+    this.location.replaceState('user/detail/' + this.searchString);
 
     this.userService.getUserById(this.userId).then(result => {
       if (result.status === 404) {

@@ -13,7 +13,7 @@ import { BaseComponent } from '../../base.component';
 @Component({
   selector: 'sp-jobs',
   templateUrl: './job-detail.component.html',
-  providers: [JobsService, AccountService ]
+  providers: [JobsService, AccountService]
 })
 export class JobDetailComponent extends BaseComponent implements OnInit {
 
@@ -33,36 +33,22 @@ export class JobDetailComponent extends BaseComponent implements OnInit {
     super(localStorageService, router);
     this.jobDetail = new JobModel();
   }
+
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.jobId = +params['jobId'];
-
+      this.jobId = +params['id'];
     });
-    this.getSessionDetails();
-  }
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
+    if (this.user) {
       this.getJobById();
     } else {
       let link = ['/login'];
       this.router.navigate(link);
     }
-
   }
+
   private getJobById(): void {
     this.jobsService.getJobById(this.jobId, this.currentPage, this.pageSize).then((result) => {
-
-      //  if (result.status == 404) {
-      //                     $scope.jobDetail = [];
-      //                     $scope.totalItems = 0;
-      //                 }
-      //                 else if (result.status == 500) {
-      //                 }
-      //                 else {
       this.jobDetail = result;
     });
-
   }
-
 }

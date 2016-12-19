@@ -29,10 +29,10 @@ export class AchSetupDetailComponent extends BaseComponent implements OnInit {
   ) {
     super(localStorageService, router);
     this.achSetupDetail = new AchSetupModel();
-    this.getParameterValues();
   }
 
   ngOnInit() {
+    this.getParameterValues();
   }
 
   private getParameterValues(): void {

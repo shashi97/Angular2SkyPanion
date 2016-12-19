@@ -17,9 +17,11 @@ import { CurrentPageArguments } from '../../pagination/pagination.component';
   selector: 'sp-jobs',
   templateUrl: './job.component.html'
 })
+
 export class JobComponent extends BaseComponent implements OnInit {
+
   private account: Object;
-  private jobs: Array<any>;
+  private jobs: Array<JobModel>;
   private job: JobModel;
   private totalItems: number;
 
@@ -36,13 +38,19 @@ export class JobComponent extends BaseComponent implements OnInit {
     private location: Location
   ) {
     super(localStorageService, router);
-    this.jobs = new Array<any>();
+    this.jobs = new Array<JobModel>();
     this.job = new JobModel();
-
-    this.getSessionDetails();
-
   }
-  ngOnInit(): void { }
+
+  ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
+  }
+
 
   private get currentPageFiltered(): CurrentPageArguments {
     return this._currentPage;
@@ -55,16 +63,6 @@ export class JobComponent extends BaseComponent implements OnInit {
 
   public onCurrentPageChanged(newValue: CurrentPageArguments) {
     this.currentPageFiltered = newValue;
-  }
-
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
-      this.getParameterValues();
-    } else {
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
   }
 
   private getParameterValues(): void {
@@ -92,7 +90,7 @@ export class JobComponent extends BaseComponent implements OnInit {
       .getJobs(this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)
       .then(result => {
         if (result.status === 404) {
-          this.jobs = [];
+          this.jobs = new Array<JobModel>();
           this.totalItems = 0;
         } else if (result.status === 500) {
         } else {
@@ -105,19 +103,4 @@ export class JobComponent extends BaseComponent implements OnInit {
         }
       });
   }
-
-  // private pageChangeHandler(): void {
-  //   this.getJobs();
-  // };
-
-  // private getDataAsPerPerPageRequired(value: number): void {
-  //   if (value !== undefined && value !== null) {
-  //     this.pageSizeFilter = value;
-  //     this.currentPage = 1;
-  //     this.getJobs();
-  //     // var instanseId = paginationService.getLastInstanceId();
-  //     // paginationService.setCurrentPage(instanseId, this.currentPage);
-  //   }
-  // }
-
 }

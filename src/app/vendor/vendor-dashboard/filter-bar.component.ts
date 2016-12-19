@@ -30,7 +30,6 @@ export class VendorFilterComponent extends BaseComponent implements OnInit {
     router: Router
   ) {
     super(localStorageService, router);
-    console.log(this.vendorDetail);
   }
 
 

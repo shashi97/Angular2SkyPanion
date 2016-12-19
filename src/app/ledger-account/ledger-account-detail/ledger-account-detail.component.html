@@ -4,7 +4,7 @@
 
     <ol class="breadcrumb" [hidden]="!companyId != 0">
         <li>
-            <a href="#companies">Companies</a>
+            <a href="#company/-1/-1">Companies</a>
         </li>
         <li>
             <a href="#company/{{companyID}}">{{companyName}}</a>
@@ -16,7 +16,7 @@
     </ol>
   
 
-    <sp-crumb-bar *ngIf="ledgerAccountDetail" [pageDetail]="ledgerAccountDetail"></sp-crumb-bar>
+    <!--<sp-crumb-bar *ngIf="ledgerAccountDetail" [pageDetail]="ledgerAccountDetail"></sp-crumb-bar>-->
 
     <div class="container-fluid">
         <div id="panel-advancedoptions">

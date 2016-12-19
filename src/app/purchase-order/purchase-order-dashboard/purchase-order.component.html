@@ -3,7 +3,7 @@
   <sp-purchase-order-filter-bar></sp-purchase-order-filter-bar>
 
 
-  <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+  <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>-->
 
   <div class="container-fluid">
     <div class="col-md-12">
@@ -23,7 +23,7 @@
           <tr *ngFor="let item of purchaseOrders">
             <td>
               <div>
-                <a href="#/vendorDetail/{{item.VendorID}}">
+                <a href="#/vendor/detail/{{item.VendorID}}/-1/-1">
                   {{item.VendorName}}
                 </a>
               </div>

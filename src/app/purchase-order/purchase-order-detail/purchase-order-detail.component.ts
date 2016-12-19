@@ -23,9 +23,8 @@ export class PurchaseOrderDetailComponent extends BaseComponent implements OnIni
   private purchaseOrderDetail: PurchaseOrderModel;
   private currentPage: number = 1;
   private pageSize: number = 25;
-
-
   selectedCity: any;
+
   constructor(
     private route: ActivatedRoute,
     private accountService: AccountService,
@@ -40,21 +39,15 @@ export class PurchaseOrderDetailComponent extends BaseComponent implements OnIni
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.purchaseOrderId = +params['purchaseOrderId'];
+      this.purchaseOrderId = +params['id'];
 
     });
-    this.getSessionDetails();
-  }
-
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
+    if (this.user) {
       this.getPurchaseOrderById();
     } else {
       let link = ['/login'];
       this.router.navigate(link);
     }
-
   }
 
   private getPurchaseOrderById(): void {

@@ -6,10 +6,10 @@
     </div>
     <ol class="breadcrumb" *ngIf="roleID==0">
         <li>
-            <a href="#accounts/{{roleDetail.AccountID}}">{{roleDetail.AccountName}}</a>
+            <a href="#account/{{roleDetail.AccountID}}">{{roleDetail.AccountName}}</a>
         </li>
         <li>
-            <a href="#/roles">Roles</a>
+            <a href="#/role">Roles</a>
         </li>
         <li class="active">New Role</li>
     </ol>
@@ -33,7 +33,7 @@
                                 <label class="control-label col-md-3" for="role_account_id">Account</label>
                                 <div class="col-md-9">
                                     <p class="form-control-static">
-                                        <a href="#accounts/{{roleDetail.AccountID}}" target="_blank">{{roleDetail.AccountName}}</a>
+                                        <a href="#account/{{roleDetail.AccountID}}" target="_blank">{{roleDetail.AccountName}}</a>
                                     </p>
                                 </div>
                             </div>

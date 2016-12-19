@@ -34,22 +34,14 @@ export class LedgerAccountDetailComponent extends BaseComponent implements OnIni
   ) {
     super(localStorageService, router);
     this.ledgerAccountDetail = new LedgerAccountModel();
-
-    this.getParameterValues();
   }
 
   ngOnInit() {
-  }
-
-  private getSessionDetails() {
-    this.user = this.userService.getSessionDetails();
-    if (this.user.userId !== undefined) {
-      if (this.user.IsSuperUser === true) {
-        this.getParameterValues();
-      } else {
-        let link = ['/company'];
-        this.router.navigate(link);
-      }
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
     }
   }
 

@@ -35,7 +35,6 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
     this.masterService.checkDocumentLocking(this.invoiceDetail.InvoiceID, 10).then(result => {
       if (result.IsLocked === 0) {
         this.toastr.error('This Invoice is locked by' + result.LockBy, 'Oops!');
-        // messageService.showMsgBox("error", "This Invoice is locked by " + result.data.LockBy, "error");
         return;
       } else {
         // $location.path('/invoices/'+$scope.searchParameters +'/'+ parseInt($scope.invoiceDetail.InvoiceID) 
@@ -46,8 +45,6 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
 
 
   private SubmitInvoiceForApproval(invoice): void {
-
-    // only make let to avoid error Please give the exact value when you call the service    
     let documentLockingId: number = 0;
     let docType: string = '';
     let documentId: number = 0;

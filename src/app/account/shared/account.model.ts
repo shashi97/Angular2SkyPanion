@@ -1,5 +1,4 @@
 export class AccountModel {
-
 AccountID: number;
 AccountName: string;
 ApproveInvoiceRoleID: number;

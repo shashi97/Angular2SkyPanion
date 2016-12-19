@@ -22,17 +22,14 @@
     </thead>
     <tbody>
       <tr *ngFor="let vDetail of vendorDetail.VendorInvoices" current-page="currentPage" total-items="totalItems">
-        <td><a routerLink="/invoiceDetail/{{vDetail.InvoiceID}}">{{vDetail.InvoiceNumber}}</a></td>
+        <td><a routerLink="/invoice/detail/{{vDetail.InvoiceID}}/-1/-1">{{vDetail.InvoiceNumber}}</a></td>
         <td>{{vDetail.VoucherNumber}}</td>
-        <td><a routerLink="/companyDetail/{{vDetail.CompanyID}}">{{vDetail.CompanyName}}</a></td>
+        <td><a routerLink="/company/detail/{{vDetail.CompanyID}}/-1/-1">{{vDetail.CompanyName}}</a></td>
         <td>${{vDetail.Amount}}</td>
         <td>
-          <a routerLink="/invoiceDetail/{{vDetail.InvoiceID}}?vendor_id={{vDetail.VendorID}}">Details</a>
+          <a routerLink="/invoice/detail/{{vDetail.InvoiceID}}?vendor_id={{vDetail.VendorID}}">Details</a>
         </td>
       </tr>
     </tbody>
   </table>
-  <!--<div class="text-center">
-                        <dir-pagination-controls max-size="8" on-page-change="pageChangeHandler(newPageNumber)" direction-links="true" boundary-links="true" template-url="../../Scripts/Pagination/dirPagination.tpl.html"></dir-pagination-controls>
-                    </div>-->
 </div>

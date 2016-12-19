@@ -21,7 +21,7 @@ import { PurchaseOrderModel } from '../shared/purchase-order.model';
 
 export class PurchaseOrderComponent extends BaseComponent implements OnInit {
   private account: Object;
-  private purchaseOrders: Array<any>;
+  private purchaseOrders: Array<PurchaseOrderModel>;
   private purchaseOrder: PurchaseOrderModel;
   private totalItems: number;
   private pageName: string = 'Purchase Orders';
@@ -40,12 +40,18 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit {
     private location: Location
   ) {
     super(localStorageService, router);
-    this.purchaseOrders = new Array<any>();
+    this.purchaseOrders = new Array<PurchaseOrderModel>();
     this.purchaseOrder = new PurchaseOrderModel();
-    this.getSessionDetails();
   }
 
-  ngOnInit(): void { }
+  ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
+  }
 
 
   private get currentPageFiltered(): CurrentPageArguments {
@@ -63,16 +69,6 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit {
     this.currentPageFiltered = newValue;
   }
 
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
-      this.getParameterValues();
-    } else {
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
-  }
-
   private getParameterValues(): void {
     this.route.params.subscribe(params => {
       let pageSizeFilter = params['pageSizeFilter'];
@@ -80,7 +76,7 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit {
 
       if (searchParameters !== '-1') {
         let parameterArray: Array<string> = searchParameters.split(',');
-        this.companyId = parseInt(parameterArray[0]);
+        this.companyId = Number(parameterArray[0]);
       }
 
       if (pageSizeFilter !== '-1') {
@@ -108,7 +104,7 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit {
       .getPurchaseOrders(this.companyId, this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)
       .then(result => {
         if (result.status === 404) {
-          this.purchaseOrders = [];
+          this.purchaseOrders = Array<PurchaseOrderModel>();
           this.totalItems = 0;
         } else if (result.status === 500) {
         } else {

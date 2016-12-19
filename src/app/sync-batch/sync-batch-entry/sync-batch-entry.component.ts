@@ -22,9 +22,7 @@ import { SyncBatchEntryFilterArguments } from './filter-invoice.component';
 export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
 
   private syncBatcheInvoices: Array<SyncBatchEntryModel>;
-  private parameterValue: any;
   private totalItems: number = 0;
-  private rejectionComment: string = '';
   private dashboardMessage: string;
   private showdashboardMessage: boolean = false;
 
@@ -117,8 +115,8 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
       let searchParameters = params['searchParameters'];
       if (searchParameters !== '-1') {
         let parameterArray: Array<string> = searchParameters.split(',');
-        this.filteredValue.companyId = parseInt(parameterArray[0]);
-        this.filteredValue.userId = parseInt(parameterArray[1]);
+        this.filteredValue.companyId = Number(parameterArray[0]);
+        this.filteredValue.userId = Number(parameterArray[1]);
       }
     });
 

@@ -21,7 +21,7 @@ export class ShowDashboardDetail {
  * A Sample of how simple it is to create a new window, with its own injects.
  */
 @Component({
-    selector: 'sync-modal',
+    selector: 'sp-sync-modal',
     templateUrl: './sync-modal.component.html',
 })
 
