@@ -38,10 +38,15 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
   ) {
     super(localStorageService, router);
     this.achSetups = new Array<AchSetupModel>();
-    this.getSessionDetails();
   }
 
   ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
 
   private get currentPageFiltered(): CurrentPageArguments {
@@ -53,22 +58,11 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
     this.getAchSetups();
   }
 
-  private getSessionDetails(): void {
-    this.user = this.userService.getSessionDetails();
-
-    if (this.user.userId != null && this.user.IsSuperUser === true) {
-      this.getParameterValues();
-    } else {
-      let link = ['/company'];
-      this.router.navigate(link);
-    }
-  }
-
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
 
       let pageSizeFilter = params['pageSizeFilter'];
-      this.companyId = params['companyId'];
+      this.companyId = params['id'];
 
       if (pageSizeFilter !== '-1') {
         this.currentPageFiltered.pageSizeFilter = pageSizeFilter;

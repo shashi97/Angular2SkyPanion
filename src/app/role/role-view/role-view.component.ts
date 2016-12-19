@@ -17,7 +17,6 @@ import { RoleModel } from '../shared/role.model';
 export class RoleViewComponent extends BaseComponent implements OnInit {
 
   private roleId: number;
-  // private pageSizeFilter: number;
   private searchString: string = '';
 
   public role: RoleModel;
@@ -32,14 +31,10 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
   ) {
     super(localStorageService, router);
     this.role = new RoleModel();
-    this.getSessionDetails();
-
   }
-  ngOnInit(): void { }
 
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
+  ngOnInit() {
+    if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];
@@ -52,22 +47,19 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
 
       let pageSizeFilter = Number(params['pageSizeFilter'] ? params['pageSizeFilter'] : '-1');
       let searchParameters = Number(params['searchParameters'] ? params['searchParameters'] : '-1');
-      this.roleId = Number(params['roleId']);
+      this.roleId = Number(params['id']);
       this.searchString = pageSizeFilter + '/' + searchParameters + '/' + this.roleId;
       this.getMemberRoleDetail();
     });
   };
 
   private getMemberRoleDetail(): void {
-
-    this.location.replaceState('roleView/' + this.searchString);
-
+    this.location.replaceState('role/view/' + this.searchString);
     this.roleService.getMemberRoleDetail(this.roleId).then((result) => {
       if (result.status === 404 || result.status === 500) {
       } else {
         this.role = result;
       }
     });
-
   };
 }

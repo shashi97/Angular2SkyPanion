@@ -22,11 +22,9 @@ export class PurchaseOrderInvoicesComponent extends BaseComponent implements OnI
     router: Router
   ) {
     super(localStorageService, router);
-
   }
 
   ngOnInit() {
-
   }
 
 }

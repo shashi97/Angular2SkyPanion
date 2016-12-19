@@ -42,10 +42,16 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit {
     super(localStorageService, router);
     this.purchaseOrders = new Array<any>();
     this.purchaseOrder = new PurchaseOrderModel();
-    this.getSessionDetails();
   }
 
-  ngOnInit(): void { }
+  ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
+  }
 
 
   private get currentPageFiltered(): CurrentPageArguments {
@@ -61,16 +67,6 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit {
 
   public onCurrentPageChanged(newValue: CurrentPageArguments) {
     this.currentPageFiltered = newValue;
-  }
-
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
-      this.getParameterValues();
-    } else {
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
   }
 
   private getParameterValues(): void {

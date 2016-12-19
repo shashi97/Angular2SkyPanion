@@ -5,7 +5,7 @@
     </div>
   </div>
 
-  <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+  <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>-->
 
   <div class="container-fluid">
     <div class="col-md-12">
@@ -31,7 +31,7 @@
             <td>{{item.ImmedDestNum}}</td>
             <td>{{item.ImmedOrigName}}</td>
             <td>{{item.ImmedOrigNum}}</td>
-            <td><a routerLink="/achSetupDetail/{{currentPageFiltered.pageSizeFilter}}/{{item.id}}">Details</a></td>
+            <td><a routerLink="/achSetup/detail/{{item.id}}/{{currentPageFiltered.pageSizeFilter}}">Details</a></td>
           </tr>
         </tbody>
 

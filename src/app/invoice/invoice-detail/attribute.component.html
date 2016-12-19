@@ -22,7 +22,7 @@
 
             <dt>Rejected By</dt>
             <dd>
-              <a href="#user/{{invoiceDetail.RejectedByID}}">{{invoiceDetail.RejectedBy}}</a>
+              <a href="#user/detail/{{invoiceDetail.RejectedByID}}/-1">{{invoiceDetail.RejectedBy}}</a>
             </dd>
 
             <dt>Rejection Comment</dt>
@@ -36,7 +36,7 @@
             <dt>Processed by</dt>
             <dd>
               <span [hidden]="invoiceDetail.ProcessedBy != 'None'" class="text-warning italic-font">{{invoiceDetail.ProcessedBy}}</span>
-              <a href="#user/{{invoiceDetail.ProcessedByID}}" [hidden]="invoiceDetail.ProcessedBy == 'None'">{{invoiceDetail.ProcessedBy}}</a>
+              <a href="#user/detail/{{invoiceDetail.ProcessedByID}}/-1/-1" [hidden]="invoiceDetail.ProcessedBy == 'None'">{{invoiceDetail.ProcessedBy}}</a>
             </dd>
 
             <dt>Processed on</dt>
@@ -45,7 +45,7 @@
             <hr>
           </div>
           <dt>Company</dt>
-          <dd><a href="#company/{{invoiceDetail.CompanyID}}">{{invoiceDetail.CompanyName}}</a></dd>
+          <dd><a href="#/company/detail/{{invoiceDetail.CompanyID}}/-1/-1">{{invoiceDetail.CompanyName}}</a></dd>
 
           <dt>Invoice Number</dt>
           <dd>{{invoiceDetail.InvoiceNumber}}</dd>
@@ -53,7 +53,7 @@
           <dt>Purchase Order</dt>
           <dd>
             <span style="color: grey;" class="italic-font" *ngIf="invoiceDetail.PurchaseOrder=='None'">{{invoiceDetail.PurchaseOrder}}</span>
-            <a href="#purchaseordersDetails/{{invoiceDetail.PurchaseOrderID}}" *ngIf="invoiceDetail.PurchaseOrder!='None'">{{invoiceDetail.PurchaseOrder}}</a>
+            <a href="#/purchaseOrderDetail/{{invoiceDetail.PurchaseOrderID}}" *ngIf="invoiceDetail.PurchaseOrder!='None'">{{invoiceDetail.PurchaseOrder}}</a>
           </dd>
 
           <dt>Invoice Date</dt>
@@ -61,7 +61,7 @@
 
           <dt>Vendor</dt>
           <dd>
-            <a href="#vendorsDetails/{{invoiceDetail.VendorID}}">{{invoiceDetail.VendorName}}</a>
+            <a href="#/vendor/detail/{{invoiceDetail.VendorID}}/-1/-1">{{invoiceDetail.VendorName}}</a>
           </dd>
 
           <dt>Due Date</dt>
@@ -81,7 +81,7 @@
             <dt>Job Category</dt>
             <dd>
               <span [hidden]="invoiceDetail.JobCategory != 'None'" class="text-warning italic-font">{{invoiceDetail.JobCategory}}</span>
-              <a href="#jobcategory/{{invoiceDetail.JobCategoryID}}" [hidden]="invoiceDetail.JobCategory == 'None'">{{invoiceDetail.JobCategory}}</a>
+              <a href="#/job/detail/{{invoiceDetail.JobCategoryID}}" [hidden]="invoiceDetail.JobCategory == 'None'">{{invoiceDetail.JobCategory}}</a>
             </dd>
           </div>
           <dt>Description</dt>

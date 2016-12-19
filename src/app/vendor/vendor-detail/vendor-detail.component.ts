@@ -38,10 +38,10 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
     private masterService: MasterService,
     private vendorService: VendorService) {
     super(localStorageService, router);
-    this.getParameterValues();
   }
 
   ngOnInit() {
+    this.getParameterValues();
   }
 
   private get filteredValue(): VendorFilterArguments {
@@ -54,7 +54,7 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
 
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.vendorId = params['vendorId'];
+      this.vendorId = params['id'];
       this.getItemsPerPageList();
     });
   }

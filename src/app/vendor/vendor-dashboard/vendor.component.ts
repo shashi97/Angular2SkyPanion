@@ -50,10 +50,15 @@ export class VendorComponent extends BaseComponent implements OnInit {
   ) {
     super(localStorageService, router);
     this.vendors = new Array<VendorModel>();
-    this.getSessionDetails();
   }
 
   ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
 
   private get currentPageFiltered(): CurrentPageArguments {
@@ -86,26 +91,17 @@ export class VendorComponent extends BaseComponent implements OnInit {
     this.currentPageFiltered = newValue;
   }
 
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
-      this.getParameterValues();
-    } else {
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
-  }
-
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
 
-      let pageSizeFilter = params['pageSizeFilter'] ? params['pageSizeFilter'] : '-1' ;
-      let searchParameters = params['searchParameters'] ? params['searchParameters'] : '-1' ;
-       this.filteredValue.companyId = params['companyId'];
-
+      let pageSizeFilter = params['pageSizeFilter'] ? params['pageSizeFilter'] : '-1';
+      let searchParameters = params['searchParameters'] ? params['searchParameters'] : '-1';
+      if (params['id'] !== undefined) {
+        this.filteredValue.companyId = params['id'];
+      }
       if (searchParameters !== '-1') {
         let parameterArray: Array<string> = searchParameters.split(',');
-        this.filteredValue.companyId = parseInt(parameterArray[0]);
+        this.filteredValue.companyId = Number(parameterArray[0]);
         this.filteredValue.vendorKey = parameterArray[1];
         this.filteredValue.vendorName = parameterArray[2];
       }

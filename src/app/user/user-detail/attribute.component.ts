@@ -23,6 +23,5 @@ export class UserDetailAttributeComponent extends BaseComponent implements OnIni
   }
 
   ngOnInit() {
-    console.log(this.userDetail);
   }
 }

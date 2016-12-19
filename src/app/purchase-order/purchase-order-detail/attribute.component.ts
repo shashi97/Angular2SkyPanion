@@ -7,25 +7,21 @@ import { PurchaseOrderModel } from '../shared/purchase-order.model';
 
 
 @Component({
-    selector: 'sp-po-attribute',
-    templateUrl: './attribute.component.html',
+  selector: 'sp-po-attribute',
+  templateUrl: './attribute.component.html',
 })
 
-
 export class PurchaseOrderAttributeComponent extends BaseComponent implements OnInit {
-  
+
   @Input() purchaseOrderDetail: PurchaseOrderModel;
 
-    constructor(
-        localStorageService: LocalStorageService,
-        router: Router
-    ) {
-        super(localStorageService, router);
-       
-    }
+  constructor(
+    localStorageService: LocalStorageService,
+    router: Router
+  ) {
+    super(localStorageService, router);
+  }
 
-    ngOnInit() {
-       
-    }
-
+  ngOnInit() {
+  }
 }

@@ -45,11 +45,18 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
   ) {
     super(localStorageService, router);
     this.ledgerAccounts = new Array<LedgerAccountModel>();
-    this.getSessionDetails();
   }
 
+
   ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
+
 
   private get filteredValue(): LedgerFilterArguments {
     return this._filteredValue;
@@ -83,19 +90,7 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
 
   }
 
-  private getSessionDetails(): void {
-    this.user = this.userService.getSessionDetails();
-    if (this.user.userId != null) {
-      if (this.user.IsSuperUser === true) {
-        this.getParameterValues();
-      } else {
-        let link = ['/company'];
-        this.router.navigate(link);
-      }
-    }
-  }
-
-   private getParameterValues(): void {
+  private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
 
       let parameterValue: any = ((params) ? params : 1);

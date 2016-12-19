@@ -1,74 +1,59 @@
 <div id="slider" class="page-content">
-	<div class="page-heading">
-		<h1>{{pageName}}</h1>
-		<div class="options">
-			<div class="btn-toolbar form-inline">
-				<sp-company-filter-bar (filtered)='onFiltered($event)' [filteredValue]='filteredValue'>
-				</sp-company-filter-bar>
-			</div>
-		</div>
-	</div>
-	<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+  <div class="page-heading">
+    <h1>{{pageName}}</h1>
+    <div class="options">
+      <div class="btn-toolbar form-inline">
+        <sp-company-filter-bar (filtered)='onFiltered($event)' [filteredValue]='filteredValue'>
+        </sp-company-filter-bar>
+      </div>
+    </div>
+  </div>
+  <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>-->
 
-	<div class="container-fluid">
-		<div class="col-md-12">
-			<sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
-			<table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-				<thead>
-					<tr>
-						<th style="width: 20%">Number</th>
-						<th style="width: 40%">Name</th>
-						<th style="width: 20%">Sync</th>
-						<th style="width: 20%"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr  *ngFor="let item of companies">
-						<td>
-							<a tooltip="{{item.ToolTipTypeText}}" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">
-								<i [ngClass]="{'fa fa-book':
+  <div class="container-fluid">
+    <div class="col-md-12">
+      <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
+      <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th style="width: 20%">Number</th>
+            <th style="width: 40%">Name</th>
+            <th style="width: 20%">Sync</th>
+            <th style="width: 20%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of companies">
+            <td>
+              <a tooltip="{{item.ToolTipTypeText}}" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top">
+                <i [ngClass]="{'fa fa-book':
 									item.type=='Skypanion::Fund',
 									'fa fa-building':
 			 						item.type=='Skypanion::Property'}">
 								</i>
-							</a>{{item.Number}}</td>
-						<td>{{item.Name}}</td>
-						<td><a [ngClass]="{'text-success': item.ActivationLink=='Enable',
+              </a>{{item.Number}}</td>
+            <td>{{item.Name}}</td>
+            <td><a [ngClass]="{'text-success': item.ActivationLink=='Enable',
 				'text-danger': item.ActivationLink=='Disable'}" (click)="activateDeactiveCompany(item.Name,item.CompanyID,item.Active)">
 				{{item.ActivationLink}}</a>
 
-							<tooltip-content #myTooltip>
-								<div *ngIf="item.type=='Skypanion::Property'">
-									<b>Ledger Accounts:</b> {{ item.LedgerAccountCount }}
-									<br /><b>Invoices:</b> {{ item.InvoiceCount }} <br /><b>Vendors:</b> {{ item.VendorCount }}<br /><b>PDFs:</b> {{
-									item.PDFCount }}<br /><b>Purchase Orders:</b> {{ item.PurchaseOrderCount }}<br /><b>Approval Criteria:</b> {{item.ApprovalCriteriaCount
-									}} <br />
-								</div>
-								<div *ngIf="item.type !='Skypanion::Property'">
-									<b>Ledger Accounts:</b> {{ item.LedgerAccountCount }}
-									<br /><b>Invoices:</b> {{ item.InvoiceCount }} <br /><b>Vendors:</b> {{ item.VendorCount }}<br /><b>PDFs:</b> {{
-									item.PDFCount }}<br /><b>Purchase Orders:</b> {{ item.PurchaseOrderCount }}<br /><b>Approval Criteria:</b> {{item.ApprovalCriteriaCount
-									}} <br />
-									<b>Posts:</b> {{item.FundCount }}<br />
-								</div>
-							</tooltip-content>
-							<td><a [tooltip]="myTooltip" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top" routerLink="/companyDetail/{{searchString}}/{{item.CompanyID}}">Details</a></td>
-
-
-							<!--<td><a routerLink="/companyDetail/{{searchString}}/{{item.CompanyID}}">Details</a></td>-->
-
-					</tr>
-				</tbody>
-				<!--<tfoot>
-      <tr>
-        <td colspan="4">
-          <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-        </td>
-      </tr>
-    </tfoot>-->
-			</table>
-			 
-			<sp-pagination [dataSource]='companies' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
-		</div>
-	</div>
+              <tooltip-content #myTooltip>
+                <div *ngIf="item.type=='Skypanion::Property'">
+                  <b>Ledger Accounts:</b> {{ item.LedgerAccountCount }}
+                  <br /><b>Invoices:</b> {{ item.InvoiceCount }} <br /><b>Vendors:</b> {{ item.VendorCount }}<br /><b>PDFs:</b>                  {{ item.PDFCount }}<br /><b>Purchase Orders:</b> {{ item.PurchaseOrderCount }}<br /><b>Approval Criteria:</b>                  {{item.ApprovalCriteriaCount }} <br />
+                </div>
+                <div *ngIf="item.type !='Skypanion::Property'">
+                  <b>Ledger Accounts:</b> {{ item.LedgerAccountCount }}
+                  <br /><b>Invoices:</b> {{ item.InvoiceCount }} <br /><b>Vendors:</b> {{ item.VendorCount }}<br /><b>PDFs:</b>                  {{ item.PDFCount }}<br /><b>Purchase Orders:</b> {{ item.PurchaseOrderCount }}<br /><b>Approval Criteria:</b>                  {{item.ApprovalCriteriaCount }} <br />
+                  <b>Posts:</b> {{item.FundCount }}<br />
+                </div>
+              </tooltip-content>
+              <td><a [tooltip]="myTooltip" [tooltipDisabled]="false" [tooltipAnimation]="true" tooltipPlacement="top" 
+              routerLink="/company/detail/{{item.CompanyID}}/{{searchString}}">Details</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <sp-pagination [dataSource]='companies' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
+    </div>
+  </div>
 </div>

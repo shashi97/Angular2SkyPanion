@@ -18,7 +18,9 @@ import { CurrentPageArguments } from '../../pagination/pagination.component';
   templateUrl: './job.component.html',
   providers: [JobsService, AccountService]
 })
+
 export class JobComponent extends BaseComponent implements OnInit {
+
   private account: Object;
   private jobs: Array<any>;
   private job: JobModel;
@@ -39,11 +41,17 @@ export class JobComponent extends BaseComponent implements OnInit {
     super(localStorageService, router);
     this.jobs = new Array<any>();
     this.job = new JobModel();
-
-    this.getSessionDetails();
-
   }
-  ngOnInit(): void { }
+
+  ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
+  }
+
 
   private get currentPageFiltered(): CurrentPageArguments {
     return this._currentPage;
@@ -56,16 +64,6 @@ export class JobComponent extends BaseComponent implements OnInit {
 
   public onCurrentPageChanged(newValue: CurrentPageArguments) {
     this.currentPageFiltered = newValue;
-  }
-
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
-      this.getParameterValues();
-    } else {
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
   }
 
   private getParameterValues(): void {
@@ -106,19 +104,4 @@ export class JobComponent extends BaseComponent implements OnInit {
         }
       });
   }
-
-  // private pageChangeHandler(): void {
-  //   this.getJobs();
-  // };
-
-  // private getDataAsPerPerPageRequired(value: number): void {
-  //   if (value !== undefined && value !== null) {
-  //     this.pageSizeFilter = value;
-  //     this.currentPage = 1;
-  //     this.getJobs();
-  //     // var instanseId = paginationService.getLastInstanceId();
-  //     // paginationService.setCurrentPage(instanseId, this.currentPage);
-  //   }
-  // }
-
 }

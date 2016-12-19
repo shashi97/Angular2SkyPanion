@@ -87,7 +87,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
 
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.userId = parseInt(params['userId']);
+      this.userId = Number(params['id']);
       this.getDigests();
     });
   }

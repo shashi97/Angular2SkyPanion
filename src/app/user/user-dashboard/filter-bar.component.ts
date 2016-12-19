@@ -30,11 +30,10 @@ export class UserFilterComponent extends BaseComponent implements OnInit {
     private roleService: RoleService
   ) {
     super(localStorageService, router);
-    this.getRoles();
   }
 
-
   ngOnInit() {
+    this.getRoles();
   }
 
   private getRoles() {

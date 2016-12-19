@@ -42,12 +42,9 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.getRoles();
   }
+
   private getRoles(): void {
     this.roleService.getRoles().then(result => {
-      //  if (result.status === 404) {
-      //  } else if (result.status === 500) {
-      //  } else {
-      //  this.roleModel.rolesDetail = result;
       this.roles = result;
       let defaultRole = { RoleID: 0, AccountID: 0, Name: 'None', Description: 'None' };
       this.roles.splice(0, 0, defaultRole);
@@ -55,10 +52,10 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
         role.text = role.Name;
       });
 
-      let temp =  this.roles;
-       this.roles = [];
+      let temp = this.roles;
+      this.roles = [];
       temp.map((item: any) => {
-         this.roles.push(
+        this.roles.push(
           { label: item.Name, value: item });
       });
 
@@ -82,8 +79,7 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
 
 
   private getCompanyDetails(): void {
-    // this.companyService.getCompanyDetails(this.companyId).then(result => {
-    //   this.company = result;
+
     this.roles.map((item) => {
       if (item.value.RoleID === this.company.view_invoice_role_id) {
         this.selectedViewInvoicesRole = item.value;
@@ -107,29 +103,14 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
         this.selectedApproverRole = item.value;
       }
     });
-    // this.getCompanyChartData('ap_totals');
-    // }).catch(function (params: any) {
-    //   let message;
-    //   message = params;
-
-    //   if (message === undefined) {
-    //     message = 'error';
-    //   }
-    // });
   }
-  // public refreshValue(value: any): void {
-
-  // }
 
   public updateInvoiceRole(selectedRole: RoleModel, key: string): void {
     this.companyService.updateCompanyInvoiceRole(selectedRole.RoleID, key, this.companyId).then((result) => {
-
     });
-
   }
 
-   public selected(value:any):void {
+  public selected(value: any): void {
     console.log('Selected value is: ', value);
   }
-
 }

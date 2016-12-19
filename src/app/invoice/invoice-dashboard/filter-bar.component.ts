@@ -30,21 +30,24 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
 
   @Input() invoiceFilteredValue: InvoiceFilteredArgs = new InvoiceFilteredArgs();
   @Output() filteredInvoice: EventEmitter<InvoiceFilteredArgs> = new EventEmitter<InvoiceFilteredArgs>();
+
   private statusName: string = 'Invoice Status';
   private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
   private _vendorFilteredValue: VendorFilterArguments = new VendorFilterArguments();
   private _userFilteredValue: UserFilterArguments = new UserFilterArguments();
+
   private status: Array<any> =
   [{ statusId: null, StatusName: 'None' },
-    { statusId: 0, statusName: 'Static' },
-    { statusId: 1, statusName: 'Waiting for Review' },
-    { statusId: 2, statusName: 'Waiting for Approval' },
-    { statusId: 3, statusName: 'Waiting for Batch' },
-    { statusId: 4, statusName: 'Waiting for Sync' },
-    { statusId: 6, statusName: 'Synced' },
-    { statusId: 5, statusName: 'Rejected' },
-    { statusId: 7, statusName: 'Deleted' }
+  { statusId: 0, statusName: 'Static' },
+  { statusId: 1, statusName: 'Waiting for Review' },
+  { statusId: 2, statusName: 'Waiting for Approval' },
+  { statusId: 3, statusName: 'Waiting for Batch' },
+  { statusId: 4, statusName: 'Waiting for Sync' },
+  { statusId: 6, statusName: 'Synced' },
+  { statusId: 5, statusName: 'Rejected' },
+  { statusId: 7, statusName: 'Deleted' }
   ];
+
   private get companyFilteredArg(): CompanyFilterArguments {
     return this._companyFilteredValue;
   }
@@ -61,7 +64,6 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
     this._vendorFilteredValue = newValue;
   }
 
-  // get set for user
   private get userFilteredArg(): UserFilterArguments {
     return this._userFilteredValue;
   }
@@ -98,13 +100,9 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
     jQuery('#invoice_FromDate').val('');
     jQuery('#invToDate').val('');
     this.statusName = 'Invoice Status';
-   // this.userFilteredArg = new UserFilterArguments();
     this.vendorFilteredArg = new VendorFilterArguments();
-    // let companyArray = { companyId: 0 };
-     this.companyFilteredArg = new CompanyFilterArguments();
-     this.userFilteredArg = new UserFilterArguments();
-    // let vendorArray = { vendorId: 0 };
-    //  this.vendorFilteredArg = vendorArray;
+    this.companyFilteredArg = new CompanyFilterArguments();
+    this.userFilteredArg = new UserFilterArguments();
     this.filteredInvoice.emit(this.invoiceFilteredValue);
   }
 
@@ -124,6 +122,4 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
   public onVendorFiltered(filteredValue: VendorFilterArguments): void {
     this.vendorFilteredArg = filteredValue;
   }
-
-
 }

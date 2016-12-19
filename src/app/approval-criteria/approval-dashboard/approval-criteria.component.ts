@@ -33,7 +33,6 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   private account: Object;
   private cmpName: string;
   private approvals: Array<ApprovalCriteriaModel>;
-  private ledgerAccounts: Array<any> = [];
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private _filteredValue: ApprovalFilterArguments = new ApprovalFilterArguments;
   private approvers: Array<any> = [];
@@ -54,11 +53,17 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   ) {
     super(localStorageService, router);
     this.approvals = new Array<ApprovalCriteriaModel>();
-    this.getSessionDetails();
   }
 
   ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
+
 
 
   private get currentPageFiltered(): CurrentPageArguments {
@@ -76,20 +81,9 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
     this.getApprovalCriteria(this._filteredValue.type);
   }
 
-  private getSessionDetails(): void {
-    this.user = this.userService.getSessionDetails();
-
-    if (this.user.userId && this.user.IsSuperUser) {
-      this.getParameterValues();
-    } else {
-      let link = ['/dashboard'];
-      this.router.navigate(link);
-    }
-  }
-
   private getParameterValues(): void {
     this.route.params.subscribe(params => {
-      this.companyId = parseInt(params['companyId']);
+      this.companyId = Number(params['id']);
       if (this.companyId === 0) {
         this.getAccountName();
       } else {
@@ -106,7 +100,7 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   }
 
   private getCompanyName(): void {
-    this.location.replaceState('approvals/' + this.companyId);
+    this.location.replaceState('approval/' + this.companyId);
     this.companiesService.getCompanyName(this.companyId).then(result => {
       this.cmpName = result._body.replace(/"/g, '');
       this.getApprovers();
@@ -130,16 +124,12 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
       };
       this.approvers.splice(0, 0, defaultApprover);
       this.approversCount = this.approvers.length;
-      // this.selectedApprover = [];
-      // this.selectedApprover.selected = [];  
       this.getLedgerAccounts();
     });
   }
 
   private getLedgerAccounts(): void {
     this.ledgerAccountService.getLedgerAccountDDOsAccountTypeWise(this.companyId).then(result => {
-      // this.ledgerAccounts = result;
-      // this.selectedLedgerAccount.selected = [];
       this.getApprovalCriteria('all');
     });
   }

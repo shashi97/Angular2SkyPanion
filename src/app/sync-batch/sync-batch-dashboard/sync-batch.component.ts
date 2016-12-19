@@ -38,10 +38,15 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
     private location: Location
   ) {
     super(localStorageService, router);
-    this.getSessionDetails();
   }
 
   ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
 
   private get currentPageFiltered(): CurrentPageArguments {
@@ -72,12 +77,6 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
     this.getSyncBatches();
   }
 
-  getSessionDetails() {
-    this.user = this.userService.getSessionDetails();
-    if (this.user.userId != null) {
-      this.getParameterValues();
-    }
-  }
 
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
@@ -90,7 +89,7 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
         this.syncBatchFilteredValue.syncFromDate = parameterArray[0];
         this.syncBatchFilteredValue.syncToDate = parameterArray[1];
         this.syncBatchFilteredValue.batchNumber = parameterArray[2];
-        this.syncBatchFilteredValue.userId = parseInt(parameterArray[3]);
+        this.syncBatchFilteredValue.userId = Number(parameterArray[3]);
       }
 
       if (pageSizeFilter !== '-1') {
@@ -120,7 +119,7 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
 
   getSyncBatches() {
 
-    this.location.replaceState('syncBatches/' + this.searchString);
+    this.location.replaceState('syncBatch/' + this.searchString);
 
     let searchCriteriaSyncBatches = {
       syncFromDate: this._currentSyncBatchArgs.syncFromDate,

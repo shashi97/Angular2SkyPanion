@@ -2,7 +2,7 @@
 
   <sp-vendor-filter-bar (filtered)="onFiltered($event)" [filteredValue]="filteredValue"></sp-vendor-filter-bar>
 
-  <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+  <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>-->
 
   <div class="container-fluid">
     <div class="col-md-12">
@@ -37,7 +37,7 @@
                 </a>
               </div>
             </td>
-            <td><a routerLink="/vendorDetail/{{searchString}}/{{item.VendorID}}">Details</a></td>
+            <td><a routerLink="/vendor/detail/{{item.VendorID}}/{{searchString}}">Details</a></td>
           </tr>
         </tbody>
 

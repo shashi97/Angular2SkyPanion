@@ -19,12 +19,9 @@ export class LedgerAccountDistributionComponent extends BaseComponent implements
     router: Router,
   ) {
     super(localStorageService, router);
-    console.log(this.ledgerAccounts);
-
   }
 
   ngOnInit() {
     this.totalItems = this.ledgerAccounts.length;
-    console.log(this.totalItems);
   }
 }

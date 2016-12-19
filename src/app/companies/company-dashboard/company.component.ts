@@ -47,10 +47,15 @@ export class CompanyComponent extends BaseComponent implements OnInit {
     super(localStorageService, router);
     this.skyPanionTypeList = new Array<any>();
     this.companies = new Array<any>();
-    this.getSessionDetails();
   }
 
   ngOnInit(): void {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
 
   private get filteredValue(): CompanyFilterArguments {
@@ -78,16 +83,6 @@ export class CompanyComponent extends BaseComponent implements OnInit {
       + this.filteredValue.syncId + ','
       + this.filteredValue.syncTypeId;
     this.getCompanies();
-  }
-
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
-      this.getParameterValues();
-    } else {
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
   }
 
   private getParameterValues(): void {
@@ -207,7 +202,7 @@ export class CompanyComponent extends BaseComponent implements OnInit {
     this.companyService
       .activateDeactiveCompany(CompanyId, isActive)
       .then((result) => {
-        this.getSessionDetails();
+        // this.getSessionDetails();
       });
   }
 

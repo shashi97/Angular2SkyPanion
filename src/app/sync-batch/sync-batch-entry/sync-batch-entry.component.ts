@@ -117,8 +117,8 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
       let searchParameters = params['searchParameters'];
       if (searchParameters !== '-1') {
         let parameterArray: Array<string> = searchParameters.split(',');
-        this.filteredValue.companyId = parseInt(parameterArray[0]);
-        this.filteredValue.userId = parseInt(parameterArray[1]);
+        this.filteredValue.companyId = Number(parameterArray[0]);
+        this.filteredValue.userId = Number(parameterArray[1]);
       }
     });
 

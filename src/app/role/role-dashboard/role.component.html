@@ -1,6 +1,6 @@
 <div id="slider" class="page-content">
     <sp-role-filter-bar [rolefilteredValue]="rolefilteredValue" (filtered)='onRoleFiltered($event)'></sp-role-filter-bar>
-    <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+    <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>-->
     <div class="container-fluid">
        
         <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
@@ -16,8 +16,8 @@
                 <tr *ngFor="let item of roles">
                     <td>{{item.Name}}</td>
                     <td>{{item.Description}}</td>
-                    <td><a href="#/roleView/{{currentPageFiltered.pageSizeFilter}}/{{item.RoleID}}"><i class="fa fa-search"></i>View</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="#/roleEntry/{{searchString}}/{{item.RoleID}}"><i class="fa fa-edit"></i>Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <td><a href="#/role/view/{{item.RoleID}}/{{currentPageFiltered.pageSizeFilter}}"><i class="fa fa-search"></i>View</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="#/role/entry/{{item.RoleID}}/{{searchString}}"><i class="fa fa-edit"></i>Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a (click)="deleteRole(item.RoleID, item.Name)"><i class="fa fa-remove"></i>Destroy</a>
                     </td>
                 </tr>

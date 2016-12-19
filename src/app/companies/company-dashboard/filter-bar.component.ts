@@ -58,21 +58,14 @@ export class CompanyFilterComponent extends BaseComponent implements OnInit {
     router: Router
   ) {
     super(localStorageService, router);
-    // console.log(this.vendorDetail);
-
   }
 
   ngOnInit() { }
 
   private searchUrl(): void {
-
     this.filteredValue.syncId = this.syncTypeFiltered.syncId;
     this.filteredValue.syncTypeId = this._companyPath.syncTypeId;
     this.filtered.emit(this.filteredValue);
-    // let link = ['/company/' + this.searchText +
-    //   ',' + this.syncTypeFiltered.syncId +
-    //   ',' + this.companyPathFiltered.syncTypeId];
-    // this.router.navigate(link);
   }
 
   private searchUrlReset(): void {

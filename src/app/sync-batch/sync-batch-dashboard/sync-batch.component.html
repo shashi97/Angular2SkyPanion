@@ -4,7 +4,7 @@
   </sp-sync-batch-filter>
 
 
-  <sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
+  <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>-->
 
   <div class="container-fluid">
 
@@ -25,10 +25,10 @@
       <tbody>
         <tr *ngFor="let item of syncBatchs">
           <td>
-            <a routerLink="accountDetail/{{item.AccountName}}">{{item.AccountName}}</a>
+            <a routerLink="account/detail/{{item.AccountName}}">{{item.AccountName}}</a>
           </td>
           <td>
-            <a routerLink="accountDetail/{{item.AccountName}}">{{item.UserName}}</a>
+            <a routerLink="account/detail/{{item.AccountName}}">{{item.UserName}}</a>
           </td>
           <td>{{item.BatchNumber}}</td>
           <td>{{item.BatchDate}}</td>
@@ -44,7 +44,7 @@
 
           </td>
           <td>{{item.Invoices}}</td>
-          <td><a href="#/syncBatchDetail/{{searchString}}/{{item.SyncBatcheID}}">Details</a></td>
+          <td><a href="#/syncBatch/detail/{{item.SyncBatcheID}}/{{searchString}}">Details</a></td>
         </tr>
       </tbody>
     </table>

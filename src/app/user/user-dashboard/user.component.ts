@@ -44,10 +44,15 @@ export class UserComponent extends BaseComponent implements OnInit {
     private confirmService: ConfirmService
   ) {
     super(localStorageService, router);
-    this.getSessionDetails();
   }
 
   ngOnInit() {
+    if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
 
   private get filteredValue(): UserFilterArguments {
@@ -74,16 +79,6 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.getUsers();
   }
 
-  private getSessionDetails(): void {
-    this.user = this.userService.getSessionDetails();
-    if (this.user.userId != null && this.user.IsSuperUser === true) {
-      this.getParameterValues();
-    } else {
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
-  }
-
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
 
@@ -93,7 +88,7 @@ export class UserComponent extends BaseComponent implements OnInit {
 
       if (searchParameters !== '-1') {
         let parameterArray: Array<string> = parameterValue.searchParameters.split(',');
-        this.filteredValue.roleId = parseInt(parameterArray[0]);
+        this.filteredValue.roleId = Number(parameterArray[0]);
         this.filteredValue.userTypeId = parameterArray[1];
       }
 
@@ -122,7 +117,7 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   private getUsers(): void {
 
-    this.location.replaceState('users/' + this.searchString);
+    this.location.replaceState('user/' + this.searchString);
 
     this.userService.getUsers(
       this.filteredValue.userTypeId,
