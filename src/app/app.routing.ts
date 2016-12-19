@@ -41,7 +41,7 @@ import { SyncBatchEntryComponent } from './sync-batch/sync-batch-entry/sync-batc
 import { UserComponent } from './user/user-dashboard/user.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserEntryComponent } from './user/user-entry/user-entry.component';
-
+import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
 
 const APP_ROUTES: Routes = [
 
@@ -88,8 +88,8 @@ const APP_ROUTES: Routes = [
 
   { path: 'user/:pageSizeFilter/:searchParameters', component: UserComponent },
   { path: 'user/detail/:id/:pageSizeFilter', component: UserDetailComponent },
-  { path: 'userEntry/:id', component: UserEntryComponent }
-
+  { path: 'userEntry/:id', component: UserEntryComponent },
+  { path: 'dashboard', component: DashboardViewComponent },
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);
