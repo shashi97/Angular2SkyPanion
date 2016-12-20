@@ -36,7 +36,7 @@ export class ReleaseInvoiceComponent extends BaseComponent implements OnInit {
             if (this.confirmService.confermMessage(message, 'Invoices?')) {
                 this.syncBatchEntryService.releaseInvoiceforSyncing(this.syncBatch).then((result) => {
                     this.toastr.success('Invoices releases successfully', 'Success!');
-                    let link = ['/syncBatches/-1/-1'];
+                    let link = ['/syncBatch/-1/-1'];
                     this.router.navigate(link);
                 });
 
