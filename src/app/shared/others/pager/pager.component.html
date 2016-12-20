@@ -1,5 +1,5 @@
  <span *ngIf="totalItems==0">No {{pageName}} found</span>
-        <span *ngIf="totalItems <= currentPageFiltered.pageSizeFilter && totalItems!=0">Displaying <b>all {{totalItems}}</b> {{pageName}}</span>
+        <span *ngIf="totalItems <= currentPageFiltered.pageSizeFilter && totalItems!=0">Displaying <b>all {{totalItems}}</b> {{pageName}} </span>
 		<span *ngIf="totalItems > currentPageFiltered.pageSizeFilter && totalItems!=0">
             Displaying {{pageName}}
             <b>

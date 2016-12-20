@@ -17,7 +17,7 @@ export class SyncBatchDetailInvoiceComponent extends BaseComponent implements On
 
   constructor(
     localStorageService: LocalStorageService,
-    router: Router,
+    router: Router
   ) {
     super(localStorageService, router);
   }

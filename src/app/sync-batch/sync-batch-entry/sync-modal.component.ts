@@ -30,7 +30,7 @@ export class SyncModelComponent implements CloseGuard, ModalComponent<SyncModalC
     private syncModel: SyncModalContext;
     private showDashboardDetail: ShowDashboardDetail;
     private rejectionComment: string;
-    private errorsInv: Array<any> = [];
+    private errorsInv: Array<Object> = [];
     private errorHeader: string;
     private showdashboardMessage: boolean = false;
     private dashboardMessage: string;

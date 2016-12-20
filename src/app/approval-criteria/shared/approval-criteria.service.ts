@@ -34,6 +34,7 @@ export class ApprovalCriteriaService {
   }
 
   public saveApprovalCriteria(approvalCriteriaID, companyID, rangeStart, rangeEnd, userID, ledgerAccountID, type): Promise<any> {
+    type = (type === '') ? null : type;
     let options = new RequestOptions();
     options.headers = new Headers();
     options.headers.append('Content-Type', 'application/json; charset=utf-8');

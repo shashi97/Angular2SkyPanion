@@ -4,10 +4,10 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { Overlay, OverlayConfig } from 'angular2-modal';
 import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
-import { ApprovalContext, ApprovalModalComponent } from './approval-criteria.modal';
+import { ApprovalModalComponent } from './approval-criteria.modal';
 import { ConfirmService } from '../../shared/services/otherServices/confirmService';
 import { ApprovalCriteriaService } from '../shared/approval-criteria.service';
-import { ApprovalCriteriaModel } from '../shared/approval-criteria.model';
+import { ApprovalCriteriaModel, ApprovalContext } from '../shared/approval-criteria.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
@@ -70,11 +70,11 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
   ngOnInit() {
   }
 
-  private showApprovalCriteria(data, typeData, isNew) {
+  private showApprovalCriteria(approvalDetail, typeData, isNew) {
 
     const builder = new BSModalContextBuilder<ApprovalContext>(
       {
-        data: data,
+        approvalDetail: approvalDetail,
         type: typeData,
         isNew: isNew,
         companyId: this.companyId,

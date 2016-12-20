@@ -1,22 +1,11 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
-import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { ApprovalCriteriaModel, ApproversModel } from '../shared/approval-criteria.model';
+import { ApproversModel, ApprovalContext, LedgersModel } from '../shared/approval-criteria.model';
 import { LedgerAccountService } from '../../ledger-account/shared/ledger-account.service';
 import { ApprovalCriteriaService } from '../shared/approval-criteria.service';
 import { LedgerAccountModel } from '../../ledger-account/shared/ledger-account.model';
 
-
-export class ApprovalContext extends BSModalContext {
-  data: ApprovalCriteriaModel;
-  type: string;
-  isNew: number;
-  companyId: number;
-  approvers: Array<any>;
-  approversCount: number = 0;
-  cmpName: string;
-}
 
 @Component({
   selector: 'sp-approval-modal',
@@ -24,22 +13,10 @@ export class ApprovalContext extends BSModalContext {
 })
 
 export class ApprovalModalComponent implements CloseGuard, ModalComponent<ApprovalContext> {
-  private context: ApprovalContext;
-  private modelHeader: string;
-  private companyName: string;
-  private userName: string;
-  private ledgerAccountID: number;
-  private type: string;
-  private rangeStart: string;
-  private rangeEnd: string;
-  private divAddApprover: boolean = false;
-  private rangeAmtError: boolean = false;
-  private errors: Array<any> = [];
+  private approvalContext: ApprovalContext = new ApprovalContext();
+  private errors: Array<Object> = [];
   private errorHeader: string;
-  private approvalCriteriaID: number;
-  private userID: number;
-  private ledgerAccounts: Array<any> = [];
-  private selectedLedgerAccount: LedgerAccountModel;
+  private selectedLedgerAccount: LedgerAccountModel = new LedgerAccountModel();
   private selectedApprover: ApproversModel = new ApproversModel();
   private showHideErrorLog: Object = { 'display': 'none' };
 
@@ -47,100 +24,92 @@ export class ApprovalModalComponent implements CloseGuard, ModalComponent<Approv
     public ledgerAccountService: LedgerAccountService,
     public approvalCriteriaService: ApprovalCriteriaService,
     public toastr: ToastsManager) {
-    this.context = dialog.context;
-    let temp = this.context.approvers;
-    this.context.approvers = [];
+    this.approvalContext = dialog.context;
+    let temp = this.approvalContext.approvers;
+    this.approvalContext.approvers = [];
     temp.map((item: any) => {
-      this.context.approvers.push(
+      this.approvalContext.approvers.push(
         { label: item.username, value: item });
     });
-    this.showApprovalCriteria(this.context.data, this.context.type, this.context.isNew);
+    this.showApprovalCriteria(this.approvalContext.approvalDetail, this.approvalContext.isNew);
   }
-    public showApprovalCriteria(data, type, isNew): void {
-    //let companyId=this.context.companyId;
-    // if (this.context.companyId == 0) {
-    //     companyId = data.CompanyID;
-    // }
-    let companyId = this.context.companyId === 0 ? data.CompanyID : this.context.companyId;
+  public showApprovalCriteria(approvalDetail, isNew): void {
+    let companyId = this.approvalContext.companyId === 0 ? approvalDetail.CompanyID : this.approvalContext.companyId;
     this.ledgerAccountService.getLedgerAccountDDOsAccountTypeWise(companyId).then((result) => {
-      this.ledgerAccounts = result;
-      let temp = this.ledgerAccounts;
-      this.ledgerAccounts = [];
+      this.approvalContext.ledgerAccounts = result;
+      let defaultLedger = new LedgersModel();
+      this.approvalContext.ledgerAccounts.splice(0, 0, defaultLedger);
+      let temp = this.approvalContext.ledgerAccounts;
+      this.approvalContext.ledgerAccounts = [];
       temp.map((item: any) => {
-        this.ledgerAccounts.push(
+        this.approvalContext.ledgerAccounts.push(
           { label: item.LedgerAccount, value: item });
       });
-      // this.selectedLedgerAccount = [];
-      // this.selectedLedgerAccount.selected = [];
-      this.showApprovalCriteriaReport(data, type, isNew);
+      this.showApprovalCriteriaReport(approvalDetail, isNew);
     });
 
   }
 
-  private showApprovalCriteriaReport(result, type, isNew): void {
-    this.rangeAmtError = false;
+  private showApprovalCriteriaReport(result, isNew): void {
+    this.approvalContext.rangeAmtError = false;
     if (isNew === 1) {
-      if (this.context.approversCount > 0) {
-        this.AddEditApproverCriteria(result, type);
+      if (this.approvalContext.approversCount > 0) {
+        this.AddEditApproverCriteria(result);
       } else {
-        this.divAddApprover = false;
+        this.approvalContext.divAddApprover = false;
         this.toastr.error('There are no user accounts with the'
           + 'permission required to approve invoices.Please go to the settings page to configure permissions', 'Oops!');
         return;
       }
     } else {
-      this.divAddApprover = true;
-      this.AddEditApproverCriteria(result, type);
+      this.approvalContext.divAddApprover = true;
+      this.AddEditApproverCriteria(result);
     }
   }
 
-  private AddEditApproverCriteria(result, type): void {
-    this.divAddApprover = true;
+  private AddEditApproverCriteria(result): void {
+    this.approvalContext.divAddApprover = true;
     this.errorHeader = '';
 
-    this.type = type;
-    this.approvalCriteriaID = 0;
+    this.approvalContext.approvalCriteriaID = 0;
 
-    this.rangeStart = '0';
-    this.rangeEnd = '0';
+    this.approvalContext.rangeStart = '0';
+    this.approvalContext.rangeEnd = '0';
 
-    if (result == null && this.type === 'range') {
-      this.modelHeader = 'Create Range Approval';
-      this.companyName = this.context.cmpName;
-    } else if (result == null && this.type === 'ledger') {
-      this.modelHeader = 'Create Ledger Account Approval';
-      this.companyName = this.context.cmpName;
+    if (result === 'RangeApproval' && this.approvalContext.type === 'range') {
+      this.approvalContext.modelHeader = 'Create Range Approval';
+    } else if (result === 'ledgerApproval' && this.approvalContext.type === 'ledger') {
+      this.approvalContext.modelHeader = 'Create Ledger Account Approval';
     } else {
-      this.modelHeader = 'Edit Range Approval';
-      this.approvalCriteriaID = result.ApprovalCriteriaID;
-      this.companyName = result.CompanyName;
+      this.approvalContext.modelHeader = 'Edit Range Approval';
+      this.approvalContext.approvalCriteriaID = result.ApprovalCriteriaID;
+      this.approvalContext.cmpName = result.CompanyName;
 
-      this.userID = result.UserID;
-      this.userName = result.UserName;
+      this.approvalContext.userID = result.UserID;
+      this.approvalContext.userName = result.UserName;
 
-      this.rangeStart = result.RangeStart_cents;
-      this.rangeEnd = result.RangeEnd_cents;
-
-      this.ledgerAccountID = result.LedgerAccountID;
-
-      if (this.context.companyId !== 0) {
-        this.context.approvers.forEach((item) => {
-          if (item.value.UserID === this.userID) {
+      this.approvalContext.rangeStart = result.RangeStart_cents;
+      this.approvalContext.rangeEnd = result.RangeEnd_cents;
+      this.approvalContext.ledgerAccountID = result.LedgerAccountID === null ?
+        this.approvalContext.ledgerAccountID : result.LedgerAccountID;
+      if (this.approvalContext.companyId !== 0) {
+        this.approvalContext.approvers.forEach((item) => {
+          if (item.value.UserID === this.approvalContext.userID) {
             this.selectedApprover = item.value;
           }
         });
 
-        if (this.type === 'ledger' || this.ledgerAccountID != null) {
-          this.ledgerAccounts.forEach((item) => {
-            if (item.value.LedgerAccountID === this.ledgerAccountID) {
+        if (this.approvalContext.type === 'ledger' || this.approvalContext.ledgerAccountID !== 0) {
+          this.approvalContext.ledgerAccounts.forEach((item) => {
+            if (item.value.LedgerAccountID === this.approvalContext.ledgerAccountID) {
               this.selectedLedgerAccount = item.value;
             }
           });
         }
       } else {
-        if (this.ledgerAccountID != null) {
-          this.ledgerAccounts.forEach((item) => {
-            if (item.value.LedgerAccountID === this.ledgerAccountID) {
+        if (this.approvalContext.ledgerAccountID !== 0) {
+          this.approvalContext.ledgerAccounts.forEach((item) => {
+            if (item.value.LedgerAccountID === this.approvalContext.ledgerAccountID) {
               this.selectedLedgerAccount = item.value;
             }
           });
@@ -155,85 +124,86 @@ export class ApprovalModalComponent implements CloseGuard, ModalComponent<Approv
   private saveApprovalCriteria(): void {
     this.errors = [];
     this.errorHeader = '';
-    this.userID = 0;
     let ledgerAccountID = 0;
-    if (this.context.companyId !== 0) {
-      if (this.selectedApprover === undefined) {
-        // let obj = { ErrorName: 'Please select Approver' }
-        // this.errors.splice(this.errors.length, 0, obj);
-      } else {
-        this.userID = this.selectedApprover.UserID;
-      }
-    }
-
-    if (this.type === 'ledger' || this.ledgerAccountID != null) {
-      if (this.selectedLedgerAccount === undefined) {
+    if (this.approvalContext.type === 'ledger') {
+      if (this.selectedLedgerAccount.LedgerAccountID === 0) {
         let obj = { ErrorName: 'Please select Ledger Account' };
         this.errors.splice(this.errors.length, 0, obj);
       } else {
         ledgerAccountID = this.selectedLedgerAccount.LedgerAccountID;
       }
-    }
-
-
-    if ((this.type === '' || this.type === 'range') && this.ledgerAccountID == null) {
-
-      if (this.rangeStart === '' || this.rangeStart == null) {
-        let obj = { ErrorName: 'Please enter Range Start' };
-        this.errors.splice(this.errors.length, 0, obj);
-      }
-
-      if (this.rangeEnd === '' || this.rangeEnd == null) {
-        let obj = { ErrorName: 'Please enter Range End' };
-        this.errors.splice(this.errors.length, 0, obj);
-      }
-
-      if (parseFloat(this.rangeStart) > parseFloat(this.rangeEnd)) {
-        let obj = { ErrorName: 'Range Start cannot exceed Range End' };
-        this.errors.splice(this.errors.length, 0, obj);
+    } else {
+      if (this.approvalContext.ledgerAccountID !== 0) {
+        ledgerAccountID = this.selectedLedgerAccount.LedgerAccountID;
       }
     }
 
+if ((this.approvalContext.type === '' || this.approvalContext.type === 'range') && this.approvalContext.ledgerAccountID === 0) {
 
-    if (this.context.companyId !== 0 && this.userID === 0) {
-      let obj = { ErrorName: 'Please select Approver' };
-      this.errors.splice(this.errors.length, 0, obj);
-    }
-    if (this.ledgerAccountID === 0 && (this.type === 'ledger' || this.type === '') && this.ledgerAccountID != null) {
-      let obj = { ErrorName: 'Please select Ledger Account' };
-      this.errors.splice(this.errors.length, 0, obj);
-    }
-    if (this.errors.length > 0) {
-      this.showHideErrorLog = { 'display': 'block' };
-      this.errorHeader = this.errors.length + ' errors prohibited this range approval from being saved:';
-      return;
-    }
-    if (this.type === '') {
-      this.type = null;
-    }
-
-    this.approvalCriteriaService.saveApprovalCriteria(
-      this.approvalCriteriaID,
-      this.context.companyId,
-      this.rangeStart,
-      this.rangeEnd,
-      this.userID,
-      ledgerAccountID,
-      this.type)
-      .then((result) => {
-        if (this.type == null) {
-          this.type = 'all';
-        }
-        this.showHideErrorLog = { 'display': 'none' };
-        this.toastr.success('Approval criteria saved successfully.', 'Success!');
-        this.dialog.close(this.type);
-      });
+  if (this.approvalContext.rangeStart === '') {
+    let obj = { ErrorName: 'Please enter Range Start' };
+    this.errors.splice(this.errors.length, 0, obj);
   }
 
+  if (this.approvalContext.rangeEnd === '') {
+    let obj = { ErrorName: 'Please enter Range End' };
+    this.errors.splice(this.errors.length, 0, obj);
+  }
 
+  if (parseFloat(this.approvalContext.rangeStart) > parseFloat(this.approvalContext.rangeEnd)) {
+    let obj = { ErrorName: 'Range Start cannot exceed Range End' };
+    this.errors.splice(this.errors.length, 0, obj);
+  }
+}
+
+
+if (this.approvalContext.companyId !== 0 && this.selectedApprover.UserID === 0) {
+  let obj = { ErrorName: 'Please select Approver' };
+  this.errors.splice(this.errors.length, 0, obj);
+} else {
+  this.approvalContext.userID = this.selectedApprover.UserID;
+}
+
+if (ledgerAccountID === 0
+  && (this.approvalContext.type === 'ledger' || this.approvalContext.type === '')
+  && (this.approvalContext.ledgerAccountID !== 0)) {
+  let obj = { ErrorName: 'Please select Ledger Account' };
+  this.errors.splice(this.errors.length, 0, obj);
+}
+
+if (this.errors.length > 0) {
+  this.showHideErrorLog = { 'display': 'block' };
+  this.errorHeader = this.errors.length + ' errors prohibited this range approval from being saved:';
+  return;
+}
+this.approvalCriteriaService.saveApprovalCriteria(
+  this.approvalContext.approvalCriteriaID,
+  this.approvalContext.companyId,
+  this.approvalContext.rangeStart,
+  this.approvalContext.rangeEnd,
+  this.approvalContext.userID,
+  ledgerAccountID,
+  this.approvalContext.type)
+  .then((result) => {
+    if (this.approvalContext.type === '') {
+      this.approvalContext.type = 'all';
+    }
+    this.showHideErrorLog = { 'display': 'none' };
+    this.toastr.success('Approval criteria saved successfully.', 'Success!');
+    this.dialog.close(true);
+  });
+  }
+
+  public checkRangeAmount(): void {
+
+  this.approvalContext.rangeAmtError = (parseFloat(this.approvalContext.rangeStart)
+    > parseFloat(this.approvalContext.rangeEnd))
+    ? true : false;
+
+}
 
   public closeModel(): void {
-    this.dialog.close();
-  }
+  this.dialog.close(false);
+}
 
 }

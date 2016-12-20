@@ -43,7 +43,12 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getSessionDetails();
+      if (this.user) {
+      this.getParameterValues();
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
   }
 
   private get filteredValue(): SyncBatchEntryFilterArguments {
@@ -59,15 +64,15 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
     this.getSyncBatcheInvoices();
   }
 
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
-      this.getParameterValues();
-    } else {
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
-  }
+  // private getSessionDetails(): void {
+  //   this.sessionDetails = this.userService.getSessionDetails();
+  //   if (this.sessionDetails.userId != null) {
+  //     this.getParameterValues();
+  //   } else {
+  //     let link = ['/login'];
+  //     this.router.navigate(link);
+  //   }
+  // }
 
 
   //   private getSyncBatcheInvoices(): void {

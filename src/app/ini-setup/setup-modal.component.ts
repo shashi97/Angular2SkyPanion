@@ -27,6 +27,11 @@ export class SetupModalComponent implements CloseGuard, ModalComponent<SetupModa
   private Serverfiles: Array<any> = [];
   private showHideErrorLog: Object = { 'display': 'none' };
   private displayValue: String;
+  private filepath : Object =
+        {
+            path: null,
+            Category: 14
+        };
 
   constructor(public dialog: DialogRef<SetupModalContext>,
     private iniSetupService: IniSetupService,
@@ -53,7 +58,7 @@ export class SetupModalComponent implements CloseGuard, ModalComponent<SetupModa
   }
 
   public getParentDirectory(): void {
-    let path = this.context.Serverfiles.filepathObject.path.substr(0, (this.context.Serverfiles.filepathObject.path.lastIndexOf('/') + 1))
+    let path = this.context.Serverfiles.filepathObject.path.substr(0, (this.context.Serverfiles.filepathObject.path.lastIndexOf('/') + 1));
     if (path.match(/\//g).length === 1) {
       this.getDirectories(null, 14);
     } else {
@@ -71,7 +76,7 @@ export class SetupModalComponent implements CloseGuard, ModalComponent<SetupModa
       } else if (result.status === 500) {
       } else {
         if (result._body.replace(/'/g, '') === 'Some thing is Wrong with this file') {
-          let obj = { ErrorName: 'Something is wrong in this selected file' }
+          let obj = { ErrorName: 'Something is wrong in this selected file' };
           this.Errors.splice(this.Errors.length, 0, obj);
 
           if (this.Errors.length > 0) {

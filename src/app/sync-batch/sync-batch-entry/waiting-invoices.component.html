@@ -143,13 +143,11 @@
 
                       <dt>Vendor</dt>
                       <dd>
-<<<<<<< HEAD
+
                         <a href="#vendorDetail/{{invoice.vendor_id}}">{{invoice.VendorName}}</a>
                         <br>
                            <a href="#company/{{invoice.company_id}}/vendors?vendor_id={{invoice.vendor_id}}" target="_blank"><i class="fa fa-list-alt"></i>&nbsp;Vendor History </a>
-=======
-                        <a href="#vendor/detail/{{invoice.vendor_id}}/-1/-1">{{invoice.VendorName}}</a>
->>>>>>> 5fc5d3232d8e6cdd989c52ac121469a02e294fc8
+
                       </dd>
 
                       <dt>Invoice Date</dt>
@@ -175,11 +173,8 @@
                         <ul class="distributions_list">
                           <li class="distribution_list_item" *ngFor="let dectribution of invoice.InvoiceDestributions">
                             <span *ngIf="dectribution.Distributions=='No Distributions'">{{dectribution.Distributions}}</span>
-<<<<<<< HEAD
-                            <a href="#/ledgerAccount/-1/{{dectribution.ledger_account_id}}," *ngIf="dectribution.Distributions!='No Distributions'">{{dectribution.Distributions}}</a>
-=======
                             <a href="#/ledgerAccount/detail/{{dectribution.ledger_account_id}}/-1/-1" *ngIf="dectribution.Distributions!='No Distributions'">{{dectribution.Distributions}}</a>
->>>>>>> 5fc5d3232d8e6cdd989c52ac121469a02e294fc8
+
                             <blockquote class="no_comment" [ngClass]="{'text-warning': dectribution.DestributionComment=='No Comment'}">
                               {{dectribution.DestributionComment}}
                             </blockquote>

@@ -4,8 +4,8 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { Overlay, OverlayConfig } from 'angular2-modal';
 import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
-import { ApprovalContext, ApprovalModalComponent } from './approval-criteria.modal';
-import { ApprovalCriteriaModel } from '../shared/approval-criteria.model';
+import {  ApprovalModalComponent } from './approval-criteria.modal';
+import { ApprovalCriteriaModel, ApprovalContext, ApproversModel } from '../shared/approval-criteria.model';
 
 export class ApprovalFilterArguments {
   type: string = '';
@@ -23,7 +23,7 @@ export class ApprovalFilterComponent extends BaseComponent implements OnInit {
   @Input() approvals: Array<ApprovalCriteriaModel>;
   @Input() companyId: number;
   @Input() approversCount: number;
-  @Input() approvers: Array<any>;
+  @Input() approvers: Array<ApproversModel>;
   @Input() cmpName: string;
 
   constructor(
@@ -44,11 +44,11 @@ export class ApprovalFilterComponent extends BaseComponent implements OnInit {
     this.filtered.emit(this.filteredValue);
   }
 
-  private showApprovalCriteria(data, typeData, isNew) {
+  private showApprovalCriteria(approvalDetail, typeData, isNew) {
 
     const builder = new BSModalContextBuilder<ApprovalContext>(
       {
-        data: data,
+        approvalDetail: approvalDetail,
         type: typeData,
         isNew: isNew,
         approvals: this.approvals,
@@ -65,20 +65,12 @@ export class ApprovalFilterComponent extends BaseComponent implements OnInit {
       context: builder.isBlocking(false).toJSON()
     };
 
-    // return this.modal.open(ApprovalModalComponent, overlayConfig)
-    //   .catch(err => alert('ERROR'))
-    //   .then(dialog => dialog.result)
-    //   .then(result => {
-    //     if (result != null) {
-    //      // this.approvalCreteriaChanged.emit();
-    //       //  this.getApprovalCriteria(this.type); need to emit for parnt call
-    //     }
-    //     //  this.getIniSetupDetails();
-    //   });
-
     const dialog = this.modal.open(ApprovalModalComponent, overlayConfig);
     dialog.then((resultPromise) => {
             return resultPromise.result.then((result) => {
+              if (result) {
+                this.getApprovalCriteria('all');
+              }
              // this.getIniSetupDetails();
             }, () => console.log(' Error In init-setup form modal '));
         });

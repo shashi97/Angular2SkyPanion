@@ -18,11 +18,11 @@
 
         <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
           <li>
-            <a data-toggle="modal" data-target="#appCriteriaModel" (click)="showApprovalCriteria(null, 'range' ,1)" data-remote="true"
+            <a data-toggle="modal" data-target="#appCriteriaModel" (click)="showApprovalCriteria('RangeApproval', 'range' ,1)" data-remote="true"
               id="ra_app_link">Range Approval</a>
           </li>
           <li>
-            <a data-toggle="modal" data-target="#appCriteriaModel" (click)="showApprovalCriteria(null, 'ledger' , 1)" data-remote="true"
+            <a data-toggle="modal" data-target="#appCriteriaModel" (click)="showApprovalCriteria('ledgerApproval', 'ledger' , 1)" data-remote="true"
               id="la_app_link">Ledger Account Approval</a>
           </li>
         </ul>

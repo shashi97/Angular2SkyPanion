@@ -27,7 +27,7 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private syncBatchs: Array<SyncBatchModel>;
   private _currentSyncBatchArgs: SyncBatchFilteredArgs = new SyncBatchFilteredArgs();
-
+  private pageName: string = 'Invoice';
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
