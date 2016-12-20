@@ -57,14 +57,12 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
     this.getSessionDetails();
   }
 
-
-
   ngOnInit() {
 
   }
 
   ngDoCheck() {
-    jQuery(this._elRef.nativeElement).find('#example_id').ionRangeSlider({
+    jQuery(this._elRef.nativeElement).find('#range').ionRangeSlider({
       type: 'double',
       min: 0,
       max: 24,
@@ -203,7 +201,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
   private changeTime(pageLoad, digestStart, digestEnd) {
 
     if (digestStart && pageLoad) {
-      digestStart = parseInt(this.userDetail.digestStart.split(':')[0]) * 60;
+      digestStart = Number(this.userDetail.digestStart.split(':')[0]) * 60;
     } else if (digestStart) {
       digestStart = digestStart * 60;
     } else {
@@ -211,7 +209,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
     }
 
     if (digestEnd && pageLoad) {
-      digestEnd = parseInt(this.userDetail.digestEnd.split(':')[0]) * 60;
+      digestEnd = Number(this.userDetail.digestEnd.split(':')[0]) * 60;
     } else if (digestEnd) {
       digestEnd = digestEnd * 60;
     } else {
@@ -234,15 +232,51 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
 
     if (pageLoad) {
       setTimeout(() => {
+        let meridiem = '';
         if (this.userId === 0) {
           hours1 = 1;
         }
-        let slider = jQuery('#example_id').data('ionRangeSlider');
-        console.log(slider.old_from + '---' + slider.old_to);
+
+        if (hours0 < 12) {
+          meridiem = ':00 AM';
+        } else {
+          meridiem = ':00 PM';
+        }
+
+        let slider = jQuery('#range').data('ionRangeSlider');
+        let anteMeridiem = ':00 AM';
+        let postMeridiem = ':00 AM';
+
+        if (hours0 > 12) {
+          anteMeridiem = ':00 PM';
+        }
+        if (hours1 > 12) {
+          postMeridiem = ':00 PM';
+        }
 
         slider.update({
+          min: 0,
+          max: 24,
+          values: [
+            '00:00 AM', '01:00 AM',
+            '02:00 AM', '03:00 AM',
+            '04:00 AM', '05:00 AM',
+            '06:00 AM', '07:00 AM',
+            '08:00 AM', '09:00 AM',
+            '10:00 AM', '11:00 AM',
+            '12:00 AM', '13:00 PM',
+            '14:00 PM', '15:00 PM',
+            '16:00 PM', '17:00 PM',
+            '18:00 PM', '19:00 PM',
+            '20:00 PM', '21:00 PM',
+            '22:00 PM', '23:00 PM',
+          ],
           from: hours0,
-          to: hours1
+          to: hours1,
+          from_percent: 0,
+          to_percent: 100,
+          keyboard: true,
+          from_shadow: true
         });
       }, 10);
     }
@@ -352,7 +386,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
     //   this.userDetail.imageType = this.currentFile.type;
     // }
 
-    let slider = jQuery('#example_id').data('ionRangeSlider');
+    let slider = jQuery('#range').data('ionRangeSlider');
 
     this.changeTime(false, slider.old_from, slider.old_to);
 
@@ -410,7 +444,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
         // messageService.showMsgBox('Success', 'Member successfully saved.', 'success');
         this.toastr.success('Member successfully saved.', 'Success!');
         // $location.path('/usersList/-1/-1');
-        let link = ['users/-1/-1'];
+        let link = ['user/-1/-1'];
         this.router.navigate(link);
       }
     });
