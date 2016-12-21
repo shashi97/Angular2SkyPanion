@@ -18,7 +18,10 @@
                 </div>
             </div>-->
             
-            <sp-company-dropdown></sp-company-dropdown>
+            <sp-company-dropdown 
+             [companyFilteredArg]='companyFilteredArg'
+             (companyFiltered)="onCompanyFiltered($event)"
+            ></sp-company-dropdown>
 
             <div class="filter_field_wrap form-group">
                 <button class="btn btn-primary" name="commit" type="button" (click)="searchByCompany()">
