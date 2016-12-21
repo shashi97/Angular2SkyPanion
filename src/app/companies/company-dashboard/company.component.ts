@@ -204,7 +204,7 @@ export class CompanyComponent extends BaseComponent implements OnInit {
     this.companyService
       .activateDeactiveCompany(CompanyId, isActive)
       .then((result) => {
-        // this.getSessionDetails();
+         this.getCompanies();
       });
   }
 
