@@ -82,6 +82,8 @@ import { AppComponent } from './app.component';
 import { OtherComponent } from './other/other.component';
 import { LoginComponent } from './login/login.component';
 
+import { AccountComponent } from './account/account.component';
+
 import { CompanyDetailComponent } from './companies/company-detail/company-detail.component';
 import { CompanyTitleComponent } from './companies/company-detail/company-title.component';
 import { CompanyComponent } from './companies/company-dashboard/company.component';
@@ -211,6 +213,7 @@ let localStorageServiceConfig = {
     AppComponent,
     OtherComponent,
     LoginComponent,
+    AccountComponent,
     CompanyComponent,
     CompanyFilterComponent,
     CompanyDetailComponent,

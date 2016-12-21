@@ -2,6 +2,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
 
+import { AccountComponent } from './account/account.component';
+
 import { CompanyComponent } from './companies/company-dashboard/company.component';
 import { CompanyDetailComponent } from './companies/company-detail/company-detail.component';
 
@@ -48,6 +50,9 @@ const APP_ROUTES: Routes = [
 
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
+
+
+  { path: 'account/:id', component: AccountComponent },
 
   { path: 'company/:pageSizeFilter/:searchParameters', component: CompanyComponent },
   { path: 'company/detail/:id/:pageSizeFilter/:searchParameters', component: CompanyDetailComponent },
