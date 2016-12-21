@@ -1,35 +1,37 @@
 <div id="slider" class="page-content">
-    <sp-role-filter-bar [rolefilteredValue]="rolefilteredValue" (filtered)='onRoleFiltered($event)'></sp-role-filter-bar>
-    <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>-->
-    <div class="container-fluid">
-       
-        <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
-        <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th style="width: 25%">Name</th>
-                    <th style="width: 50%">Description</th>
-                    <th style="width: 50%"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of roles">
-                    <td>{{item.Name}}</td>
-                    <td>{{item.Description}}</td>
-                    <td><a href="#/role/view/{{item.RoleID}}/{{currentPageFiltered.pageSizeFilter}}"><i class="fa fa-search"></i>View</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="#/role/entry/{{item.RoleID}}/{{searchString}}"><i class="fa fa-edit"></i>Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a (click)="deleteRole(item.RoleID, item.Name)"><i class="fa fa-remove"></i>Destroy</a>
-                    </td>
-                </tr>
-            </tbody>
-            <!--<tfoot>
+  <sp-role-filter-bar [rolefilteredValue]="rolefilteredValue" (filtered)='onRoleFiltered($event)'></sp-role-filter-bar>
+
+  <sp-crumb-bar></sp-crumb-bar>
+
+  <div class="container-fluid">
+
+    <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
+    <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th style="width: 25%">Name</th>
+          <th style="width: 50%">Description</th>
+          <th style="width: 50%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of roles">
+          <td>{{item.Name}}</td>
+          <td>{{item.Description}}</td>
+          <td><a href="#/role/view/{{item.RoleID}}/{{currentPageFiltered.pageSizeFilter}}"><i class="fa fa-search"></i>View</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#/role/entry/{{item.RoleID}}/{{searchString}}"><i class="fa fa-edit"></i>Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a (click)="deleteRole(item.RoleID, item.Name)"><i class="fa fa-remove"></i>Destroy</a>
+          </td>
+        </tr>
+      </tbody>
+      <!--<tfoot>
       <tr>
         <td colspan="4">
           <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
         </td>
       </tr>
     </tfoot>-->
-        </table>
-        <sp-pagination [dataSource]='roles' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
-    </div>
+    </table>
+    <sp-pagination [dataSource]='roles' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
+  </div>
 </div>

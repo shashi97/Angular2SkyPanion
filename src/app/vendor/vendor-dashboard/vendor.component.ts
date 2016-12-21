@@ -10,6 +10,7 @@ import { VendorModel } from '../shared/vendor.model';
 import { VendorFilterArguments } from './filter-bar.component';
 
 import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
+
 import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-dropdown.component';
 
 import { VendorService } from '../shared/vendor.service';

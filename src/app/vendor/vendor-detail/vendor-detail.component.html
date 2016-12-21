@@ -3,6 +3,10 @@
   <sp-vendor-detail-filter-bar *ngIf="vendorDetail" [vendorDetail]="vendorDetail" (filtered)="onFiltered($event)" [filteredValue]="filteredValue">
   </sp-vendor-detail-filter-bar>
   <!--<sp-crumb-bar *ngIf="vendorDetail" [pageDetail]="vendorDetail"></sp-crumb-bar>-->
+  
+  <sp-crumb-bar *ngIf='vendorDetail' [lastTitle]="vendorDetail.VendorName"></sp-crumb-bar>
+  
+  
   <div class="container-fluid">
     <div id="panel-advancedoptions">
       <div class="row">

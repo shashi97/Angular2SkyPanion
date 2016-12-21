@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
+import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
 import { MasterService } from '../../shared/services/master/master.service';
 import { AccountService } from '../../account/shared/account.service';
 import { JobsService } from '.././shared/jobs.service';

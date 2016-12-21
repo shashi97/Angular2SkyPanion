@@ -4,13 +4,7 @@
     <sp-user-detail-filter-bar *ngIf="userDetail" [userDetail]="userDetail"></sp-user-detail-filter-bar>
   </div>
 
-  <!--<sp-crumb-bar *ngIf="vendorDetail" [pageDetail]="vendorDetail"></sp-crumb-bar>-->
-  <ol class="breadcrumb" *ngIf="userDetail" [hidden]="userDetail.IsSuperUser != true">
-    <li>
-      <a href="#/user/{{pageSizeFilter}}/-1">All Users</a>
-    </li>
-    <li class="active">{{userDetail.userName}}</li>
-  </ol>
+  <sp-crumb-bar *ngIf='userDetail' [lastTitle]="userDetail.userName"></sp-crumb-bar>
 
   <div class="container-fluid">
     <div id="panel-advancedoptions">

@@ -8,6 +8,7 @@ import { JobsService } from '.././shared/jobs.service';
 import { JobModel } from '.././shared/job.model';
 import { UserService } from '../../user/shared/user.service';
 import { BaseComponent } from '../../base.component';
+import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
 
 
 @Component({

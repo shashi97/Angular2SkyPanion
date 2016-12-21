@@ -6,12 +6,7 @@
         </div>
     </div>
     
-    <ol class="breadcrumb">
-        <li>
-            <a href="#job">All Jobs</a>
-        </li>
-        <li class="active">{{jobDetail.JobDescription}}</li>
-    </ol>
+   <sp-crumb-bar *ngIf='jobDetail' [lastTitle]="jobDetail.jobName"></sp-crumb-bar>
 
     <div class="container-fluid">
 

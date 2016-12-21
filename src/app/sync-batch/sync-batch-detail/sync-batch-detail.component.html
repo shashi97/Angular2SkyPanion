@@ -2,12 +2,8 @@
 
   <sp-sync-batch-detail-filter-bar></sp-sync-batch-detail-filter-bar>
 
-  <ol class="breadcrumb">
-    <li>
-      <a href="#syncbatch/{{pageSizeFilter}}/{{searchParameters}}">All Sync Batches</a>
-    </li>
-    <li class="active">Batch Details</li>
-  </ol>
+  <sp-crumb-bar *ngIf='syncBatcheDetail' [lastTitle]="syncBatcheDetail.AccountName"></sp-crumb-bar>
+
 
   <div class="container-fluid">
     <div id="panel-advancedoptions">

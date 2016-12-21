@@ -29,6 +29,7 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
   private totalItems: number = 0;
   private vendorDetail: VendorModel;
   private vendorId: number = 0;
+  private searchString: string = '';
   private _filteredValue: VendorFilterArguments = new VendorFilterArguments();
 
   constructor(
@@ -54,7 +55,18 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
 
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
+      let parameterValue: any = ((params) ? params : 1);
       this.vendorId = params['id'];
+      let searchParameters = params['searchParameters'];
+      this.pageSizeFilter = params['pageSizeFilter'];
+
+      if (searchParameters !== '-1') {
+        let parameterArray: Array<string> = parameterValue.searchParameters.split(',');
+        this.filteredValue.companyId = Number(parameterArray[0]);
+      }
+
+      this.searchString = this.vendorId + '/' + this.pageSizeFilter + '/' + this.filteredValue.companyId;
+
       this.getItemsPerPageList();
     });
   }

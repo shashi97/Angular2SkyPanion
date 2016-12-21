@@ -3,6 +3,7 @@ import { BaseComponent } from '../../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { AccountService } from '../../../account/shared/account.service';
 
 export class VendorFilterArguments {
   companyId: number
@@ -17,10 +18,20 @@ export class BreadCrumb {
 export class BreadCrumbs {
   values: Array<BreadCrumb> = new Array<BreadCrumb>();
   constructor() {
-
     this.values.push(new BreadCrumb('account', 'Accounts'));
-    this.values.push(new BreadCrumb('vendors', 'Vendors'));
+    this.values.push(new BreadCrumb('vendor', 'Vendors'));
+    this.values.push(new BreadCrumb('company', 'Companies'));
+    this.values.push(new BreadCrumb('job', 'Jobs'));
+    this.values.push(new BreadCrumb('invoice', 'Invoices'));
+    this.values.push(new BreadCrumb('purchaseOrder', 'Purchase Order'));
+    this.values.push(new BreadCrumb('ledgerAccount', 'Ledger Accounts'));
+    this.values.push(new BreadCrumb('achSetup', 'Ach Setups'));
+    this.values.push(new BreadCrumb('approval', 'Approval'));
+    this.values.push(new BreadCrumb('syncBatch', 'All Sync Batches'));
+    this.values.push(new BreadCrumb('user', 'All Users'));
+    this.values.push(new BreadCrumb('role', 'Role'));
   }
+
   find(path) {
     return this.values.filter(i => { return i.path === path; })[0];
   }
@@ -46,12 +57,19 @@ export class CrumbBarComponent extends BaseComponent implements OnInit {
   @Input() pageDetail: any;
 
   private firstUrlPart: UrlModel = new UrlModel();
-  private secondUrlPart: UrlModel = new UrlModel();
+
+  // @Input()
+  // public lastUrlPart: UrlModel = new UrlModel();
+
+  @Input()
+  public lastTitle: string = '';
+
 
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private accountService: AccountService,
   ) {
     super(localStorageService, router);
   }
@@ -61,43 +79,37 @@ export class CrumbBarComponent extends BaseComponent implements OnInit {
 
     this.activatedRoute.url.subscribe(segments => {
       const firstBreadCrumb = breadCrumbs.find(segments[0].path);
-      this.firstUrlPart.urlFragement = segments[0].path;
+      this.firstUrlPart.urlFragement = '/' + segments[0].path;
       this.firstUrlPart.linkTitle = firstBreadCrumb.title;
       let isEdit = false;
       if (segments.length > 1) {
         if (segments[1].path === 'edit' || segments[1].path === 'detail') {
           isEdit = true;
-        };
-      }
-      if (segments.length > 2) {
-        let firstUrl = '';
-        if (isEdit) {
-          firstUrl = segments[0].path + '/' + segments[2].path;
         } else {
-          firstUrl = segments[0].path + '/' + segments[1].path + '/' + segments[2].path;
+          this.lastTitle = this.firstUrlPart.linkTitle;
+          this.accountService.getAccountName().then(result => {
+            this.firstUrlPart.linkTitle = result.AccountName;
+            this.firstUrlPart.urlFragement = '/account/' + result.AccountID;
+          });
         }
-        if (segments.length > 3) {
-          firstUrl += '/' + segments[3].path;
-        }
-        this.firstUrlPart.urlFragement = firstUrl;
       }
+
+      if (isEdit) {
+        this.activatedRoute.params.subscribe(param => {
+
+          let url = this.firstUrlPart.urlFragement;
+          if (param['pageSizeFilter']) {
+            url += '/' + param['pageSizeFilter'];
+          }
+          if (param['searchParameters']) {
+            url += '/' + param['searchParameters'];
+          }
+          this.firstUrlPart.urlFragement = url;
+        });
+      };
+
     });
 
-
-    // if (this.pageDetail.AccountName) {
-    //   this.pageUrl = 'account';
-    //   this.pageName = this.pageDetail.AccountName;
-    //   this.pageId = this.pageDetail.AccountID;
-    // } else if (this.pageDetail.VendorName) {
-    //   this.pageUrl = 'vendor';
-    //   this.pageName = this.pageDetail.VendorName;
-    // } else if (this.pageDetail.PortalAccName) {
-    //   this.pageUrl = 'achSetups';
-    //   this.pageName = this.pageDetail.PortalAccName;
-    // } else if (this.pageDetail.InvoiceNumber) {
-    //   this.pageUrl = 'invoices';
-    //   this.pageName = 'invoices';
-    // }
   }
 }
 

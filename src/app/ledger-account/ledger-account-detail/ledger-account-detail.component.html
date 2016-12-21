@@ -1,30 +1,17 @@
 <div id="slider" class="page-content" *ngIf="ledgerAccountDetail">
 
-    <sp-ledger-detail-filter-bar [ledgerAccountDetail]="ledgerAccountDetail"></sp-ledger-detail-filter-bar>
+  <sp-ledger-detail-filter-bar [ledgerAccountDetail]="ledgerAccountDetail"></sp-ledger-detail-filter-bar>
 
-    <ol class="breadcrumb" [hidden]="!companyId != 0">
-        <li>
-            <a href="#company/-1/-1">Companies</a>
-        </li>
-        <li>
-            <a href="#company/{{companyID}}">{{companyName}}</a>
-        </li>
-        <li>
-            <a href="#company/{{searchParameters}}/{{companyID}}/ledgeraccounts">Ledger Accounts</a>
-        </li>
-        <li class="active">{{ledgerAccountDetail.LedgerAccountName}} {{ledgerAccountDetail.AccountTitle}}</li>
-    </ol>
-  
+  <sp-crumb-bar *ngIf='ledgerAccountDetail' [lastTitle]="ledgerAccountDetail.LedgerAccountName"></sp-crumb-bar>
+  <!--ledgerAccountsDetail.AccountTitle-->
 
-    <!--<sp-crumb-bar *ngIf="ledgerAccountDetail" [pageDetail]="ledgerAccountDetail"></sp-crumb-bar>-->
-
-    <div class="container-fluid">
-        <div id="panel-advancedoptions">
-            <div class="row">
-                <sp-ledger-attribute [ledgerAccountDetail]="ledgerAccountDetail"></sp-ledger-attribute>
-                <sp-ledger-account-distribution *ngIf="ledgerAccounts" [ledgerAccounts]="ledgerAccounts"></sp-ledger-account-distribution>
-            </div>
-        </div>
+  <div class="container-fluid">
+    <div id="panel-advancedoptions">
+      <div class="row">
+        <sp-ledger-attribute [ledgerAccountDetail]="ledgerAccountDetail"></sp-ledger-attribute>
+        <sp-ledger-account-distribution *ngIf="ledgerAccounts" [ledgerAccounts]="ledgerAccounts"></sp-ledger-account-distribution>
+      </div>
     </div>
+  </div>
 
 </div>
