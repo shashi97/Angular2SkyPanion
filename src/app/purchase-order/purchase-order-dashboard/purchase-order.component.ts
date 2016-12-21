@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { AccountService } from '../../account/shared/account.service';
 import { PurchaseOrderSevice } from '../shared/purchase-order.service';
@@ -37,7 +38,8 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit {
     public router: Router,
     public purchaseOrderSevice: PurchaseOrderSevice,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    public toastr: ToastsManager
   ) {
     super(localStorageService, router);
     this.purchaseOrders = new Array<PurchaseOrderModel>();
@@ -104,8 +106,9 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit {
       .getPurchaseOrders(this.companyId, this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)
       .then(result => {
         if (result.status === 404) {
-          this.purchaseOrders = Array<PurchaseOrderModel>();
-          this.totalItems = 0;
+          this.toastr.error('There is no data availablity', 'Oops!');
+          // this.purchaseOrders = Array<PurchaseOrderModel>();
+          // this.totalItems = 0;
         } else if (result.status === 500) {
         } else {
           this.purchaseOrders = result;

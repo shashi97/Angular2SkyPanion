@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 import { MasterService } from '../../shared/services/master/master.service';
 import { AccountService } from '../../account/shared/account.service';
@@ -35,7 +36,8 @@ export class JobComponent extends BaseComponent implements OnInit {
     public jobsService: JobsService,
     public masterService: MasterService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+     public toastr: ToastsManager
   ) {
     super(localStorageService, router);
     this.jobs = new Array<JobModel>();
@@ -90,8 +92,9 @@ export class JobComponent extends BaseComponent implements OnInit {
       .getJobs(this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)
       .then(result => {
         if (result.status === 404) {
-          this.jobs = new Array<JobModel>();
-          this.totalItems = 0;
+          // this.jobs = new Array<JobModel>();
+          // this.totalItems = 0;
+          this.toastr.error('There is no data availablity', 'Oops!');
         } else if (result.status === 500) {
         } else {
           this.jobs = result;
