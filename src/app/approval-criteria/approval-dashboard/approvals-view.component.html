@@ -13,7 +13,7 @@
 
   <tbody  [dragula]='"evented-bag"' [dragulaModel]='approvals'>
     <tr *ngFor="let approval of approvals" current-page="currentPage" total-items="totalItems" class="Skypanion::Property_row">
-      <td [hidden]="CompanyId==0"><a href="#/company/detail/{{approval.CompanyID}}">{{approval.CompanyName}}</a></td>
+      <td [hidden]="CompanyId==0"><a href="#company/detail/{{approval.CompanyID}}/-1/-1">{{approval.CompanyName}}</a></td>
       <td><a href="user/{{approval.UserID}}">{{approval.UserName}}</a></td>
       <td>{{approval.ApprovalType}}</td>
       <td><span [hidden]="approval.LedgerAccountID==null"><b>Account</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{approval.ApprovalCriteria}}</td>
