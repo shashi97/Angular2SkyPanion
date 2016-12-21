@@ -6,6 +6,7 @@ export class BaseComponent {
   sessionDetails: any;
   disableMenu: Object = { 'display': 'block' };
   disableSideBar: Object = { 'display': '' };
+
   constructor(protected localStorageService: LocalStorageService,
     protected router: Router) {
     let token = this.localStorageService.get('authorization');

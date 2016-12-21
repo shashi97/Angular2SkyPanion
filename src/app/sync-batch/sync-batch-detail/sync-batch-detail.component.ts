@@ -32,11 +32,11 @@ export class SyncBatchDetailComponent extends BaseComponent implements OnInit {
     private location: Location
   ) {
     super(localStorageService, router);
-   // this.getSessionDetails();
+    // this.getSessionDetails();
   }
 
   ngOnInit() {
-      if (this.user) {
+    if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];
@@ -61,7 +61,7 @@ export class SyncBatchDetailComponent extends BaseComponent implements OnInit {
       let searchParameters = params['searchParameters'];
       this.syncBatcheId = Number(params['id']);
 
-      this.searchString = pageSizeFilter + '/' + searchParameters + '/' + this.syncBatcheId;
+      this.searchString = this.syncBatcheId + '/' + pageSizeFilter + '/' + searchParameters;
 
       this.getSyncBatcheDetail();
     });

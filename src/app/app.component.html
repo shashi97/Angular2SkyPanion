@@ -76,13 +76,14 @@
   <a routerLink="dashboard">
     <img src="../../assets/img/SkyPanion-R.png" style="height: 45px; margin-top: 3px; float: left">
   </a>
-  <!--<div class="yamm navbar-left navbar-collapse collapse in">
+  
+  <div class="yamm navbar-left navbar-collapse collapse in">
     <ul class="nav navbar-nav">
-      <li class="dropdown" >
+      <li class="dropdown" *ngIf="showLoading">
         <div class="loading">Loading&#8230;</div>
       </li>
     </ul>
-  </div>-->
+  </div>
 
   <ul class="nav navbar-nav toolbar pull-right">
 

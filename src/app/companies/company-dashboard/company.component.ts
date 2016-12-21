@@ -138,6 +138,7 @@ export class CompanyComponent extends BaseComponent implements OnInit {
           this.totalItems = 0;
         } else if (result.status === 500) {
         } else {
+          this.showLoading = false;
           this.companies = result;
           if (this.companies && this.companies.length > 0) {
             this.totalItems = this.companies[0].CompanyCount;
@@ -204,7 +205,7 @@ export class CompanyComponent extends BaseComponent implements OnInit {
     this.companyService
       .activateDeactiveCompany(CompanyId, isActive)
       .then((result) => {
-         this.getCompanies();
+        this.getCompanies();
       });
   }
 
