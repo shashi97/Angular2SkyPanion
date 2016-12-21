@@ -3,7 +3,7 @@ import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { UserService } from '../../user/shared/user.service';
 import { AccountService } from '../../account/shared/account.service';
 import { CompanyService } from '../../companies/shared/company.service';
@@ -34,7 +34,8 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
     private accountService: AccountService,
     private companiesService: CompanyService,
     private achSetupService: AchSetupService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public toastr: ToastsManager
   ) {
     super(localStorageService, router);
     this.achSetups = new Array<AchSetupModel>();
@@ -92,8 +93,14 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
 
   private getAchSetups(): void {
     this.achSetupService.getAchSetups(this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter).then(result => {
-      this.achSetups = result;
-      this.totalItems = this.achSetups[0].TotalCount;
+      if (result.status === 404) {
+        this.toastr.error('There is no data availablity', 'Oops!');
+      } else if (result.status === 500) {
+
+      } else {
+        this.achSetups = result;
+        this.totalItems = this.achSetups[0].TotalCount;
+      }
     });
   }
 

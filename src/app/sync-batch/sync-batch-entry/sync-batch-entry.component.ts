@@ -133,7 +133,7 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
 
   private getSyncBatcheInvoices(): void {
 
-    this.location.replaceState('syncBatcheNew/' + this.searchString);
+    this.location.replaceState('syncBatchNew/' + this.searchString);
     // this.companies.map((item) => {
     //     if (item.CompanyID === this.companyId) {
     //        // $scope.selectedCompany.selected = item;
