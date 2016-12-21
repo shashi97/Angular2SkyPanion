@@ -32,21 +32,27 @@ export class SyncBatchDetailComponent extends BaseComponent implements OnInit {
     private location: Location
   ) {
     super(localStorageService, router);
-    this.getSessionDetails();
+   // this.getSessionDetails();
   }
 
   ngOnInit() {
-  }
-
-  private getSessionDetails(): void {
-    this.sessionDetails = this.userService.getSessionDetails();
-    if (this.sessionDetails.userId != null) {
+      if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];
       this.router.navigate(link);
     }
   }
+
+  // private getSessionDetails(): void {
+  //   this.sessionDetails = this.userService.getSessionDetails();
+  //   if (this.sessionDetails.userId != null) {
+  //     this.getParameterValues();
+  //   } else {
+  //     let link = ['/login'];
+  //     this.router.navigate(link);
+  //   }
+  // }
 
 
   private getParameterValues(): void {
