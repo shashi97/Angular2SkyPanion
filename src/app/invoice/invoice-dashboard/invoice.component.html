@@ -1,8 +1,6 @@
 <div id="slider" class="page-content">
 
-  <sp-invoice-filter-bar 
-      [invoiceFilteredValue]="invoiceFilteredValue" 
-      (filteredInvoice)="onFilteredInvoice($event)">
+  <sp-invoice-filter-bar [invoiceFilteredValue]="invoiceFilteredValue" (filteredInvoice)="onFilteredInvoice($event)">
   </sp-invoice-filter-bar>
 
   <!--<sp-crumb-bar 
@@ -82,7 +80,12 @@
               </a>
             </div>
             <div>
-              <a *ngIf="item.Distributions!='None' && item.LedgerAccountID==0">
+              <tooltip-content #myTooltip>
+                <div [innerHTML]=item.DistributionMessage>
+                </div>
+              </tooltip-content>
+              <a *ngIf="item.Distributions!='None' && item.LedgerAccountID==0" [tooltip]="myTooltip" [tooltipDisabled]="false" [tooltipAnimation]="true"
+                tooltipPlacement="top">
                 {{item.Distributions}}
              </a>
             </div>
