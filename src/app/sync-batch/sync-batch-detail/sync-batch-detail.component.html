@@ -13,9 +13,15 @@
     <div id="panel-advancedoptions">
       <div class="row">
 
-        <sp-sync-batch-detail-attribute *ngIf="syncBatcheDetail" [syncBatcheDetail]="syncBatcheDetail"></sp-sync-batch-detail-attribute>
+        <sp-sync-batch-detail-attribute 
+        *ngIf="syncBatcheDetail" 
+        [syncBatcheDetail]="syncBatcheDetail"
+        ></sp-sync-batch-detail-attribute>
 
-        <sp-sync-batch-detail-invoices *ngIf="syncBatcheDetail" [syncBatcheDetail]="syncBatcheDetail"></sp-sync-batch-detail-invoices>
+        <sp-sync-batch-detail-invoices 
+          *ngIf="syncBatcheDetail" 
+          [syncBatcheDetail]="syncBatcheDetail" 
+          [totalItems]="totalItems"></sp-sync-batch-detail-invoices>
 
       </div>
     </div>

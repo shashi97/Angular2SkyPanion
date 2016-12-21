@@ -12,9 +12,9 @@ import { SyncBatchModel } from '../shared/sync-batch.model';
 
 export class SyncBatchDetailInvoiceComponent extends BaseComponent implements OnInit {
 
-  private totalItems: number = 0;
+  // private totalItems: number = 0;
   @Input() syncBatcheDetail: SyncBatchModel;
-
+  @Input() totalItems: number;
   constructor(
     localStorageService: LocalStorageService,
     router: Router
