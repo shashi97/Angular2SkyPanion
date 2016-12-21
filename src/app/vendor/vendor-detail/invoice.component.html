@@ -1,7 +1,7 @@
 <div class="col-md-8">
   <h4 class="left_align">Invoice History</h4>
   <span *ngIf ="totalItems==0" class="right_align">No invoices found</span>
-  <span class="right_align">Displaying <b>{{totalItems}}</b> invoice</span>
+  <span class="right_align" *ngIf ="totalItems > 0">Displaying <b>{{totalItems}}</b> invoice</span>
   <!--<span [hidden]="totalItems <= pageSize" class="right_align">Displaying 
       <b>{{currentPage*pageSize-pageSize+1}}&nbsp;-&nbsp; 
           <span *ngIf="currentPage*pageSize < totalItems">{{currentPage*pageSize}}</span>
