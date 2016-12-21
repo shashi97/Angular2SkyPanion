@@ -27,7 +27,7 @@
                                 <input class="form-control" disabled="disabled" type="text" *ngIf="approvalContext.companyId==0" [value]="approvalContext.userName" (input)="approvalContext.userName = $event.target.value" name="second">
                              <!--{{selectedApprover.name}}-->
                                  <p-dropdown [options]="approvalContext.approvers" 
-                                  style="width: 100%"
+                                  
                                        
                                   *ngIf="approvalContext.companyId!=0"
                                   [(ngModel)]="selectedApprover" 
@@ -44,7 +44,7 @@
                             <label class="col-md-4 control-label">Ledger Account </label>
                             <div class="col-md-8">
                                 <p-dropdown [options]="approvalContext.ledgerAccounts" 
-                                  style="width: 100%"
+                                  
                                   [(ngModel)]="selectedLedgerAccount" 
                                   [filter]="true"
                                   [autoWidth]="true"

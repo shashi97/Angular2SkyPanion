@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ export class SyncBatchFilteredArgs {
   templateUrl: './filter-bar.component.html',
 })
 
-export class SyncBatchFilterComponent extends BaseComponent implements OnInit {
+export class SyncBatchFilterComponent extends BaseComponent implements OnInit, OnChanges {
   private totalItems: number = 0;
   @Input() syncBatchFilteredValue: SyncBatchFilteredArgs = new SyncBatchFilteredArgs();
   @Output() filteredsyncBatch: EventEmitter<SyncBatchFilteredArgs> = new EventEmitter<SyncBatchFilteredArgs>();
@@ -37,6 +37,10 @@ export class SyncBatchFilterComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     jQuery('#syncFromDate').datepicker();
     jQuery('#syncToDate').datepicker();
+  }
+
+  ngOnChanges() {
+    this.userFilteredArg.UserID = this.syncBatchFilteredValue.userId;
   }
 
 

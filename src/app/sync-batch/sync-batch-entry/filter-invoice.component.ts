@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ export class SyncBatchEntryFilterArguments {
   templateUrl: './filter-invoice.component.html'
 })
 
-export class FilterInvoiceComponent extends BaseComponent implements OnInit {
+export class FilterInvoiceComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Output() filtered: EventEmitter<SyncBatchEntryFilterArguments> = new EventEmitter<SyncBatchEntryFilterArguments>();
   @Input() filteredValue: SyncBatchEntryFilterArguments = new SyncBatchEntryFilterArguments();
@@ -37,6 +37,12 @@ export class FilterInvoiceComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngOnChanges() {
+    this.companyFilteredArg = this.filteredValue;
+    this.userFilteredArg.UserID = this.filteredValue.userId;
+  }
+
 
   private get companyFilteredArg(): CompanyFilterArguments {
     return this._companyFilteredValue;

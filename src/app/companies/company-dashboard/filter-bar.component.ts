@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -10,6 +10,8 @@ export class CompanyFilterArguments {
   searchText: string = '';
   syncTypeId: string = '-1';
   syncId: string = '-1';
+  // companyType: string = 'Company Type';
+  // syncName: string = 'Sync Type';
 }
 
 
@@ -18,7 +20,7 @@ export class CompanyFilterArguments {
   templateUrl: './filter-bar.component.html'
 })
 
-export class CompanyFilterComponent extends BaseComponent implements OnInit {
+export class CompanyFilterComponent extends BaseComponent implements OnInit, OnChanges {
 
 
   @Output() filtered: EventEmitter<CompanyFilterArguments> = new EventEmitter<CompanyFilterArguments>();
@@ -61,6 +63,12 @@ export class CompanyFilterComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() { }
+  ngOnChanges(): void {
+    this.companyPathFiltered.syncTypeId = this.filteredValue.syncTypeId;
+    this.syncTypeFiltered.syncId = this.filteredValue.syncId;
+
+  }
+
 
   private searchUrl(): void {
     this.filteredValue.syncId = this.syncTypeFiltered.syncId;

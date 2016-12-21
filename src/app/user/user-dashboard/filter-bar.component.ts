@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ export class UserFilterArguments {
   templateUrl: './filter-bar.component.html',
 })
 
-export class UserFilterComponent extends BaseComponent implements OnInit {
+export class UserFilterComponent extends BaseComponent implements OnInit, OnChanges {
 
   private userRoleName: string = 'User Role';
   private userTypeName: string = 'User Type';
@@ -30,10 +30,18 @@ export class UserFilterComponent extends BaseComponent implements OnInit {
     private roleService: RoleService
   ) {
     super(localStorageService, router);
+    // this.getRoles();
   }
 
   ngOnInit() {
+
+  }
+  ngOnChanges() {
+    this.roles = [];
+    this.userTypes = [];
     this.getRoles();
+    this.getUserType();
+    this.onSelectUserType(this.filteredValue.userTypeId);
   }
 
   private getRoles() {
@@ -51,7 +59,7 @@ export class UserFilterComponent extends BaseComponent implements OnInit {
           }
         });
 
-        this.getUserType();
+
       }
     });
   }

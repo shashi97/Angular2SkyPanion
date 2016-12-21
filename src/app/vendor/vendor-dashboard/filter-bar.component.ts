@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ export class VendorFilterArguments {
   templateUrl: './filter-bar.component.html',
 })
 
-export class VendorFilterComponent extends BaseComponent implements OnInit {
+export class VendorFilterComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Input() vendorDetail: VendorModel;
   @Output() filtered: EventEmitter<VendorFilterArguments> = new EventEmitter<VendorFilterArguments>();
@@ -34,6 +34,9 @@ export class VendorFilterComponent extends BaseComponent implements OnInit {
 
 
   ngOnInit() {
+  }
+  ngOnChanges() {
+    this.companyFilteredArg = this.filteredValue;
   }
 
   private get companyFilteredArg(): CompanyFilterArguments {

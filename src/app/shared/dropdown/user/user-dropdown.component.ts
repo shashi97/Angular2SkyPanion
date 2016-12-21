@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input, OnChanges } from '@angular/core';
 import { BaseComponent } from '../../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ export class UserFilterArguments {
   selector: 'sp-user-dropdown',
   templateUrl: './user-dropdown.component.html'
 })
-export class UserDropdownComponent extends BaseComponent implements OnInit {
+export class UserDropdownComponent extends BaseComponent implements OnInit, OnChanges {
   @Output() public userFiltered: EventEmitter<UserFilterArguments> = new EventEmitter<UserFilterArguments>();
   @Input() userFilteredArg: UserFilterArguments = new UserFilterArguments();
   private users: Array<any> = [];
@@ -27,8 +27,21 @@ export class UserDropdownComponent extends BaseComponent implements OnInit {
   }
   ngOnInit() {
   }
+  ngOnChanges() {
+    // this.companyFilteredArg = this.filteredValue;
+    this.users = [];
+    this.getSkypanionsUsers().then((res) => {
+      this.users.map((item) => {
+        if (item.UserID === this.userFilteredArg.UserID) {
+          this.userFilteredArg.userName = item.username;
+          this.userFilteredArg.UserID = item.UserID;
+        }
+      });
+   });
+  }
+
   private getSkypanionsUsers() {
-    this.userService.getUserDDOs().then(result => {
+    return this.userService.getUserDDOs().then(result => {
       this.users = result;
       let obj = { UserID: 0, username: 'None', ImagePathName: 'None' };
       this.users.splice(0, 0, obj);

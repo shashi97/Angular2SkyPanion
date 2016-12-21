@@ -4,9 +4,14 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
 import { DashboardService } from '../../../dashboard/shared/dashboard.service';
+import { SelectedCompanyDropdownModel } from './shared/company-dropdown.model';
 
 export class CompanyFilterArguments {
   companyId: number = 0;
+}
+export class CompanyDropdownModel {
+label: string = '';
+value: SelectedCompanyDropdownModel = new SelectedCompanyDropdownModel();
 }
 
 @Component({
@@ -20,7 +25,7 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit, O
   @Input() companyFilteredArg: CompanyFilterArguments = new CompanyFilterArguments();
 
   private companies: Array<any> = [];
-  private selectedCompany: any;
+  private selectedCompany: SelectedCompanyDropdownModel= new SelectedCompanyDropdownModel();
 
   constructor(
     localStorageService: LocalStorageService,
@@ -35,11 +40,17 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit, O
   }
 
   ngOnChanges() {
-    this.selectedCompany = this.companyFilteredArg;
-  }
+    this.getSkypanionsCompanies().then(res => {
+      this.companies.map((item) => {
+        if (item.value.CompanyID === this.companyFilteredArg.companyId) {
+          this.selectedCompany = item.value;
+        }
+      });
+    });
 
-  private getSkypanionsCompanies(): void {
-    this.dashboardService.getSkypanionsCompanies().then((result) => {
+  }
+  private getSkypanionsCompanies() {
+    return this.dashboardService.getSkypanionsCompanies().then((result) => {
       this.companies = result;
       // let temp = this.companies;
       let defaultRole = {
@@ -55,6 +66,7 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit, O
           { label: item.CompanyName, value: item });
       });
     });
+    //  return this.companies;
   }
 
   private getSelectedCompany(selectedCompany): void {
