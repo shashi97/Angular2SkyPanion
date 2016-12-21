@@ -19,7 +19,7 @@
       <td><span [hidden]="approval.LedgerAccountID==null"><b>Account</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{approval.ApprovalCriteria}}</td>
       <td>
         <a data-toggle="modal" data-target="#appCriteriaModel" (click)="showApprovalCriteria(approval, '' ,0)">
-          <i class="fa fa-edit" [hidden]="approval.LedgerAccountID==null"></i> Edit
+          <i [ngClass]="{'fa fa-edit': approval.LedgerAccountID!=null}"></i> Edit
         </a>
         <a (click)="deleteApprovalCriteria(approval.ApprovalCriteriaID)">
           <i [ngClass]="{'fa fa-remove': approval.LedgerAccountID!=null}"></i> Delete

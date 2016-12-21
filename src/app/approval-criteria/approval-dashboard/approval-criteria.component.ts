@@ -31,6 +31,7 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
   private totalItems: number = 0;
   private account: Object;
   private cmpName: string = '';
+  private pageName: string = 'approvals';
   private approvals: Array<ApprovalCriteriaModel>;
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private _filteredValue: ApprovalFilterArguments = new ApprovalFilterArguments;
