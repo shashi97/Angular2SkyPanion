@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ export class InvoiceFilteredArgs {
   companyId: number = 0;
   vendorId: number = 0;
   statusId: number = -1;
-  userId: number = 0;
+  userId: number = -1;
 }
 
 @Component({
@@ -26,7 +26,7 @@ export class InvoiceFilteredArgs {
   templateUrl: './filter-bar.component.html',
 })
 
-export class InvoiceFilterComponent extends BaseComponent implements OnInit {
+export class InvoiceFilterComponent extends BaseComponent implements OnInit, OnChanges {
 
   @Input() invoiceFilteredValue: InvoiceFilteredArgs = new InvoiceFilteredArgs();
   @Output() filteredInvoice: EventEmitter<InvoiceFilteredArgs> = new EventEmitter<InvoiceFilteredArgs>();
@@ -83,7 +83,16 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit {
     jQuery('#invoice_FromDate').datepicker();
     jQuery('#invToDate').datepicker();
   }
-
+ngOnChanges() {
+    this.companyFilteredArg.companyId = this.invoiceFilteredValue.companyId;
+    this.userFilteredArg.UserID = this.invoiceFilteredValue.userId;
+    this.vendorFilteredArg.vendorId = this.invoiceFilteredValue.vendorId;
+    this.status.map((item) => {
+      if (item.statusId === this.invoiceFilteredValue.statusId) {
+        this.onStatusChange(item);
+      }
+    });
+  }
   private searchUrl(): void {
     let dateFrom = jQuery('#invoice_FromDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
     this.invoiceFilteredValue.invFromDate = dateFrom.val();

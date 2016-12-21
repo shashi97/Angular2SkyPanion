@@ -34,11 +34,17 @@ export class VendorDropdownComponent extends BaseComponent implements OnInit, On
   }
 
   ngOnChanges() {
-    this.selectedVendorArray = this.vendorFilteredArg;
+      this.getSkypanionsVendors().then(res => {
+      this.vendors.map((item) => {
+         if (item.value.id === this.vendorFilteredArg.vendorId) {
+          this.selectedVendorArray = item.value;
+        }
+      });
+    });
   }
 
-  private getSkypanionsVendors(): void {
-    this.vendorService.getDistinctVendors().then(result => {
+  private getSkypanionsVendors() {
+    return this.vendorService.getDistinctVendors().then(result => {
       this.vendors = result;
 
       let defaultRole = {
