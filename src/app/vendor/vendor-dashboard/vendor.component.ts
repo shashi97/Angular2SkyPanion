@@ -104,6 +104,8 @@ export class VendorComponent extends BaseComponent implements OnInit {
         this.filteredValue.companyId = Number(parameterArray[0]);
         this.filteredValue.vendorKey = parameterArray[1];
         this.filteredValue.vendorName = parameterArray[2];
+      } else {
+        this.filteredValue.companyId = 0;
       }
 
       if (pageSizeFilter !== '-1') {
