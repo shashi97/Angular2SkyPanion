@@ -12,7 +12,6 @@ import { AccountService } from '../../account/shared/account.service';
 @Component({
   selector: 'sp-company',
   templateUrl: './company-detail.component.html',
-  providers: [CompanyService, UserService]
 })
 
 export class CompanyDetailComponent extends BaseComponent implements OnInit {

@@ -18,6 +18,13 @@ export class AccountService {
       .catch(error => error);
   }
 
+  getAccount(accountId) {
+    return this.http.get(ApiUrl.baseUrl + 'api/accounts/' + accountId)
+      .toPromise()
+      .then(response => response.json())
+      .catch(error => error);
+  }
+
   public handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
