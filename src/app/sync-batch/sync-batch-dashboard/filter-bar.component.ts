@@ -13,7 +13,7 @@ export class SyncBatchFilteredArgs {
   syncFromDate: string = '';
   syncToDate: string = '';
   batchNumber: string = '';
-  userId: number = 0;
+  userId: number = -1;
 }
 
 @Component({
