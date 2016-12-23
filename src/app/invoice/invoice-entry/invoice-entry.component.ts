@@ -71,13 +71,14 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private Accountbind;
   private invSearchObject: invSearchObject;
   private vendors: Array<Vendors>;
-  private jobs: Array<JobModel>;
+  private jobs: Array<any>;
   private companies: Array<CompanyModel>;
   private selectedJob = {
     selected: []
   }
   private selectedJobCategory = {
-    selected: {}
+    selected: {
+    }
   }
   private selectedPaymentMethod = {
     selected: {}
@@ -106,7 +107,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private poVendorKey;
   private poInvDesc;
   private documentType;
-  private paymentMethods;
   private pageSizeFilter;
   private searchParameters;
   private LedgerAccountsCount;
@@ -116,12 +116,12 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private invoiceDetail: InvoiceDetail;
   private purchaseOrders: Array<PurchaseOrder>;
   private invoiceNumber;
-  private invoiceBackLink;
+  private attachmentBackLink;
   private invoiceExistItems: InvoiceExistItems;
   private User: UserModel;
-  private jobCategory: Array<JobCategory>;
+  private jobCategory: Array<any>;
   private ledgerAccounts: Array<LedgerAccounts>;
-
+  private paymentMethods: Array<any>;
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private domSanitizer: DomSanitizer,
@@ -143,10 +143,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.glAccountObject = new GlAccountObject();
     this.purchaseOrders = new Array<PurchaseOrder>();
     this.invSearchObject = new invSearchObject();
-    this.jobCategory = new Array<JobCategory>();
+    this.jobCategory = new Array<any>();
     this.pageSizeFilter = 25;
     this.searchParameters = -1;
-    this.invoiceBackLink = '/invoicesList/' + this.pageSizeFilter + '/' + this.searchParameters;
+    this.attachmentBackLink = '/attachmentsList/' + this.pageSizeFilter + '/' + this.searchParameters;
+
   }
 
   ngOnInit() {
@@ -154,6 +155,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       this.activatedRoute.params.subscribe(params => {
         this.attachmentId = +params['attachmentId']; // (+) converts string 'id' to a number
         this.getCompanies();
+        this.poNum = ''
+        this.invoiceDate = '';
+        this.dueDate = '';
+        this.postGlDate = '';
       });
     } else {
       let link = ['/login'];
@@ -222,7 +227,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         if (result != null) {
           this.GetSelectedVendors(result);
         }
-      }, () => console.log(' Error In Vendor modal '));
+      }, () => console.log('Error In Vendor modal'));
     });
 
   }
@@ -294,7 +299,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     // });
   }
   private getUserDetails(): void {
-    this.userService.getUserById(this.sessionDetails.userId).then(result => {
+    this.userService.getUserById(this.user.userId).then(result => {
       if (result) {
         this.User = result;
         this.getPurchaseOrders();
@@ -318,10 +323,14 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private getPaymentMethod(): void {
-    this.paymentMethods = [];
     this.paymentMethods = [{ ID: 0, Name: 'Check' }];
-
-
+    let temp = this.paymentMethods;
+    temp.map((item: any) => {
+      this.paymentMethods.push({
+        label: item.Name,
+        value: item
+      });
+    });
     this.paymentMethods.forEach(item => {
       if (item.ID === 0) {
         this.selectedPaymentMethod.selected = item;
@@ -437,7 +446,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         }
 
 
-        //         if ($rootScope.sessionDetails.IsSuperUser == false && this.companyData.view_invoice_role_id != 0) {
+        //         if ($rootScope.user.IsSuperUser == false && this.companyData.view_invoice_role_id != 0) {
         //             if (this.User.selectedRoles != null && this.User.selectedRoles != undefined && this.User.selectedRoles.length > 0) {
         //                 for (let i = 0 ; i < this.User.selectedRoles.length ; i++) {
         //                     if (this.companyData.view_invoice_role_id == this.User.selectedRoles[i].RoleID) {
@@ -502,9 +511,19 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.jobsService.getJobsByCompanyId(CompanyID).then(result => {
       if (result) {
         this.jobs = result;
+        let temp = this.jobs;
+        this.jobs = [];
+        temp.map((item: any) => {
+          this.jobs.push({
+            label: item.Description,
+            value: item
+          });
+        });
       }
+
       if (this.invoiceDetail.JobID != null && this.invoiceDetail.JobID !== 0) {
         this.selectedJob.selected = [];
+
         this.jobs.forEach(function (item) {
           if (item.JobID === this.invoiceDetail.JobID) {
             this.selectedJob.selected = item;
@@ -530,6 +549,14 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       if (result) {
 
         this.jobCategory = result;
+        let temp = this.jobCategory;
+        this.jobCategory = [];
+        temp.map((item: any) => {
+          this.jobCategory.push({
+            label: item.Category,
+            value: item
+          });
+        });
         this.invoiceDetail.JobID = jobID;
         this.jobCategory.forEach(item => {
           if (item.JobCategoryID === this.invoiceDetail.JobCategoryID) {
@@ -542,6 +569,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   }
 
+  private SelectJobCategory(JobCategoryID): void {
+    this.invoiceDetail.JobCategoryID = JobCategoryID;
+  }
   private addGlAccountByPopup(led) {
     // this.invoiceDetail.InvoiceDistributions
 
@@ -963,7 +993,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
   }
   private checklockingStatusForExit(linkString): void {
-    if (this.invoiceDetail.LockedByID === this.sessionDetails.userID) {
+    if (this.invoiceDetail.LockedByID === this.user.userId) {
       this.unlockDocument(linkString);
     } else {
       this.router.navigate([linkString]);
@@ -1064,15 +1094,15 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
 
           this.invoiceService.getNextAttachmentIDs(this.attachmentId).then(result1 => {
-            this.invoiceService.saveInvoice(this.invoiceDetail).then(res => {
-              if (res) {
-              }
-              // else if (res.status == 500) {
-              //     this.showHideErrorLog = { 'display': 'none' };
-              //     this.displayValue = 'none';
-              //     alert('error', result.data.Message, 'error');
-              // }
-              else {
+            this.invoiceService.saveInvoice(this.invoiceDetail).then(result => {
+              if (result) {
+                //}
+                // else if (res.status == 500) {
+                //     this.showHideErrorLog = { 'display': 'none' };
+                //     this.displayValue = 'none';
+                //     alert('error', result.data.Message, 'error');
+                // }
+                //else {
                 // if ($rootScope.intervalPromise != undefined) {
                 //     $interval.cancel($rootScope.intervalPromise);
                 // }
@@ -1080,11 +1110,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
                 this.invoiceAlert = '';
 
                 if (value === 'isSaveAndContinue') {
-                  if (result1.data == null
-                    || result1.data === 0
-                    || result1.data === ''
-                    || result1.data === '0'
-                    || result1.data === 'null') {
+                  if (result1 == null
+                    || result1 === 0
+                    || result1 === ''
+                    || result1 === '0'
+                    || result1 === 'null') {
                     alert('Invoice saved successfully');
                     this.unlockDocument('/attachmentsList/' + this.pageSizeFilter + '/-1');
                   } else {
@@ -1104,7 +1134,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
                   this.unlockDocument('/invoices/'
                     + this.pageSizeFilter + '/'
                     + this.searchParameters + '/'
-                    + Number(result.data) + '/'
+                    + Number(result) + '/'
                     + null
                     + '/' + 0 + '/' + 0 + '/' + 0 + '/' + 0);
 
@@ -1127,6 +1157,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private unlockDocument(linkString): void {
+    //this.getCompanies();
     this.documentType = 5;
     this.doctype = 'Attachment';
     this.documentID = 0;
@@ -1141,7 +1172,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
     }
 
-    this.masterService.unlockDocument(this.documentID, this.sessionDetails.userId, this.documentType).then(result => {
+    this.masterService.unlockDocument(this.documentID, this.user.userId, this.documentType).then(result => {
       if (result) {
       } else {
         // if ($rootScope.intervalPromise != undefined) {
@@ -1192,11 +1223,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
 
     if (this.invoiceDate !== '' && this.invoiceDate != null) {
-      let isValid = moment(this.invoiceDate, 'MM/DD/YYYY', true).isValid();
-      if (isValid === false) {
-        let obj = { ErrorName: 'Invoice Date format is wrong' };
-        this.errors.splice(this.errors.length, 0, obj);
-      }
+      // let isValid = moment(this.invoiceDate, 'MM/DD/YYYY', true).isValid();
+      // if (isValid === false) {
+      //   let obj = { ErrorName: 'Invoice Date format is wrong' };
+      //   this.errors.splice(this.errors.length, 0, obj);
+      // }
     }
 
 
@@ -1209,11 +1240,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
 
     if (this.postGlDate !== '' && this.postGlDate != null) {
-      let isValid = moment(this.postGlDate, 'MM/DD/YYYY', true).isValid();
-      if (isValid === false) {
-        let obj = { ErrorName: 'postGlDate format is wrong' };
-        this.errors.splice(this.errors.length, 0, obj);
-      }
+      // let isValid = moment(this.postGlDate, 'MM/DD/YYYY', true).isValid();
+      // if (isValid === false) {
+      //   let obj = { ErrorName: 'postGlDate format is wrong' };
+      //   this.errors.splice(this.errors.length, 0, obj);
+      // }
     }
 
     if (this.dueDate === '' || this.dueDate == null) {
@@ -1224,11 +1255,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
 
     if (this.dueDate !== '' && this.dueDate != null) {
-      let isValid = moment(this.dueDate, 'MM/DD/YYYY', true).isValid();
-      if (isValid === false) {
-        let obj = { ErrorName: 'Due Date format is wrong' };
-        this.errors.splice(this.errors.length, 0, obj);
-      }
+      // let isValid = moment(this.dueDate, 'MM/DD/YYYY', true).isValid();
+      // if (isValid === false) {
+      //   let obj = { ErrorName: 'Due Date format is wrong' };
+      //   this.errors.splice(this.errors.length, 0, obj);
+      // }
     }
 
 

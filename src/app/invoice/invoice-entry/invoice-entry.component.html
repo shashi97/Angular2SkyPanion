@@ -20,7 +20,7 @@
       <button type="button" class="btn btn-danger" data-toggle="modal" (click)="openInvalidateModal()">
                     Invalid/Remove
                 </button>
-      <button type="button" class="btn btn-default" *ngIf="invoiceDetail.LockedByID == sessionDetails.userId" (click)="checklockingStatusForExit(attachmentBackLink)">
+      <button type="button" class="btn btn-default" *ngIf="invoiceDetail.LockedByID == user.userId" (click)="checklockingStatusForExit(attachmentBackLink)">
                     <i class="fa fa-arrow-left"></i>
                     Back
                 </button>
@@ -53,7 +53,7 @@
         <a href="#" tooltip-placement="top" uib-tooltip-html="companyTooltip">{{invoiceDetail.CompanyName}}</a>
       </div>
       <div class="col-md-4 input-group">
-        <div style="padding: 0 !important;margin: 0 !important;" *ngIf="invoiceDetail.InvoiceStatusID == 5 && sessionDetails.IsSuperUser == true">
+        <div style="padding: 0 !important;margin: 0 !important;" *ngIf="invoiceDetail.InvoiceStatusID == 5 && user.IsSuperUser == true">
           <!--<ui-select ng-model="selectedCompany.selected" theme="select2" style="width:200px" data-ng-change="onCompanyDropperChange(selectedCompany.selected.CompanyID , selectedCompany.selected.Number)">
           <ui-select-match placeholder="Select a Company">{{selectedCompany.selected.CompanyName}}</ui-select-match>
           <ui-select-choices repeat="company in companies| filter: $select.search">
@@ -114,8 +114,7 @@
             <i class="icon icon-warning-sign"></i>
             <span *ngIf="invoiceDetail.VendorName!=null" class="text-error" style="font-weight: bold">Ach not configured</span>
             <br>
-            <a *ngIf="invoiceDetail.VendorName!=null" href="#vendors/25/-1/{{invoiceDetail.VendorID}}"
-              target="_blank">
+            <a *ngIf="invoiceDetail.VendorName!=null" href="#vendors/25/-1/{{invoiceDetail.VendorID}}" target="_blank">
               <i class="fa fa-list-alt"></i><b>Invoice History</b>
             </a>
           </div>
@@ -130,7 +129,7 @@
         <div class="input-group date">
           <input [(ngModel)]="invoiceDate" class="form-control" id="Invoice_date" name="btn" #Invoice_date="ngModel" placeholder="Invoice Date From"
             size="12" type="text" value="">
-            <!--(blur)="setDueDateByInvoiceDate(invoiceDate)"-->
+          <!--(blur)="setDueDateByInvoiceDate(invoiceDate)"-->
           <span class="input-group-addon">
           <span class="caret" ></span>
           </span>
@@ -165,8 +164,8 @@
                                 </label>
       <div class="col-md-8 input-group ">
         <div class='input-group date'>
-          <input [(ngModel)]="dueDate" class="form-control" id="Due_date"  #Due_date="ngModel" placeholder="Due Date"
-            size="12" type="text" value="">
+          <input [(ngModel)]="dueDate" class="form-control" id="Due_date" #Due_date="ngModel" placeholder="Due Date" size="12" type="text"
+            value="">
           <!--<input type='text' class="form-control " focus-name="7 " tabindex="7 " placeholder="Click to select date" [(ngModel)]="dueDate "
             date-time-picker accept=" " (blur)="setDueDate() " />-->
           <span class="input-group-addon ">
@@ -296,8 +295,8 @@
                                 </label>
       <div class="col-md-8  input-group">
         <div class='input-group date'>
-          <input [(ngModel)]="postGlDate" class="form-control" id="Gl_date"  #Gl_date="ngModel" placeholder="Due Date"
-            size="12" type="text" value="">
+          <input [(ngModel)]="postGlDate" class="form-control" id="Gl_date" #Gl_date="ngModel" placeholder="Due Date" size="12" type="text"
+            value="">
           <!--<input type='text' class="form-control" data-ng-model="postGlDate" placeholder="Click to select date" date-time-picker focus-name="12"
             tabindex="12" ng-blur="setPostToGLDate()" />-->
           <span class="input-group-addon">
@@ -344,24 +343,24 @@
     <div class="field form-group">
       <label class="control-label col-md-4" for="invoice_PayUsingAch">Pay Using</label>
       <div class="col-md-8 input-group">
-        <p-dropdown [options]="paymentMethods" [disabled]="selectedPaymentMethod.selected.ID==0" [(ngModel)]="selectedPaymentMethod.selected.Name"
-          [filter]="true" [autoWidth]="true" [style]="{'width':'260px'}" (ngModelChange)="updateInvoiceRole(selectedViewInvoicesRole, 'view')"></p-dropdown>
-        <p>{{selectedPaymentMethod.selected.Name}}</p>
+        <p-dropdown [options]="paymentMethods" [disabled]="selectedPaymentMethod.selected.ID == 0" [(ngModel)]="selectedPaymentMethod.selected"
+          [filter]="true" [autoWidth]="true" [style]="{'width':'260px'}"></p-dropdown>
+       
       </div>
     </div>
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="job_id_Job ">Job</label>
       <div class="col-md-8 input-group ">
-        <p-dropdown [options]="jobs" [(ngModel)]="selectedJob.selected.Description" [filter]="true" [autoWidth]="true" [style]="{'width':'260px'}"
-          (ngModelChange)="updateInvoiceRole(selectedViewInvoicesRole, 'view')"></p-dropdown>
-        <p>{{selectedJob.selected.Description}}</p>
+        <p-dropdown [options]="jobs" [(ngModel)]="selectedJob.selected" placeholder="Select a Job" [filter]="true" [autoWidth]="true" [style]="{'width':'260px'}"
+          (ngModelChange)="getJobCategory(selectedJob.selected.JobID)"></p-dropdown>
+        <!--<p>{{selectedJob.selected.Description}}</p>-->
       </div>
     </div>
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="job_category_id_Job Category ">Job category</label>
       <div class="col-md-8 input-group ">
-        <p-dropdown [options]="jobCategory" [(ngModel)]="selectedJobCategory.selected.Category" [filter]="true" [autoWidth]="true"
-          [style]="{'width':'260px'}" (ngModelChange)="updateInvoiceRole(selectedViewInvoicesRole, 'view')"></p-dropdown>
+        <p-dropdown [options]="jobCategory" [(ngModel)]="selectedJobCategory.selected" [filter]="true" [autoWidth]="true"
+          [style]="{'width':'260px'}" (ngModelChange)="SelectJobCategory(selectedJobCategory.selected.JobCategoryID)"></p-dropdown>
       </div>
     </div>
     <div class="field form-group ">
@@ -393,7 +392,7 @@
                                         <input class="btn btn-success" id="submit_for_approval" value="Submit for Approval" type="button" (click)="SubmitInvoiceForApproval(invoiceDetail)" *ngIf="(invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.InvoiceStatusID == 1 ||invoiceDetail.InvoiceStatusID == 5)  && invoiceDetail.InvoiceAmount != 0" />
                                         <input class="btn btn-info" id="expedite_invoice" type="button" value="Expedite" (click)="submitInvoiceExpedite(invoiceDetail)" *ngIf="(invoiceDetail.IsExpeditedable == true || invoiceDetail.InvoiceStatusID ==1 || invoiceDetail.IsSubmitForApprovalRequired == true ||invoiceDetail.InvoiceStatusID == 5)  && invoiceDetail.InvoiceAmount != 0" />
                                         <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('isSaveAfterEdit','')" *ngIf="invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.IsApprovalRequired == true || invoiceDetail.InvoiceStatusID == 2 || invoiceDetail.InvoiceStatusID == 5" />
-                                        <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('getInvoiceGrid','')" *ngIf="(sessionDetails.IsSuperUser == true && (invoiceDetail.InvoiceStatusID == 4 ||invoiceDetail.InvoiceStatusID == 6))" />
+                                        <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('getInvoiceGrid','')" *ngIf="(user.IsSuperUser == true && (invoiceDetail.InvoiceStatusID == 4 ||invoiceDetail.InvoiceStatusID == 6))" />
 
                                         <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('isSave','saveInvoiceAfterEditFromBatch')" *ngIf="invoiceDetail.IsBatche == true && invoiceDetail.InvoiceStatusID == 3" />
 

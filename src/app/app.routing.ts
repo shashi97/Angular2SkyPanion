@@ -71,7 +71,7 @@ const APP_ROUTES: Routes = [
   { path: 'achSetup/detail/:id/:pageSizeFilter', component: AchSetupDetailComponent },
 
   { path: 'invoice/:pageSizeFilter/:searchParameters', component: InvoiceComponent },
-  { path: 'invoice/detail/:id/:pageSizeFilter/:searchParameters', component: InvoiceDetailComponent },
+  { path: 'invoices/:id/:pageSizeFilter/:searchParameters', component: InvoiceDetailComponent },
 
   { path: 'purchaseOrder/:pageSizeFilter/:searchParameters', component: PurchaseOrderComponent },
   { path: 'purchaseOrderDetail/:id', component: PurchaseOrderDetailComponent },
@@ -80,9 +80,9 @@ const APP_ROUTES: Routes = [
 
   { path: 'approval/:id', component: ApprovalCriteriaComponent },
 
-  { path: 'attachment', component: AttachmentComponent },
-  { path: 'attachment/:SearchParameters', component: AttachmentComponent },
-  { path: 'attachment/invoicesNew/:id', component: InvoiceEntryComponent },
+  // { path: 'attachment', component: AttachmentComponent },
+  { path: 'attachmentsList/:pageSizeFilter/:SearchParameters', component: AttachmentComponent },
+  { path: 'invoices/:pageSizeFilter/:SearchParameters/:InvoiceID/new/:attachmentId', component: InvoiceEntryComponent },
 
   { path: 'syncBatch/:pageSizeFilter/:searchParameters', component: SyncBatchComponent },
   { path: 'syncBatch/detail/:id/:pageSizeFilter/:searchParameters', component: SyncBatchDetailComponent },
