@@ -154,6 +154,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     if (this.user.userId != null) {
       this.activatedRoute.params.subscribe(params => {
         this.attachmentId = +params['attachmentId']; // (+) converts string 'id' to a number
+        this.InvoiceID = +params['InvoiceID']
         this.getCompanies();
         this.poNum = ''
         this.invoiceDate = '';
@@ -1131,10 +1132,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
                 }
                 if (value === 'isSave') {
                   alert('Invoice saved successfully');
-                  this.unlockDocument('/invoices/'
+                  this.unlockDocument('/invoice/detail/'
+                    + Number(result) + '/'
                     + this.pageSizeFilter + '/'
                     + this.searchParameters + '/'
-                    + Number(result) + '/'
                     + null
                     + '/' + 0 + '/' + 0 + '/' + 0 + '/' + 0);
 

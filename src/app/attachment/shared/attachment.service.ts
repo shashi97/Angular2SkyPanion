@@ -1,5 +1,5 @@
-import {Http} from '@angular/http';
-import {Injectable} from '@angular/core';
+import { Http } from '@angular/http';
+import { Injectable } from '@angular/core';
 import { ApiUrl } from '../../config.component';
 import { AttachmentObject } from '../../attachment/shared/attachment.model';
 
@@ -9,11 +9,11 @@ export class AttachmentService {
 
   }
 
-  getAttachments(companyID:number,status:string,pageNumber:number,rowsPerPage:number): Promise<AttachmentObject[]> {
-      // var companyID = 0;
-      // var status = "all";
-      // var pageNumber = 1;
-      // var rowsPerPage = 25;
+  getAttachments(companyID: number, status: string, pageNumber: number, rowsPerPage: number): Promise<AttachmentObject[]> {
+    // var companyID = 0;
+    // var status = "all";
+    // var pageNumber = 1;
+    // var rowsPerPage = 25;
     return this
       .http
       .get(ApiUrl.baseUrl + 'api/attachments/' + companyID + "/" + status + "/" + pageNumber + "/" + rowsPerPage)
@@ -22,7 +22,7 @@ export class AttachmentService {
       .catch(this.handleError);
   }
 
- deleteAttachement(attachemntID:number){
+  deleteAttachement(attachemntID: number) {
     return this
       .http
       .get(ApiUrl.baseUrl + "api/attachments/getDeleteAttachments/" + attachemntID)
@@ -31,10 +31,10 @@ export class AttachmentService {
       .catch(this.handleError);
   }
 
-   changeAttachmentProperty(attachmentID, companyID, newCompanyNumber, oldCompanyNumber, attachmentName) {
+  changeAttachmentProperty(attachmentID, companyID, newCompanyNumber, oldCompanyNumber, attachmentName) {
     return this
       .http
-      .get(ApiUrl.baseUrl  + "api/attachments/getChangeAttachmentProperty/" + attachmentID + "/" + companyID + "/" + newCompanyNumber + "/" + oldCompanyNumber + "/" + attachmentName)
+      .get(ApiUrl.baseUrl + "api/attachments/getChangeAttachmentProperty/" + attachmentID + "/" + companyID + "/" + newCompanyNumber + "/" + oldCompanyNumber + "/" + attachmentName)
       .toPromise()
       .then(response => response)
       .catch(this.handleError);

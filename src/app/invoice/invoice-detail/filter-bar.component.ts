@@ -17,7 +17,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 export class InvoiceDetailFilterComponent extends BaseComponent implements OnInit {
 
   @Input() invoiceDetail: InvoiceModel;
-
+  private searchParameters;
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -26,6 +26,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
     public toastr: ToastsManager
   ) {
     super(localStorageService, router);
+    this.searchParameters = -1;
   }
 
   ngOnInit() {
@@ -37,6 +38,8 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
         this.toastr.error('This Invoice is locked by' + result.LockBy, 'Oops!');
         return;
       } else {
+        this.router.navigate(['/invoices/'+ this.searchParameters +'/'+ this.invoiceDetail.InvoiceID 
+         + '/edit'] , { queryParams:{ status: this.invoiceDetail.InvoiceStatusID, amount: this.invoiceDetail.InvoiceAmount }});
         // $location.path('/invoices/'+$scope.searchParameters +'/'+ parseInt($scope.invoiceDetail.InvoiceID) 
         // + '/edit').search({ status: $scope.invoiceDetail.InvoiceStatusID, amount: $scope.invoiceDetail.InvoiceAmount });
       }

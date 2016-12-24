@@ -143,7 +143,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   }
 
   getInvoices() {
-    this.location.replaceState('invoice/' + this.searchString);
+    //this.location.replaceState('invoiceList/' + this.searchString);
     let searchFields = {
       invoiceNumber: this._currentInvoiceArgs.invoiceNumber,
       vendorId: this._currentInvoiceArgs.vendorId,
