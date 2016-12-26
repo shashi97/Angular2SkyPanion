@@ -27,10 +27,17 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   private account: Object;
   private totalItems: number = 0;
   private searchString: string = '';
-
+  private pageSizeFilter: number = 0;
+  private searchParameters: number = 0;
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private _currentInvoiceArgs: InvoiceFilteredArgs = new InvoiceFilteredArgs();
-
+  private invoiceNumber: string = '';
+  private invoiceDesc: string = '';
+  private vendorID: number = 0;
+  private companyID: number = 0;
+  private statusID: number = -1;
+  private userID: number = -1;
+  private currentPage: number = 0;
   private Invoices: Array<InvoiceModel> = [];
 
   constructor(
@@ -46,6 +53,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   ) {
     super(localStorageService, router);
     this.Invoices = new Array<InvoiceModel>();
+    this.pageSizeFilter = 25;
+    this.searchParameters = -1;
   }
 
   ngOnInit() {
@@ -131,6 +140,13 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     });
   }
 
+  private showInvoiceDetail(invoiceID): void {
+
+    if (this.invoiceNumber == "" || this.invoiceNumber == "null" || this.invoiceNumber == undefined) {
+                this.invoiceNumber = null;
+            }
+    this.router.navigate(['/invoice/detail/' + this.pageSizeFilter + "/" + this.searchParameters + '/' + invoiceID + '/' + this.invoiceNumber + '/' + this.vendorID + '/' + this.companyID + '/' + this.statusID + '/' + this.userID]);
+  }
   private getAccountName(): void {
     this.accountService.getAccountName().then(result => {
       this.account = result;

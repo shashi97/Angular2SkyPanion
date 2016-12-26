@@ -62,7 +62,7 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
 
   private getParameterValues(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.invoiceId = params['id'];
+      this.invoiceId = +params['InvoiceID'];
       this.invoiceArgs.invoiceId = this.invoiceId;
       this.getUserDetails();
     });

@@ -29,7 +29,7 @@
           <th style="width: 7%">Invoice Amount</th>
           <th style="width: 7%">Paid Status</th>
           <th style="width: 7%">Processed</th>
-          <th style="width:11%">Description</th>
+          <th style="width: 11%">Description</th>
           <th style="width: 8%">Locked By</th>
           <th style="width: 5%"></th>
           <th style="width: 5%"></th>
@@ -112,7 +112,7 @@
             </div>
           </td>
           <td>
-            <a href="#/invoice/detail/{{item.InvoiceID}}/{{searchString}}">Details</a></td>
+            <a (click)="showInvoiceDetail(item.InvoiceID)">Details</a></td>
         </tr>
       </tbody>
       <tfoot>

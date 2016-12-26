@@ -30,3 +30,12 @@ export class InvoiceModel {
   docType: number = 0;
   TotalDistributionAmount: number = 0;
 }
+export class InvApprovals {
+ InvoiceApprovals:Array<any>;
+  OwnerName: string = '';
+  AccountID: number = 0;
+  OwnerID: number = 0;
+ 
+}
+
+

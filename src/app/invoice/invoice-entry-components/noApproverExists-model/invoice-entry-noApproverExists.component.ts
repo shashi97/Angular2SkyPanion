@@ -4,19 +4,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { BaseComponent } from '../../../base.component';
 import { UserService } from '../../../user/shared/user.service';
-import {CurrentPageArguments} from '../../../pagination/pagination.component';
+import { CurrentPageArguments } from '../../../pagination/pagination.component';
 import { CrumbBarComponent } from '../../../shared/others/crumb-bar/crumb-bar.component';
 import { InvoiceEntryService } from '../../../invoice/invoice-entry/shared/invoice-entry.service';
 import { PurchaseOrder } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
+import { Vendors, InvoiceDetail } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
 // import { CompanyDropdownComponent } from '../shared/dropdown/company/company-dropdown.component';
 // import { Modal } from 'angular2-modal/plugins/bootstrap';
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 // import { BSModalContext } from 'angular2-modal/plugins/bootstrap/index';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
-import { FilterPipe } from '../../../shared/pipe/orderby';
+// import { FilterPipe } from '../../../shared/pipe/orderby.ts';
 
 
-export class InvoiceEntryPurchaseModalContext extends BSModalContext {
+export class InvoiceEntryNoApproverExistsModalContext extends BSModalContext {
 	constructor() {
 		super();
 	}
@@ -25,34 +26,36 @@ export class InvoiceEntryPurchaseModalContext extends BSModalContext {
 
 
 @Component({
-	selector: 'sp-invoice-entry-purchase',
-	templateUrl: 'invoice-entry-purchase.component.html'
+	selector: 'sp-invoice-entry-noApproverExists',
+	templateUrl: 'invoice-entry-noApproverExists.component.html'
 })
-export class InvoiceEntryPurchaseComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoiceEntryPurchaseModalContext>, OnInit {
+export class InvoiceEntryNoApproverExistsComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoiceEntryNoApproverExistsModalContext>, OnInit {
 	// export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
-	private purchaseOrder: Array<PurchaseOrder>
-	context: InvoiceEntryPurchaseModalContext;
+	context: InvoiceEntryNoApproverExistsModalContext;
 	public wrongAnswer: boolean;
-	private POSearchText: string = '';
-	private PuchaseOrderID: number = 0;
+	private CompanyID: number = 0;
+	private vendors: Array<Vendors>;
 	// @ViewChild('templateRef') public templateRef: TemplateRef<any>;
 	constructor(private activatedRoute: ActivatedRoute,
 		private userService: UserService,
+
 		private invoiceEntryService: InvoiceEntryService,
 		localStorageService: LocalStorageService,
 		router: Router,
-		public dialog: DialogRef<InvoiceEntryPurchaseModalContext>) {
+		public dialog: DialogRef<InvoiceEntryNoApproverExistsModalContext>) {
 		super(localStorageService, router);
 		this.context = dialog.context;
 		dialog.setCloseGuard(this);
-		this.getPurchaseOrders()
+		this.vendors = new Array<Vendors>();
+
 
 	}
 	ngOnInit() {
 		this.sessionDetails = this.userService.getSessionDetails();
 		if (this.sessionDetails.userId != null) {
-			this.getPurchaseOrders()
+		//	this.getVendors();
 			// this.getAccountName();
+
 		} else {
 			let link = ['/login'];
 			this.router.navigate(link);
@@ -60,25 +63,25 @@ export class InvoiceEntryPurchaseComponent extends BaseComponent implements Clos
 	}
 
 
-	public getPurchaseOrders(): void {
-		this.invoiceEntryService
-			.getPurchaseOrders()
-			.then(result => {
-				if (result) {
-                    this.purchaseOrder = result;
-                }
+	// public getVendors(): void {
+	// 	this.invoiceEntryService
+	// 		.getVendorById(this.CompanyID)
+	// 		.then(result => {
+	// 			if (result) {
+  //                   this.vendors = result;
 
-			});
+  //               }
 
-	}
-	GetSelectedPurchaseOrder(PuchaseOrderID): void {
-		this.dialog.close(PuchaseOrderID);
-		//	this.PuchaseOrderID = PuchaseOrderID;
-	}
+	// 		});
+
+	// }
+	// GetSelectedVendor(VendorID): void {
+	// 	this.dialog.close(VendorID);
+
+	// }
 
 	closeModal(): void {
 		this.dialog.close();
-		
 	}
 }
 

@@ -11,7 +11,7 @@ import { Overlay, OverlayConfig } from 'angular2-modal';
 import { InvoiceModel } from '../../invoice/shared/invoice.model';
 import {
   InvoiceDetail, invSearchObject, PurchaseOrder, CompanyData, Vendors,
-  LedgerAccounts, GlAccountObject, InvoiceExistItems, JobCategory
+  LedgerAccounts, GlAccountObject, InvoiceExistItems, JobCategory, InvApprovals
 } from '../../invoice/invoice-entry/shared/invoice-entry.model';
 import { JobModel } from '../../job/shared/job.model';
 import { UserModel } from '../../user/shared/user.model';
@@ -41,7 +41,10 @@ import {
   InvoiceRejectModalContext,
   InvoiceRejectModalComponent
 } from '../../invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
-
+import {
+  InvoiceEntryNoApproverExistsModalContext,
+  InvoiceEntryNoApproverExistsComponent
+} from '../../invoice/invoice-entry-components/noApproverExists-model/invoice-entry-noApproverExists.component';
 
 declare let jQuery: any;
 @Component({
@@ -72,6 +75,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private invSearchObject: invSearchObject;
   private vendors: Array<Vendors>;
   private jobs: Array<any>;
+  private invApprovals: InvApprovals;
   private companies: Array<CompanyModel>;
   private selectedJob = {
     selected: []
@@ -110,7 +114,12 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private pageSizeFilter;
   private searchParameters;
   private LedgerAccountsCount;
-  private invoiceIDs: InvoiceModel;
+  private invoiceIDs = {
+    CurrentInvoiceID: '',
+    NextInvoiceID: '',
+    PreviousInvoiceID: ''
+  };
+  private invoiceBackLink;
   private fcs_AccountNum;
   private fcs_description;
   private invoiceDetail: InvoiceDetail;
@@ -147,7 +156,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.pageSizeFilter = 25;
     this.searchParameters = -1;
     this.attachmentBackLink = '/attachmentsList/' + this.pageSizeFilter + '/' + this.searchParameters;
-
+    this.invoiceBackLink = '/invoice/' + this.pageSizeFilter + '/' + this.searchParameters;
   }
 
   ngOnInit() {
@@ -204,6 +213,30 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         // alert(result.status);
         if (result != null) {
           this.GetSelectedPurchaseOrder(result);
+        }
+      }, () => console.log(' Error In Purchase modal '));
+    });
+
+
+  }
+
+  openNoApproverExistsModal() {
+    const builder = new BSModalContextBuilder<InvoiceEntryNoApproverExistsModalContext>(
+      { num1: 2, num2: 3 } as any,
+      undefined,
+      InvoiceEntryNoApproverExistsModalContext
+    );
+
+    let overlayConfig: OverlayConfig = {
+      context: builder.toJSON()
+    };
+
+    const dialog = this.modal.open(InvoiceEntryNoApproverExistsComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
+        if (result != null) {
+          //this.GetSelectedPurchaseOrder(result);
         }
       }, () => console.log(' Error In Purchase modal '));
     });
@@ -342,8 +375,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private getInvoiceID(): void {
-
-
+    this.invSearchObject.invoiceID = this.InvoiceID
+    
     this.invoiceService.getInvoiceId(this.invSearchObject).then(result => {
       if (result) {
         this.invoiceIDs = result;
@@ -539,7 +572,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       //     this.confirmLock();
       // }, 1 * 60000);
 
-      // this.getInvoiceApprovals(this.invoiceDetail.InvoiceID, this.invoiceDetail.InvoiceAmount, this.invoiceDetail.CompanyID);
+      this.getInvoiceApprovals(this.invoiceDetail.InvoiceID, this.invoiceDetail.InvoiceAmount, this.invoiceDetail.CompanyID);
 
 
     });
@@ -994,7 +1027,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
   }
   private checklockingStatusForExit(linkString): void {
-    if (this.invoiceDetail.LockedByID === this.user.userId) {
+    if (this.invoiceDetail.LockedByID == this.user.userId) {
       this.unlockDocument(linkString);
     } else {
       this.router.navigate([linkString]);
@@ -1307,6 +1340,121 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       return;
     }
   }
+
+  private SubmitInvoiceForApproval(invoice): void {
+
+    if (this.invApprovals != undefined && this.invApprovals.InvoiceApprovals != undefined && this.invApprovals.InvoiceApprovals.length > 0) {
+      this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID).then(result => {
+        if (result.data.IsLocked == 0) {
+          alert("This invoice is locked by " + result.LockBy);
+          return;
+
+        } else {
+          this.ValidateInvoice();
+
+          if (this.errors.length == 0) {
+            if (invoice.InvoiceAmount == "0" || invoice.InvoiceAmount == "" || invoice.InvoiceAmount == null) {
+              invoice.InvoiceAmount = 0;
+            }
+
+            if (invoice.InvoiceAmount != 0 && invoice.InvoiceAmount != 0.00) {
+              this.invoiceService.saveInvoice(this.invoiceDetail).then(result => {
+
+                if (result) {
+                  // }
+                  // else if (result.status == 500) {
+                  //     this.showHideErrorLog = { 'display': 'none' };
+                  //     this.displayValue = 'none';
+                  //     messageService.showMsgBox("error", result.data.ExceptionMessage, "error");
+                  // }
+                  // else {
+                  if (invoice.InvoiceAmount != 0 && invoice.InvoiceAmount != 0.00) {
+                    this.invoiceService.submitInvoiceForApproval(invoice.InvoiceID).then(result => {
+                      if (result) {
+
+                        alert("Invoice submit for approval successfully");
+                        if (this.invoiceIDs != undefined && this.invoiceIDs.NextInvoiceID != null && this.invoiceIDs.NextInvoiceID > invoice.InvoiceID) {
+                          this.unlockDocument('/invoices/-1/' + parseInt(this.invoiceIDs.NextInvoiceID) + '/edit');
+                        } else {
+                          this.unlockDocument('/dashboard');
+                        }
+                      }
+                    });
+                  }
+                }
+              });
+            }
+
+            else {
+              alert("Invoice amount is zero.so can not submit this invoice for approval");
+              return false;
+            }
+          }
+        }
+      });
+    }
+    else {
+      this.openNoApproverExistsModal()
+    }
+  }
+
+  private getInvoiceApprovals(invoiceID, InvoiceAmount, CompanyID) {
+
+    this.invoiceService.getInvoiceApprovals(invoiceID, InvoiceAmount, CompanyID).then(result => {
+      if (result) {
+        this.invApprovals = result;
+      }
+    });
+  }
+
+  private submitInvoiceExpedite (invoice):void {
+            this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID).then(result=> {
+                if (result.IsLocked == 0) {
+                    alert("This invoice is locked by " + result.LockBy);
+                    return;
+
+                } else {
+                    this.ValidateInvoice();
+                    if (this.errors.length == 0) {
+                        if (invoice.InvoiceAmount == "0" || invoice.InvoiceAmount == "" || invoice.InvoiceAmount == null) {
+                            invoice.InvoiceAmount = 0;
+                        }
+
+                        if (invoice.InvoiceAmount != 0 && invoice.InvoiceAmount != 0.00) {
+                            this.invoiceService.saveInvoice(this.invoiceDetail).then(result=> {
+
+                                if (result) {
+                                // }
+                                // else if (result.status == 500) {
+                                //     messageService.showMsgBox("error", result.data.ExceptionMessage, "error");
+                                // }
+                                // else {
+                                    this.invoiceService.submitInvoiceExpedite(invoice.InvoiceID).then(result=> {
+                                        if (result) {
+                                        // }
+                                        // else {
+                                           alert("Invoice expedited successfully");
+                                            if (this.invoiceIDs != undefined && this.invoiceIDs.NextInvoiceID != null && this.invoiceIDs.NextInvoiceID > invoice.InvoiceID) {
+                                                this.unlockDocument('/invoices/-1/' + parseInt(this.invoiceIDs.NextInvoiceID) + '/edit');
+                                            } else {
+                                                this.unlockDocument('/dashboard');
+                                            }
+
+                                            //this.unlockDocument('/dashboard');
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                          alert("Invoice amount is zero.so can not expedite this invoice");
+                            return false;
+                        }
+                    }
+                }
+            });
+
+        }
 }
 
 

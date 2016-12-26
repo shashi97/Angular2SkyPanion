@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { InvoiceModel } from '../shared/invoice.model';
+import { InvoiceModel,InvApprovals } from '../shared/invoice.model';
 import { InvoiceService } from '../shared/invoice.service';
 import { InvoiceArgs } from './invoice-detail.component';
 
@@ -17,31 +17,41 @@ export class InvoiceDetailInvoiceComponent extends BaseComponent implements OnIn
 
   @Input() invoiceDetail: InvoiceModel;
   @Input() invoiceArgs: InvoiceArgs;
-
-  private invApprovals: Array<any> = [];
+  private invType;
+  private invoiceID;
+  private invApprovals: Array<InvApprovals>;
 
 
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
+    private activatedRoute: ActivatedRoute,
     private invoiceService: InvoiceService
   ) {
     super(localStorageService, router);
+    this.invApprovals = new  Array<InvApprovals>();
   }
 
   ngOnInit() {
+      this.activatedRoute.params.subscribe(params => {
+        //this.attachmentId = +params['attachmentId']; // (+) converts string 'id' to a number
+        this.invoiceID = +params['InvoiceID']
+        //this.getInvoiceApprovals();
+      });
   }
 
   private getInvoicePdf(): void {
     this.invoiceArgs.invType = 'pdf';
   }
+   private getInvoiceApprovalsAllow  (invoiceID, InvoiceAmount, CompanyID):void {
+            this.invType = 'approvals';
+            this.getInvoiceApprovals(invoiceID, InvoiceAmount, CompanyID);
+        }
 
-  private getInvoiceApprovals(): void {
+  private getInvoiceApprovals(invoiceID, InvoiceAmount, CompanyID): void {
     this.invoiceArgs.invType = 'approvals';
-    this.invoiceService.getInvoiceApprovals(
-      this.invoiceArgs.invoiceId,
-      this.invoiceDetail.InvoiceAmount,
-      this.invoiceDetail.CompanyID)
+    this.invoiceService.getInvoiceApprovals (
+      invoiceID, InvoiceAmount, CompanyID)
       .then(result => {
         if (result.status === 404) {
         } else if (result.status === 500) {

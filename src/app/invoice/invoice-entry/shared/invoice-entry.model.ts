@@ -31,13 +31,27 @@ export class GlAccountObject {
     glAccountDescription: string = '';
 }
 export class invSearchObject {
-    invoiceID: string = '';
+    invoiceID: number = 0;
     invoiceNumber: string = '';
     vendorID: number = 0;
     companyID: number = 0;
     statusID: string = '';
     userID: number = 0;
 }
+export class InvApprovals  {
+    AccountID: number = 0;
+    OwnerID: number = 0;
+    OwnerName: string = '';
+    InvoiceApprovals: Array<any>
+}
+// export class invSearchObject {
+//     invoiceID: string = '';
+//     invoiceNumber: string = '';
+//     vendorID: number = 0;
+//     companyID: number = 0;
+//     statusID: string = '';
+//     userID: number = 0;
+// }
 export class JobCategory {
     Category: string = '';
     invoiceNumber: string = '';
