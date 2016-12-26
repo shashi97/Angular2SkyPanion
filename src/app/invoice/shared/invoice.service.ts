@@ -65,7 +65,7 @@ export class InvoiceService {
     return this.http.get(ApiUrl.baseUrl
       + 'api/invoices/getInvoiceExpedite/' + invoiceID)
       .toPromise()
-      .then(response => response.json())
+      .then(response => response)
       .catch(error => error);
   }
 

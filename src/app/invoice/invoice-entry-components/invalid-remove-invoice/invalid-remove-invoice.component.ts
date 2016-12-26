@@ -14,7 +14,7 @@ import { MasterService } from '../../../shared/services/master/master.service';
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 // import { BSModalContext } from 'angular2-modal/plugins/bootstrap/index';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
-import { FilterPipe } from '../../../shared/pipe/orderby.ts';
+import { FilterPipe } from '../../../shared/pipe/orderby';
 import { InvoiceService } from '../../../invoice/shared/invoice.service';
 
 export class InvoiceRejectModalContext extends BSModalContext {

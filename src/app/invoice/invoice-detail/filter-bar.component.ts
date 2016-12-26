@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { Overlay, OverlayConfig } from 'angular2-modal';
-import { InvoiceModel,InvApprovals } from '../shared/invoice.model';
+import { InvoiceModel, InvApprovals } from '../shared/invoice.model';
 import { MasterService } from '../../shared/services/master/master.service';
 import { InvoiceService } from '../../invoice/shared/invoice.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
@@ -23,7 +23,7 @@ import {
 })
 
 export class InvoiceDetailFilterComponent extends BaseComponent implements OnInit {
- @Input()  invApprovals: InvApprovals;
+
   @Input() invoiceDetail: InvoiceModel;
   private searchParameters;
   private InvoiceIDs;
@@ -32,9 +32,13 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
     NextInvoiceID: '',
     PreviousInvoiceID: ''
   };
+  private invApprovals: InvApprovals;
   private invSearchObject: invSearchObject;
   private attachmentId;
   private InvoiceID;
+  private DocumentLockingID;
+  private DocumentID;
+  private docType;
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -59,6 +63,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
       this.invSearchObject.userID = +params['user'];
       this.invSearchObject.vendorID = +params['vendor'];
       this.getInvoiceID();
+      this.getInvoiceApprovals();
     });
   }
 
@@ -111,12 +116,32 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
 
   }
 
+  private getInvoiceApprovals(): void {
+    this.invoiceService.getInvoiceApprovals(
+      this.invSearchObject.invoiceID,
+      this.invoiceDetail.InvoiceAmount,
+      this.invoiceDetail.CompanyID)
+      .then(result => {
+        if (result.status === 404) {
+        } else if (result.status === 500) {
+        } else {
+          this.invApprovals = result;
+        }
+      });
+  }
+
   private SubmitInvoiceForApproval(invoice): void {
-    let documentLockingId: number = 0;
-    let docType: string = '';
-    let documentId: number = 0;
+    if (this.invoiceDetail.InvoiceID == 0) {
+      this.docType = 5;
+      this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
+      this.DocumentID = this.invoiceDetail.AttachmentID;
+    } else {
+      this.docType = 10;
+      this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
+      this.DocumentID = this.invoiceDetail.InvoiceID;
+    }
     if (this.invApprovals != undefined && this.invApprovals.InvoiceApprovals != undefined && this.invApprovals.InvoiceApprovals.length > 0) {
-      this.masterService.checkLockedDocumentState(documentLockingId, docType, documentId)
+      this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID)
         .then(result => {
           if (result.IsLocked === 0) {
             // messageService.showMsgBox("error", "This invoice is locked by " + result.data.LockBy, "error");
@@ -148,24 +173,35 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
   private submitInvoiceExpedite(invoice): void {
 
     // only make let to avoid error Please give the exact value when you call the service    
-    let documentLockingId: number = 0;
-    let docType: string = '';
-    let documentId: number = 0;
+    if (this.invoiceDetail.InvoiceID == 0) {
+      this.docType = 5;
+      this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
+      this.DocumentID = this.invoiceDetail.AttachmentID;
+    } else {
+      this.docType = 10;
+      this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
+      this.DocumentID = this.invoiceDetail.InvoiceID;
+    }
 
-    this.masterService.checkLockedDocumentState(documentLockingId, docType, documentId)
+    this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID)
       .then(result => {
-        if (result.data.IsLocked === 0) {
+        if (result.IsLocked === 0) {
           this.toastr.error('This invoice is locked by' + result.LockBy, 'Oops!');
           // messageService.showMsgBox("error", "This invoice is locked by " + result.data.LockBy, "error");
           return;
         } else {
           if (invoice.InvoiceAmount > 0) {
-            this.invoiceService.submitInvoiceExpedite(invoice.InvoiceID).then(function (response) {
+            this.invoiceService.submitInvoiceExpedite(invoice.InvoiceID).then(response => {
               if (response.Status === 500) {
               } else {
                 this.toastr.success('Invoice expedited successfully', 'Success!');
-                // messageService.showMsgBox("Success", "Invoice expedited successfully", "success");
-                // $location.path('/dashboard');
+                if (this.invoiceIDs != undefined && this.invoiceIDs.NextInvoiceID != null && this.invoiceIDs.NextInvoiceID > invoice.InvoiceID) {
+                  this.unlockDocument('/invoice/detail/' + parseInt(this.invoiceIDs.NextInvoiceID), invoice.InvoiceID);
+
+                } else {
+                  // $location.path('/dashboard');
+                  this.unlockDocument('/dashboard', invoice.InvoiceID);
+                }
               }
             });
           } else {
@@ -177,6 +213,12 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
       });
   }
 
+  private unlockDocument(linkString, invoiceID): void {
+
+    this.masterService.unlockDocument(invoiceID, 0, 10).then(result => {
+     this.router.navigate([linkString]);
+    });
+  }
   private getInvoiceReject(): void {
     // $scope.errorHeaderRemoveInv = "";
     // $scope.displayValue = 'none';
