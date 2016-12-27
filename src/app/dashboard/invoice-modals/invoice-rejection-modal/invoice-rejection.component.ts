@@ -79,7 +79,7 @@ export class InvoiceRejectModalComponent extends BaseComponent implements CloseG
 
       this.masterService.checkDocumentLocking(this.invoiceID, 10).then(result => {
         if (result.IsLocked == 0) {
-          this.toastr.error('This Invoice is locked by ' + result.LockBy, 'Oops!');
+          this.toastr.error('This Invoice is locked by' + result.LockBy, 'Oops!');
           this.rejectionComment = '';
           return;
         } else {
