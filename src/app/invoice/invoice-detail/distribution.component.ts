@@ -16,7 +16,7 @@ export class InvoiceDetailDistributeComponent extends BaseComponent implements O
 
   constructor(
     localStorageService: LocalStorageService,
-    router: Router,
+    router: Router
   ) {
     super(localStorageService, router);
   }

@@ -40,6 +40,10 @@ import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
 import { UiSwitchModule } from 'angular2-ui-switch';
 /* bootstrap components end */
 
+import { InterceptorService } from 'ng2-interceptors';
+import {CustomHttp} from './interceptor/customhttp';
+import {PubSubService} from './interceptor/pub-service'
+
 
 /*sp-app services*/
 import { MasterService } from './shared/services/master/master.service';
@@ -63,9 +67,10 @@ import { SyncBatchService } from './sync-batch/shared/sync-batch.service';
 import { InvoiceEntryService } from './invoice/invoice-entry/shared/invoice-entry.service';
 
 /*pipes */
-import { OrderByPipe, FilterPipe } from './shared/pipe/orderby';
-import { Modal } from 'angular2-modal';
+import { OrderByPipe, FilterPipe , CurrencyPipe } from './shared/pipe/orderby';
 
+
+import { Modal } from 'angular2-modal';
 import { ModalComponent, CloseGuard } from 'angular2-modal';
 /* sp-app components */
 
@@ -106,7 +111,9 @@ import { LedgerAccountDistributionComponent } from './ledger-account/ledger-acco
 
 
 import { IniSetupComponent } from './ini-setup/ini-setup.component';
-import { ShowOnRowHover } from './shared/directive/showOnRowHover';
+
+import { ShowOnRowHover , CurrencyFormatterDirective} from './shared/directive/showOnRowHover';
+import { LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
 
 import { JobComponent } from './job/job-dashboard/job.component';
 import { JobDetailComponent } from './job/job-detail/job-detail.component';
@@ -154,6 +161,11 @@ import { InvoiceEntryNoApproverExistsComponent } from './invoice/invoice-entry-c
 import { InvoiceApprovalModalComponent } from './dashboard/invoice-modals/invoice-approval-modal/invoice-approval.component';
 import { InvoiceDistributionCommentModalComponent } from
   './dashboard/invoice-modals/invoice-distribution-comment-model/invoice-distribution-comment.component';
+
+  import { PageHeaderTitleComponent } from './shared/others/page-header/page-header.component';
+
+
+
 
 import { AttachmentComponent } from './attachment/attachment.component';
 
@@ -208,10 +220,19 @@ let localStorageServiceConfig = {
   storageType: 'localStorage'
 };
 
+
+export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: RequestOptions){
+  let service = new InterceptorService(xhrBackend, requestOptions);
+  // Add interceptors here with service.addInterceptor(interceptor)
+  return service;
+}
+
+
 @NgModule({
 
   declarations: [
     OrderByPipe,
+    CurrencyPipe,
     AppComponent,
     OtherComponent,
     LoginComponent,
@@ -310,9 +331,12 @@ let localStorageServiceConfig = {
     InvoiceDistributionCommentModalComponent,
     InvoiceEntryNoApproverExistsComponent,
     ShowOnRowHover,
+    CurrencyFormatterDirective,
     AttachmentEditComponent,
     ResetPasswordComponent,
-    InvoicePdfRejectModalComponent
+    InvoicePdfRejectModalComponent,
+    PageHeaderTitleComponent,
+    LoadingSpinnerComponent
   ],
   entryComponents: [
     SetupModalComponent,
@@ -350,6 +374,18 @@ let localStorageServiceConfig = {
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
+     {
+      provide: InterceptorService,
+      useFactory: interceptorFactory,
+      deps: [XHRBackend, RequestOptions]
+      },
+      {
+       provide:Http, 
+        useFactory:
+         (backend: XHRBackend, defaultOptions: RequestOptions, pubsub: PubSubService) => new CustomHttp(backend, defaultOptions, pubsub),
+        deps: [XHRBackend, RequestOptions, PubSubService]
+    },
+    PubSubService,
     RoleService,
     IniSetupService,
     ApprovalCriteriaService,

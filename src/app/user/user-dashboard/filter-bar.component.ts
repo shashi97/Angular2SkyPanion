@@ -4,6 +4,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 
 import { RoleService } from '../../role/shared/role.service';
+import { PagingFilterArgumentsModel } from '../../shared/models/pagination-filter.model';
 
 export class UserFilterArguments {
   userTypeId: string = '-1';
@@ -23,14 +24,18 @@ export class UserFilterComponent extends BaseComponent implements OnInit, OnChan
   private roles: Array<any> = [];
   @Output() filtered: EventEmitter<UserFilterArguments> = new EventEmitter<UserFilterArguments>();
   @Input() filteredValue: UserFilterArguments = new UserFilterArguments();
-
+   private paginationFilter: PagingFilterArgumentsModel;
+  private searchString: string = '';
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
     private roleService: RoleService
   ) {
     super(localStorageService, router);
-    // this.getRoles();
+    this.paginationFilter = new PagingFilterArgumentsModel();
+    this.searchString = this.paginationFilter.pageSizeFilter + '/'
+        + this.filteredValue.roleId + ','
+        + this.filteredValue.userTypeId;
   }
 
   ngOnInit() {

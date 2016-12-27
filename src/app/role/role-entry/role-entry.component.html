@@ -1,25 +1,11 @@
 <div id="slider" class="page-content">
-    <div class="page-heading" *ngIf="roleID==0">
-        <h1>New Role</h1>
-        <div class="options">
-        </div>
-    </div>
-    <ol class="breadcrumb" *ngIf="roleID==0">
-        <li>
-            <a href="#account/{{roleDetail.AccountID}}">{{roleDetail.AccountName}}</a>
-        </li>
-        <li>
-            <a href="#/role">Roles</a>
-        </li>
-        <li class="active">New Role</li>
-    </ol>
+
+ <sp-page-header-title [pageName]="pageHeader"></sp-page-header-title>
+
+     <sp-crumb-bar [lastTitle]="pageHeader"></sp-crumb-bar>
+
+
     <div id="edit_role_wrap" class="container-fluid">
-        <div class="row" *ngIf="roleID!=0">
-            <div class="col-md-12">
-                <h1>{{pageHeader}}</h1>
-                <hr>
-            </div>
-        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="row">

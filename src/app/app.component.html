@@ -77,13 +77,15 @@
     <img src="../../assets/img/SkyPanion-R.png" style="height: 45px; margin-top: 3px; float: left">
   </a>
   
-  <div class="yamm navbar-left navbar-collapse collapse in">
+  <!--<div class="yamm navbar-left navbar-collapse collapse in">
     <ul class="nav navbar-nav">
       <li class="dropdown" *ngIf="showLoading">
         <div class="loading">Loading&#8230;</div>
       </li>
     </ul>
-  </div>
+  </div>-->
+
+  <sp-loading-spinner [showLoader] = 'showLoader' ></sp-loading-spinner>
 
   <ul class="nav navbar-nav toolbar pull-right">
 
@@ -187,7 +189,7 @@
                   </a>
                   <ul class="acc-menu" *ngIf="user.IsSuperUser">
                     <li><a routerLink="user/-1/-1">All Members</a></li>
-                    <li><a routerLink="userEntry/0">Create Member</a></li>
+                    <li><a routerLink="user/entry/0">Create Member</a></li>
                     <li><a routerLink="role/-1/-1">All Roles</a></li>
                     <li><a routerLink="role/entry/0/-1/-1">New Role</a></li>
                   </ul>
@@ -224,3 +226,4 @@
 
 </div>
 <!--</div>-->
+

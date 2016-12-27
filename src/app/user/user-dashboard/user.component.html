@@ -84,8 +84,8 @@
             <td>
 
               <div>
-                <a href="#/user/detail/{{item.UserID}}/{{currentPageFiltered.pageSizeFilter}}">Show</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a [hidden]="item.IsEdit != true" href="#/userEntry/{{item.UserID}}">
+                <a href="#/user/detail/{{item.UserID}}/{{searchString}}">Show</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a [hidden]="item.IsEdit != true" href="#user/entry/{{item.UserID}}/{{searchString}}">
                   Edit
                 </a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <a [hidden]="item.IsDelete != true" (click)="checkUserExistInInvoiceApproval(item.UserID , item.UserName ,item.DisableLink)">

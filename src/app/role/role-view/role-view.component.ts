@@ -9,6 +9,7 @@ import { BaseComponent } from '../../base.component';
 import { AccountService } from '../../account/shared/account.service';
 import { RoleService } from '../shared/role.service';
 import { RoleModel } from '../shared/role.model';
+import { PageHeaderTitleComponent } from '../../shared/others/page-header/page-header.component';
 @Component({
   selector: 'sp-role-view',
   templateUrl: './role-view.component.html'
@@ -48,7 +49,7 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
       let pageSizeFilter = Number(params['pageSizeFilter'] ? params['pageSizeFilter'] : '-1');
       let searchParameters = Number(params['searchParameters'] ? params['searchParameters'] : '-1');
       this.roleId = Number(params['id']);
-      this.searchString = pageSizeFilter + '/' + searchParameters + '/' + this.roleId;
+      this.searchString =  this.roleId + '/' + pageSizeFilter + '/' + searchParameters ;
       this.getMemberRoleDetail();
     });
   };

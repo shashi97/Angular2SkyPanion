@@ -9,6 +9,12 @@ export class VendorFilterArguments {
   companyId: number
 }
 
+export class TitleModel {
+  pageName: string;
+}
+
+
+
 export class BreadCrumb {
   constructor(public path: string,
     public title: string) {
@@ -29,7 +35,7 @@ export class BreadCrumbs {
     this.values.push(new BreadCrumb('approval', 'Approval'));
     this.values.push(new BreadCrumb('syncBatch', 'All Sync Batches'));
     this.values.push(new BreadCrumb('user', 'All Users'));
-    this.values.push(new BreadCrumb('role', 'Role'));
+    this.values.push(new BreadCrumb('role', 'Roles'));
   }
 
   find(path) {
@@ -55,6 +61,7 @@ export class UrlModel {
 export class CrumbBarComponent extends BaseComponent implements OnInit {
   @Input() model: CrumbModel;
   @Input() pageDetail: any;
+  @Input() pageName: TitleModel;
 
   private firstUrlPart: UrlModel = new UrlModel();
 
@@ -82,8 +89,9 @@ export class CrumbBarComponent extends BaseComponent implements OnInit {
       this.firstUrlPart.urlFragement = '/' + segments[0].path;
       this.firstUrlPart.linkTitle = firstBreadCrumb.title;
       let isEdit = false;
+      
       if (segments.length > 1) {
-        if (segments[1].path === 'edit' || segments[1].path === 'detail') {
+        if (segments[1].path === 'edit' || segments[1].path === 'detail' || segments[1].path === 'entry' || segments[1].path === 'view') {
           isEdit = true;
         } else {
           this.lastTitle = this.firstUrlPart.linkTitle;

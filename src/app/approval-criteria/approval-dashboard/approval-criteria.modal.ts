@@ -5,11 +5,16 @@ import { ApproversModel, ApprovalContext, LedgersModel } from '../shared/approva
 import { LedgerAccountService } from '../../ledger-account/shared/ledger-account.service';
 import { ApprovalCriteriaService } from '../shared/approval-criteria.service';
 import { LedgerAccountModel } from '../../ledger-account/shared/ledger-account.model';
+import { OrderByPipe,CurrencyPipe } from '../../shared/pipe/orderby';
+import { CurrencyFormatterDirective } from '../../shared/directive/showOnRowHover';
 
 
 @Component({
   selector: 'sp-approval-modal',
-  templateUrl: './approval-criteria.modal.html'
+  templateUrl: './approval-criteria.modal.html',
+  providers:
+        [CurrencyPipe,
+          CurrencyFormatterDirective]
 })
 
 export class ApprovalModalComponent implements CloseGuard, ModalComponent<ApprovalContext> {
@@ -19,13 +24,14 @@ export class ApprovalModalComponent implements CloseGuard, ModalComponent<Approv
   private selectedLedgerAccount: LedgerAccountModel = new LedgerAccountModel();
   private selectedApprover: ApproversModel = new ApproversModel();
   private showHideErrorLog: Object = { 'display': 'none' };
-
+   private pattern='';
   constructor(public dialog: DialogRef<ApprovalContext>,
     public ledgerAccountService: LedgerAccountService,
     public approvalCriteriaService: ApprovalCriteriaService,
     public toastr: ToastsManager) {
     this.approvalContext = dialog.context;
     let temp = this.approvalContext.approvers;
+    this.pattern = '/06([0-9]{8})/';
     this.approvalContext.approvers = [];
     temp.map((item: any) => {
       this.approvalContext.approvers.push(
@@ -150,7 +156,8 @@ if ((this.approvalContext.type === '' || this.approvalContext.type === 'range') 
     this.errors.splice(this.errors.length, 0, obj);
   }
 
-  if (parseFloat(this.approvalContext.rangeStart) > parseFloat(this.approvalContext.rangeEnd)) {
+  if (Number(this.approvalContext.rangeStart.replace(/[^0-9\.]+/g,""))
+    > Number(this.approvalContext.rangeEnd.replace(/[^0-9\.]+/g,"")) ) {
     let obj = { ErrorName: 'Range Start cannot exceed Range End' };
     this.errors.splice(this.errors.length, 0, obj);
   }
@@ -196,8 +203,8 @@ this.approvalCriteriaService.saveApprovalCriteria(
 
   public checkRangeAmount(): void {
 
-  this.approvalContext.rangeAmtError = (parseFloat(this.approvalContext.rangeStart)
-    > parseFloat(this.approvalContext.rangeEnd))
+  this.approvalContext.rangeAmtError =  Number(this.approvalContext.rangeStart.replace(/[^0-9\.]+/g,""))
+    > Number(this.approvalContext.rangeEnd.replace(/[^0-9\.]+/g,"")) 
     ? true : false;
 
 }

@@ -18,6 +18,7 @@ import { UserService } from '../../user/shared/user.service';
 import { CurrentPageArguments } from '../../pagination/pagination.component';
 import { ConfirmService } from '../../shared/services/otherServices/confirmService';
 
+
 @Component({
   selector: 'sp-user',
   templateUrl: './user.component.html',

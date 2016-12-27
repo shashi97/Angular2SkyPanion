@@ -2,20 +2,7 @@
 
   <sp-user-entry-filter-bar [userDetail]="userDetail" [messageHeader]="messageHeader"></sp-user-entry-filter-bar>
 
-
-  <!--<sp-crumb-bar *ngIf="userDetail.IsSuperUser" [pageDetail]="userDetail"></sp-crumb-bar>-->
-
-
-  <!--<ol class="breadcrumb" *ngIf="userDetail.IsSuperUser == true">
-    <li>
-      <a href="#accounts/{{userDetail.accountID}}">{{userDetail.accountName}}</a>
-    </li>
-    <li *ngIf="userID!=0">
-      <a href="#usersList/-1/-1">Account Users</a>
-    </li>
-    <li class="active" *ngIf="userID!=0">{{userDetail.userName}}</li>
-    <li class="active" data-ng-hide="userID!=0">{{msgHeader}}</li>
-  </ol>-->
+     <!--<sp-crumb-bar [lastTitle]="messageHeader"></sp-crumb-bar>-->
 
   <div class="container-fluid">
     <div id="panel-advancedoptions">
@@ -339,7 +326,7 @@
                 <!--bootstrap-switch-animate bootstrap-switch-id-member_EmailNotificationsEnabled">-->
                 <div class="bootstrap-switch-container">
 
-                  <ui-switch [(ngModel)]="userDetail.invoiceDigestEnabled" name="userDetail.invoiceDigestEnabled"></ui-switch>
+                  <ui-switch [(ngModel)]="userDetail.invoiceDigestEnabled" name="userDetail.invoiceDigestEnabled" on="On" off="Off"></ui-switch>
                   <!--<input type="checkbox" [(ngModel)]="userDetail.invoiceDigestEnabled" bootstrap-switch class="bootstrap-switch switch-alt"
                     data-off-color="default" data-on-color="success" name="userDetail.invoiceDigestEnabled" />-->
                 </div>
@@ -491,14 +478,8 @@
               <div class="col-md-9">
 
                 <div class="form-group">
-                  <!--<ui-select ng-model="selectedInvoiceDigest.selected" theme="select2" style="width:100%">
-                    <ui-select-match placeholder="Select Number Digest">{{selectedInvoiceDigest.selected.numberOfDigests}}</ui-select-match>
-                    <ui-select-choices repeat="dig in Digests| filter: $select.search">
-                      {{dig.numberOfDigests}}
-                    </ui-select-choices>
-                  </ui-select>-->
 
-                  <p-dropdown [options]="digests" [(ngModel)]="selectedDigestArray" [filter]="true" [autoWidth]="true" (ngModelChange)="onSelectedDigest(selectedDigestArray)"
+                  <p-dropdown [options]="digests" [(ngModel)]="selectedDigestArray"  [style]="{'width':'200px'}" [filter]="true" [autoWidth]="true"  (ngModelChange)="onSelectedDigest(selectedDigestArray)"
                     name="selectedDigestArray">
                   </p-dropdown>
                 </div>

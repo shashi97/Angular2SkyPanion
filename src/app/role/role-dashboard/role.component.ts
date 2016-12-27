@@ -13,6 +13,8 @@ import { RoleModel } from '../shared/role.model';
 import { RoleFilterArgument } from './filter-bar.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
+
+
 @Component({
   selector: 'sp-role-dashboard',
   templateUrl: './role.component.html'
@@ -20,11 +22,12 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class RoleComponent extends BaseComponent implements OnInit {
 
+  
   private account: Object;
   private totalItems: number;
   private roles: Array<RoleModel>;
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
-  private pageName: string = 'roles';
+  private pageName: string = 'All Roles';
   private searchString: string = '';
   private _filterRow: RoleFilterArgument = new RoleFilterArgument();
   constructor(

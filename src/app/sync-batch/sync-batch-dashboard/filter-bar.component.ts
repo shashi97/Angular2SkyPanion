@@ -12,7 +12,7 @@ declare let jQuery: any;
 export class SyncBatchFilteredArgs {
   syncFromDate: string = '';
   syncToDate: string = '';
-  batchNumber: string = '';
+  batchNumber: string =null;
   userId: number = -1;
 }
 

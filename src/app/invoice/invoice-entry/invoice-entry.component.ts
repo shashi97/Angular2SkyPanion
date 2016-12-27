@@ -841,7 +841,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         this.dueDate = '';
         this.invoiceDate = '';
         this.postGlDate = '';
-        this.toastr.error(("Invoice",'This Invoice Number with same vendor and same invoice date is  already exists in this property');
+        this.toastr.error(("Invoice",'This Invoice Number with same vendor and same invoice date is  already exists in this property'));
       } else {
 
         if (this.AccountNumber != null && this.AccountNumber !== '') {

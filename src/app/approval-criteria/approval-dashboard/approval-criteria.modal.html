@@ -18,7 +18,8 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label ">Company </label>
                             <div class="col-md-8">
-                                <input class="form-control" disabled="disabled" type="text" [value]="approvalContext.cmpName" (input)="approvalContext.cmpName = $event.target.value" >
+                                <input class="form-control" disabled="disabled" type="text" 
+                                     [value]="approvalContext.cmpName" (input)="approvalContext.cmpName = $event.target.value" >
                             </div>
                         </div>
                         <div class="form-group">
@@ -27,13 +28,11 @@
                                 <input class="form-control" disabled="disabled" type="text" *ngIf="approvalContext.companyId==0" [value]="approvalContext.userName" (input)="approvalContext.userName = $event.target.value" name="second">
                              <!--{{selectedApprover.name}}-->
                                  <p-dropdown [options]="approvalContext.approvers" 
-                                  
-                                       
                                   *ngIf="approvalContext.companyId!=0"
                                   [(ngModel)]="selectedApprover" 
                                   [filter]="true"
                                   [autoWidth]="true"
-                                  [style]="{'width':'150px'}"
+                                  [style]="{'width':'400px'}"
                                   name = "first"
                                  >
                                  </p-dropdown>
@@ -48,7 +47,7 @@
                                   [(ngModel)]="selectedLedgerAccount" 
                                   [filter]="true"
                                   [autoWidth]="true"
-                                  [style]="{'width':'150px'}"
+                                  [style]="{'width':'400px'}"
                                   name="second"
                                  ></p-dropdown>
                                 <!--<ui-select ng-model="selectedLedgerAccount.selected"
@@ -70,7 +69,8 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-usd"></i>
                                     </span>
-                                    <input class="form-control" placeholder="Enter the start of the range" type="text" valid-number [(ngModel)]="approvalContext.rangeStart" (ngModelChange)="checkRangeAmount()" name="third">
+                                    <input class="form-control" placeholder="Enter the start of the range" type="text"  
+                                           [(ngModel)]="approvalContext.rangeStart" (blur)="checkRangeAmount()" name="third" CurrencyFormatter />
                                 </div>
                             </div>
                         </div>
@@ -83,7 +83,9 @@
                                     <span class="input-group-addon">
                                         <i class="fa fa-usd"></i>
                                     </span>
-                                    <input class="form-control" placeholder="Enter the end of the range" type="text" valid-number [(ngModel)]="approvalContext.rangeEnd" (ngModelChange)="checkRangeAmount()" name="four">
+                                    <input class="form-control" placeholder="Enter the end of the range" 
+                                            type="text" [(ngModel)]="approvalContext.rangeEnd" (blur)="checkRangeAmount()" name="four"
+                                                     CurrencyFormatter />
                                 </div>
                             </div>
                         </div>

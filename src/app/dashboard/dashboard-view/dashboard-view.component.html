@@ -1,3 +1,5 @@
+
+
 <div id="slider" class="page-content">
     <div class="page-heading">
         <h1>Dashboard</h1>
@@ -23,11 +25,11 @@
                                      <div id="Div2SS" class="pull-right" *ngIf ="dashboardPermissions && dashboardData">
 
                                     <span style="margin-left: 6px">
-                                        <a class="edit_invoice_link btn btn-default remote_href" *ngIf="dashboardPermissions.UserPermissions.IsSuperUser" href="#attachments">To Process({{dashboardData.InvStateCount.toProcessInvCount}})</a>
+                                        <a class="edit_invoice_link btn btn-default remote_href" *ngIf="dashboardPermissions.UserPermissions.IsSuperUser" href="#attachmentsList/-1/-1">To Process({{dashboardData.InvStateCount.toProcessInvCount}})</a>
 
                                     </span>
                                     <span style="margin-left: 6px">
-                                        <a class="edit_invoice_link btn btn-default remote_href" href="#syncBatcheNew/0,-1" *ngIf="dashboardPermissions.UserPermissions.IsSuperUser || dashboardPermissions.UserPermissions.IsSyncBatching">To Sync({{dashboardData.InvStateCount.toSyncInvCount}})</a>
+                                        <a class="edit_invoice_link btn btn-default remote_href" href="#syncBatchNew/0,-1" *ngIf="dashboardPermissions.UserPermissions.IsSuperUser || dashboardPermissions.UserPermissions.IsSyncBatching">To Sync({{dashboardData.InvStateCount.toSyncInvCount}})</a>
 
                                     </span>
 

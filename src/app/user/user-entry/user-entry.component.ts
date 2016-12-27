@@ -16,6 +16,8 @@ import { RoleService } from '../../role/shared/role.service';
 
 import { OrderByPipe } from '../../shared/pipe/orderby';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { PageHeaderTitleComponent } from '../../shared/others/page-header/page-header.component';
+
 
 declare let jQuery: any;
 

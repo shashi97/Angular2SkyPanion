@@ -18,7 +18,7 @@
         <tr *ngFor="let item of roles">
           <td>{{item.Name}}</td>
           <td>{{item.Description}}</td>
-          <td><a href="#/role/view/{{item.RoleID}}/{{currentPageFiltered.pageSizeFilter}}"><i class="fa fa-search"></i>View</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <td><a href="#/role/view/{{item.RoleID}}/{{searchString}}"><i class="fa fa-search"></i>View</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="#/role/entry/{{item.RoleID}}/{{searchString}}"><i class="fa fa-edit"></i>Edit</a>&nbsp;&nbsp;&nbsp;&nbsp;
             <a (click)="deleteRole(item.RoleID, item.Name)"><i class="fa fa-remove"></i>Destroy</a>
           </td>

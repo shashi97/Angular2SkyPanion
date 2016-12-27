@@ -20,6 +20,7 @@ import {InvoiceRejectModalComponent } from '../../dashboard/invoice-modals/invoi
 import { InvoiceApprovalModalComponent } from '../../dashboard/invoice-modals/invoice-approval-modal/invoice-approval.component';
 import { InvoiceDistributionCommentModalComponent } from '../../dashboard/invoice-modals/invoice-distribution-comment-model/invoice-distribution-comment.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { PagingFilterArgumentsModel } from '../../shared/models/pagination-filter.model';
 
 @Component({
   selector: 'sp-dashboard-invoice',
@@ -33,7 +34,8 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
   @Input() dashboardStatefilterItems: DashboardStateModel;
    @Input() dashboardPermissions : DashboardPermissionModel;
     @Output() invoiceStateChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+   private paginationFilter: PagingFilterArgumentsModel;
+   private searchParamsValue = -1;
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -43,6 +45,8 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
      public toastr: ToastsManager
   ) {
     super(localStorageService, router);
+    this.paginationFilter = new PagingFilterArgumentsModel();
+    this.searchParamsValue = -1;
     console.log(this.invoices);
   }
   
@@ -61,7 +65,7 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
                     }
                     else {
                         this.masterService.unlockDocument(invoice.InvoiceID, 0, 10).then(result3 => {
-                            this.toastr.success('Invoice number ' + invoice.InvoiceNumber + ' delete successfully', 'Success!');
+                            this.toastr.success('Invoice number  ' + invoice.InvoiceNumber + '  delete successfully', 'Success!');
                           this.invoiceStateChange.emit(true);
                         });
                     }
@@ -71,7 +75,21 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
   }
 
   private getInvoiceDetailsByID(invoice: DashboardInvoiceModel):void{
-
+       this.masterService.checkDocumentLocking(invoice.InvoiceID, 10).then(result => {
+            if(result.IsLocked == 0)
+            {
+                this.toastr.error('This Invoice is locked by '+ result.LockBy, 'Oops!'); 
+            }
+            else{
+                 let link = [];
+                    if (this.user) {
+                    link = ['/invoices/-1/'+ invoice.InvoiceID + '/edit'];
+                    } else {
+                    link = ['/login'];
+                    }
+                    this.router.navigate(link);
+            }
+      });
   }
 
   private submitInvoicebatch(invoice: DashboardInvoiceModel):void{

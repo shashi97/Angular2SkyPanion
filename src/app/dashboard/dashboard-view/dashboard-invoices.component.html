@@ -21,7 +21,7 @@
                                                         <dl class="dl-horizontal">
                                                             <dt>Invoice Details</dt>
                                                             <dd>
-                                                                <a href="#invoicesDetails/{{invoice.InvoiceID}}" class="badge badge-info"><i class="fa fa-info"></i>View Details</a>
+                                                                <a href="#invoice/detail/{{invoice.InvoiceID}}/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}" class="badge badge-info"><i class="fa fa-info"></i>View Details</a>
                                                             </dd>
 
                                                             <dt>Invoice Number</dt>
@@ -34,19 +34,19 @@
 
                                                                 <span class="text-success" *ngIf="invoice.InvoiceState == 1">
                                                                     {{invoice.Status}}
-                                                                    <a href="#userDetails/-1/{{invoice.ReviewerId}}/details">{{invoice.CompanyReviewerName}}</a>
+                                                                    <a href="#user/detail/{{invoice.ReviewerId}}/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}">{{invoice.CompanyReviewerName}}</a>
                                                                 </span>
                                                                 <span class="text-info" *ngIf="invoice.InvoiceState == 2">
                                                                     {{invoice.Status}}
-                                                                    <a href="#userDetails/-1/{{invoice.approver_id}}/details">{{invoice.InvoiceApproverName}}</a>
+                                                                    <a href="#user/detail/{{invoice.ApproverId}}/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}">{{invoice.InvoiceApproverName}}</a>
                                                                 </span>
                                                                 <span class="text-info" *ngIf="invoice.InvoiceState == 3">
                                                                     {{invoice.Status}}
-                                                                    <a href="#userDetails/-1/{{invoice.batched_by_id}}/details">{{invoice.BatchUserName}}</a>
+                                                                    <a href="#user/detail/{{invoice.BatchedById}}/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}">{{invoice.BatchUserName}}</a>
                                                                 </span>
                                                                 <span class="text-danger" *ngIf="invoice.InvoiceState == 5">
                                                                     <b>{{invoice.Status}}</b> by
-                                                                    <a href="#userDetails/-1/{{invoice.rejected_by_id}}/details">{{invoice.RejectedByName}}</a>
+                                                                    <a href="#user/detail/{{invoice.RejectedById}}/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}">{{invoice.RejectedByName}}</a>
                                                                 </span>
                                                                 <span class="text-danger" *ngIf="invoice.InvoiceState == 6">
                                                                     <b>{{invoice.Status}}</b>
@@ -63,12 +63,12 @@
 
                                                             <dt>Company</dt>
                                                             <dd>
-                                                                <a href="#company/{{invoice.company_id}}" target="_blank"><i [ngClass]="{'fa fa-book': invoice.type=='Skypanion::Fund', 'fa fa-building': invoice.type=='Skypanion::Property'}"></i>{{invoice.CompanyName}}</a>
+                                                                <a href="#company/detail/{{invoice.company_id}}/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}" target="_blank"><i [ngClass]="{'fa fa-book': invoice.type=='Skypanion::Fund', 'fa fa-building': invoice.type=='Skypanion::Property'}"></i>{{invoice.CompanyName}}</a>
                                                             </dd>
 
                                                             <dt>Vendor</dt>
                                                             <dd>
-                                                                <a href="#vendorsDetails/{{invoice.vendor_id}}">{{invoice.VendorName}}</a>
+                                                                <a href="#vendor/detail/{{invoice.vendor_id}}/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}">{{invoice.VendorName}}</a>
                                                             </dd>
 
                                                             <dt>Invoice Date</dt>
@@ -96,7 +96,7 @@
                                                                 <ul class="distributions_list">
                                                                     <li class="distribution_list_item" *ngFor="let destribution of invoice.InvoiceDestributions" >
                                                                         <span *ngIf="destribution.Distributions=='No Distributions'">{{destribution.Distributions}}</span>
-                                                                        <a href="#ledgeraccounts/-1/-1/{{destribution.ledger_account_id}}" *ngIf="destribution.Distributions!='No Distributions'">{{destribution.Distributions}}</a>
+                                                                        <a href="#ledgerAccount/detail/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}/{{destribution.ledger_account_id}}" *ngIf="destribution.Distributions!='No Distributions'">{{destribution.Distributions}}</a>
                                                                         <blockquote style="font-size:15px;font-style:normal" *ngIf="destribution.FundCompanyID>0"> <strong>Fund:</strong><span>{{destribution.FundCompanyNumber}}</span></blockquote> 
                                                                         <blockquote class="no_comment" [ngClass]="{'text-warning': destribution.DestributionComment=='No Comment'}" (click)="openInvoiceDistributionCommentModal(destribution,invoice)">
                                                                             {{destribution.DestributionComment}}
@@ -113,7 +113,7 @@
 
                                                             <dt>Job</dt>
                                                             <dd>
-                                                                <a href="#jobs/{{invoice.job_id}}" *ngIf="invoice.job_id!=null">{{invoice.Job}}</a>
+                                                                <a href="#job/detail/{{invoice.job_id}}" *ngIf="invoice.job_id!=null">{{invoice.Job}}</a>
                                                                 <span style="color: gray;" *ngIf="invoice.job_id==null">{{invoice.Job}}</span>
                                                             </dd>
 
@@ -124,12 +124,12 @@
 
                                                             <dt>Clerk</dt>
                                                             <dd>
-                                                                <a href="#userDetails/-1/{{invoice.clerk_id}}/details">{{invoice.ClerkName}}</a>
+                                                                <a href="#user/detail/{{invoice.clerk_id}}/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}">{{invoice.ClerkName}}</a>
                                                             </dd>
 
                                                             <dt>Updated By</dt>
                                                             <dd>
-                                                                <a href="#userDetails/-1/{{invoice.updated_by_id}}/details">{{invoice.UpdatedByName}}</a>
+                                                                <a href="#user/detail/{{invoice.updated_by_id}}/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}">{{invoice.UpdatedByName}}</a>
                                                             </dd>
 
                                                             <dt>Description</dt>
@@ -146,7 +146,7 @@
                                                             <dd *ngIf="invoice.IsApproversCommentExists== true">
                                                                 <ul class="distributions_list">
                                                                     <li class="distribution_list_item"  *ngFor="let approversComment of invoice.InvoiceApproverList" >
-                                                                        <a href="#userDetails/-1/{{approversComment.UserID}}/details" *ngIf="approversComment.ApproverComment != 'No Comments' && approversComment.ApproverComment != 'null'  && approversComment.ApproverComment != null ">{{approversComment.ApprovarName}}</a>
+                                                                        <a href="#user/detail/{{approversComment.UserID}}/{{paginationFilter.pageSizeFilter}}/{{searchParamsValue}}" *ngIf="approversComment.ApproverComment != 'No Comments' && approversComment.ApproverComment != 'null'  && approversComment.ApproverComment != null ">{{approversComment.ApprovarName}}</a>
                                                                         <blockquote class="no_comment" [ngClass]="{'text-warning': approversComment.ApproverComment=='No Comment'}" *ngIf="approversComment.ApproverComment != 'No Comments'&& approversComment.ApproverComment != 'null'  && approversComment.ApproverComment != null " style="color:red;font-size:14px" >
                                                                             {{approversComment.ApproverComment}}
                                                                         </blockquote>

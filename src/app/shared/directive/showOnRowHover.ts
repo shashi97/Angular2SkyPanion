@@ -1,4 +1,6 @@
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, HostListener, ElementRef, OnInit } from "@angular/core";
+import { OrderByPipe,CurrencyPipe } from '../../shared/pipe/orderby';
+
 @Directive({ selector: '[showOnRowHover]' })
 export class ShowOnRowHover {
     constructor(el: ElementRef) {
@@ -17,4 +19,45 @@ export class ShowOnRowHover {
 
 }
 };
+
+
+
+
+@Directive({ selector: "[CurrencyFormatter]" })
+export class CurrencyFormatterDirective {
+
+  private el: HTMLInputElement;
+
+  constructor(
+    private elementRef: ElementRef,
+    private currencyPipe: CurrencyPipe
+  ) {
+    this.el = this.elementRef.nativeElement;
+  }
+
+  ngOnInit() {
+    this.el.value = this.currencyPipe.parse(this.el.value);
+  }
+
+  @HostListener("focus", ["$event.target.value"])
+  onFocus(value) {
+    this.el.value = this.currencyPipe.parse(value); // opossite of transform
+  }
+
+  @HostListener("blur", ["$event.target.value"])
+  onBlur(value) {
+    this.el.value = this.currencyPipe.parse(value);
+  }
+
+  @HostListener("keyup", ["$event.target.value"]) 
+  onKeyUp(value) {
+    this.el.value = this.currencyPipe.parse(value);
+  }
+
+
+
+}
+
+
+
 

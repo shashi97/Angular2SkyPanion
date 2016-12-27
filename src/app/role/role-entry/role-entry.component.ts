@@ -10,6 +10,7 @@ import { AccountService } from '../../account/shared/account.service';
 import { RoleService } from '../shared/role.service';
 import { RoleModel } from '../shared/role.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { PageHeaderTitleComponent } from '../../shared/others/page-header/page-header.component';
 
 @Component({
   selector: 'sp-role-entry',
@@ -19,6 +20,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 export class RoleEntryComponent extends BaseComponent implements OnInit {
 
   private searchParameters: number = -1;
+  private currentPageFiltered: number = 25;
   private roleId: number = 0;
   private parameterValue: any;
   private pageHeader: string;
@@ -35,6 +37,7 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
 
   ) {
     super(localStorageService, router);
+    this.currentPageFiltered = 25;
     this.roleDetail = new RoleModel();
   }
 
@@ -102,7 +105,7 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
       } else if (result.status === 500) {
       } else {
         this.toastr.success('Role saved successfully', 'Success!');
-        let link = ['/role/view/' + result + '/' + this.searchParameters];
+        let link = ['/role/view/' + result + '/' + this.currentPageFiltered + '/' + this.searchParameters];
         this.router.navigate(link);
       }
     });
