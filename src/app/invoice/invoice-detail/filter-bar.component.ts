@@ -17,13 +17,16 @@ import {
   InvoiceEntryNoApproverExistsModalContext,
   InvoiceEntryNoApproverExistsComponent
 } from '../../invoice/invoice-entry-components/noApproverExists-model/invoice-entry-noApproverExists.component';
+import { InvoiceModelContext } from '../../dashboard/shared/invoice-context.model';
+import { DashboardInvoiceModel } from '../../dashboard/shared/dashboard-invoice.model';
+import { InvoiceRejectModalComponent } from '../../dashboard/invoice-modals/invoice-rejection-modal/invoice-rejection.component';
 @Component({
   selector: 'sp-invoice-detail-filter-bar',
   templateUrl: './filter-bar.component.html',
 })
 
 export class InvoiceDetailFilterComponent extends BaseComponent implements OnInit {
-
+  @Input() invoices: Array<DashboardInvoiceModel>;
   @Input() invoiceDetail: InvoiceModel;
   private searchParameters;
   private InvoiceIDs;
@@ -76,6 +79,36 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
       }
       // this.getInvoiceDetail();
     });
+  }
+  openRejectInvoiceModal(invoice) {
+
+    const builder = new BSModalContextBuilder<InvoiceModelContext>(
+      {
+        invoiceID: invoice.InvoiceID,
+        companyID: invoice.CompanyID,
+        invoiceAmount: invoice.InvoiceAmount,
+        invoiceNumber: invoice.InvoiceNumber,
+      } as any,
+      undefined,
+      InvoiceModelContext
+    );
+
+    let overlayConfig: OverlayConfig = {
+      context: builder.toJSON()
+    };
+
+    return this.modal.open(InvoiceRejectModalComponent, overlayConfig)
+      .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
+      .then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
+      .then(result => {
+        if (result != null) {
+          if (this.invoiceIDs != undefined && this.invoiceIDs.NextInvoiceID != null && parseInt(this.invoiceIDs.NextInvoiceID) > this.invoiceDetail.InvoiceID) {
+           this.router.navigate(['/invoice/detail/' + parseInt(this.invoiceIDs.NextInvoiceID)]);
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
+        }
+      });
   }
 
   private getInvoiceDetailsByID(): void {
@@ -216,7 +249,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
   private unlockDocument(linkString, invoiceID): void {
 
     this.masterService.unlockDocument(invoiceID, 0, 10).then(result => {
-     this.router.navigate([linkString]);
+      this.router.navigate([linkString]);
     });
   }
   private getInvoiceReject(): void {

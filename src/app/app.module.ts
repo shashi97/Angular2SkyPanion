@@ -28,7 +28,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 /* for tooltip */
 import { TooltipModule } from 'ng2-tooltip';
 
-import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 /* for drag and drop grid rows */
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
@@ -64,7 +64,7 @@ import { InvoiceEntryService } from './invoice/invoice-entry/shared/invoice-entr
 
 /*pipes */
 import { OrderByPipe, FilterPipe } from './shared/pipe/orderby';
-import {  Modal } from 'angular2-modal';
+import { Modal } from 'angular2-modal';
 
 import { ModalComponent, CloseGuard } from 'angular2-modal';
 /* sp-app components */
@@ -149,10 +149,11 @@ import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
 import { InvoiceEntryVendorComponent } from './invoice/invoice-entry-components/vendors-model/invoice-entry-vendor.component';
 import { InvoicePdfRejectModalComponent } from './invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
+import { InvoiceRejectModalComponent } from './dashboard/invoice-modals/invoice-rejection-modal/invoice-rejection.component';
 import { InvoiceEntryNoApproverExistsComponent } from './invoice/invoice-entry-components/noApproverExists-model/invoice-entry-noApproverExists.component';
-import {InvoiceApprovalModalComponent } from './dashboard/invoice-modals/invoice-approval-modal/invoice-approval.component';
-import {InvoiceDistributionCommentModalComponent } from
-                       './dashboard/invoice-modals/invoice-distribution-comment-model/invoice-distribution-comment.component';
+import { InvoiceApprovalModalComponent } from './dashboard/invoice-modals/invoice-approval-modal/invoice-approval.component';
+import { InvoiceDistributionCommentModalComponent } from
+  './dashboard/invoice-modals/invoice-distribution-comment-model/invoice-distribution-comment.component';
 
 import { AttachmentComponent } from './attachment/attachment.component';
 
@@ -171,10 +172,10 @@ import { DashboardInvoicesComponent } from './dashboard/dashboard-view/dashboard
 import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
 
 import { InvoiceEntryAccountsComponent }
-from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
+  from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
 
 import { InvoiceEntryDistributionsComponent }
-from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
+  from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
 import { AttachmentEditComponent } from './attachment/attachment-edit-model/attachment-edit-model.component';
 
 import { InvoiceEntryPurchaseComponent } from './invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
@@ -190,7 +191,7 @@ import { FilterInvoiceComponent } from './sync-batch/sync-batch-entry/filter-inv
 /* for role entry */
 import { RoleComponent } from './role/role-dashboard/role.component';
 
-import {  SetupModalComponent } from './ini-setup/setup-modal.component';
+import { SetupModalComponent } from './ini-setup/setup-modal.component';
 import { RoleViewComponent } from './role/role-view/role-view.component';
 import { RoleMemberComponent } from './role/role-view/role-member.component';
 import { RoleAttributeComponent } from './role/role-view/role-attribute.component';
@@ -304,7 +305,7 @@ let localStorageServiceConfig = {
     DashboardInvoicesComponent,
     FilterPipe,
     ApprovalModalComponent,
-    // InvoiceRejectModalComponent,
+    InvoiceRejectModalComponent,
     InvoiceApprovalModalComponent,
     InvoiceDistributionCommentModalComponent,
     InvoiceEntryNoApproverExistsComponent,
@@ -320,7 +321,7 @@ let localStorageServiceConfig = {
     InvoiceEntryPurchaseComponent,
     InvoiceEntryVendorComponent,
     InvoiceEntryAccountsComponent,
-    // InvoiceRejectModalComponent,
+    InvoiceRejectModalComponent,
     InvoiceApprovalModalComponent,
     InvoiceDistributionCommentModalComponent,
     AttachmentEditComponent,
