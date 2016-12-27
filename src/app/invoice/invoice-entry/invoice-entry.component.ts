@@ -38,8 +38,8 @@ import {
   InvoiceEntryAccountsComponent
 } from '../../invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
 import {
-  InvoiceRejectModalContext,
-  InvoiceRejectModalComponent
+  InvoicePdfRejectModalContext,
+  InvoicePdfRejectModalComponent
 } from '../../invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
 import {
   InvoiceEntryNoApproverExistsModalContext,
@@ -288,8 +288,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     });
 
   }
-  openAttachmentEditModal() {
-    const builder = new BSModalContextBuilder<InvoiceRejectModalContext>(
+  openInvalidatePdfModal() {
+    const builder = new BSModalContextBuilder<InvoicePdfRejectModalContext>(
       {
         DocumentLockingID: this.DocumentLockingID,
         doctype: this.doctype,
@@ -299,14 +299,14 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         searchParameters: this.searchParameters
       } as any,
       undefined,
-      InvoiceRejectModalContext
+      InvoicePdfRejectModalContext
     );
 
     let overlayConfig: OverlayConfig = {
       context: builder.toJSON()
     };
 
-    const dialog = this.modal.open(InvoiceRejectModalComponent, overlayConfig);
+    const dialog = this.modal.open(InvoicePdfRejectModalComponent, overlayConfig);
 
     dialog.then((resultPromise) => {
       return resultPromise.result.then((result) => {

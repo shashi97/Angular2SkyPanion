@@ -17,7 +17,7 @@ import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { FilterPipe } from '../../../shared/pipe/orderby';
 import { InvoiceService } from '../../../invoice/shared/invoice.service';
 
-export class InvoiceRejectModalContext extends BSModalContext {
+export class InvoicePdfRejectModalContext extends BSModalContext {
 	DocumentLockingID;
 	doctype;
 	DocumentID;
@@ -35,9 +35,9 @@ export class InvoiceRejectModalContext extends BSModalContext {
 	selector: 'sp-invalid-remove-invoice',
 	templateUrl: 'invalid-remove-invoice.component.html'
 })
-export class InvoiceRejectModalComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoiceRejectModalContext>, OnInit {
+export class InvoicePdfRejectModalComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoicePdfRejectModalContext>, OnInit {
 	// export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
-	context: InvoiceRejectModalContext;
+	context: InvoicePdfRejectModalContext;
 	public wrongAnswer: boolean;
 	private CompanyID: number = 0;
 	private vendors: Array<Vendors>;
@@ -64,7 +64,7 @@ export class InvoiceRejectModalComponent extends BaseComponent implements CloseG
 		router: Router,
 		private invoiceService: InvoiceService,
 		private masterService: MasterService,
-		public dialog: DialogRef<InvoiceRejectModalContext>) {
+		public dialog: DialogRef<InvoicePdfRejectModalContext>) {
 		super(localStorageService, router);
 		this.context = dialog.context;
 		this.DocumentLockingID=this.context.DocumentLockingID;

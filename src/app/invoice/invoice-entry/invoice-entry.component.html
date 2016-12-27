@@ -17,7 +17,7 @@
   <div class="page-heading" *ngIf="InvoiceID==0">
     <h1><strong>Proccessing Invoice:</strong>{{invoiceDetail.AttachmentName}}</h1>
     <div class="options">
-      <button type="button" class="btn btn-danger" data-toggle="modal" (click)="openInvalidateModal()">
+      <button type="button" class="btn btn-danger" data-toggle="modal" (click)="openInvalidatePdfModal()">
                     Invalid/Remove
                 </button>
       <button type="button" class="btn btn-default" *ngIf="invoiceDetail.LockedByID == user.userId" (click)="checklockingStatusForExit(attachmentBackLink)">

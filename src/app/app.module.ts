@@ -148,7 +148,7 @@ import { InvoiceDetailDistributeComponent } from './invoice/invoice-detail/distr
 import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.component';
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
 import { InvoiceEntryVendorComponent } from './invoice/invoice-entry-components/vendors-model/invoice-entry-vendor.component';
-import { InvoiceRejectModalComponent } from './invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
+import { InvoicePdfRejectModalComponent } from './invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
 import { InvoiceEntryNoApproverExistsComponent } from './invoice/invoice-entry-components/noApproverExists-model/invoice-entry-noApproverExists.component';
 import {InvoiceApprovalModalComponent } from './dashboard/invoice-modals/invoice-approval-modal/invoice-approval.component';
 import {InvoiceDistributionCommentModalComponent } from
@@ -304,13 +304,14 @@ let localStorageServiceConfig = {
     DashboardInvoicesComponent,
     FilterPipe,
     ApprovalModalComponent,
-    InvoiceRejectModalComponent,
+    // InvoiceRejectModalComponent,
     InvoiceApprovalModalComponent,
     InvoiceDistributionCommentModalComponent,
     InvoiceEntryNoApproverExistsComponent,
     ShowOnRowHover,
     AttachmentEditComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    InvoicePdfRejectModalComponent
   ],
   entryComponents: [
     SetupModalComponent,
@@ -319,11 +320,12 @@ let localStorageServiceConfig = {
     InvoiceEntryPurchaseComponent,
     InvoiceEntryVendorComponent,
     InvoiceEntryAccountsComponent,
-    InvoiceRejectModalComponent,
+    // InvoiceRejectModalComponent,
     InvoiceApprovalModalComponent,
     InvoiceDistributionCommentModalComponent,
     AttachmentEditComponent,
-    InvoiceEntryNoApproverExistsComponent
+    InvoiceEntryNoApproverExistsComponent,
+    InvoicePdfRejectModalComponent
 
 
   ],
