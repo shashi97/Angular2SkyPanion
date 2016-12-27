@@ -4,25 +4,15 @@
     <div class="options">
       <div class="form-inline" id="filter_form">
         <div class="filter_field_wrap form-group">
-          <!--<ui-select ng-model="selectedCompanyFilter.selected"
-                               theme="select2"
-                               style="width: 250px"
-                               data-ng-change="getCompanyID(selectedCompanyFilter.selected.CompanyID)">
-                        <ui-select-match placeholder="Select a Company">
-                            <span>{{selectedCompanyFilter.selected.CompanyName}}</span>
-                            <a class="btn btn-link pull-right"><i class="fa fa-remove transparent" data-ng-click="removeSelectedCompanyItem()"></i></a>
-                        </ui-select-match>
-                        <ui-select-choices repeat="company in companies| filter: $select.search">
-                            {{company.CompanyName}}
-                        </ui-select-choices>
-                    </ui-select>-->
+         <sp-company-dropdown [companyFilteredArg]='companyFilteredArg'
+        (companyFiltered)="onCompanyFiltered($event)"></sp-company-dropdown>
         </div>
         <div class="form-group">
-          <button class="btn btn-primary" name="commit" type="button" data-ng-click="searchURL()">
+          <button class="btn btn-primary" name="commit" type="button" (click)="searchURL()">
                         <i class="fa fa-search" aria-hidden="true"></i>
                         Filter
                     </button>
-          <button class="btn btn-warning" (click)="CreateModal()">
+          <button class="btn btn-warning" (click)="searchUrlReset()">
                         <i class="fa fa-refresh" aria-hidden="true"></i>
                         Reset
                     </button>

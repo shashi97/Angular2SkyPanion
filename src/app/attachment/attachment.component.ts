@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, ViewContainerRef, ViewEncapsulation, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Pipe, ViewContainerRef, Input, OnChanges, Output, EventEmitter, ViewEncapsulation, AfterViewInit } from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -18,6 +18,7 @@ import { CrumbBarComponent } from '../shared/others/crumb-bar/crumb-bar.componen
 import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { Overlay, OverlayConfig } from 'angular2-modal';
 import { BrowserModule } from '@angular/platform-browser';
+import { CompanyDropdownComponent, CompanyFilterArguments } from '../shared/dropdown/company/company-dropdown.component';
 // import { CompanyDropdownComponent } from '../shared/dropdown/company/company-dropdown.component';
 import {
   TableOptions,
@@ -25,12 +26,21 @@ import {
   ColumnMode
 } from 'angular2-data-table';
 
+export class AttachmentFilterArguments {
+  companyId: number = 0;
+
+}
+
 @Component({
   selector: 'attachment',
   templateUrl: 'attachment.component.html'
 })
 
-export class AttachmentComponent extends BaseComponent implements OnInit {
+export class AttachmentComponent extends BaseComponent implements OnInit, OnChanges {
+  @Output() filtered: EventEmitter<AttachmentFilterArguments> = new EventEmitter<AttachmentFilterArguments>();
+  @Input() filteredValue: AttachmentFilterArguments = new AttachmentFilterArguments();
+  private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
+
   private model: Array<AttachmentObject>;
   private account: AccountModel;
   private companyID: number = 0;
@@ -87,31 +97,54 @@ export class AttachmentComponent extends BaseComponent implements OnInit {
 
 
   }
+  ngOnChanges() {
+    //this.companyFilteredArg = this.filteredValue;
+  }
+  private get companyFilteredArg(): CompanyFilterArguments {
+    return this._companyFilteredValue;
+  }
 
+  private set companyFilteredArg(newValue: CompanyFilterArguments) {
+    this._companyFilteredValue = newValue;
+  }
 
+  public onCurrentPageChanged(newValue: AttachmentFilterArguments) {
+    this.filteredValue = newValue;
+  }
+  private searchUrlReset(): void {
+    this.filteredValue.companyId = 0;
+    let companyArray = { companyId: 0 };
+    this.companyFilteredArg = companyArray;
+    this.filtered.emit(this.filteredValue);
+    this.companyID = this.filteredValue.companyId;
+    this.getAttachments();
 
+  }
+  public onCompanyFiltered(filteredValue: CompanyFilterArguments): void {
+    this.companyID = filteredValue.companyId;
+
+  }
+  private searchURL(): void {
+    this.getAttachments();
+
+  }
   private getAttachments(): void {
     this.attachmentService
       .getAttachments(this.companyID, this.status, this.pageNumber, this.rowsPerPage)
       .then(result => {
         if (result) {
           this.model = result;
-          this.AttachmentCount = this.model[0].AttachmentCount;
+          if (this.model.length == 0) {
+            this.AttachmentCount = 0;
+          } else {
+            this.AttachmentCount = this.model[0].AttachmentCount;
+          }
         }
 
       });
 
   }
-  CreateModal() {
-    this.modal.alert()
-      .size('lg')
-      .isBlocking(true)
-      .showClose(true)
-      .keyboard(27)
-      .title('Hello World')
-      .body('A Customized Modal')
-      .open();
-  }
+
   private GetAttachmentDetails(AttachmentID): void {
     this.AttachmentID = AttachmentID;
     this.masterService.checkDocumentLocking(AttachmentID, 5).then(result => {

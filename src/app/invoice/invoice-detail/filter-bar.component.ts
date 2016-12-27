@@ -97,19 +97,21 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
       context: builder.toJSON()
     };
 
-    return this.modal.open(InvoiceRejectModalComponent, overlayConfig)
-      .catch(err => alert("ERROR")) // catch error not related to the result (modal open...)
-      .then(dialog => dialog.result) // dialog has more properties,lets just return the promise for a result.
-      .then(result => {
-        if (result != null) {
+    const dialog = this.modal.open(InvoiceRejectModalComponent, overlayConfig)
+       dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
+         if (result != null) {
           if (this.invoiceIDs != undefined && this.invoiceIDs.NextInvoiceID != null && parseInt(this.invoiceIDs.NextInvoiceID) > this.invoiceDetail.InvoiceID) {
            this.router.navigate(['/invoice/detail/' + parseInt(this.invoiceIDs.NextInvoiceID)]);
           } else {
             this.router.navigate(['/dashboard']);
           }
         }
-      });
+      }, () => console.log(' Error In Filterbar  modal '));
+    });
   }
+ 
 
   private getInvoiceDetailsByID(): void {
     this.masterService.checkDocumentLocking(this.invoiceDetail.InvoiceID, 10).then(result => {
