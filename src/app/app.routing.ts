@@ -71,7 +71,7 @@ const APP_ROUTES: Routes = [
   { path: 'achSetup/detail/:id/:pageSizeFilter', component: AchSetupDetailComponent },
 
   { path: 'invoice/:pageSizeFilter/:searchParameters', component: InvoiceComponent },
-  { path: 'invoice/detail/:id/:pageSizeFilter/:searchParameters', component: InvoiceDetailComponent },
+  { path: 'invoice/detail/:id', component: InvoiceDetailComponent },
   { path: 'invoice/detail/:pageSizeFilter/:SearchParameters/:InvoiceID/:invoiceNumber/:vendor/:company/:status/:user', component: InvoiceDetailComponent },
 
   { path: 'purchaseOrder/:pageSizeFilter/:searchParameters', component: PurchaseOrderComponent },

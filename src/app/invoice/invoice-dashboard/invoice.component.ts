@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-
+import { ApiUrl } from '../../config.component';
 import { InvoiceModel } from '../shared/invoice.model';
 
 import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
@@ -39,7 +39,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   private userID: number = -1;
   private currentPage: number = 0;
   private Invoices: Array<InvoiceModel> = [];
-
+  private isAllInvoiceSelected: boolean;
+  private SelectInoivcesSpan: string = '';
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -55,6 +56,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.Invoices = new Array<InvoiceModel>();
     this.pageSizeFilter = 25;
     this.searchParameters = -1;
+    this.isAllInvoiceSelected = false;
+    this.SelectInoivcesSpan = "Select All"
   }
 
   ngOnInit() {
@@ -143,8 +146,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
   private showInvoiceDetail(invoiceID): void {
 
     if (this.invoiceNumber == "" || this.invoiceNumber == "null" || this.invoiceNumber == undefined) {
-                this.invoiceNumber = null;
-            }
+      this.invoiceNumber = null;
+    }
     this.router.navigate(['/invoice/detail/' + this.pageSizeFilter + "/" + this.searchParameters + '/' + invoiceID + '/' + this.invoiceNumber + '/' + this.vendorID + '/' + this.companyID + '/' + this.statusID + '/' + this.userID]);
   }
   private getAccountName(): void {
@@ -190,6 +193,52 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
       }
 
     });
+  }
+
+  SelectAllInvoice() {
+    if (this.isAllInvoiceSelected == true) {
+      for (var i = 0; i < this.Invoices.length; i++) {
+        this.Invoices[i].IsInoiveSelected = true;
+      }
+      this.SelectInoivcesSpan = "Deselect All";
+    }
+    else {
+      for (var i = 0; i < this.Invoices.length; i++) {
+        this.Invoices[i].IsInoiveSelected = false;
+      }
+      this.SelectInoivcesSpan = "Select All";
+    }
+
+
+  }
+
+
+  private ExporPdf() {
+    var invPdfs = '';
+    var invCompany = '';
+
+    for (var i = 0; i < this.Invoices.length; i++) {
+      if (this.Invoices[i].IsInoiveSelected == true) {
+        if (invPdfs == '') {
+          invPdfs = this.Invoices[i].AttachmentName;
+          invCompany = this.Invoices[i].CompanyNumber;
+        }
+        else {
+          invPdfs = invPdfs + ',' + this.Invoices[i].AttachmentName;
+          invCompany = invCompany + ',' + this.Invoices[i].CompanyNumber;
+        }
+      }
+
+
+    }
+
+    if ((invPdfs != "" && invPdfs != null) && (invCompany != null && invCompany != "")) {
+      let apiServiceBase = ApiUrl.baseUrl;
+      window.open(apiServiceBase + "api/invoices/GetExportSelectedInvoicePdf?invPdfs=" + invPdfs + '&invCompany=' + invCompany);
+    }
+    else {
+      this.toastr.error("Invoice", "Please select one of the invoice to export pdf", "error");
+    }
   }
 
   public onFilteredInvoice(filteredValue: InvoiceFilteredArgs): void {

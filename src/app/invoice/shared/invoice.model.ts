@@ -28,6 +28,7 @@ export class InvoiceModel {
   AttachmentID: number = 0;
   InvoiceStatusID: number = 0;
   docType: number = 0;
+  IsInoiveSelected:boolean;
   TotalDistributionAmount: number = 0;
 }
 export class InvApprovals {

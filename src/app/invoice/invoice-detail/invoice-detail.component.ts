@@ -3,11 +3,11 @@ import { BaseComponent } from '../../base.component';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
-
+import { ApiUrl } from '../../config.component';
 import { InvoiceModel } from '../shared/invoice.model';
 import { UserModel } from '../../user/shared/user.model';
 import { CompanyModel } from '../../companies/shared/company.model';
-
+import { DomSanitizer } from '@angular/platform-browser';
 import { CompanyService } from '../../companies/shared/company.service';
 
 import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-dropdown.component';
@@ -40,13 +40,14 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
   private userId: number = 0;
   private checkDetails: Array<any> = [];
   private invoiceArgs: InvoiceArgs = new InvoiceArgs();
-
+  
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
     private companiesService: CompanyService,
     private invoiceService: InvoiceService,
     private userService: UserService,
+    private domSanitizer: DomSanitizer,
     private activatedRoute: ActivatedRoute) {
     super(localStorageService, router);
   }
@@ -100,18 +101,14 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
     let roleExistCount: number = 0;
     this.invoiceService.getInvoiceDetail(this.invoiceId, 0).then(result => {
       this.invoiceDetail = result;
-
       if (this.invoiceDetail.InvoiceID === 0) {
         this.invoiceDetail.docType = 5;
       } else {
         this.invoiceDetail.docType = 10;
       }
+      
 
-      // this.pdfsrc1 = apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber +
-      // '/' + this.invoiceDetail.AttachmentName;
-      // this.pdfsrc = $sce.trustAsResourceUrl(this.pdfsrc1);
-
-      if (this.invoiceDetail.InvoiceStatusID === 0) {
+      if (this.invoiceDetail.InvoiceStatusID == 0) {
         this.invoiceArgs.invType = 'duplicates';
       }
 

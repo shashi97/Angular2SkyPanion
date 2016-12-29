@@ -28,11 +28,11 @@
   </div>
   <ol class="breadcrumb">
     <li>
-      <a href="#invoicesList/-1/{{searchParameters}}" *ngIf="InvoiceID!=0">All Invoices</a>
-      <a href="#attachments/{{pageSizeFilter}}/{{searchParameters}}" *ngIf="InvoiceID==0">Pending Invoices</a>
+      <a href="#invoice/-1/{{searchParameters}}" *ngIf="InvoiceID!=0">All Invoices</a>
+      <a href="#attachmentsList/{{pageSizeFilter}}/{{searchParameters}}" *ngIf="InvoiceID==0">Pending Invoices</a>
     </li>
     <li class="active" *ngIf="InvoiceID!=0">
-      <a href="#invoicesDetails/{{invoiceDetail.InvoiceID}}">{{invoiceNumber}}</a>
+      <a href="#/invoice/detail/{{invoiceDetail.InvoiceID}}">{{invoiceNumber}}</a>
     </li>
     <li class="active" *ngIf="InvoiceID!=0">Edit</li>
     <li class="active" *ngIf="InvoiceID==0">Process Invoice</li>
@@ -48,20 +48,19 @@
     </div>
     <div class="col-md-12 field form-group">
       <label class="control-label col-md-4" for="invoice_company_id">{{invoiceDetail.type}}</label>
+     
       <div class="col-md-4" style="padding-top: 6px">
-        <i ng-class="{'fa fa-book': invoiceDetail.type=='Skypanion::Fund', 'fa fa-building': invoiceDetail.type=='Skypanion::Property'}"></i>
-        <a href="#" tooltip-placement="top" uib-tooltip-html="companyTooltip">{{invoiceDetail.CompanyName}}</a>
+        <i [ngClass]="{'fa fa-book': invoiceDetail.type=='Skypanion::Fund', 'fa fa-building': invoiceDetail.type=='Skypanion::Property'}"></i>
+         <tooltip-content #CompaniesTooltip>
+                <div [innerHTML]=companyTooltip>
+                </div>
+              </tooltip-content>
+        <a href="#" [tooltip]="CompaniesTooltip">{{invoiceDetail.CompanyName}}</a>
       </div>
       <div class="col-md-4 input-group">
         <div style="padding: 0 !important;margin: 0 !important;" *ngIf="invoiceDetail.InvoiceStatusID == 5 && user.IsSuperUser == true">
-          <!--<ui-select ng-model="selectedCompany.selected" theme="select2" style="width:200px" data-ng-change="onCompanyDropperChange(selectedCompany.selected.CompanyID , selectedCompany.selected.Number)">
-          <ui-select-match placeholder="Select a Company">{{selectedCompany.selected.CompanyName}}</ui-select-match>
-          <ui-select-choices repeat="company in companies| filter: $select.search">
-            {{company.CompanyName}}
-          </ui-select-choices>
-        </ui-select>-->
-          <p-dropdown [options]="companies" [(ngModel)]="selectedCompany.selected" [filter]="true" [autoWidth]="true" [style]="{'width':'260px'}"
-            (ngModelChange)="updateInvoiceRole(selectedViewInvoicesRole, 'view')"></p-dropdown>
+         <sp-company-dropdown 
+        (companyFiltered)="onCompanyFiltered($event)"></sp-company-dropdown>
         </div>
       </div>
     </div>
@@ -71,8 +70,8 @@
       </div>
       <div class="col-md-8 tooltip-class input-group">
         <input [(ngModel)]="invoiceDetail.InvoiceNumber" focus-name="1 " class="filtered_field form-control" data-html="true" data-trigger="focus"
-          uib-tooltip="This field only accepts letters, numbers, spaces, and the following grammatical characters: -#&@." id="invoice_InvoiceNumber "
-          data-toggle="tooltip" placeholder="Enter Invoice Number" size="30 " title="" type="text" tabindex="1" (blur)="checkInvoiceNumberExists($event) ">
+          tooltip="This field only accepts letters, numbers, spaces, and the following grammatical characters: -#&@." id="invoice_InvoiceNumber"
+          tooltipPlacement="top" placeholder="Enter Invoice Number" size="30 " title="" type="text" tabindex="1" (blur)="checkInvoiceNumberExists($event) ">
       </div>
     </div>
     <div class="field form-group">
@@ -344,30 +343,29 @@
       <label class="control-label col-md-4" for="invoice_PayUsingAch">Pay Using</label>
       <div class="col-md-8 input-group">
         <p-dropdown [options]="paymentMethods" [disabled]="selectedPaymentMethod.selected.ID == 0" [(ngModel)]="selectedPaymentMethod.selected"
-          [filter]="true" [autoWidth]="true" [style]="{'width':'260px'}"></p-dropdown>
-       
+          [filter]="true" [autoWidth]="true" [style]="{'width':'100%'}"></p-dropdown>
       </div>
     </div>
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="job_id_Job ">Job</label>
       <div class="col-md-8 input-group ">
-        <p-dropdown [options]="jobs" [(ngModel)]="selectedJob.selected" placeholder="Select a Job" [filter]="true" [autoWidth]="true" [style]="{'width':'260px'}"
-          (ngModelChange)="getJobCategory(selectedJob.selected.JobID)"></p-dropdown>
+        <p-dropdown [options]="jobs" [(ngModel)]="selectedJob.selected" placeholder="Select a Job" [filter]="true" [autoWidth]="true"
+          [style]="{'width':'100%'}" (ngModelChange)="getJobCategory(selectedJob.selected.JobID)"></p-dropdown>
         <!--<p>{{selectedJob.selected.Description}}</p>-->
       </div>
     </div>
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="job_category_id_Job Category ">Job category</label>
       <div class="col-md-8 input-group ">
-        <p-dropdown [options]="jobCategory" [(ngModel)]="selectedJobCategory.selected" [filter]="true" [autoWidth]="true"
-          [style]="{'width':'260px'}" (ngModelChange)="SelectJobCategory(selectedJobCategory.selected.JobCategoryID)"></p-dropdown>
+        <p-dropdown [options]="jobCategory" [(ngModel)]="selectedJobCategory.selected" [filter]="true" [autoWidth]="true" [style]="{'width':'100%'}"
+          (ngModelChange)="SelectJobCategory(selectedJobCategory.selected.JobCategoryID)"></p-dropdown>
       </div>
     </div>
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="invoice_Comment ">Notes</label>
       <div class="col-md-8 input-group ">
-        <textarea class="form-control " cols="40 " id="invoice_Comment " focus-name="15 " tabindex="15 " maxlength="250
-              " [(ngModel)]="invoiceDetail.Comment " placeholder="Enter a note for this invoice. " rows="3 "></textarea>
+        <textarea class="form-control " cols="40 " id="invoice_Comment " focus-name="15 " tabindex="15 " maxlength="250" [(ngModel)]="invoiceDetail.Comment "
+          placeholder="Enter a note for this invoice. " rows="3 "></textarea>
         <span class="text-warning ">**This field is for SkyPanion only.  It will not be synced with Skyline.</span>
       </div>
     </div><br><br>

@@ -11,7 +11,7 @@
           <div id="invalidationErrors" class="alert alert-danger" *ngIf="errorsRemoveInv" [ngStyle]="showHideErrorLog">
             <h3>{{errorHeaderRemoveInv}}</h3>
             <ul>
-              <li *ngFor="let error of errorsRemoveInv">{{error}}</li>
+              <li *ngFor="let error of errorsRemoveInv">{{error.ErrorName}}</li>
               <!--<li data-ng-repeat="error in errorsRemoveInv">{{error.ErrorName}}</li>-->
             </ul>
           </div>

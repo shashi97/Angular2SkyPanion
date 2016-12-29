@@ -132,6 +132,7 @@ export class InvoiceDetail {
     InvoiceStatusID: number = 0;
     IsApprovalRequired: number = 0;
     IsBatche: number = 0;
+    IsFund:boolean;
     IsExpedited: number = 0;
     IsExpeditedable: number = 0;
     IsInvoiceDelete: number = 0;
@@ -220,6 +221,7 @@ export class CompanyData {
     view_invoice_role_id: number = 0;
     APDescription: string = '';
     AccountName: string = '';
+    PurchaseOrderCount:string = '';
     CashAccount1Description: string = '';
     CashAccount2Description: string = '';
     CashAccount3Description: string = '';

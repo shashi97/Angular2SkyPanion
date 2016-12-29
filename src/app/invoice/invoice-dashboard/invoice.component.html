@@ -8,7 +8,7 @@
   <div class="container-fluid">
     <div class="col-md-12" style="padding-bottom: 10px">
       <div class="col-md-10" style="padding-top: 10px">
-        <label><input type="checkbox" data-ng-model="isAllInvoiceSelected" ng-change="SelectAllInvoice()" style="height:15px;width:15px;">&nbsp;&nbsp;&nbsp;{{selectInoivcesSpan}}</label>
+        <label><input type="checkbox" [(ngModel)]="isAllInvoiceSelected" (ngModelChange)="SelectAllInvoice()" style="height:15px;width:15px;">&nbsp;&nbsp;&nbsp;{{SelectInoivcesSpan}}</label>
       </div>
       <div class="col-md-2">
         <button class="btn btn-default pull-right" (click)="ExporPdf()">
@@ -126,5 +126,6 @@
     </table>
 
   </div>
+   <sp-pagination [dataSource]='Invoices' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
 
 </div>

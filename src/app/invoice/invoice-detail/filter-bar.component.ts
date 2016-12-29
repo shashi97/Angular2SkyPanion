@@ -271,9 +271,8 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
   }
 
   private getNextInvoice(invoiceID): void {
-    // $scope.invoiceID = invoiceID;
-    // $location.path('/invoices/' + invoiceID + '/' + encodeURIComponent($scope.invoiceNumber) 
-    // + '/' + $scope.vendorID + '/' + $scope.companyID + '/' + $scope.statusID + '/' + $scope.userID);
+   this.InvoiceID = invoiceID;
+    this.router.navigate(['/invoice/detail' + invoiceID]);
   }
 
 }

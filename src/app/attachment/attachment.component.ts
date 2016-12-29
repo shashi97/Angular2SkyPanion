@@ -19,6 +19,7 @@ import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { Overlay, OverlayConfig } from 'angular2-modal';
 import { BrowserModule } from '@angular/platform-browser';
 import { CompanyDropdownComponent, CompanyFilterArguments } from '../shared/dropdown/company/company-dropdown.component';
+
 // import { CompanyDropdownComponent } from '../shared/dropdown/company/company-dropdown.component';
 import {
   TableOptions,
@@ -28,7 +29,13 @@ import {
 
 export class AttachmentFilterArguments {
   companyId: number = 0;
-
+    pageNo: number= 1;
+    toPage: number = 0;
+    fromPage: number = 0;
+    pageSizeFilter: number = 25;
+    isShowPage: boolean = false;
+    validatePageSize: boolean = false;
+    validateTotalItems: boolean = false;
 }
 
 @Component({
@@ -40,9 +47,10 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
   @Output() filtered: EventEmitter<AttachmentFilterArguments> = new EventEmitter<AttachmentFilterArguments>();
   @Input() filteredValue: AttachmentFilterArguments = new AttachmentFilterArguments();
   private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
-
-  private model: Array<AttachmentObject>;
+  private _currentPage: CurrentPageArguments = new CurrentPageArguments();
+  private attachments: Array<AttachmentObject>;
   private account: AccountModel;
+ private pageName: string = 'attachments';
   private companyID: number = 0;
   private pageNumber: number = 1;
   private rowsPerPage: number = 25;
@@ -71,7 +79,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
     overlay: Overlay, vcRef: ViewContainerRef,
     router: Router, public modal: Modal) {
     super(localStorageService, router);
-    this.model = new Array<AttachmentObject>();
+    this.attachments = new Array<AttachmentObject>();
     this.account = new AccountModel();
     this.searchParameters = null;
     this.companies = new Array<CompanyModel>();
@@ -84,9 +92,9 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
       this.searchParameters = +params['SearchParameters' ? 'SearchParameters' : -1];
     });
     if (this.sessionDetails.userId != null) {
-      this.getAttachments();
       this.getAccountName();
       this.getCompanies();
+      this.getAttachments();
     } else {
       let link = ['/login'];
       this.router.navigate([link]);
@@ -95,10 +103,18 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
       this.pageSizeFilter = 25;
     }
 
-
+  
   }
   ngOnChanges() {
     //this.companyFilteredArg = this.filteredValue;
+  }
+    private get currentPageFiltered(): CurrentPageArguments {
+    return this._currentPage;
+  }
+
+  private set currentPageFiltered(newValue: CurrentPageArguments) {
+    this._currentPage = newValue;
+    this.getAttachments();
   }
   private get companyFilteredArg(): CompanyFilterArguments {
     return this._companyFilteredValue;
@@ -109,19 +125,18 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
   }
 
   public onCurrentPageChanged(newValue: AttachmentFilterArguments) {
-    this.filteredValue = newValue;
+    this.currentPageFiltered = newValue;
   }
   private searchUrlReset(): void {
     this.filteredValue.companyId = 0;
     let companyArray = { companyId: 0 };
     this.companyFilteredArg = companyArray;
     this.filtered.emit(this.filteredValue);
-    this.companyID = this.filteredValue.companyId;
     this.getAttachments();
 
   }
   public onCompanyFiltered(filteredValue: CompanyFilterArguments): void {
-    this.companyID = filteredValue.companyId;
+    this.filteredValue.companyId = filteredValue.companyId;
 
   }
   private searchURL(): void {
@@ -130,14 +145,14 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
   }
   private getAttachments(): void {
     this.attachmentService
-      .getAttachments(this.companyID, this.status, this.pageNumber, this.rowsPerPage)
+      .getAttachments(this.filteredValue.companyId, this.status, this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)
       .then(result => {
         if (result) {
-          this.model = result;
-          if (this.model.length == 0) {
+          this.attachments = result;
+          if (this.attachments.length == 0) {
             this.AttachmentCount = 0;
           } else {
-            this.AttachmentCount = this.model[0].AttachmentCount;
+            this.AttachmentCount = this.attachments[0].AttachmentCount;
           }
         }
 
@@ -178,13 +193,13 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
         return;
       } else {
         this.attachmentService.deleteAttachement(attachemntID).then(result => {
-          if (result) {
-            //}
-            // else if (result.status == 500) {
-            //     messageService.showMsgBox("error", result.data.ExceptionMessage, "error");
-            //     $scope.getAttachments();
-            // }
-            //else {
+          if (result.status == 404) {
+          }
+          else if (result.status == 500) {
+            this.toastr.error("error", result.data.ExceptionMessage, "error");
+            this.getAttachments();
+          }
+          else {
             this.toastr.success('Attachment has been deleted successfully');
             this.unlockDocument(attachemntID);
           }
@@ -308,7 +323,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
     dialog.then((resultPromise) => {
       return resultPromise.result.then((result) => {
         // alert(result.status);
-        if (result == true) {
+        if (result) {
           this.unlockDocument(result);
         }
       }, () => console.log(' Error In Attachment Edit modal '));

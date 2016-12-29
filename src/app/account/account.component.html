@@ -3,8 +3,9 @@
     <div class="page-heading">
         <h1 *ngIf="account">{{account.AccountName}}</h1>
         <div class="options">
-            <div class="btn-toolbar" *ngIf="account">
-                <a href="#account/{{account.AccountID}}" class="btn btn-default"><i class="fa fa-fw fa-cog"></i></a>
+            <div class="btn-toolbar">
+                <!--<a href="#account/{{account.AccountID}}" class="btn btn-default"><i class="fa fa-fw fa-cog"></i></a>-->
+                 <a href="#/dashboard" class="btn btn-default"><i class="fa fa-fw fa-cog"></i></a>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -14,7 +15,7 @@
         <div id="panel-advancedoptions">
             <div id="account_info_wrap" class="row">
                 <div class="col-md-3">
-                    <!--<img alt="{{account.ImageName}}" class="img-thumbnail" ng-src="{{account.ImagePath}}" />-->
+                    <!--<img *ngIf="account" alt="{{account.ImageName}}" class="img-thumbnail" [src]="{{account.ImagePath}}" />-->
                 </div>
                 <div class="col-md-9">
                     <div class="alert alert-info">

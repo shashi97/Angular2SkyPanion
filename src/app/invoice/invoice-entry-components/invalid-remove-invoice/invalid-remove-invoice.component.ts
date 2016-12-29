@@ -16,7 +16,7 @@ import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { FilterPipe } from '../../../shared/pipe/orderby';
 import { InvoiceService } from '../../../invoice/shared/invoice.service';
-
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 export class InvoicePdfRejectModalContext extends BSModalContext {
 	DocumentLockingID;
 	doctype;
@@ -62,6 +62,7 @@ export class InvoicePdfRejectModalComponent extends BaseComponent implements Clo
 		private invoiceEntryService: InvoiceEntryService,
 		localStorageService: LocalStorageService,
 		router: Router,
+     public toastr: ToastsManager,
 		private invoiceService: InvoiceService,
 		private masterService: MasterService,
 		public dialog: DialogRef<InvoicePdfRejectModalContext>) {
@@ -96,7 +97,7 @@ export class InvoicePdfRejectModalComponent extends BaseComponent implements Clo
 	private InvalidateInvoice(): void {
 		this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.doctype, this.DocumentID).then(result => {
 			if (result.IsLocked == 0) {
-				alert("This invoice is locked by" + result.LockBy);
+				 this.toastr.error("This invoice is locked by" + result.LockBy);
 			} else {
 
 				this.errorsRemoveInv = [];
@@ -116,7 +117,7 @@ export class InvoicePdfRejectModalComponent extends BaseComponent implements Clo
 					this.showHideErrorLog = { 'display': 'none' };
 					this.displayValue = 'block';
 					this.invoiceService.rejectAttachment(this.attachmentId, this.RejectionComment).then(result => {
-						alert("Invoice reject successfully");
+						 this.toastr.success("Invoice reject successfully");
 							this.dialog.close(this.attachmentBackLink);
 					});
 				}

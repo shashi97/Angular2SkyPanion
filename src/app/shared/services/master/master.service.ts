@@ -28,7 +28,7 @@ export class MasterService {
   public checkDocumentLocking(attachemntID, documentType) {
     return this.http.get(ApiUrl.baseUrl + "api/invoices/getDocumentLockStatus/" + attachemntID + "/" + documentType)
       .toPromise()
-      .then(response => response.json())
+      .then(response => response)
       .catch(error => error);
   }
 

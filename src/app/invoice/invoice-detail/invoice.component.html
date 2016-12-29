@@ -5,8 +5,8 @@
       <span [hidden]="invoiceDetail.InvoiceStatusID!=0">Duplicates</span>
     </h2>
     <div class="btn-group pull-right" [hidden]="invoiceDetail.InvoiceStatusID==0">
-      <a class="btn btn-default" ng-class="{active: invoiceArgs.invType=='pdf'}" (click)="getInvoicePdf()">Pdf</a>
-      <a class="btn btn-default" ng-class="{active: invoiceArgs.invType=='approvals'}" (click)="getInvoiceApprovalsAllow(invoiceArgs.invType,invoiceDetail.InvoiceAmount,invoiceDetail.CompanyID)">Approvals</a>
+      <a class="btn btn-default" [ngClass]="{active: invoiceArgs.invType=='pdf'}" (click)="getInvoicePdf()">Pdf</a>
+      <a class="btn btn-default" [ngClass]="{active: invoiceArgs.invType=='approvals'}" (click)="getInvoiceApprovalsAllow(invoiceArgs.invType,invoiceDetail.InvoiceAmount,invoiceDetail.CompanyID)">Approvals</a>
       <!--<a class="btn btn-default" ng-class="{active: invoiceDetail.invType=='duplicates'}" data-ng-click="getInvoiceDuplicates()">Duplicates</a>-->
     </div>
     <span class="pull-right" [hidden]="invoiceDetail.InvoiceStatusID!=0">
@@ -18,26 +18,24 @@
                             </span>
     <div class="clearfix"></div>
     <br>
-    <!--<div class="row" [hidden]="invoiceDetail.invType != 'pdf' && invoiceDetail.InvoiceStatusID!=0">
-      <iframe id="Iframe1" height="725" class="col-md-12" ng-src="{{pdfsrc}}" style="border: 0"></iframe>
-    </div>-->
-
-    <div   class="invoice_relation_wrap" *ngIf="invoiceArgs.invType == 'approvals'">
-
-      <div class="alert alert-warning" *ngIf="invApprovals.InvoiceApprovals.length == 0">
+    <div class="row" *ngIf="invoiceArgs.invType == 'pdf' && invoiceDetail.InvoiceStatusID!=0">
+      <iframe id="pdf_frame" height="725" class="col-md-12" [src]="pdfsrc" style="border: 0;position: inherit"></iframe>
+    </div>
+    <div class="invoice_relation_wrap" *ngIf="invoiceArgs.invType == 'approvals'">
+      <div class="alert alert-warning" *ngIf="invApprovals.InvoiceApprovals && invApprovals.InvoiceApprovals.length == 0">
         <h4>No Approvals</h4>
         <span>
                                         If you believe that this messege is being displayed in error, contact the account admin:
                                         <br>
-                                        <a href="#user/{{invApprovals.OwnerID}}">{{invApprovals.OwnerName}}</a>
+                                        <a href="#/user/detail/{{invApprovals.OwnerID}}/-1">{{invApprovals.OwnerName}}</a>
                                     </span>
       </div>
-
-      <table class="table table-striped table-bordered table-hover" *ngIf="invApprovals.InvoiceApprovals.length != 0">
+      <table class="table table-striped table-bordered table-hover" *ngIf="invApprovals.InvoiceApprovals && invApprovals.InvoiceApprovals.length != 0">
         <thead>
           <tr>
             <th>Approver</th>
             <th>Condition</th>
+            <th>Comment</th>
             <th>Status</th>
           </tr>
         </thead>
@@ -55,10 +53,12 @@
               <a href="#ledgerAccount/{{approval.LedgerAccountID}}" [hidden]="approval.Condition=='None'">{{approval.Condition}}</a>
               </span>
             </td>
+            <td>
+              {{approval.ApproverComment}}
+            </td>
             <td class="approval_actions">
               <span class="text-warning" [hidden]="approval.Status != 'Waiting'">Waiting</span>
-              <a href="#invoice/detail/{{approval.InvoiceApprovalID}}" class="view_invoice_approval approved_link" data-remote="true"
-                [hidden]="approval.Status == 'Waiting'">
+              <a href="#invoice/detail/{{approval.InvoiceApprovalID}}" class="view_invoice_approval approved_link" data-remote="true" [hidden]="approval.Status == 'Waiting'">
                 <i class="icon icon-search"></i>Approved
               </a>
             </td>
@@ -66,8 +66,7 @@
         </tbody>
       </table>
     </div>
-
-    <div id="invoice_duplicates_wrap" class="invoice_relation_wrap" *ngIf="invoiceDetail.invType == 'duplicates' || invoiceDetail.InvoiceStatusID!=0">
+    <div id="invoice_duplicates_wrap" class="invoice_relation_wrap" *ngIf="invoiceArgs.invType == 'duplicates' || invoiceDetail.InvoiceStatusID==0">
       <div class="alert alert-info">
         <h3>No Duplicates!</h3>
         <p>

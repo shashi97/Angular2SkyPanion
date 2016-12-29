@@ -60,14 +60,5 @@ export class CompanyData {
   CompanyName: string = '';
   Number: string = '';
   type: string = '';
-
-  // constructor(data) {
-  //   this.CompanyID = data.CompanyID,
-  //     this.account_id = data.account_id,
-  //     this.CompanyName = data.CompanyName,
-  //     this.Number = data.Number,
-  //     this.type = data.type
-
-  // }
 }
 
