@@ -1371,7 +1371,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
     if (this.invApprovals != undefined && this.invApprovals.InvoiceApprovals != undefined && this.invApprovals.InvoiceApprovals.length > 0) {
       this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID).then(result => {
-        if (result.data.IsLocked == 0) {
+        if (result.IsLocked == 0) {
           this.toastr.error("This invoice is locked by " + result.LockBy);
           return;
 

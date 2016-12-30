@@ -82,13 +82,13 @@ export class InvoiceService {
   public submitInvoiceForApproval(invoiceID) {
     return this.http.get(ApiUrl.baseUrl + 'api/invoices/InvoiceForApproval/' + invoiceID)
       .toPromise()
-      .then(response => response.json())
+      .then(response => response)
       .catch(error => error);
   }
    public rejectAttachment(attachmentID, rejectionComment) {
     return this.http.get(ApiUrl.baseUrl + "api/invoices/rejectAttachment/" + attachmentID + "/" + rejectionComment)
       .toPromise()
-      .then(response => response.json())
+      .then(response => response)
       .catch(error => error);
   }
 

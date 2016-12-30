@@ -6,7 +6,7 @@
     </h2>
     <div class="btn-group pull-right" [hidden]="invoiceDetail.InvoiceStatusID==0">
       <a class="btn btn-default" [ngClass]="{active: invoiceArgs.invType=='pdf'}" (click)="getInvoicePdf()">Pdf</a>
-      <a class="btn btn-default" [ngClass]="{active: invoiceArgs.invType=='approvals'}" (click)="getInvoiceApprovalsAllow(invoiceArgs.invType,invoiceDetail.InvoiceAmount,invoiceDetail.CompanyID)">Approvals</a>
+      <a class="btn btn-default" [ngClass]="{active: invoiceArgs.invType=='approvals'}" (click)="getInvoiceApprovalsAllow(invoiceID,invoiceDetail.InvoiceAmount,invoiceDetail.CompanyID)">Approvals</a>
       <!--<a class="btn btn-default" ng-class="{active: invoiceDetail.invType=='duplicates'}" data-ng-click="getInvoiceDuplicates()">Duplicates</a>-->
     </div>
     <span class="pull-right" [hidden]="invoiceDetail.InvoiceStatusID!=0">
@@ -50,7 +50,7 @@
                   <span [hidden]="approval.Condition!='None'" class="text-warning italic-font">
                       {{approval.Condition}}
                   </span>
-              <a href="#ledgerAccount/{{approval.LedgerAccountID}}" [hidden]="approval.Condition=='None'">{{approval.Condition}}</a>
+              <a href="#ledgerAccount/detail/{{approval.LedgerAccountID}}/{{pageSizeFilter}}/{{searchParameters}}" [hidden]="approval.Condition=='None'">{{approval.Condition}}</a>
               </span>
             </td>
             <td>

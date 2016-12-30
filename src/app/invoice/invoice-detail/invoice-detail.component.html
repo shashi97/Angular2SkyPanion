@@ -1,9 +1,6 @@
 <div id="slider" class="page-content" style="overflow: -moz-scrollbars-vertical;overflow-y: scroll">
-
   <sp-invoice-detail-filter-bar *ngIf="invoiceDetail" [invoiceDetail]="invoiceDetail"></sp-invoice-detail-filter-bar>
-
- <sp-crumb-bar *ngIf='invoiceDetail' [lastTitle]="invoiceDetail.InvoiceNumber"></sp-crumb-bar>
-
+  <sp-crumb-bar *ngIf='invoiceDetail' [lastTitle]="invoiceDetail.InvoiceNumber"></sp-crumb-bar>
   <div class="container-fluid">
     <div id="panel-advancedoptions">
       <div id="show_invoice_content" class="row">
@@ -18,5 +15,4 @@
       </div>
     </div>
   </div>
-
 </div>

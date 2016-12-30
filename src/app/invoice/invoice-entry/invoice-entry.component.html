@@ -32,7 +32,7 @@
       <a href="#attachmentsList/{{pageSizeFilter}}/{{searchParameters}}" *ngIf="InvoiceID==0">Pending Invoices</a>
     </li>
     <li class="active" *ngIf="InvoiceID!=0">
-      <a href="#/invoice/detail/{{invoiceDetail.InvoiceID}}">{{invoiceNumber}}</a>
+      <a href="#/invoice/detail/{{pageSizeFilter}}/{{searchParameters}}/{{invoiceDetail.InvoiceID}}/null/0/0/-1/-1">{{invoiceNumber}}</a>
     </li>
     <li class="active" *ngIf="InvoiceID!=0">Edit</li>
     <li class="active" *ngIf="InvoiceID==0">Process Invoice</li>

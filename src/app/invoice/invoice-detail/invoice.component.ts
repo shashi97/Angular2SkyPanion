@@ -22,6 +22,8 @@ export class InvoiceDetailInvoiceComponent extends BaseComponent implements OnIn
   private invApprovals: Array<InvApprovals>;
   private pdfsrc1;
   private pdfsrc;
+  private pageSizeFilter;
+  private searchParameters;
 
   constructor(
     localStorageService: LocalStorageService,
@@ -38,6 +40,8 @@ export class InvoiceDetailInvoiceComponent extends BaseComponent implements OnIn
     this.activatedRoute.params.subscribe(params => {
       //this.attachmentId = +params['attachmentId']; // (+) converts string 'id' to a number
       this.invoiceID = +params['InvoiceID']
+      this.searchParameters = +params['SearchParameters']
+      this.pageSizeFilter = +params['pageSizeFilter']
       let apiServiceBase = ApiUrl.baseUrl;
       this.pdfsrc1 = apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber +
         '/' + this.invoiceDetail.AttachmentName;
