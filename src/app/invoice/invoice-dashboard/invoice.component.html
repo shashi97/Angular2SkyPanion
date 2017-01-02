@@ -27,12 +27,12 @@
           <th style="width: 12%">Vendor</th>
           <th style="width: 16%">Distributions</th>
           <th style="width: 7%">Invoice Amount</th>
-          <th style="width: 7%">Paid Status</th>
-          <th style="width: 7%">Processed</th>
-          <th style="width: 11%">Description</th>
+          <!--<th style="width: 7%">Paid Status</th>-->
+          <th style="width: 8%">Processed</th>
+          <th style="width: 13%">Description</th>
           <th style="width: 8%">Locked By</th>
-          <th style="width: 5%"></th>
-          <th style="width: 5%"></th>
+          <th style="width: 3%"></th>
+          <th style="width: 9%"></th>
         </tr>
       </thead>
       <tbody>
@@ -60,14 +60,14 @@
             </div>
           </td>
           <td>{{item.InvoiceNumber}}</td>
-          <td>
-            <div>
+          <td >
+            <div style="width:120px;overflow:hidden;display:inline-block;text-overflow: ellipsis;white-space: nowrap;">
               <a href="#/vendor/detail/{{item.VendorID}}/-1/-1" class="remote_href" data-remote="true">
               {{item.VendorKey}}&nbsp;
               </a>{{item.VendorName}}
             </div>
           </td>
-          <td>
+          <td style="text-overflow: ellipsis;">
             <div class="italic-font text-warning" *ngIf="item.Distributions=='None' && item.LedgerAccountID==0">
               {{item.Distributions}}
             </div>
@@ -90,13 +90,13 @@
           <td>
             <div>${{item.InvoiceAmount}}</div>
           </td>
-          <td>
+          <!--<td>
             <div [ngClass]="{'text-success': item.PaidStatus=='Full Paid', 
                             'text-danger': item.PaidStatus=='Not Paid' ,
                             'text-warning': item.PaidStatus=='Partial Paid'}">
               {{item.PaidStatus}}
             </div>
-          </td>
+          </td>-->
           <td>
             <div [ngClass]="{'italic-font': item.Processed=='Not Applicable'}">
               {{item.Processed}}
@@ -117,7 +117,8 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="4">
+          <td >
+             <sp-pagination [dataSource]='Invoices' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
             <!--<sp-pagination [dataSource]='Invoices' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->
             <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>-->
           </td>
@@ -126,6 +127,6 @@
     </table>
 
   </div>
-   <sp-pagination [dataSource]='Invoices' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
+  
 
 </div>

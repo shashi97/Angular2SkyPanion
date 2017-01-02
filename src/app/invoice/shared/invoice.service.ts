@@ -46,6 +46,14 @@ export class InvoiceService {
       .catch(error => error);
   }
 
+   public getInvoicesForApprovalByUserID(userID) {
+    return this.http
+      .get(ApiUrl.baseUrl + 'api/invoices/invoicesForApproval/' + userID )
+      .toPromise()
+      .then(response => response)
+      .catch(error => error);
+  }
+
     public changeInvoiceProperty(invoiceID, companyID, newCompanyNumber, oldCompanyNumber, AttachmentName) {
     return this.http
       .get(ApiUrl.baseUrl + 'api/invoices/getChangeInvoiceProperty/'  + invoiceID + "/" + companyID + "/" + newCompanyNumber + "/" + oldCompanyNumber + "/" + AttachmentName)

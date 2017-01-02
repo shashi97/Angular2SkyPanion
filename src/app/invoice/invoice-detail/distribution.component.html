@@ -10,7 +10,7 @@
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body panel-no-padding">
 
-        <div class="alert alert-danger" *ngIf = "invoiceDetail.InvoiceDistributions" [hidden]="invoiceDetail.InvoiceDistributions">
+        <div class="alert alert-danger"  [hidden]="invoiceDetail.InvoiceDistributions && invoiceDetail.InvoiceDistributions.length!=0">
           <h3>No Distributions!</h3>
           <p>There are no distributions for this invoice.....</p>
         </div>

@@ -20,6 +20,7 @@ import {
 import { InvoiceModelContext } from '../../dashboard/shared/invoice-context.model';
 import { DashboardInvoiceModel } from '../../dashboard/shared/dashboard-invoice.model';
 import { InvoiceRejectModalComponent } from '../../dashboard/invoice-modals/invoice-rejection-modal/invoice-rejection.component';
+import { InvoiceApproveModalComponent } from '../../invoice/invoice-detail/invalid-approve-modal.component';
 @Component({
   selector: 'sp-invoice-detail-filter-bar',
   templateUrl: './filter-bar.component.html',
@@ -42,6 +43,9 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
   private DocumentLockingID;
   private DocumentID;
   private docType;
+  private errorsInv = [];
+  private errorHeader: string = '';
+  private aprovalComment;
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -49,12 +53,12 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
     private masterService: MasterService,
     private invoiceService: InvoiceService,
     overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal,
-    private  toastr: ToastsManager
+    private toastr: ToastsManager
   ) {
     super(localStorageService, router);
     this.searchParameters = -1;
     this.invSearchObject = new invSearchObject();
-   
+
   }
 
   ngOnInit() {
@@ -80,6 +84,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
       }
       // this.getInvoiceDetail();
     });
+    
   }
   openRejectInvoiceModal(invoice) {
 
@@ -184,7 +189,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
             return;
           } else {
             if (invoice.InvoiceAmount !== 0.00 && invoice.InvoiceAmount !== 0) {
-              this.invoiceService.submitInvoiceForApproval(invoice.InvoiceID).then(response=> {
+              this.invoiceService.submitInvoiceForApproval(invoice.InvoiceID).then(response => {
                 if (response.status === 500) {
                 } else {
                   this.toastr.success("Invoice submit for approval successfully");
@@ -213,15 +218,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
   private submitInvoiceExpedite(invoice): void {
 
     // only make let to avoid error Please give the exact value when you call the service    
-    if (this.invoiceDetail.InvoiceID == 0) {
-      this.docType = 5;
-      this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
-      this.DocumentID = this.invoiceDetail.AttachmentID;
-    } else {
-      this.docType = 10;
-      this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
-      this.DocumentID = this.invoiceDetail.InvoiceID;
-    }
+   
 
     this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID)
       .then(result => {
@@ -266,15 +263,51 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
   }
 
   private openInvoiceApproval(invoiceID, Amount, companyID, InvoiceNumber): void {
-    // $scope.invoiceID = invoiceID;
-    // $scope.companyID = companyID
-    // $scope.errorsInv = [];
-    // $scope.errorHeader = "";
-    // $scope.aprovalComment = null;
-    // $scope.InvAmount = Amount;
-    // $scope.InvoiceNumber = InvoiceNumber;
-  }
+     if (this.invoiceDetail.InvoiceID == 0) {
+      this.docType = 5;
+      this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
+      this.DocumentID = this.invoiceDetail.AttachmentID;
+    } else {
+      this.docType = 10;
+      this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
+      this.DocumentID = this.invoiceDetail.InvoiceID;
+    }
 
+    this.errorsInv = [];
+    this.errorHeader = "";
+    this.aprovalComment = null;
+    this.openApproveinvoiceModal(invoiceID, Amount, companyID, this.aprovalComment);
+  }
+  openApproveinvoiceModal(invoiceID, Amount, companyID, aprovalComment) {
+
+    const builder = new BSModalContextBuilder<InvoiceModelContext>(
+      {
+        invoiceID: invoiceID,
+        companyID: companyID,
+        invoiceAmount: Amount,
+        aprovalComment: aprovalComment,
+        DocumentLockingID: this.DocumentLockingID,
+        docType: this.docType,
+        DocumentID: this.DocumentID,
+      } as any,
+      undefined,
+      InvoiceModelContext
+    );
+
+    let overlayConfig: OverlayConfig = {
+      context: builder.toJSON()
+    };
+
+    const dialog = this.modal.open(InvoiceApproveModalComponent, overlayConfig)
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
+        if (result != null) {
+        this.unlockDocument(result.StateUrl,result.InvoiceID);
+        }
+      }, () => console.log(' Error In aprrovals  modal '));
+    });
+  }
   private getNextInvoice(invoiceID): void {
     this.InvoiceID = invoiceID;
     this.router.navigate(['/invoice/detail' + invoiceID]);

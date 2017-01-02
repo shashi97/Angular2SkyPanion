@@ -6,6 +6,10 @@ export class InvoiceModelContext extends BSModalContext {
 	companyID;
 	invoiceAmount;
 	invoiceNumber;
+  aprovalComment;
+  DocumentLockingID;
+  docType;
+  DocumentID;
 	constructor() {
 		super();
 	}

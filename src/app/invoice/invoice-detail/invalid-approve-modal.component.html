@@ -1,0 +1,22 @@
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">
+        <img src="https://maxcdn.icons8.com/Color/PNG/24/User_Interface/close_window-24.png" title="Close Window" width="24"></span></button>
+      <h3>Submit Invoice For Approval</h3>
+    </div>
+    <div class="modal-body">
+      <form accept-charset="UTF-8" class="" id="Form1" method="post">
+        <div class="form-group">
+          <label class="control-label" for="attachment_RejectionMemo"><b>Submit For Approval Comment</b></label>
+          <textarea class="form-control" cols="40" id="Textarea1" maxlength="250" [(ngModel)]="aprovalComment" [ngModelOptions]="{standalone: true}" placeholder="Enter Comment"
+            rows="2"></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <a id="A1" class="btn btn-default closeButton" (click)="closeModal()">Cancel</a>
+      <a id="A2" class="btn btn-success" (click)="ApproveInvoice()">Approve Invoice</a>
+    </div>
+  </div>
+</div>

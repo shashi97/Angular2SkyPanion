@@ -156,6 +156,7 @@ import { InvoiceDetailInvoiceComponent } from './invoice/invoice-detail/invoice.
 import { InvoiceCheckDetailComponent } from './invoice/invoice-detail/check-detail.component';
 import { InvoiceEntryVendorComponent } from './invoice/invoice-entry-components/vendors-model/invoice-entry-vendor.component';
 import { InvoicePdfRejectModalComponent } from './invoice/invoice-entry-components/invalid-remove-invoice/invalid-remove-invoice.component';
+import { InvoiceApproveModalComponent } from './invoice/invoice-detail/invalid-approve-modal.component';
 import { InvoiceRejectModalComponent } from './dashboard/invoice-modals/invoice-rejection-modal/invoice-rejection.component';
 import { InvoiceEntryNoApproverExistsComponent } from './invoice/invoice-entry-components/noApproverExists-model/invoice-entry-noApproverExists.component';
 import { InvoiceApprovalModalComponent } from './dashboard/invoice-modals/invoice-approval-modal/invoice-approval.component';
@@ -336,7 +337,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     ResetPasswordComponent,
     InvoicePdfRejectModalComponent,
     PageHeaderTitleComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    InvoiceApproveModalComponent
   ],
   entryComponents: [
     SetupModalComponent,
@@ -350,7 +352,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     InvoiceDistributionCommentModalComponent,
     AttachmentEditComponent,
     InvoiceEntryNoApproverExistsComponent,
-    InvoicePdfRejectModalComponent
+    InvoicePdfRejectModalComponent,
+    InvoiceApproveModalComponent
 
 
   ],
