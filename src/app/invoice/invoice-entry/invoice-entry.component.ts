@@ -209,13 +209,13 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         this.companyNumber = item.Number;
       }
     });
-    this.onCompanyDropperChange(this.CompanyID,this.companyNumber)
+    this.onCompanyDropperChange(this.CompanyID, this.companyNumber)
   }
- private onCompanyDropperChange (companyID, companyNumber) {
-   
+  private onCompanyDropperChange(companyID, companyNumber) {
+
     if (companyID != 0 && companyID != this.invoiceDetail.CompanyID) {
       if (confirm("Are you sure you'd like to change property of this invoice?") == true) {
-        this.invoiceService.changeInvoiceProperty(this.invoiceDetail.InvoiceID, this.CompanyID, this.companyNumber, this.invoiceDetail.CompanyNumber, this.invoiceDetail.AttachmentName).then(result=> {
+        this.invoiceService.changeInvoiceProperty(this.invoiceDetail.InvoiceID, this.CompanyID, this.companyNumber, this.invoiceDetail.CompanyNumber, this.invoiceDetail.AttachmentName).then(result => {
           if (result.status == 404) {
           }
           else if (result.status == 500) {
@@ -504,28 +504,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           this.companyData = result;
 
         }
-
-
-        //         if ($rootScope.user.IsSuperUser == false && this.companyData.view_invoice_role_id != 0) {
-        //             if (this.User.selectedRoles != null && this.User.selectedRoles != undefined && this.User.selectedRoles.length > 0) {
-        //                 for (let i = 0 ; i < this.User.selectedRoles.length ; i++) {
-        //                     if (this.companyData.view_invoice_role_id == this.User.selectedRoles[i].RoleID) {
-        //                         this.roleExistCount = this.roleExistCount + 1;
-        //                     }
-
-        //                 }
-        //             }
-        //             else {
-        //                 window.location.href = '#/dashboard';
-        //             }
-
-        //             if (this.roleExistCount == 0) {
-        //                 window.location.href = '#/dashboard';
-        //             }
-
-        //         }
-
-
         if (this.cashAccount === 49 && this.companyData.CashAccount1Description !== 'Unknown') {
           this.Accountbind = 'AcDiscription1';
         } else if (this.cashAccount === 50 && this.companyData.CashAccount2Description !== 'Unknown') {
@@ -542,12 +520,12 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         }
 
         this.companyTooltip = '<b>Ledger Accounts:</b> ' +
-        this.companyData.LedgerAccountCount + '<br /><b>Invoices:</b> ' + this.companyData.InvoiceCount +
-        '<br /><b>Vendors:</b> ' + this.companyData.VendorCount + '<br /><b>PDFs:</b> ' + 
-        this.companyData.PDFCount + '<br /><b>Purchase Orders:</b> ' + this.companyData.PurchaseOrderCount + 
-        '<br ><b>Approval Criteria:</b> ' + this.companyData.ApprovalCriteriaCount + 
-        '<br /><b>Posts:</b> ' + this.companyData.FundCount + '<br />';
-        
+          this.companyData.LedgerAccountCount + '<br /><b>Invoices:</b> ' + this.companyData.InvoiceCount +
+          '<br /><b>Vendors:</b> ' + this.companyData.VendorCount + '<br /><b>PDFs:</b> ' +
+          this.companyData.PDFCount + '<br /><b>Purchase Orders:</b> ' + this.companyData.PurchaseOrderCount +
+          '<br ><b>Approval Criteria:</b> ' + this.companyData.ApprovalCriteriaCount +
+          '<br /><b>Posts:</b> ' + this.companyData.FundCount + '<br />';
+
         this.getVendorByCompanyID();
       });
 
@@ -592,12 +570,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           }
         });
       }
-
-
-      // $rootScope.intervalPromise = $interval(function () {
-      //     this.confirmLock();
-      // }, 1 * 60000);
-
       this.getInvoiceApprovals(this.invoiceDetail.InvoiceID, this.invoiceDetail.InvoiceAmount, this.invoiceDetail.CompanyID);
 
 
@@ -903,34 +875,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         this.invoiceDetail.InvoiceAmount = item.POAmount;
         this.poNum = item.PONum;
         let vendorID = item.VendorID;
-        // check Account Number exist or not 
-        // if (this.AccountNumber != null && this.AccountNumber !== '') {
-        //   if (this.invoiceDetail.InvoiceDistributions.length > 0) {
-        //     for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-        //       if (this.invoiceDetail.InvoiceDistributions[i].AccountNumber === this.AccountNumber) {
-        //         if (this.invoiceDetail.InvoiceDistributions[i].DistributionID === 0) {
-        //           this.invoiceDetail.InvoiceDistributions.splice(i, 1);
-        //         }
-        //         else {
-        //           this.invoiceService.removeInvoiceDistributions(
-        //             this.invoiceDetail.InvoiceDistributions[i].DistributionID,
-        //             this.invoiceDetail.InvoiceID).then(result => {
-        //               this.invoiceDetail.InvoiceDistributions.splice(i, 1);
-        //               this.ProcessVendor(vendorID);
-        //               return;
-        //             });
-        //         }
-        //       }
-        //     }
-        //   }
-        // }
-
         this.ProcessVendor(vendorID);
       }
     });
 
   }
-
   private getLedgerAccounts(CompanyID): void {
     this.invoiceEntryService
       .getLedgerAccountDDOsAccountTypeWise(CompanyID)

@@ -42,7 +42,7 @@
               class="gridCellIcon" />
           </td>
           <td>
-            <div [ngClass]="{'text-warning': item.InvoiceStatus=='Waiting For Sync',
+            <div style="width:80px;overflow:hidden;display:inline-block;text-overflow: ellipsis;white-space: nowrap;" [ngClass]="{'text-warning': item.InvoiceStatus=='Waiting For Sync',
              'text-warning1': item.InvoiceStatus=='Waiting For Approval', 
              'text-success': item.InvoiceStatus=='Synced',
              'text-danger': item.InvoiceStatus=='Rejected',
@@ -61,22 +61,22 @@
           </td>
           <td>{{item.InvoiceNumber}}</td>
           <td >
-            <div style="width:120px;overflow:hidden;display:inline-block;text-overflow: ellipsis;white-space: nowrap;">
+            <div style="width:130px;overflow:hidden;display:inline-block;text-overflow: ellipsis;white-space: nowrap;">
               <a href="#/vendor/detail/{{item.VendorID}}/-1/-1" class="remote_href" data-remote="true">
               {{item.VendorKey}}&nbsp;
               </a>{{item.VendorName}}
             </div>
           </td>
           <td style="text-overflow: ellipsis;">
-            <div class="italic-font text-warning" *ngIf="item.Distributions=='None' && item.LedgerAccountID==0">
+            <div style="width:170px;overflow:hidden;display:inline-block;text-overflow: ellipsis;white-space: nowrap;" class="italic-font text-warning" *ngIf="item.Distributions=='None' && item.LedgerAccountID==0">
               {{item.Distributions}}
             </div>
-            <div *ngIf="item.Distributions!='None' && item.LedgerAccountID!=0">
+            <div style="width:170px;overflow:hidden;display:inline-block;text-overflow: ellipsis;white-space: nowrap;" *ngIf="item.Distributions!='None' && item.LedgerAccountID!=0">
               <a href="#/ledgerAccount/detail/{{item.LedgerAccountID}}/-1/-1">
               {{item.Distributions}}
               </a>
             </div>
-            <div>
+            <div style="width:170px;overflow:hidden;display:inline-block;text-overflow: ellipsis;white-space: nowrap;">
               <tooltip-content #myTooltip>
                 <div [innerHTML]=item.DistributionMessage>
                 </div>
@@ -98,7 +98,7 @@
             </div>
           </td>-->
           <td>
-            <div [ngClass]="{'italic-font': item.Processed=='Not Applicable'}">
+            <div style="width:80px;overflow:hidden;display:inline-block;text-overflow: ellipsis;white-space: nowrap;" [ngClass]="{'italic-font': item.Processed=='Not Applicable'}">
               {{item.Processed}}
             </div>
           </td>
@@ -117,8 +117,8 @@
       </tbody>
       <tfoot>
         <tr>
-          <td >
-             <sp-pagination [dataSource]='Invoices' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
+          <td>
+            
             <!--<sp-pagination [dataSource]='Invoices' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->
             <!--<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>-->
           </td>
@@ -127,6 +127,6 @@
     </table>
 
   </div>
-  
+   <sp-pagination [dataSource]='Invoices' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>
 
 </div>
