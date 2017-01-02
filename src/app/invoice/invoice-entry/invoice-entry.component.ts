@@ -302,7 +302,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   openAccountModal() {
     const builder = new BSModalContextBuilder<InvoiceEntryAccountModalContext>(
-      { num1: 2, num2: 3 } as any,
+      { 
+        CompanyID:this.invoiceDetail.CompanyID
+        } as any,
       undefined,
       InvoiceEntryAccountModalContext
     );
