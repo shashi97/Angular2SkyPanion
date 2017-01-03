@@ -126,7 +126,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private fcs_AccountNum;
   private fcs_description;
   private invoiceDetail: InvoiceDetail;
-  private purchaseOrders: Array<PurchaseOrder>;
+  private purchaseOrders: Array<any>;
   private invoiceNumber;
   private attachmentBackLink;
   private invoiceExistItems: InvoiceExistItems;
@@ -154,7 +154,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.isAddAccount = true;
     this.fcs_AccountNum = false;
     this.glAccountObject = new GlAccountObject();
-    this.purchaseOrders = new Array<PurchaseOrder>();
+    // this.purchaseOrders = new Array<PurchaseOrder>();
     this.invSearchObject = new invSearchObject();
     this.jobCategory = new Array<any>();
     this.pageSizeFilter = 25;
@@ -302,9 +302,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   openAccountModal() {
     const builder = new BSModalContextBuilder<InvoiceEntryAccountModalContext>(
-      { 
-        CompanyID:this.invoiceDetail.CompanyID
-        } as any,
+      {
+        CompanyID: this.invoiceDetail.CompanyID
+      } as any,
       undefined,
       InvoiceEntryAccountModalContext
     );
@@ -382,7 +382,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.invoiceEntryService
       .getPurchaseOrders()
       .then(result => {
-        if (result) {
+        if (result.status == 404) {
+        }
+        else if (result.status == 500) {
+        } else {
           this.purchaseOrders = result;
         }
         this.getPaymentMethod();
@@ -449,7 +452,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
             this.postGlDate = this.invoiceDetail.PostDate;
             this.dueDate = this.invoiceDetail.DueDate;
           }
-          if (this.purchaseOrders) {
+          if (this.purchaseOrders!= undefined && this.purchaseOrders!= null && this.purchaseOrders.length >0) {
             this.purchaseOrders.forEach(item => {
               if (item.PuchaseOrderID === this.invoiceDetail.PurchaseOrderID) {
                 this.poVendorKey = item.NumberKey;
@@ -1157,7 +1160,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
                 if (value === 'getInvoiceGrid') {
                   this.toastr.success('Invoice saved successfully');
-                  this.unlockDocument('/invoicesList/' + +this.pageSizeFilter + '/' + this.searchParameters);
+                  this.unlockDocument('/invoice/' + +this.pageSizeFilter + '/' + this.searchParameters);
                 }
               }
             });

@@ -10,7 +10,7 @@
             <div class="input-group">
               <input class="modal_search_input form-control" type="text" placeholder="Search" #listFilter (keyup)="0" id="outer" search-popover-close
                 exclude-class="exclude234" />
-              <div class="input-group-addon clear_search_field" ng-click="resetSearch()">
+              <div class="input-group-addon clear_search_field" (click)="listFilter.value = ''">
                 <i class="fa fa-times-circle-o"></i>
               </div>
             </div>
@@ -20,7 +20,7 @@
     </div>
     <div class="popover_content_wrap">
       <ul class="popover_list">
-        <li class="presentation" *ngFor="let purchase of purchaseOrder | Filter:listFilter.value" search-popover-close>
+        <li class="presentation" *ngFor="let purchase of purchaseOrder | purchaseFilter:listFilter.value" search-popover-close>
           <a class="vendor_link link_button" data-dismiss="modal" (click)="GetSelectedPurchaseOrder(purchase.PuchaseOrderID)">
                                         {{purchase.NumberKey}}
                                     </a>

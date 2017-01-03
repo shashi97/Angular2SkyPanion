@@ -67,7 +67,7 @@ import { SyncBatchService } from './sync-batch/shared/sync-batch.service';
 import { InvoiceEntryService } from './invoice/invoice-entry/shared/invoice-entry.service';
 
 /*pipes */
-import { OrderByPipe, FilterPipe , CurrencyPipe } from './shared/pipe/orderby';
+import { OrderByPipe, FilterPipe ,AccountFilterPipe, CurrencyPipe, VendorFilterPipe } from './shared/pipe/orderby';
 
 
 import { Modal } from 'angular2-modal';
@@ -326,6 +326,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     DashboardStateFilterComponent,
     DashboardInvoicesComponent,
     FilterPipe,
+    VendorFilterPipe,
+    AccountFilterPipe,
     ApprovalModalComponent,
     InvoiceRejectModalComponent,
     InvoiceApprovalModalComponent,

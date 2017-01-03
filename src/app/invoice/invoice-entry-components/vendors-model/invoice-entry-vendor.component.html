@@ -1,6 +1,6 @@
-<button type="button" class="close" data-dismiss="modal" aria-label="Close"  (click)="closeModal()"><span aria-hidden="true">
-        <img src="https://maxcdn.icons8.com/Color/PNG/24/User_Interface/close_window-24.png" title="Close Window" width="24"></span></button>
 <div class="popover-list" id="divVendorPopOver">
+  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()"><span aria-hidden="true">
+        <img src="https://maxcdn.icons8.com/Color/PNG/24/User_Interface/close_window-24.png" title="Close Window" width="24"></span></button>
   <div class="popover-content" style="padding: 0px; margin: 0px">
     <h3 class="popover-title"><b>All vendors</b></h3>
     <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
@@ -8,9 +8,9 @@
         <div class="navbar-search navbar-form search_form" action="#" role="search">
           <div class="form-group">
             <div class="input-group">
-              <input class="modal_search_input form-control" type="text" placeholder="Search" #listFilter (keyup)="0"
-                id="outer2" />
-              <div class="input-group-addon clear_search_field" ng-click="resetSearch()">
+              <input class="modal_search_input form-control" type="text" placeholder="Search" #listFilter (keyup)="0" id="outer" search-popover-close
+                exclude-class="exclude234" />
+              <div class="input-group-addon clear_search_field" (click)="listFilter.value = ''">
                 <i class="fa fa-times-circle-o"></i>
               </div>
             </div>
@@ -18,7 +18,7 @@
         </div>
       </div>
     </div>
-     <div class="popover_content_wrap">
+    <div class="popover_content_wrap">
       <ul class="popover_list">
         <li class="presentation" *ngFor="let vendor of vendors | Filter:listFilter.value" search-popover-close>
           <a class="vendor_link link_button" data-dismiss="modal" (click)="GetSelectedVendor(vendor.VendorID)">

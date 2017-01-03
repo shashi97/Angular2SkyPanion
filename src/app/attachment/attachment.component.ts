@@ -50,7 +50,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private attachments: Array<AttachmentObject>;
   private account: AccountModel;
- private pageName: string = 'attachments';
+  private pageName: string = 'attachments';
   private companyID: number = 0;
   private pageNumber: number = 1;
   private rowsPerPage: number = 25;

@@ -11,7 +11,7 @@ import { LedgerAccounts } from '../../../invoice/invoice-entry/shared/invoice-en
 // import { CompanyDropdownComponent } from '../shared/dropdown/company/company-dropdown.component';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
-
+import { AccountFilterPipe } from '../../../shared/pipe/orderby';
 
 
 export class InvoiceEntryAccountModalContext extends BSModalContext {

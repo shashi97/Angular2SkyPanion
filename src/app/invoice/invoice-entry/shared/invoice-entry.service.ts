@@ -9,12 +9,12 @@ export class InvoiceEntryService {
 
   }
 
-  getPurchaseOrders(): Promise<PurchaseOrder[]> {
+  getPurchaseOrders() {
     return this
       .http
       .get(ApiUrl.baseUrl + 'api/purchaseorders/')
       .toPromise()
-      .then(response => response.json() as PurchaseOrder[])
+      .then(response => response.json())
       .catch(this.handleError);
   }
   getLedgerAccountDDOsAccountTypeWise(companyID:number): Promise<LedgerAccounts[]> {

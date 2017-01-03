@@ -19,12 +19,12 @@ import { CurrentPageArguments } from '../../pagination/pagination.component';
 @Component({
   selector: 'sp-invoice',
   templateUrl: './invoice.component.html',
-   styleUrls: ['../../dashboard/css/dashboard-invoices-distribution.css']
+  styleUrls: ['../../dashboard/css/dashboard-invoices-distribution.css']
 })
 
 export class InvoiceComponent extends BaseComponent implements OnInit {
 
-
+  private pageName: string = 'invoices';
   private account: Object;
   private totalItems: number = 0;
   private searchString: string = '';

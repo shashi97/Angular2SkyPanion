@@ -14,7 +14,7 @@ import { Vendors, InvoiceDetail } from '../../../invoice/invoice-entry/shared/in
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 // import { BSModalContext } from 'angular2-modal/plugins/bootstrap/index';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
-import { FilterPipe } from '../../../shared/pipe/orderby.ts';
+import { VendorFilterPipe } from '../../../shared/pipe/orderby';
 
 
 export class InvoiceEntryVendorModalContext extends BSModalContext {

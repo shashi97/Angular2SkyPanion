@@ -57,10 +57,31 @@
     margin-bottom: 10px;
   }
   
-  .tableList_wrap {
-   width:100px;
-   overflow:hidden;
-   display:inline-block;
-   text-overflow: ellipsis;
-   white-space: nowrap;
-  }
+ .modal-open {
+  overflow: hidden;
+}
+
+
+.modal {
+  display: none;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+ 
+}
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+
+.modals-dialog {
+  position: relative;
+  width: 400px;
+  margin: 10px;
+}
