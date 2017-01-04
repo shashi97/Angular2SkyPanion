@@ -1146,9 +1146,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
                 if (value === 'isSave') {
                   this.toastr.success('Invoice saved successfully');
                   this.unlockDocument('/invoice/detail/'
-                    + Number(result) + '/'
+                   
                     + this.pageSizeFilter + '/'
                     + this.searchParameters + '/'
+                     + Number(result) + '/'
                     + null
                     + '/' + 0 + '/' + 0 + '/' + 0 + '/' + 0);
 
