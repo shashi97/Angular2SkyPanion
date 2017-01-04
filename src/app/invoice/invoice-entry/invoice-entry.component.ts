@@ -74,10 +74,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private cashAccount;
   private Accountbind;
   private invSearchObject: invSearchObject;
-  private vendors: Array<Vendors>;
+  private vendors: Array<any>;
   private jobs: Array<any>;
   private invApprovals: InvApprovals;
-  private companies: Array<CompanyData>;
+  private companies: Array<any>;
   private selectedJob = {
     selected: []
   }
@@ -133,7 +133,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private User: UserModel;
   private companyNumber;
   private jobCategory: Array<any>;
-  private ledgerAccounts: Array<LedgerAccounts>;
+  private ledgerAccounts: Array<any>;
   private paymentMethods: Array<any>;
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
@@ -154,12 +154,12 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.isAddAccount = true;
     this.fcs_AccountNum = false;
     this.glAccountObject = new GlAccountObject();
+    this.companyData = new CompanyData();
     // this.purchaseOrders = new Array<PurchaseOrder>();
     this.invSearchObject = new invSearchObject();
     this.jobCategory = new Array<any>();
     this.pageSizeFilter = 25;
     this.searchParameters = -1;
-    this.companyData = new CompanyData();
     this.attachmentBackLink = '/attachmentsList/' + this.pageSizeFilter + '/' + this.searchParameters;
     this.invoiceBackLink = '/invoice/' + this.pageSizeFilter + '/' + this.searchParameters;
   }
@@ -357,7 +357,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   private getCompanies(): void {
     this.companiesService.getCompanyDDOs().then(result => {
-      if (result) {
+      if (result.status == 404 || result.status == 500) {
+      } else {
         this.companies = result;
         let obj = { CompanyID: 0, Number: 'None', CompanyName: 'None', Type: 'None', account_id: 0 };
         // this.companies.splice(0, 0, obj);
@@ -415,9 +416,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.invSearchObject.invoiceID = this.InvoiceID
 
     this.invoiceService.getInvoiceId(this.invSearchObject).then(result => {
-      if (result) {
+      if (result.status == 404 || result.status == 500) {
+      } else {
         this.invoiceIDs = result;
-
       }
       this.getInvoiceDetail();
     });
@@ -452,14 +453,15 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
             this.postGlDate = this.invoiceDetail.PostDate;
             this.dueDate = this.invoiceDetail.DueDate;
           }
-          if (this.purchaseOrders!= undefined && this.purchaseOrders!= null && this.purchaseOrders.length >0) {
+          if (this.purchaseOrders != undefined && this.purchaseOrders != null && this.purchaseOrders.length > 0) {
             this.purchaseOrders.forEach(item => {
               if (item.PuchaseOrderID === this.invoiceDetail.PurchaseOrderID) {
                 this.poVendorKey = item.NumberKey;
                 this.poNum = item.PONum;
                 this.poInvDesc = item.InvoiceDescription;
                 this.invoiceEntryService.getVendorById(this.invoiceDetail.CompanyID).then(res => {
-                  if (res) {
+                  if (res.status == 404 || res.status == 500) {
+                  } else {
                     this.vendors = res;
                     this.vendors.forEach(item1 => {
                       if (item1.VendorID === this.invoiceDetail.VendorID) {
@@ -505,32 +507,30 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private getCompanyDetail(CompanyID): void {
     this.invoiceEntryService
       .getCompanyDetail(CompanyID).then(result => {
-        if (result) {
-          this.companyData = result;
-
-        }
-        if (this.cashAccount === 49 && this.companyData.CashAccount1Description !== 'Unknown') {
-          this.Accountbind = 'AcDiscription1';
-        } else if (this.cashAccount === 50 && this.companyData.CashAccount2Description !== 'Unknown') {
-          this.Accountbind = 'AcDiscription2';
-        } else if (this.cashAccount === 51 && this.companyData.CashAccount3Description !== 'Unknown') {
-          this.Accountbind = 'AcDiscription3';
-
-        } else if (this.cashAccount === 52 && this.companyData.CashAccount4Description !== 'Unknown') {
-          this.Accountbind = 'AcDiscription4';
+        if (result.status == 404) {
+        } else if (result.status == 500) {
         } else {
-          if (this.companyData.CashAccount1Description !== 'Unknown') {
+          this.companyData = result;
+          if (this.cashAccount === 49 && this.companyData.CashAccount1Description !== 'Unknown') {
             this.Accountbind = 'AcDiscription1';
+          } else if (this.cashAccount === 50 && this.companyData.CashAccount2Description !== 'Unknown') {
+            this.Accountbind = 'AcDiscription2';
+          } else if (this.cashAccount === 51 && this.companyData.CashAccount3Description !== 'Unknown') {
+            this.Accountbind = 'AcDiscription3';
+          } else if (this.cashAccount === 52 && this.companyData.CashAccount4Description !== 'Unknown') {
+            this.Accountbind = 'AcDiscription4';
+          } else {
+            if (this.companyData.CashAccount1Description !== 'Unknown') {
+              this.Accountbind = 'AcDiscription1';
+            }
           }
+          this.companyTooltip = '<b>Ledger Accounts:</b> ' +
+            this.companyData.LedgerAccountCount + '<br /><b>Invoices:</b> ' + this.companyData.InvoiceCount +
+            '<br /><b>Vendors:</b> ' + this.companyData.VendorCount + '<br /><b>PDFs:</b> ' +
+            this.companyData.PDFCount + '<br /><b>Purchase Orders:</b> ' + this.companyData.PurchaseOrderCount +
+            '<br ><b>Approval Criteria:</b> ' + this.companyData.ApprovalCriteriaCount +
+            '<br /><b>Posts:</b> ' + this.companyData.FundCount + '<br />';
         }
-
-        this.companyTooltip = '<b>Ledger Accounts:</b> ' +
-          this.companyData.LedgerAccountCount + '<br /><b>Invoices:</b> ' + this.companyData.InvoiceCount +
-          '<br /><b>Vendors:</b> ' + this.companyData.VendorCount + '<br /><b>PDFs:</b> ' +
-          this.companyData.PDFCount + '<br /><b>Purchase Orders:</b> ' + this.companyData.PurchaseOrderCount +
-          '<br ><b>Approval Criteria:</b> ' + this.companyData.ApprovalCriteriaCount +
-          '<br /><b>Posts:</b> ' + this.companyData.FundCount + '<br />';
-
         this.getVendorByCompanyID();
       });
 
@@ -542,8 +542,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       companyID = this.invoiceDetail.CompanyID;
     }
     this.invoiceEntryService.getVendorById(companyID).then(result => {
-      if (result) {
-
+      if (result.status == 404 || result.status == 500) {
+      } else {
         this.vendors = result;
         this.getJobs(this.invoiceDetail.CompanyID);
       }
@@ -552,7 +552,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
   private getJobs(CompanyID): void {
     this.jobsService.getJobsByCompanyId(CompanyID).then(result => {
-      if (result) {
+      if (result.status == 404 || result.status == 500) {
+      } else {
         this.jobs = result;
         let temp = this.jobs;
         this.jobs = [];
@@ -583,8 +584,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   private getJobCategory(jobID): void {
     this.jobsService.getJobCategory(jobID).then(result => {
-      if (result) {
-
+      if (result.status == 404 || result.status == 500) {
+      } else {
         this.jobCategory = result;
         let temp = this.jobCategory;
         this.jobCategory = [];
@@ -643,7 +644,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.invoiceEntryService
       .getLedgerAccountDDOsAccountTypeWise(this.invoiceDetail.CompanyID)
       .then(result => {
-        if (result) {
+        if (result.status == 404 || result.status == 500) {
+        } else {
           this.ledgerAccounts = result;
           if (this.ledgerAccounts != null && this.ledgerAccounts.length > 0) {
             this.ledgerAccounts.forEach(item => {
@@ -851,8 +853,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
               if (this.invoiceDetail.InvoiceDistributions[i].AccountNumber === this.AccountNumber) {
                 if (this.invoiceDetail.InvoiceDistributions[i].DistributionID === 0) {
                   this.invoiceDetail.InvoiceDistributions.splice(i, 1);
-                }
-                else {
+                } else {
                   this.invoiceService.removeInvoiceDistributions(
                     this.invoiceDetail.InvoiceDistributions[i].DistributionID,
                     this.invoiceDetail.InvoiceID).then(res => {
@@ -1109,17 +1110,14 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
           this.invoiceService.getNextAttachmentIDs(this.attachmentId).then(result1 => {
             this.invoiceService.saveInvoice(this.invoiceDetail).then(result => {
-              if (result) {
-                //}
-                // else if (res.status == 500) {
-                //     this.showHideErrorLog = { 'display': 'none' };
-                //     this.displayValue = 'none';
-                //     alert('error', result.data.Message, 'error');
-                // }
-                //else {
-                // if ($rootScope.intervalPromise != undefined) {
-                //     $interval.cancel($rootScope.intervalPromise);
-                // }
+              if (result.status = 404) {
+              }
+              else if (result.status == 500) {
+                this.displayValue = 'none';
+                this.toastr.error('error', result.Message, 'error');
+              }
+              else {
+
                 this.displayValue = 'none';
                 this.invoiceAlert = '';
 
@@ -1146,10 +1144,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
                 if (value === 'isSave') {
                   this.toastr.success('Invoice saved successfully');
                   this.unlockDocument('/invoice/detail/'
-                   
+
                     + this.pageSizeFilter + '/'
                     + this.searchParameters + '/'
-                     + Number(result) + '/'
+                    + Number(result) + '/'
                     + null
                     + '/' + 0 + '/' + 0 + '/' + 0 + '/' + 0);
 

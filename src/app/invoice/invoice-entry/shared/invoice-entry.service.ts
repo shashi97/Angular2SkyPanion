@@ -1,7 +1,7 @@
-import {Http} from '@angular/http';
-import {Injectable} from '@angular/core';
+import { Http } from '@angular/http';
+import { Injectable } from '@angular/core';
 import { ApiUrl } from '../../../config.component';
-import { PurchaseOrder,LedgerAccounts,InvoiceDetail,Vendors,CompanyData } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
+import { PurchaseOrder, LedgerAccounts, InvoiceDetail, Vendors, CompanyData } from '../../../invoice/invoice-entry/shared/invoice-entry.model';
 
 @Injectable()
 export class InvoiceEntryService {
@@ -9,50 +9,50 @@ export class InvoiceEntryService {
 
   }
 
-  getPurchaseOrders() {
+  getPurchaseOrders(): Promise<any> {
     return this
       .http
       .get(ApiUrl.baseUrl + 'api/purchaseorders/')
       .toPromise()
-      .then(response => response.json())
-      .catch(this.handleError);
+      .then(response => response.json() as any)
+      .catch(error => error);
   }
-  getLedgerAccountDDOsAccountTypeWise(companyID:number): Promise<LedgerAccounts[]> {
+  getLedgerAccountDDOsAccountTypeWise(companyID: number): Promise<any> {
     return this
       .http
       .get(ApiUrl.baseUrl + 'api/ledgerAccounts/ledgerAccountDDOsAccountTypeWise/' + companyID)
       .toPromise()
-      .then(response => response.json() as LedgerAccounts[])
-      .catch(this.handleError);
+      .then(response => response.json() as any)
+      .catch(error => error);
   }
-  getInvoiceDetail(invoiceId:number,attachmentId:number): Promise<InvoiceDetail> {
+  getInvoiceDetail(invoiceId: number, attachmentId: number): Promise<InvoiceDetail> {
     var isFromEditWindow = true;
     return this
       .http
-      .get(ApiUrl.baseUrl + 'api/invoices/'+ invoiceId + "/" + attachmentId + "/" + isFromEditWindow)
+      .get(ApiUrl.baseUrl + 'api/invoices/' + invoiceId + "/" + attachmentId + "/" + isFromEditWindow)
       .toPromise()
       .then(response => response.json() as InvoiceDetail)
       .catch(this.handleError);
   }
-    getVendorById(CompanyID:number): Promise<Vendors[]> {
-    
+  getVendorById(CompanyID: number): Promise<any> {
+
     return this
       .http
-      .get(ApiUrl.baseUrl + 'api/vendor/'+ CompanyID)
+      .get(ApiUrl.baseUrl + 'api/vendor/' + CompanyID)
       .toPromise()
-      .then(response => response.json() as Vendors[])
+      .then(response => response.json() as any)
       .catch(this.handleError);
   }
-     getCompanyDetail(CompanyID:number): Promise<CompanyData> {
-    
+  getCompanyDetail(CompanyID: number): Promise<any> {
+
     return this
       .http
-      .get(ApiUrl.baseUrl + 'api/company/'+ CompanyID)
+      .get(ApiUrl.baseUrl + 'api/company/' + CompanyID)
       .toPromise()
-      .then(response => response.json() as CompanyData)
+      .then(response => response.json() as any)
       .catch(this.handleError);
   }
-  
+
 
 
   private handleError(error: any): Promise<any> {

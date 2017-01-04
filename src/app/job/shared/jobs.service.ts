@@ -24,7 +24,7 @@ export class JobsService {
       .catch(error => error);
   }
 
-  public getJobsByCompanyId(CompanyID: number): Promise<JobModel[]> {
+  public getJobsByCompanyId(CompanyID: number): Promise<any> {
     return this
       .http
       .get(ApiUrl.baseUrl
@@ -32,12 +32,12 @@ export class JobsService {
       + CompanyID
       )
       .toPromise()
-      .then(response => response.json() as JobModel[])
+      .then(response => response.json() as any)
       .catch(error => error);
   }
 
 
-  public getJobCategory(jobID: number): Promise<JobCategory[]> {
+  public getJobCategory(jobID: number): Promise<any> {
     return this
       .http
       .get(ApiUrl.baseUrl
@@ -45,7 +45,7 @@ export class JobsService {
       + jobID
       )
       .toPromise()
-      .then(response => response.json() as JobCategory[])
+      .then(response => response.json() as any)
       .catch(error => error);
   }
   public getJobById(jobId: number, currentPage: number, pageSize: number): Promise<JobModel> {

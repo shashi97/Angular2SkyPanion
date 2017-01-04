@@ -29,12 +29,12 @@ export class InvoiceService {
       .catch(error => error);
   }
 
-  public getInvoiceId(invSearchObject) {
+  public getInvoiceId(invSearchObject):Promise<any> {
     let data = JSON.stringify(invSearchObject);
     return this.http
       .post(ApiUrl.baseUrl + 'api/invoices/PostSearchTogetInvoicesIds/', data)
       .toPromise()
-      .then(response => response.json() as InvoiceModel)
+      .then(response => response.json() as any)
       .catch(error => error);
   }
 
@@ -127,13 +127,13 @@ export class InvoiceService {
       .catch(this.handleError);
   }
 
-  public saveInvoice(invoiceDetail) {
+  public saveInvoice(invoiceDetail):Promise<any> {
     let data = JSON.stringify(invoiceDetail);
     return this
       .http
       .post(ApiUrl.baseUrl + 'api/invoices/newOrUpdate', data)
       .toPromise()
-      .then(response => response.json())
+      .then(response => response.json() as any)
       .catch(error => error);
   }
 
