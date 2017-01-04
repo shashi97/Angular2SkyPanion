@@ -156,6 +156,10 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.glAccountObject = new GlAccountObject();
     this.companyData = new CompanyData();
     // this.purchaseOrders = new Array<PurchaseOrder>();
+    this.IsAcc1show = true;
+    this.IsAcc2show = true;
+    this.IsAcc3show = true;
+    this.IsAcc4show = true;
     this.invSearchObject = new invSearchObject();
     this.jobCategory = new Array<any>();
     this.pageSizeFilter = 25;
@@ -448,7 +452,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           }
 
           this.invoiceNumber = this.invoiceDetail.InvoiceNumber;
-          if (this.invoiceID != 0) {
+          if (this.InvoiceID != 0) {
             this.invoiceDate = this.invoiceDetail.InvoiceDate;
             this.postGlDate = this.invoiceDetail.PostDate;
             this.dueDate = this.invoiceDetail.DueDate;
@@ -709,7 +713,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount)).toFixed(2);
       }
 
-      if ((Number(this.invoiceDetail.InvoiceAmount.toString)) < Number(totalDistAmount.toString())) {
+      if (this.invoiceDetail.InvoiceAmount < (Number(totalDistAmount))) {
         this.toastr.error('Total Distribution amount can not be greater then Invoice amount ');
         return;
       }
@@ -1110,13 +1114,13 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
           this.invoiceService.getNextAttachmentIDs(this.attachmentId).then(result1 => {
             this.invoiceService.saveInvoice(this.invoiceDetail).then(result => {
-              if (result.status = 404) {
-              }
-              else if (result.status == 500) {
-                this.displayValue = 'none';
-                this.toastr.error('error', result.Message, 'error');
-              }
-              else {
+              if (result) {
+                // }
+                // else if (result.status == 500) {
+                //   this.displayValue = 'none';
+                //   this.toastr.error('error', result.Message, 'error');
+                // }
+                // else {
 
                 this.displayValue = 'none';
                 this.invoiceAlert = '';
@@ -1301,12 +1305,12 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           if (this.invoiceDetail.InvoiceDistributions[i].DistributionAmount == 0) {
             this.invoiceDetail.InvoiceDistributions[i].DistributionAmount = 0.00;
           }
-          totalAmount = (totalAmount + this.invoiceDetail.InvoiceDistributions[i].DistributionAmount);
-          //totalAmount = (Number(totalAmount) + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount)).toFixed(2);
+          //totalAmount = (totalAmount + this.invoiceDetail.InvoiceDistributions[i].DistributionAmount);
+          totalAmount = (Number(totalAmount) + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount));
         }
       }
 
-      if ((Number(this.invoiceDetail.InvoiceAmount)) !== (totalAmount)) {
+      if ((Number(this.invoiceDetail.InvoiceAmount)) != (totalAmount)) {
         let obj = { ErrorName: 'Invoice amount and total distribution amount are not equal' };
         this.errors.splice(this.errors.length, 0, obj);
       }
