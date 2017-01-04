@@ -1298,10 +1298,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       let totalAmount = 0.00;
       if (this.invoiceDetail.InvoiceDistributions.length > 0) {
         for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-          if (this.invoiceDetail.InvoiceDistributions[i].DistributionAmount === 0) {
+          if (this.invoiceDetail.InvoiceDistributions[i].DistributionAmount == 0) {
             this.invoiceDetail.InvoiceDistributions[i].DistributionAmount = 0.00;
           }
           totalAmount = (totalAmount + this.invoiceDetail.InvoiceDistributions[i].DistributionAmount);
+          //totalAmount = (Number(totalAmount) + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount)).toFixed(2);
         }
       }
 
