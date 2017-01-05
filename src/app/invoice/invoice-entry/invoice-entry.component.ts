@@ -46,6 +46,8 @@ import {
   InvoiceEntryNoApproverExistsComponent
 } from '../../invoice/invoice-entry-components/noApproverExists-model/invoice-entry-noApproverExists.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { InvoiceModelContext } from '../../dashboard/shared/invoice-context.model';
+import { InvoiceRejectModalComponent } from '../../dashboard/invoice-modals/invoice-rejection-modal/invoice-rejection.component';
 import { CompanyDropdownComponent, CompanyFilterArguments } from '../../shared/dropdown/company/company-dropdown.component';
 declare let jQuery: any;
 
@@ -232,6 +234,39 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         });
       }
     }
+  }
+
+
+  openRejectInvoiceModal() {
+
+    const builder = new BSModalContextBuilder<InvoiceModelContext>(
+      {
+        invoiceID: this.InvoiceID,
+        companyID: this.invoiceDetail.CompanyID,
+        invoiceAmount: this.invoiceDetail.InvoiceAmount,
+        invoiceNumber: this.invoiceDetail.InvoiceNumber,
+      } as any,
+      undefined,
+      InvoiceModelContext
+    );
+
+    let overlayConfig: OverlayConfig = {
+      context: builder.toJSON()
+    };
+
+    const dialog = this.modal.open(InvoiceRejectModalComponent, overlayConfig)
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
+        if (result != null) {
+          if (this.invoiceIDs != undefined && this.invoiceIDs.NextInvoiceID != null && this.invoiceIDs.NextInvoiceID > (this.invoiceDetail.InvoiceID).toString()) {
+            this.unlockDocument('/invoices/-1/' + parseInt(this.invoiceIDs.NextInvoiceID) + '/edit');
+          } else {
+            this.unlockDocument('/dashboard');
+          }
+        }
+      }, () => console.log(' Error In Dashboard invoice modal '));
+    });
   }
 
   openPurchaseModal() {

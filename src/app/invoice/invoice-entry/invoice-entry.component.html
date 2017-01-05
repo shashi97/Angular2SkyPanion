@@ -9,7 +9,7 @@
                     </button>
         <a *ngIf="invoiceDetail.InvoiceStatusID != 5 && invoiceDetail.InvoiceStatusID != 6 && invoiceDetail.InvoiceStatusID != 7"
           class="reject_invoice_link btn btn-danger" data-remote="true" style="color: white!important; margin-top: 0px;" data-toggle="modal"
-          data-target="#dgInvcoiceReject" data-ng-click="getInvoiceReject()"><i class="fa fa-remove"></i>Reject Invoice</a>
+          data-target="#dgInvcoiceReject" (click)="openRejectInvoiceModal()"><i class="fa fa-remove"></i>Reject Invoice</a>
         <a href="#invoice/-1/-1" class="btn btn-default"><i class="fa fa-fw fa-arrow-circle-left"></i></a>
       </div>
     </div>
@@ -47,14 +47,14 @@
       </div>
     </div>
     <div class="col-md-12 field form-group">
-      <label class="control-label col-md-4" for="invoice_company_id">{{invoiceDetail.type}}</label>
-     
-      <div class="col-md-4" style="padding-top: 6px">
-        <i [ngClass]="{'fa fa-book': invoiceDetail.type=='Skypanion::Fund', 'fa fa-building': invoiceDetail.type=='Skypanion::Property'}"></i>
-         <tooltip-content #CompaniesTooltip>
+       <tooltip-content #CompaniesTooltip>
                 <div [innerHTML]=companyTooltip>
                 </div>
               </tooltip-content>
+      <label class="control-label col-md-4" for="invoice_company_id">{{invoiceDetail.type}}</label>
+      <div class="col-md-4" style="padding-top: 6px">
+        <i [ngClass]="{'fa fa-book': invoiceDetail.type=='Skypanion::Fund', 'fa fa-building': invoiceDetail.type=='Skypanion::Property'}"></i>
+        
         <a href="#" [tooltip]="CompaniesTooltip">{{invoiceDetail.CompanyName}}</a>
       </div>
       <div class="col-md-4 input-group">
@@ -113,7 +113,7 @@
             <i class="icon icon-warning-sign"></i>
             <span *ngIf="invoiceDetail.VendorName!=null" class="text-error" style="font-weight: bold">Ach not configured</span>
             <br>
-            <a *ngIf="invoiceDetail.VendorName!=null" href="#vendors/25/-1/{{invoiceDetail.VendorID}}" target="_blank">
+            <a *ngIf="invoiceDetail.VendorName!=null" href="#/vendor/detail/{{invoiceDetail.VendorID}}/25/-1" target="_blank">
               <i class="fa fa-list-alt"></i><b>Invoice History</b>
             </a>
           </div>
