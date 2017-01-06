@@ -185,7 +185,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
       this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID)
         .then(result => {
           if (result.IsLocked === 0) {
-            this.toastr.error("error", "This invoice is locked by " + result.data.LockBy, "error");
+            this.toastr.error("error", "This invoice is locked by " + result.LockBy, "error");
             return;
           } else {
             if (invoice.InvoiceAmount !== 0.00 && invoice.InvoiceAmount !== 0) {

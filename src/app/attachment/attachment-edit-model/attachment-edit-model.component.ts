@@ -81,7 +81,7 @@ export class AttachmentEditComponent extends BaseComponent implements CloseGuard
     }
   }
   private getCompanies() {
-    this.companiesService.getCompanyDDOs().then(result => {
+    this.companiesService.getCompanyDDOs(true).then(result => {
       if (result) {
         this.companies = result;
         let obj = new CompanyData();

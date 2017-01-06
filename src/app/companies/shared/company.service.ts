@@ -33,7 +33,7 @@ export class CompanyService {
   public getCompanyDetail(companyId: number): Promise<CompanyModel> {
     return this
       .http
-      .get(ApiUrl.baseUrl + 'api/company/' + companyId)
+      .get(ApiUrl.baseUrl + 'api/company/Details/' + companyId) 
       .toPromise()
       .then(response => response.json() as CompanyModel)
       .catch(error => error);
@@ -78,9 +78,9 @@ export class CompanyService {
       .catch(error => error);
   }
 
-  public getCompanyDDOs() {
+  public getCompanyDDOs(isGeneral) {
     return this.http.get(ApiUrl.baseUrl
-      + 'api/company').toPromise()
+      + 'api/company/'+isGeneral).toPromise()
       .then(response => response.json() as CompanyModel[])
       .catch(error => error);
   }
