@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, AfterViewInit , ChangeDetectorRef } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { Overlay, OverlayConfig } from 'angular2-modal';
@@ -13,13 +13,15 @@ import { RoleService } from '../role/shared/role.service';
 import { SetupModalComponent, SetupModalContext } from './setup-modal.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { RoleModel } from '../role/shared/role.model';
-
+import {PubSubService} from '../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../shared/loading-spinner/loading-spinner.component';
 @Component({
   selector: 'sp-ini-setup',
   templateUrl: './ini-setup.component.html',
 })
 
-export class IniSetupComponent extends BaseComponent implements OnInit {
+export class IniSetupComponent extends BaseComponent implements OnInit , AfterViewInit {
+  private showLoader:boolean;
   private iniSetupModel: IniSetupModel;
   private userArray: Array<any> = [];
   private account: Object;
@@ -43,20 +45,41 @@ export class IniSetupComponent extends BaseComponent implements OnInit {
     private accountService: AccountService,
     private iniSetupService: IniSetupService,
     private roleService: RoleService,
-    public toastr: ToastsManager
+    public toastr: ToastsManager,
+    public pubsub: PubSubService,
+    public cdr: ChangeDetectorRef
   ) {
     super(localStorageService, router);
+     this.cdr = cdr;
     this.iniSetupModel = new IniSetupModel();
   }
 
   ngOnInit() {
-    if (this.user) {
-      this.getUserDDOs();
-    } else {
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
+     if (this.user) {
+          this.getUserDDOs();
+        } else {
+          let link = ['/login'];
+          this.router.navigate(link);
+        }
   }
+
+  ngAfterViewInit(){
+      this.loadView();
+  }
+
+  private loadView = function(){
+
+     this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+    if (this.user) {
+          this.getUserDDOs();
+        } else {
+          let link = ['/login'];
+          this.router.navigate(link);
+        }
+  }
+
+
 
   private getUserDDOs(): void {
     this.userService.getUserDDOs().then(result => {

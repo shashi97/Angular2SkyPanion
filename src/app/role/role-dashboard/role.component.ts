@@ -12,7 +12,8 @@ import { RoleService } from '../shared/role.service';
 import { RoleModel } from '../shared/role.model';
 import { RoleFilterArgument } from './filter-bar.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
 
 @Component({
@@ -22,7 +23,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 })
 export class RoleComponent extends BaseComponent implements OnInit {
 
-  
+  private showLoader:boolean;
   private account: Object;
   private totalItems: number;
   private roles: Array<RoleModel>;
@@ -39,13 +40,17 @@ export class RoleComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private confirmService: ConfirmService,
     public toastr: ToastsManager,
-    public location: Location
+    public location: Location,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.roles = new Array<RoleModel>();
     this.getSessionDetails();
   }
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+   }
   private get currentPageFiltered(): CurrentPageArguments {
     return this._currentPage;
   }

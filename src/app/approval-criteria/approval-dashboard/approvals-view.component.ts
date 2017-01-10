@@ -9,8 +9,10 @@ import { ConfirmService } from '../../shared/services/otherServices/confirmServi
 import { ApprovalCriteriaService } from '../shared/approval-criteria.service';
 import { ApprovalCriteriaModel, ApprovalContext } from '../shared/approval-criteria.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 import { DragulaService } from 'ng2-dragula/ng2-dragula';
+
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
 
 import 'jquery';
@@ -23,7 +25,7 @@ declare let jQuery: any;
 })
 
 export class ApprovalsViewComponent extends BaseComponent implements OnInit {
-
+ private showLoader:boolean;
   @Input() approvals: Array<ApprovalCriteriaModel>;
   @Input() companyId: number;
   @Input() approvers: Array<any>;
@@ -39,7 +41,7 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
     vcRef: ViewContainerRef,
     overlay: Overlay,
     public modal: Modal,
-
+    public pubsub: PubSubService,
     public confirmService: ConfirmService,
     public approvalCriteriaService: ApprovalCriteriaService,
     public toastr: ToastsManager,
@@ -68,7 +70,10 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
 
 
   ngOnInit() {
+    this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+    this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
   }
+  
 
   private showApprovalCriteria(approvalDetail, typeData, isNew) {
 

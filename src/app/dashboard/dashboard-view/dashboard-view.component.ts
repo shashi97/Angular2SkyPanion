@@ -6,7 +6,6 @@ import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-dropdown.component';
-//import { DashboardInvoicesComponent } from '../dashboard-view/dashboard-invoices.component';
 
 import { UserService } from '../../user/shared/user.service';
 import { MasterService } from '../../shared/services/master/master.service';
@@ -22,6 +21,7 @@ import { DashboardCompanyWisePermissionsModel } from '../shared/dashboard-permis
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Interceptor, InterceptedRequest, InterceptedResponse } from 'ng2-interceptors';
 import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
 @Component({
     selector: 'sp-dashboard',
@@ -30,6 +30,7 @@ import {PubSubService} from '../../interceptor/pub-service';
 
 
 export class DashboardViewComponent extends BaseComponent implements OnInit, Interceptor {
+    
     private dashboardPermissions: DashboardPermissionModel;
     private dashboardData: DashboardModel;
     private invoices: DashboardInvoiceModel[];
@@ -37,6 +38,7 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
     private invoiceState: number = 0;
     private totalItems: number = 0;
     private invoiceForValidApprovalCount = 0;
+    private showLoader:boolean;
     private _filteredValue: InvoiceStateFilterArguments = new InvoiceStateFilterArguments();
     constructor(
         private http: Http,
@@ -57,11 +59,11 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
         this.totalItems = 0;
         this.invoiceForValidApprovalCount = 0;
         this.getSessionDetails();
-        this.showLoader = true;
+        
     }
     ngOnInit() {
-     //   this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
-      //  this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
     }
 
     private getSessionDetails(): void {
@@ -82,7 +84,6 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
     }
 
     private getInvoices(): void {
-        this.showLoader = true;
           this.dashboardService
             .getInvoices(
             this._filteredValue.companyId,
@@ -91,10 +92,7 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
                 this.dashboardData = result;
                 this.invoices = result.invoiceObjects;
                 this.getInvoicesByState(this._filteredValue);
-                this.showLoader = false;
-           }else{
-                this.showLoader = false;
-            }
+           }
       });
     }
 

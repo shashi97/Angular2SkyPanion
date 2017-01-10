@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 
 import { RoleService } from '../../role/shared/role.service';
 import { PagingFilterArgumentsModel } from '../../shared/models/pagination-filter.model';
-
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 export class UserFilterArguments {
   userTypeId: string = '-1';
   roleId: number = -1;
@@ -17,7 +18,7 @@ export class UserFilterArguments {
 })
 
 export class UserFilterComponent extends BaseComponent implements OnInit, OnChanges {
-
+  private showLoader:boolean;
   private userRoleName: string = 'User Role';
   private userTypeName: string = 'User Type';
   private userTypes: Array<any> = [];
@@ -29,7 +30,8 @@ export class UserFilterComponent extends BaseComponent implements OnInit, OnChan
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
-    private roleService: RoleService
+    private roleService: RoleService,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.paginationFilter = new PagingFilterArgumentsModel();
@@ -39,6 +41,8 @@ export class UserFilterComponent extends BaseComponent implements OnInit, OnChan
   }
 
   ngOnInit() {
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
 
   }
   ngOnChanges() {

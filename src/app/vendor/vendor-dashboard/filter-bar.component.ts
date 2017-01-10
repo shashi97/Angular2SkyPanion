@@ -63,6 +63,7 @@ export class VendorFilterComponent extends BaseComponent implements OnInit, OnCh
     let companyArray = { companyId: 0 };
     this.companyFilteredArg = companyArray;
     this.filtered.emit(this.filteredValue);
+    
   }
 
   public onCompanyFiltered(filteredValue: CompanyFilterArguments): void {

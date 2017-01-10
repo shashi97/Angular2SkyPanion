@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -10,14 +10,17 @@ import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.compo
 import { UserService } from '../../user/shared/user.service';
 import { LedgerAccountService } from '../shared/ledger-account.service';
 
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+
 
 @Component({
   selector: 'sp-ledger-account-detail',
   templateUrl: './ledger-account-detail.component.html',
 })
 
-export class LedgerAccountDetailComponent extends BaseComponent implements OnInit {
-
+export class LedgerAccountDetailComponent extends BaseComponent implements OnInit , AfterViewInit {
+  private showLoader:boolean;
   private id: number = 0;
   private companyId: number = 0;
   private currentPage: number = 1;
@@ -30,14 +33,20 @@ export class LedgerAccountDetailComponent extends BaseComponent implements OnIni
     router: Router,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-    private ledgerAccountService: LedgerAccountService
+    private ledgerAccountService: LedgerAccountService,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.ledgerAccountDetail = new LedgerAccountModel();
   }
 
-  ngOnInit() {
-    if (this.user) {
+  ngOnInit(): void {
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+  }
+
+   ngAfterViewInit(){
+      if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];

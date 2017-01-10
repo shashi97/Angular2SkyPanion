@@ -2,12 +2,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
+import {PubSubService} from '../../interceptor/pub-service';
 
 import { CompanyDropdownComponent, CompanyFilterArguments } from '../../shared/dropdown/company/company-dropdown.component';
 import { DashboardStateModel } from '../shared/dashboard-state.model';
 import { DashboardPermissionModel } from '../shared/dashboard-permissions.model';
 import { DashboardUserWisePermissionsModel } from '../shared/dashboard-permissions.model';
 import { DashboardCompanyWisePermissionsModel } from '../shared/dashboard-permissions.model';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
 export class InvoiceStateFilterArguments {
   companyId: number = 0;
@@ -23,7 +25,7 @@ export class InvoiceStateFilterArguments {
 
 
 export class DashboardStateFilterComponent extends BaseComponent implements OnInit{
-
+    showLoader;
    @Input() dashboardPermissions : DashboardPermissionModel;
    @Input() dashboardStatefilterItems: DashboardStateModel;
     @Output() filtered: EventEmitter<InvoiceStateFilterArguments> = new EventEmitter<InvoiceStateFilterArguments>();
@@ -31,7 +33,8 @@ export class DashboardStateFilterComponent extends BaseComponent implements OnIn
   private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
     constructor(
     localStorageService: LocalStorageService,
-    router: Router
+    router: Router,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.filteredValue = new  InvoiceStateFilterArguments();
@@ -39,8 +42,8 @@ export class DashboardStateFilterComponent extends BaseComponent implements OnIn
   }
 
   ngOnInit() {
-     console.log(this.dashboardStatefilterItems);
-      console.log(this.dashboardPermissions.UserPermissions.IsGlobalReviewer);
+       this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
   }
 
    private get companyFilteredArg(): CompanyFilterArguments {

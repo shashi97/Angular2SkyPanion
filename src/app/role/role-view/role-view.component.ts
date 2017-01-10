@@ -10,6 +10,8 @@ import { AccountService } from '../../account/shared/account.service';
 import { RoleService } from '../shared/role.service';
 import { RoleModel } from '../shared/role.model';
 import { PageHeaderTitleComponent } from '../../shared/others/page-header/page-header.component';
+ import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 @Component({
   selector: 'sp-role-view',
   templateUrl: './role-view.component.html'
@@ -19,7 +21,7 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
 
   private roleId: number;
   private searchString: string = '';
-
+  private showLoader:boolean;
   public role: RoleModel;
   constructor(
     public localStorageService: LocalStorageService,
@@ -28,13 +30,16 @@ export class RoleViewComponent extends BaseComponent implements OnInit {
     private accountService: AccountService,
     private roleService: RoleService,
     private activatedRoute: ActivatedRoute,
-    private location: Location
+    private location: Location,
+     public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.role = new RoleModel();
   }
 
   ngOnInit() {
+    this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
     if (this.user) {
       this.getParameterValues();
     } else {

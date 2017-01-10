@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { BaseComponent } from '../../base.component';
@@ -15,15 +15,18 @@ import { LedgerFilterArguments } from './filter-bar.component'
 import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.component';
 import { CurrentPageArguments } from '../../pagination/pagination.component';
 
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+
 @Component({
   selector: 'sp-ledger-account',
   templateUrl: './ledger-account.component.html',
 })
 
-export class LedgerAccountComponent extends BaseComponent implements OnInit {
+export class LedgerAccountComponent extends BaseComponent implements OnInit ,AfterViewInit {
 
   private pageName: string = 'Ledger Account';
-
+  private showLoader:boolean;
   private totalItems: number = 0;
   private account: Object;
   private companyId: number = 0;
@@ -41,15 +44,22 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private accountService: AccountService,
     private ledgerAccountService: LedgerAccountService,
-    private location: Location
+    private location: Location,
+    public pubsub: PubSubService  
   ) {
     super(localStorageService, router);
     this.ledgerAccounts = new Array<LedgerAccountModel>();
   }
 
 
-  ngOnInit() {
-    if (this.user) {
+ ngOnInit(): void {
+   
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+  }
+
+   ngAfterViewInit(){
+      if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];
@@ -57,6 +67,7 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit {
     }
   }
 
+  
 
   private get filteredValue(): LedgerFilterArguments {
     return this._filteredValue;

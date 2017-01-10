@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , AfterViewInit } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -15,6 +15,8 @@ import { BaseComponent } from '../../base.component';
 import { CompanyFilterArguments } from './filter-bar.component';
 import { CurrentPageArguments } from '../../pagination/pagination.component';
 
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'sp-companies',
@@ -22,12 +24,12 @@ import { CurrentPageArguments } from '../../pagination/pagination.component';
   providers: [CompanyService]
 })
 
-export class CompanyComponent extends BaseComponent implements OnInit {
+export class CompanyComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   private account: Object;
   private companies: Array<CompanyModel>;
   private searchString: string = '';
-
+  private showLoader:boolean;
   private pageName: string = 'Companies';
   private totalItems: number;
 
@@ -44,7 +46,8 @@ export class CompanyComponent extends BaseComponent implements OnInit {
     public confirmService: ConfirmService,
     public accountService: AccountService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.skyPanionTypeList = new Array<any>();
@@ -52,13 +55,21 @@ export class CompanyComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.user) {
+   
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+  }
+
+   ngAfterViewInit(){
+      if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];
       this.router.navigate(link);
     }
   }
+
+
 
   private get filteredValue(): CompanyFilterArguments {
     return this._filteredValue;
@@ -138,7 +149,6 @@ export class CompanyComponent extends BaseComponent implements OnInit {
           this.totalItems = 0;
         } else if (result.status === 500) {
         } else {
-          // this.showLoading = false;
           this.companies = result;
           if (this.companies && this.companies.length > 0) {
             this.totalItems = this.companies[0].CompanyCount;

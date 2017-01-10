@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input ,AfterViewInit} from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -16,14 +16,19 @@ import { AccountService } from '../../account/shared/account.service';
 import { UserService } from '../../user/shared/user.service';
 import { CurrentPageArguments } from '../../pagination/pagination.component';
 
+
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+
 @Component({
   selector: 'sp-invoice',
   templateUrl: './invoice.component.html',
   styleUrls: ['../../dashboard/css/dashboard-invoices-distribution.css']
 })
 
-export class InvoiceComponent extends BaseComponent implements OnInit {
+export class InvoiceComponent extends BaseComponent implements OnInit , AfterViewInit {
 
+  private showLoader:boolean;
   private pageName: string = 'invoices';
   private account: Object;
   private totalItems: number = 0;
@@ -51,7 +56,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private toastr: ToastsManager,
-    private masterService: MasterService
+    private masterService: MasterService,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.Invoices = new Array<InvoiceModel>();
@@ -61,15 +67,21 @@ export class InvoiceComponent extends BaseComponent implements OnInit {
     this.SelectInoivcesSpan = "Select All"
   }
 
-  ngOnInit() {
-    if (this.user) {
+ 
+ ngOnInit(): void {
+   
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+  }
+
+   ngAfterViewInit(){
+      if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];
       this.router.navigate(link);
     }
   }
-
   private get currentPageFiltered(): CurrentPageArguments {
     return this._currentPage;
   }

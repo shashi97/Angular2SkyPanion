@@ -91,12 +91,13 @@ const APP_ROUTES: Routes = [
   { path: 'syncBatchNew/:searchParameters', component: SyncBatchEntryComponent },
 
   { path: 'role/:pageSizeFilter/:searchParameters', component: RoleComponent },
-  { path: 'role/view/:id/:pageSizeFilter', component: RoleViewComponent },
+ { path: 'role/view/:id/:pageSizeFilter/:searchParameters', component: RoleViewComponent },
   { path: 'role/entry/:id/:pageSizeFilter/:searchParameters', component: RoleEntryComponent },
 
   { path: 'user/:pageSizeFilter/:searchParameters', component: UserComponent },
-  { path: 'user/detail/:id/:pageSizeFilter', component: UserDetailComponent },
-  { path: 'userEntry/:id', component: UserEntryComponent },
+  { path: 'user/detail/:id/:pageSizeFilter/:searchParameters', component: UserDetailComponent },
+  { path: 'user/entry/:id/:pageSizeFilter/:searchParameters', component: UserEntryComponent },
+ 
   { path: 'dashboard', component: DashboardViewComponent },
 
 

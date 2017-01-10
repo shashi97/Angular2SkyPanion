@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -20,13 +20,17 @@ import { ApprovalCriteriaModel, ApproversModel } from '../shared/approval-criter
 
 import { CurrentPageArguments } from '../../pagination/pagination.component';
 
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+
 @Component({
   selector: 'sp-approval-criteria',
   templateUrl: './approval-criteria.component.html',
 })
 
-export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
+export class ApprovalCriteriaComponent extends BaseComponent implements OnInit , AfterViewInit {
 
+  private showLoader:boolean;
   private companyId: number = 0;
   private totalItems: number = 0;
   private account: Object;
@@ -48,22 +52,29 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit {
     private ledgerAccountService: LedgerAccountService,
     private approvalCriteriaService: ApprovalCriteriaService,
     private location: Location,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public pubsub: PubSubService
 
   ) {
     super(localStorageService, router);
     this.approvals = new Array<ApprovalCriteriaModel>();
   }
 
-  ngOnInit() {
-    if (this.user) {
+  
+ ngOnInit(): void {
+   
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+  }
+
+   ngAfterViewInit(){
+      if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];
       this.router.navigate(link);
     }
   }
-
 
 
   private get currentPageFiltered(): CurrentPageArguments {

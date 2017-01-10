@@ -3,9 +3,11 @@ import { Http, Request, RequestOptionsArgs, Response, RequestOptions, Connection
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { LocalStorageService } from 'angular-2-local-storage';
+import {PubSubService} from '../interceptor/pub-service';
+
 
 export class HttpInterceptor extends Http {
-
+ _pubsub: PubSubService;
   authorization: any;
   requested: EventEmitter<string>;
   completed: EventEmitter<string>;
@@ -14,7 +16,9 @@ export class HttpInterceptor extends Http {
   constructor(backend: ConnectionBackend,
     defaultOptions: RequestOptions,
     private router: Router,
-    private localStorageService: LocalStorageService) {
+    private pubsub: PubSubService,
+    private localStorageService: LocalStorageService
+    ) {
     super(backend, defaultOptions);
     this.requested = new EventEmitter<string>();
     this.completed = new EventEmitter<string>();
@@ -27,6 +31,7 @@ export class HttpInterceptor extends Http {
   }
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    
     // this.requested.emit('start');
 
     options = this.addHeaders(options);
@@ -79,11 +84,19 @@ export class HttpInterceptor extends Http {
   }
 
   intercept(observable: Observable<Response>): Observable<Response> {
-    // this.completed.emit('end');
-    // this.loadingPage.close();
-    return observable.catch((err, source) => {
-      // this.error.emit(err);
-      if (err.status === 401) {                   // UnOthorised Access
+    this.pubsub.beforeRequest.emit("beforeRequestEvent");
+      observable.do
+
+
+
+
+    try
+    {
+      return observable.finally(() => 
+      this.pubsub.afterRequest.emit("afterRequestEvent"));
+    }catch (e) {
+        return observable.catch((err, source) => {
+      if (err.status === 401) {                  
         this.authorization = this.localStorageService.get('authorization');
         if (this.authorization) {
           this.localStorageService.remove('authorization');
@@ -102,5 +115,6 @@ export class HttpInterceptor extends Http {
         return Observable.throw(err);
       }
     });
+    }
   }
 }

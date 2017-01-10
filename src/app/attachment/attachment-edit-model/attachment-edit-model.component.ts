@@ -1,4 +1,4 @@
-import { Component, Pipe, OnChanges, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { Component, Pipe, OnChanges, OnInit, ViewChildren, QueryList , AfterViewInit } from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -32,7 +32,7 @@ export class AttachmentEditModalContext extends BSModalContext {
   selector: 'sp-attachment-edit-model',
   templateUrl: 'attachment-edit-model.component.html'
 })
-export class AttachmentEditComponent extends BaseComponent implements CloseGuard, ModalComponent<AttachmentEditModalContext>, OnInit {
+export class AttachmentEditComponent extends BaseComponent implements CloseGuard, ModalComponent<AttachmentEditModalContext>, OnInit , AfterViewInit {
   // export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
   context: AttachmentEditModalContext;
   public wrongAnswer: boolean;
@@ -70,7 +70,18 @@ export class AttachmentEditComponent extends BaseComponent implements CloseGuard
   }
 
   ngOnInit() {
-    this.sessionDetails = this.userService.getSessionDetails();
+  
+  }
+
+  
+  ngAfterViewInit(){
+         setTimeout(() => {
+      this.loadModal();
+    }, 1);
+  }
+
+  private loadModal(){
+         this.sessionDetails = this.userService.getSessionDetails();
     if (this.sessionDetails.userId != null) {
       this.getCompanies();
       // this.getAccountName();
@@ -80,6 +91,8 @@ export class AttachmentEditComponent extends BaseComponent implements CloseGuard
       this.router.navigate(link);
     }
   }
+  
+
   private getCompanies() {
     this.companiesService.getCompanyDDOs().then(result => {
       if (result) {

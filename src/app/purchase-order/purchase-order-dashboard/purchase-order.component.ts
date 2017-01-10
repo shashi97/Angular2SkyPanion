@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , AfterViewInit } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -14,13 +14,17 @@ import { Location } from '@angular/common';
 
 import { PurchaseOrderModel } from '../shared/purchase-order.model';
 
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+
 @Component({
   selector: 'sp-purchase-order',
   templateUrl: './purchase-order.component.html',
   providers: [PurchaseOrderSevice, AccountService]
 })
 
-export class PurchaseOrderComponent extends BaseComponent implements OnInit {
+export class PurchaseOrderComponent extends BaseComponent implements OnInit , AfterViewInit {
+  private showLoader:boolean;
   private account: Object;
   private purchaseOrders: Array<PurchaseOrderModel>;
   private purchaseOrder: PurchaseOrderModel;
@@ -39,15 +43,22 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit {
     public purchaseOrderSevice: PurchaseOrderSevice,
     private route: ActivatedRoute,
     private location: Location,
-    public toastr: ToastsManager
+    public toastr: ToastsManager,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.purchaseOrders = new Array<PurchaseOrderModel>();
     this.purchaseOrder = new PurchaseOrderModel();
   }
 
-  ngOnInit() {
-    if (this.user) {
+   ngOnInit(): void {
+   
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+  }
+
+   ngAfterViewInit(){
+      if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];

@@ -10,10 +10,12 @@
   <div class="container-fluid">
     <div id="panel-advancedoptions">
       <div class="row">
-        <sp-vendor-detail-attribute [vendorDetail]="vendorDetail"></sp-vendor-detail-attribute>
-        <sp-vendor-detail-invoice [vendorDetail]="vendorDetail" [totalItems]="totalItems"></sp-vendor-detail-invoice>
+        <sp-vendor-detail-attribute *ngIf="vendorDetail" [vendorDetail]="vendorDetail"></sp-vendor-detail-attribute>
+        <sp-vendor-detail-invoice *ngIf="vendorDetail" [vendorDetail]="vendorDetail" [totalItems]="totalItems"></sp-vendor-detail-invoice>
       </div>
     </div>
   </div>
 
 </div>
+
+<sp-loading-spinner [showLoader] = 'showLoader' ></sp-loading-spinner>.

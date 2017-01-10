@@ -11,14 +11,15 @@ import { SyncBatchService } from '../shared/sync-batch.service';
 import { UserService } from '../../user/shared/user.service';
 
 import { SyncBatchModel } from '../shared/sync-batch.model';
-
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 @Component({
   selector: 'sp-sync-batch-detail',
   templateUrl: './sync-batch-detail.component.html',
 })
 
 export class SyncBatchDetailComponent extends BaseComponent implements OnInit {
-
+  private showLoader:boolean;
   private totalItems: number = 0;
   private syncBatcheId: number = 0;
   private syncBatcheDetail: SyncBatchModel;
@@ -29,13 +30,16 @@ export class SyncBatchDetailComponent extends BaseComponent implements OnInit {
     private syncBatchService: SyncBatchService,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private location: Location
+    private location: Location,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     // this.getSessionDetails();
   }
 
   ngOnInit() {
+     this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+     this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
     if (this.user) {
       this.getParameterValues();
     } else {

@@ -16,11 +16,12 @@ export class VendorDetailAttributeComponent extends BaseComponent implements OnI
 
     constructor(
         localStorageService: LocalStorageService,
-        router: Router,
+        router: Router
     ) {
         super(localStorageService, router);
     }
 
     ngOnInit() {
     }
+
 }

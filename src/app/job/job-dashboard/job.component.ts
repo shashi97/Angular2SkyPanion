@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  ,AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { ActivatedRoute } from '@angular/router';
@@ -14,18 +14,22 @@ import { UserService } from '../../user/shared/user.service';
 import { BaseComponent } from '../../base.component';
 import { CurrentPageArguments } from '../../pagination/pagination.component';
 
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+
 
 @Component({
   selector: 'sp-jobs',
   templateUrl: './job.component.html'
 })
 
-export class JobComponent extends BaseComponent implements OnInit {
-
+export class JobComponent extends BaseComponent implements OnInit , AfterViewInit {
+  private showLoader:boolean;
   private account: Object;
   private jobs: Array<JobModel>;
   private job: JobModel;
   private totalItems: number;
+
 
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
 
@@ -38,15 +42,22 @@ export class JobComponent extends BaseComponent implements OnInit {
     public masterService: MasterService,
     private route: ActivatedRoute,
     private location: Location,
-     public toastr: ToastsManager
+     public toastr: ToastsManager,
+     public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.jobs = new Array<JobModel>();
     this.job = new JobModel();
   }
 
-  ngOnInit() {
-    if (this.user) {
+ ngOnInit(): void {
+   
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+  }
+
+   ngAfterViewInit(){
+      if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];

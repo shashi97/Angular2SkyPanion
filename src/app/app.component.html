@@ -85,7 +85,7 @@
     </ul>
   </div>-->
 
-  <sp-loading-spinner [showLoader] = 'showLoader' ></sp-loading-spinner>
+  <!--<sp-loading-spinner [showLoader] = 'showLoader' ></sp-loading-spinner>-->
 
   <ul class="nav navbar-nav toolbar pull-right">
 
@@ -189,7 +189,7 @@
                   </a>
                   <ul class="acc-menu" *ngIf="user.IsSuperUser">
                     <li><a routerLink="user/-1/-1">All Members</a></li>
-                    <li><a routerLink="user/entry/0">Create Member</a></li>
+                    <li><a routerLink="user/entry/0/-1/-1">Create Member</a></li>
                     <li><a routerLink="role/-1/-1">All Roles</a></li>
                     <li><a routerLink="role/entry/0/-1/-1">New Role</a></li>
                   </ul>

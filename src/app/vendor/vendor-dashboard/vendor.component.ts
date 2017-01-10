@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { BaseComponent } from '../../base.component';
@@ -20,17 +20,21 @@ import { UserService } from '../../user/shared/user.service';
 
 import { CurrentPageArguments } from '../../pagination/pagination.component';
 
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+
+
 @Component({
   selector: 'sp-vendorDetail',
   templateUrl: './vendor.component.html',
 })
 
-export class VendorComponent extends BaseComponent implements OnInit {
+export class VendorComponent extends BaseComponent implements OnInit , AfterViewInit {
 
   private account: Object;
   /* Temporary variables */
   private searchString: string = '';
-
+  private showLoader:boolean;
   private totalItems: number = 0;
   private pageName: string = 'venders';
   private ledgerAccountId: number = null;
@@ -47,14 +51,22 @@ export class VendorComponent extends BaseComponent implements OnInit {
     router: Router,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private location: Location
+    private location: Location,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.vendors = new Array<VendorModel>();
   }
 
-  ngOnInit() {
-    if (this.user) {
+
+   ngOnInit(): void {
+   
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+  }
+
+   ngAfterViewInit(){
+      if (this.user) {
       this.getParameterValues();
     } else {
       let link = ['/login'];

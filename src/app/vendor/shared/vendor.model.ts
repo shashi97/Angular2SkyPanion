@@ -1,4 +1,6 @@
 
+import { VendorDistributionModel } from './vendor-accounts.model';
+
 export class VendorModel {
   RowNumber: number;
   LedgerAccountId: number = null;
@@ -15,7 +17,7 @@ export class VendorModel {
   VendorName: string = '';
   WebSite: string = '';
   account_id: number = 0;
-  glAccount: any;
+  glAccount:VendorDistributionModel = new VendorDistributionModel();
   company_id: number;
   CompanyName: string;
   VendorsCount: number;

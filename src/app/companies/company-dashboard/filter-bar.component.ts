@@ -6,7 +6,12 @@ import { Router } from '@angular/router';
 import { SyncTypeArgument } from '../../shared/dropdown/sync-type/sync-type.component';
 import { CompanyPathArgument } from '../../shared/dropdown/company-path/company-path.component';
 
+
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+
 export class CompanyFilterArguments {
+  
   searchText: string = '';
   syncTypeId: string = '-1';
   syncId: string = '-1';
@@ -22,7 +27,7 @@ export class CompanyFilterArguments {
 
 export class CompanyFilterComponent extends BaseComponent implements OnInit, OnChanges {
 
-
+ private showLoader:boolean;
   @Output() filtered: EventEmitter<CompanyFilterArguments> = new EventEmitter<CompanyFilterArguments>();
   @Input() filteredValue: CompanyFilterArguments = new CompanyFilterArguments();
 
@@ -57,12 +62,16 @@ export class CompanyFilterComponent extends BaseComponent implements OnInit, OnC
 
   constructor(
     localStorageService: LocalStorageService,
-    router: Router
+    router: Router,
+      public pubsub: PubSubService
   ) {
     super(localStorageService, router);
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+     this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+  }
   ngOnChanges(): void {
     this.companyPathFiltered.syncTypeId = this.filteredValue.syncTypeId;
     this.syncTypeFiltered.syncId = this.filteredValue.syncId;

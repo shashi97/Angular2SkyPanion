@@ -17,7 +17,8 @@ import { RoleService } from '../../role/shared/role.service';
 import { OrderByPipe } from '../../shared/pipe/orderby';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { PageHeaderTitleComponent } from '../../shared/others/page-header/page-header.component';
-
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
 declare let jQuery: any;
 
@@ -27,7 +28,7 @@ declare let jQuery: any;
 })
 
 export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck {
-
+  private showLoader : boolean= false;
   private messageHeader: string = 'New Member';
   private userDetail: UserModel;
   private styleLeft: string = '';
@@ -53,14 +54,16 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
     private location: Location,
     private roleService: RoleService,
     private _elRef: ElementRef,
-    public toastr: ToastsManager
+    public toastr: ToastsManager,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.getSessionDetails();
   }
 
   ngOnInit() {
-
+  this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+  this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
   }
 
   ngDoCheck() {
@@ -111,6 +114,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
   }
 
   private getRoles(): void {
+    this.showLoader = true;
     this.roleService.getRoles().then(result => {
       if (result.status === 404) {
       } else if (result.status === 500) {
@@ -125,6 +129,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
   private getEmailEventTypes(): void {
     this.userService.getEmailEventTypes().then(result => {
       if (result.status === 404) {
+         
       } else if (result.status === 500) {
       } else {
         this.eventTypes = result;

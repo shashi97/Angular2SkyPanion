@@ -7,7 +7,7 @@ import { BaseComponent } from '../base.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-
+import {PubSubService} from '../interceptor/pub-service';
 
 @Component({
   selector: 'sp-login',
@@ -27,7 +27,8 @@ export class LoginComponent extends BaseComponent implements OnInit {
     localStorageService: LocalStorageService,
     router: Router,
     private location: Location,
-    private toastr: ToastsManager) {
+    private toastr: ToastsManager,
+     public pubsub: PubSubService) {
     super(localStorageService, router);
     this.loginModel = new LoginModel();
 
@@ -92,7 +93,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
 
       } else {
         this.userService.updateUserDetail(this.loginModel.userName).then((result) => {
-          this.location.replaceState('/company/-1/-1');
+          this.location.replaceState('/dashboard');
           window.location.reload();
         });
       }

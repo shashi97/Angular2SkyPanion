@@ -13,14 +13,15 @@ import { SyncBatchEntryModel } from '../shared/sync-batch-entry.model';
 import { SyncBatchService } from '../shared/sync-batch.service';
 
 import { SyncBatchEntryFilterArguments } from './filter-invoice.component';
-
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 @Component({
   selector: 'sp-sync-batch-entry',
   templateUrl: './sync-batch-entry.component.html'
 })
 
 export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
-
+  private showLoader:boolean;
   private syncBatcheInvoices: Array<SyncBatchEntryModel>;
   private totalItems: number = 0;
   private dashboardMessage: string;
@@ -36,13 +37,16 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
     router: Router,
     private route: ActivatedRoute,
     private syncBatchEntryService: SyncBatchService,
-    private location: Location
+    private location: Location,
+     public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     //  this.syncBatcheInvoices = new Array<SyncBatchEntryModel>();
   }
 
   ngOnInit() {
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
       if (this.user) {
       this.getParameterValues();
     } else {

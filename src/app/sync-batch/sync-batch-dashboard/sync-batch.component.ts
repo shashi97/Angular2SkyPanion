@@ -12,6 +12,8 @@ import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.compo
 import { AccountService } from '../../account/shared/account.service';
 import { UserService } from '../../user/shared/user.service';
 import { SyncBatchService } from '../shared/sync-batch.service';
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'sp-sync-batch',
@@ -19,7 +21,7 @@ import { SyncBatchService } from '../shared/sync-batch.service';
 })
 
 export class SyncBatchComponent extends BaseComponent implements OnInit {
-
+  private showLoader:boolean;
   private searchString: string = '';
   private totalItems: number = 0;
   private userId: number = 0;
@@ -35,12 +37,16 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private syncBatchService: SyncBatchService,
-    private location: Location
+    private location: Location,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
   }
 
   ngOnInit() {
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+	  
     if (this.user) {
       this.getParameterValues();
     } else {

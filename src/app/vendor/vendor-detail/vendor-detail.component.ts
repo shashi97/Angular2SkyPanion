@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -15,13 +15,16 @@ import { CrumbBarComponent } from '../../shared/others/crumb-bar/crumb-bar.compo
 import { MasterService } from '../../shared/services/master/master.service';
 import { VendorService } from '../shared/vendor.service';
 
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+
 
 @Component({
   selector: 'sp-vendor',
   templateUrl: './vendor-detail.component.html',
 })
 
-export class VendorDetailComponent extends BaseComponent implements OnInit {
+export class VendorDetailComponent extends BaseComponent implements OnInit , AfterViewInit {
 
   private itemsPerPageList: Array<any>;
   private pageSize: number = 25;
@@ -30,6 +33,7 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
   private vendorDetail: VendorModel;
   private vendorId: number = 0;
   private searchString: string = '';
+  private showLoader:boolean;
   private _filteredValue: VendorFilterArguments = new VendorFilterArguments();
 
   constructor(
@@ -37,13 +41,21 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
     router: Router,
     private activatedRoute: ActivatedRoute,
     private masterService: MasterService,
-    private vendorService: VendorService) {
+    private vendorService: VendorService,
+    public pubsub: PubSubService) {
     super(localStorageService, router);
+    this.vendorDetail = new VendorModel();
   }
 
   ngOnInit() {
-    this.getParameterValues();
+     this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
   }
+
+    ngAfterViewInit(){
+  this.getParameterValues();
+  }
+
 
   private get filteredValue(): VendorFilterArguments {
     return this._filteredValue;
@@ -85,7 +97,7 @@ export class VendorDetailComponent extends BaseComponent implements OnInit {
       if (this.vendorDetail.VendorInvoices.length > 0) {
         this.totalItems = this.vendorDetail.VendorInvoices[0].TotalCount;
       }
-      if (this.vendorDetail.glAccount.AccountTitle === '' || this.vendorDetail.glAccount.AccountTitle == null) {
+      if (this.vendorDetail.glAccount.AccountTitle == undefined || this.vendorDetail.glAccount.AccountTitle === '' || this.vendorDetail.glAccount.AccountTitle == null) {
         this.vendorDetail.glAccount.AccountTitle = 'Unknown';
       }
     });

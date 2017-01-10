@@ -67,7 +67,7 @@ import { SyncBatchService } from './sync-batch/shared/sync-batch.service';
 import { InvoiceEntryService } from './invoice/invoice-entry/shared/invoice-entry.service';
 
 /*pipes */
-import { OrderByPipe, FilterPipe ,AccountFilterPipe, CurrencyPipe, VendorFilterPipe } from './shared/pipe/orderby';
+import { OrderByPipe, FilterPipe , CurrencyPipe , VendorFilterPipe , AccountFilterPipe } from './shared/pipe/orderby';
 
 
 import { Modal } from 'angular2-modal';
@@ -416,12 +416,14 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
       useFactory: (xhrBackend: XHRBackend,
         requestOptions: RequestOptions,
         router: Router,
+		 pubsub: PubSubService,
         localStorageService: LocalStorageService) => new HttpInterceptor(xhrBackend,
           requestOptions,
           router,
+		   pubsub,
           localStorageService),
 
-      deps: [XHRBackend, RequestOptions, Router, LocalStorageService],
+       deps: [XHRBackend, RequestOptions, Router,PubSubService, LocalStorageService],
     },
     {
       provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig

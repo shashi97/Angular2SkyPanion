@@ -19,6 +19,9 @@ import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { Overlay, OverlayConfig } from 'angular2-modal';
 import { BrowserModule } from '@angular/platform-browser';
 import { CompanyDropdownComponent, CompanyFilterArguments } from '../shared/dropdown/company/company-dropdown.component';
+import {PubSubService} from '../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../shared/loading-spinner/loading-spinner.component';
+
 
 // import { CompanyDropdownComponent } from '../shared/dropdown/company/company-dropdown.component';
 import {
@@ -62,6 +65,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
   private searchParameters;
   private LockIntervalTime;
   private attachmentObject: attachmentdata;
+  private showLoader:boolean;
   private companies: Array<CompanyModel>;
   private selectedCompany = {
     selected: {}
@@ -77,6 +81,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
     localStorageService: LocalStorageService,
     private masterService: MasterService,
     overlay: Overlay, vcRef: ViewContainerRef,
+    public pubsub: PubSubService,
     router: Router, public modal: Modal) {
     super(localStorageService, router);
     this.attachments = new Array<AttachmentObject>();
@@ -86,6 +91,9 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
     this.attachmentObject = new attachmentdata();
   }
   ngOnInit() {
+	   this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+    
     this.sessionDetails = this.userService.getSessionDetails();
     this.activatedRoute.params.subscribe(params => {
       this.pageSizeFilter = +params['pageSizeFilter'];

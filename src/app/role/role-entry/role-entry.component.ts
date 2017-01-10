@@ -11,6 +11,8 @@ import { RoleService } from '../shared/role.service';
 import { RoleModel } from '../shared/role.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { PageHeaderTitleComponent } from '../../shared/others/page-header/page-header.component';
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'sp-role-entry',
@@ -26,6 +28,7 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
   private pageHeader: string;
   private account: Object;
   private roleDetail: RoleModel;
+   private showLoader:boolean;
   constructor(
     public localStorageService: LocalStorageService,
     public router: Router,
@@ -33,7 +36,8 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
     private accountService: AccountService,
     private roleService: RoleService,
     private route: ActivatedRoute,
-    public toastr: ToastsManager
+    public toastr: ToastsManager,
+     public pubsub: PubSubService
 
   ) {
     super(localStorageService, router);
@@ -42,7 +46,10 @@ export class RoleEntryComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+     this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
     if (this.user) {
+     
       this.getMemberRoleDetail();
     } else {
       let link = ['/login'];

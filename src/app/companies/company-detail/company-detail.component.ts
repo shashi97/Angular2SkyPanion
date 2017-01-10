@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , AfterViewInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { ActivatedRoute } from '@angular/router';
@@ -9,16 +9,19 @@ import { UserService } from '../../user/shared/user.service';
 import { BaseComponent } from '../../base.component';
 import { AccountService } from '../../account/shared/account.service';
 
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+
 @Component({
   selector: 'sp-company',
   templateUrl: './company-detail.component.html',
 })
 
-export class CompanyDetailComponent extends BaseComponent implements OnInit {
+export class CompanyDetailComponent extends BaseComponent implements OnInit, AfterViewInit {
 
   private companyId: number;
   private searchParameters: number;
-
+  private showLoader:boolean;
   // private company: CompanyModel = new CompanyModel();
   private company: CompanyModel;
   constructor(private route: ActivatedRoute,
@@ -26,19 +29,33 @@ export class CompanyDetailComponent extends BaseComponent implements OnInit {
     public localStorageService: LocalStorageService,
     public router: Router,
     public accountService: AccountService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
+     this.company = new CompanyModel();
   }
 
   ngOnInit() {
-    if (this.user) {
+    
+  }
+
+    ngAfterViewInit()
+    {
+       setTimeout(() => {
+           this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+           this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+
+         if (this.user) {
       this.getParameterValue();
     } else {
       let link = ['/login'];
       this.router.navigate(link);
     }
+    }, 1);
   }
+
+ 
 
   private getParameterValue(): void {
     this.route.params.subscribe(params => {

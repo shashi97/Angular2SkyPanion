@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter , OnInit } from '@angular/core';
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { ApproversModel, ApprovalContext, LedgersModel } from '../shared/approval-criteria.model';
@@ -17,7 +17,7 @@ import { CurrencyFormatterDirective } from '../../shared/directive/showOnRowHove
           CurrencyFormatterDirective]
 })
 
-export class ApprovalModalComponent implements CloseGuard, ModalComponent<ApprovalContext> {
+export class ApprovalModalComponent implements CloseGuard, ModalComponent<ApprovalContext> , OnInit {
   private approvalContext: ApprovalContext = new ApprovalContext();
   private errors: Array<Object> = [];
   private errorHeader: string;
@@ -37,8 +37,17 @@ export class ApprovalModalComponent implements CloseGuard, ModalComponent<Approv
       this.approvalContext.approvers.push(
         { label: item.username, value: item });
     });
-    this.showApprovalCriteria(this.approvalContext.approvalDetail, this.approvalContext.isNew);
+    
   }
+
+   ngOnInit() {
+      setTimeout(() => {
+      this.showApprovalCriteria(this.approvalContext.approvalDetail, this.approvalContext.isNew);
+    }, 100);
+  }
+
+
+
   public showApprovalCriteria(approvalDetail, isNew): void {
     let companyId = this.approvalContext.companyId === 0 ? approvalDetail.CompanyID : this.approvalContext.companyId;
     this.ledgerAccountService.getLedgerAccountDDOsAccountTypeWise(companyId).then((result) => {

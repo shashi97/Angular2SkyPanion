@@ -17,6 +17,8 @@ import { UserService } from '../../user/shared/user.service';
 
 import { CurrentPageArguments } from '../../pagination/pagination.component';
 import { ConfirmService } from '../../shared/services/otherServices/confirmService';
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
 
 @Component({
@@ -25,7 +27,7 @@ import { ConfirmService } from '../../shared/services/otherServices/confirmServi
 })
 
 export class UserComponent extends BaseComponent implements OnInit {
-
+  private showLoader:boolean;
   private pageName: string = 'Users';
   private searchString: string = '';
   private account: Object;
@@ -42,12 +44,15 @@ export class UserComponent extends BaseComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private location: Location,
-    private confirmService: ConfirmService
+    private confirmService: ConfirmService,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
   }
 
   ngOnInit() {
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
     if (this.user) {
       this.getParameterValues();
     } else {

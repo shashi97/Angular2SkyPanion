@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component,OnInit, Output, EventEmitter , AfterViewInit } from '@angular/core';
 
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
@@ -6,7 +6,8 @@ import { IniSetupComponent } from './ini-setup.component';
 import { IniSetupService } from './shared/ini-setup.service';
 import { IniSetupModel } from './shared/ini-setup.model';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
-
+import {PubSubService} from '../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../shared/loading-spinner/loading-spinner.component';
 
 export class SetupModalContext extends BSModalContext {
   Serverfiles: IniSetupModel = new IniSetupModel();
@@ -20,7 +21,8 @@ export class SetupModalContext extends BSModalContext {
   templateUrl: './setup-modal.component.html',
 })
 
-export class SetupModalComponent implements CloseGuard, ModalComponent<SetupModalContext> {
+export class SetupModalComponent implements OnInit,CloseGuard , ModalComponent<SetupModalContext> {
+  private showLoader:boolean;
   context: SetupModalContext;
   private Errors: Array<any> = [];
   private ErrorsHeaders: string = '';
@@ -35,10 +37,17 @@ export class SetupModalComponent implements CloseGuard, ModalComponent<SetupModa
 
   constructor(public dialog: DialogRef<SetupModalContext>,
     private iniSetupService: IniSetupService,
-    public toastr: ToastsManager) {
+    public toastr: ToastsManager, public pubsub: PubSubService) {
     this.context = dialog.context;
-    this.getDirectoryDetail(this.context.Serverfiles);
+    // this.getDirectoryDetail(this.context.Serverfiles);
   }
+
+    ngOnInit() {
+      setTimeout(() => {
+      this.getDirectoryDetail(this.context.Serverfiles);
+    }, 1);
+  }
+
 
   public getDirectories(filepath, category): void {
     this.context.Serverfiles.filepathObject.path = filepath;

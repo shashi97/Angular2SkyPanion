@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter , AfterViewInit } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -11,6 +11,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CompanyService } from '../../companies/shared/company.service';
 
 import { CompanyDropdownComponent } from '../../shared/dropdown/company/company-dropdown.component';
+
+import {PubSubService} from '../../interceptor/pub-service';
+import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
 import { UserService } from '../../user/shared/user.service';
 import { InvoiceService } from '../shared/invoice.service';
@@ -26,9 +29,10 @@ export class InvoiceArgs {
   templateUrl: './invoice-detail.component.html',
 })
 
-export class InvoiceDetailComponent extends BaseComponent implements OnInit {
+export class InvoiceDetailComponent extends BaseComponent implements OnInit , AfterViewInit {
 
   @Input() invoiceArgsValue: InvoiceArgs;
+  private showLoader:boolean;
   private userDetail: UserModel;
   private companyDetail: CompanyModel;
   private invoiceDetail: InvoiceModel;
@@ -48,11 +52,19 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit {
     private invoiceService: InvoiceService,
     private userService: UserService,
     private domSanitizer: DomSanitizer,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    public pubsub: PubSubService) {
     super(localStorageService, router);
+    this.invoiceDetail = new InvoiceModel();
   }
 
-  ngOnInit() {
+ ngOnInit(): void { 
+      this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+      this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
+  }
+
+
+  ngAfterViewInit() {
     if (this.user) {
       this.getParameterValues();
     } else {

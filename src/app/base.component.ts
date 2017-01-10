@@ -6,12 +6,10 @@ export class BaseComponent {
   sessionDetails: any;
   disableMenu: Object = { 'display': 'block' };
   disableSideBar: Object = { 'display': '' };
-  showLoader: boolean;
 
   constructor(protected localStorageService: LocalStorageService,
     protected router: Router) {
 
-   // this.showLoader = true;
     let token = this.localStorageService.get('authorization');
     if (token) {
       this.user = this.localStorageService.get('sessionData');

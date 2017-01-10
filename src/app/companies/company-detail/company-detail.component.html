@@ -1,10 +1,10 @@
 <div id="slider" class="page-content">
 
-  <sp-company-title *ngIf="company" 
+  <!--<sp-company-title *ngIf="company" 
                     [company]="company"></sp-company-title>
                     
   <sp-crumb-bar *ngIf='company' [lastTitle]="company.CompanyName"
-               ></sp-crumb-bar>
+               ></sp-crumb-bar>-->
 
   <div id="panel-advancedoptions">
     <div class="row">
@@ -17,3 +17,5 @@
     </div>
   </div>
 </div>
+
+<sp-loading-spinner [showLoader] = 'showLoader' ></sp-loading-spinner>
