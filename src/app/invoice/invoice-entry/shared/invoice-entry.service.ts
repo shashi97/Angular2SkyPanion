@@ -47,7 +47,7 @@ export class InvoiceEntryService {
 
     return this
       .http
-      .get(ApiUrl.baseUrl + 'api/company/' + CompanyID)
+      .get(ApiUrl.baseUrl + 'api/company/Details/' + CompanyID)
       .toPromise()
       .then(response => response.json() as any)
       .catch(this.handleError);

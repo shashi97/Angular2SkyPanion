@@ -247,7 +247,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
   }
 
   private getCompanies() {
-    this.companiesService.getCompanyDDOs().then(result => {
+    this.companiesService.getCompanyDDOs(true).then(result => {
       if (result) {
         this.companies = result;
 

@@ -395,7 +395,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private getCompanies(): void {
-    this.companiesService.getCompanyDDOs().then(result => {
+    this.companiesService.getCompanyDDOs(false).then(result => {
       if (result.status == 404 || result.status == 500) {
       } else {
         this.companies = result;

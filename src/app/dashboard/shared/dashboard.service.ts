@@ -13,18 +13,18 @@ export class DashboardService {
 
   }
 
-  getSkypanionsCompanies() {
-    return this.http.get(ApiUrl.baseUrl + 'api/dashboard/skypanionsCompanies')
+  getSkypanionsCompanies(isGeneral) {
+    return this.http.get(ApiUrl.baseUrl + 'api/dashboard/skypanionsCompanies/'+isGeneral)
       .toPromise()
       .then(response =>
         response.json())
-      .catch(this.handleError);
+      .catch(this.handleError).catch(error => error);
   }
 
   getInvoices(companyId: number, invoiceState: number): Promise<DashboardModel> {
     return this
       .http
-      .get(ApiUrl.baseUrl + 'api/dashboard/getDashboard/' + invoiceState + '/' + companyId)
+      .get(ApiUrl.baseUrl + 'api/dashboard/getDashboard/' + invoiceState + '/' + companyId +'/'+ 0)
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);

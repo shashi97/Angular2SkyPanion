@@ -26,35 +26,121 @@ export class HttpInterceptor extends Http {
 
   }
 
+
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-    return this.intercept(super.request(url, options));
+    return super.request(url, options);
   }
 
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    
-    // this.requested.emit('start');
-
-    options = this.addHeaders(options);
-
-    return this.intercept(super.get(url, options));
+     this.requestInterceptor();
+     options = this.addHeaders(options);
+     return super.get(url, options)
+            .catch(this.onCatch)
+            .do((res: Response) => {
+                this.onSubscribeSuccess(res);
+            }, (error: any) => {
+                this.onSubscribeError(error);
+            })
+            .finally(() => {
+                this.onFinally();
+            });
   }
+
 
   post(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-    // this.requested.emit('start');
 
-    return this.intercept(super.post(url, body, this.getRequestOptionArgs(options)));
-  }
+     this.requestInterceptor();
+     return super.post(url, body, this.requestOptions(options))
+            .catch(this.onCatch)
+            .do((res: Response) => {
+                this.onSubscribeSuccess(res);
+            }, (error: any) => {
+                this.onSubscribeError(error);
+            })
+            .finally(() => {
+                this.onFinally();
+            });
+    }
+  
 
   put(url: string, body: string, options?: RequestOptionsArgs): Observable<Response> {
-    // this.requested.emit('start');
-    return this.intercept(super.put(url, body, this.getRequestOptionArgs(options)));
+      this.requestInterceptor();
+        return super.put(url, body, this.requestOptions(options))
+            .catch(this.onCatch)
+            .do((res: Response) => {
+                this.onSubscribeSuccess(res);
+            }, (error: any) => {
+                this.onSubscribeError(error);
+            })
+            .finally(() => {
+                this.onFinally();
+            });
+  
   }
 
   delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    // this.requested.emit('start');
-
-    return this.intercept(super.delete(url, options));
+     this.requestInterceptor();
+        return super.delete(url, options)
+            .catch(this.onCatch)
+            .do((res: Response) => {
+                this.onSubscribeSuccess(res);
+            }, (error: any) => {
+                this.onSubscribeError(error);
+            })
+            .finally(() => {
+                this.onFinally();
+            });
   }
+
+  
+  private requestOptions(options?: RequestOptionsArgs): RequestOptionsArgs {
+    if (options == null) {
+        options = new RequestOptions();
+    }
+    if (options.headers == null) {
+        options.headers = new Headers();
+    }
+    return options;
+}
+
+  private onCatch(error: any, caught: Observable<any>): Observable<any> {
+      if (error.status === 401) {                  
+        this.authorization = this.localStorageService.get('authorization');
+        if (this.authorization) {
+          this.localStorageService.remove('authorization');
+          this.localStorageService.remove('user');
+        }
+        this.router.navigate(['/login']);
+        return Observable.empty();
+
+      } else if (error.status === 403) {
+        console.log('you can not access api');
+        return Observable.throw(error);
+      } else if (error.status === 0) {                // Api Connection Refused
+        console.log('ERR_CONNECTION_REFUSED, Api is down');
+        return Observable.throw(error);
+      } else {
+        return Observable.throw(error);
+      }
+}
+
+  private onSubscribeSuccess(res: Response): void {
+}
+
+ private onSubscribeError(error: any): void {
+ }
+
+  private onFinally(): void {
+    this.responseInterceptor();
+}
+
+  private responseInterceptor(): void {
+  this.pubsub.afterRequest.emit("afterRequestEvent");
+}
+
+   private requestInterceptor(): void {
+        this.pubsub.beforeRequest.emit("beforeRequestEvent");
+    }
 
   getRequestOptionArgs(options?: RequestOptionsArgs): RequestOptionsArgs {
     let isHeaderFound = true;
@@ -81,40 +167,5 @@ export class HttpInterceptor extends Http {
       options.headers.append('Authorization', this.authorization);
     }
     return options;
-  }
-
-  intercept(observable: Observable<Response>): Observable<Response> {
-    this.pubsub.beforeRequest.emit("beforeRequestEvent");
-      observable.do
-
-
-
-
-    try
-    {
-      return observable.finally(() => 
-      this.pubsub.afterRequest.emit("afterRequestEvent"));
-    }catch (e) {
-        return observable.catch((err, source) => {
-      if (err.status === 401) {                  
-        this.authorization = this.localStorageService.get('authorization');
-        if (this.authorization) {
-          this.localStorageService.remove('authorization');
-          this.localStorageService.remove('user');
-        }
-        this.router.navigate(['/login']);
-        return Observable.empty();
-
-      } else if (err.status === 403) {
-        console.log('you can not access api');
-        return Observable.throw(err);
-      } else if (err.status === 0) {                // Api Connection Refused
-        console.log('ERR_CONNECTION_REFUSED, Api is down');
-        return Observable.throw(err);
-      } else {
-        return Observable.throw(err);
-      }
-    });
-    }
   }
 }

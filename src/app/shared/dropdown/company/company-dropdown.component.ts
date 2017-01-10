@@ -50,7 +50,7 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit, O
 
   }
   private getSkypanionsCompanies() {
-    return this.dashboardService.getSkypanionsCompanies().then((result) => {
+    return this.dashboardService.getSkypanionsCompanies(false).then((result) => {
       this.companies = result;
       // let temp = this.companies;
       let defaultRole = {
