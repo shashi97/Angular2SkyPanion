@@ -1,0 +1,11 @@
+<p-dataTable *ngIf = 'attachments' [value]="attachments">
+    <p-column field="Info" header="Vin"></p-column>
+    <p-column field="CompanyName" header="Year"></p-column>
+    <p-column field="Name" header="Brand"></p-column>
+    <p-column field="Uploaded" header="Color"></p-column>
+</p-dataTable>
+
+<h3>Dynamic Columns</h3>
+<!--<p-dataTable [value]="cars">-->
+    <p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header"></p-column>
+<!--</p-dataTable>-->

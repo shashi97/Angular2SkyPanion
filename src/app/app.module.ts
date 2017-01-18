@@ -20,7 +20,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { ConfirmService } from './shared/services/otherServices/confirmService';
 
-import { DropdownModule, MultiSelectModule } from 'primeng/primeng';
+import { DropdownModule, MultiSelectModule ,DataTableModule as PrimeDataTableModule , SharedModule} from 'primeng/primeng';
 
 /* for pagination */
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -163,13 +163,8 @@ import { InvoiceApprovalModalComponent } from './dashboard/invoice-modals/invoic
 import { InvoiceDistributionCommentModalComponent } from
   './dashboard/invoice-modals/invoice-distribution-comment-model/invoice-distribution-comment.component';
 
-  import { PageHeaderTitleComponent } from './shared/others/page-header/page-header.component';
-
-
-
-
+import { PageHeaderTitleComponent } from './shared/others/page-header/page-header.component';
 import { AttachmentComponent } from './attachment/attachment.component';
-
 
 import { SyncBatchComponent } from './sync-batch/sync-batch-dashboard/sync-batch.component';
 import { SyncBatchFilterComponent } from './sync-batch/sync-batch-dashboard/filter-bar.component';
@@ -215,6 +210,10 @@ import { SyncModelComponent } from './sync-batch/sync-batch-entry/sync-modal.com
 /* for Reset Password */
 import { ResetPasswordService } from './reset-password/shared/reset-password.service';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+
+import { PrimeTableComponent } from './prime-table/prime-table.component';
+
+
 
 let localStorageServiceConfig = {
   prefix: 'my-app',
@@ -340,7 +339,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     InvoicePdfRejectModalComponent,
     PageHeaderTitleComponent,
     LoadingSpinnerComponent,
-    InvoiceApproveModalComponent
+    InvoiceApproveModalComponent,
+    PrimeTableComponent
   ],
   entryComponents: [
     SetupModalComponent,
@@ -356,9 +356,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     InvoiceEntryNoApproverExistsComponent,
     InvoicePdfRejectModalComponent,
     InvoiceApproveModalComponent
-
-
   ],
+  
   imports: [
     UiSwitchModule,
     BrowserModule,
@@ -367,9 +366,11 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     routing,
     DragulaModule,
     Angular2DataTableModule,
+    SharedModule,
     AlertModule,
     DataTableModule,
     DropdownModule,
+    PrimeDataTableModule,
     MultiSelectModule,
     NgbModule.forRoot(),
     ModalModule.forRoot(),

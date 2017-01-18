@@ -45,6 +45,7 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { UserEntryComponent } from './user/user-entry/user-entry.component';
 import { DashboardViewComponent } from './dashboard/dashboard-view/dashboard-view.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { PrimeTableComponent } from './prime-table/prime-table.component';
 
 const APP_ROUTES: Routes = [
 
@@ -99,7 +100,7 @@ const APP_ROUTES: Routes = [
   { path: 'user/entry/:id/:pageSizeFilter/:searchParameters', component: UserEntryComponent },
  
   { path: 'dashboard', component: DashboardViewComponent },
-
+  { path: 'primeTable', component: PrimeTableComponent },
 
   // routing for reset password
   { path: 'resetPassword', component: ResetPasswordComponent },
