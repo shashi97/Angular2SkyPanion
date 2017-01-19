@@ -96,7 +96,7 @@
       </a>
       <ul class="dropdown-menu userinfo">
         <li *ngIf="user">
-          <a href="#/user/{{user.UserID}}">
+          <a href="#/user/detail/{{user.userId}}/-1/-1">
             <span class="pull-left">My Profile</span>
             <i class="pull-right fa fa-pencil"></i>
           </a>
@@ -131,7 +131,7 @@
             <div class="widget-body welcome-box tabular">
               <div class="tabular-row">
                 <div class="tabular-cell welcome-avatar">
-                  <a routerLink="#dashboard" *ngIf="user">
+                  <a routerLink="dashboard" *ngIf="user">
                     <img [src]="user.ImageName" class="avatar" />
                   </a>
                 </div>

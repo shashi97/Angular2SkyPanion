@@ -74,6 +74,7 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
                     this.sessionDetails = this.userService.getSessionDetails();
                     this.dashboardPermissions.UserPermissions.IsSuperUser = this.sessionDetails.IsSuperUser;
                     if (this.sessionDetails.userId != null) {
+                        this._filteredValue.userId = this.sessionDetails.userId;
                         this.getInvoices();
                     } else {
                         let link = ['/login'];
@@ -86,8 +87,10 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
     private getInvoices(): void {
           this.dashboardService
             .getInvoices(
-            this._filteredValue.companyId,
-            null).then((result) => {
+            null,
+             this._filteredValue.companyId,
+             this._filteredValue.userId
+            ).then((result) => {
                 if (result) {
                 this.dashboardData = result;
                 this.invoices = result.invoiceObjects;

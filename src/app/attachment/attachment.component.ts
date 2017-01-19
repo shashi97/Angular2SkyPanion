@@ -270,7 +270,10 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
   }
 
 
-  private editAttachment(row) {
+
+
+  
+  private openEditDialog(row) {
     this.masterService.checkDocumentLocking(row.AttachmentID, 5).then(result => {
       if (result.IsLocked == 0) {
         this.toastr.error("This Invoice is locked by " + result.LockBy);
@@ -289,7 +292,8 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
           fileName: row.Filename,
           companyID: row.CompanyID,
           companyNumber: row.CompanyNumber,
-          rejectionMemo: row.RejectionMemo
+          rejectionMemo: row.RejectionMemo,
+          IsGeneralPdf :row.IsGeneralPdf
         };
 
 
@@ -297,7 +301,6 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
           if (item.CompanyID == this.attachmentObject.companyID) {
             this.selectedCompany.selected = item;
             this.newCompanyID = item.CompanyID;
-            //this.newCompanyNumber = item.Number;
           }
         });
 
@@ -305,7 +308,6 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
 
       }
     });
-
   }
 
 

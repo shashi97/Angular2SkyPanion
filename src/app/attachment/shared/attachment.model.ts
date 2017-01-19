@@ -41,8 +41,7 @@ export class attachmentdata{
     companyID:number = 0;
     fileName:string = '';
     companyNumber:number = 0;
-   
+    IsGeneralPdf:boolean;
     
-
 }
 

@@ -10,12 +10,14 @@ import { DashboardPermissionModel } from '../shared/dashboard-permissions.model'
 import { DashboardUserWisePermissionsModel } from '../shared/dashboard-permissions.model';
 import { DashboardCompanyWisePermissionsModel } from '../shared/dashboard-permissions.model';
 import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+import { UserFilterArguments } from '../../shared/dropdown/user/user-dropdown.component';
 
 export class InvoiceStateFilterArguments {
   companyId: number = 0;
   invoiceState:  number = 1;
   isCompanyFilter:boolean = false;
   isTabApproveInvoice:boolean = false;
+  userId:number = null;
 }
 
 @Component({
@@ -25,12 +27,14 @@ export class InvoiceStateFilterArguments {
 
 
 export class DashboardStateFilterComponent extends BaseComponent implements OnInit{
-    showLoader;
+    private showLoader = false;
    @Input() dashboardPermissions : DashboardPermissionModel;
    @Input() dashboardStatefilterItems: DashboardStateModel;
     @Output() filtered: EventEmitter<InvoiceStateFilterArguments> = new EventEmitter<InvoiceStateFilterArguments>();
     private filteredValue: InvoiceStateFilterArguments = new InvoiceStateFilterArguments();
   private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
+  private _userFilteredValue: UserFilterArguments = new UserFilterArguments();
+
     constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -54,6 +58,20 @@ export class DashboardStateFilterComponent extends BaseComponent implements OnIn
     this._companyFilteredValue = newValue;
   }
 
+  private get userFilteredArg(): UserFilterArguments {
+    return this._userFilteredValue;
+  }
+
+  private set userFilteredArg(newValue: UserFilterArguments) {
+    this._userFilteredValue = newValue;
+  }
+
+  public onUserFiltered(_userFilteredValue: UserFilterArguments): void {
+    this.userFilteredArg = _userFilteredValue;
+    this.filteredValue.isCompanyFilter = true;
+    this.filteredValue.userId = this.userFilteredArg.UserID;
+    this.filtered.emit(this.filteredValue);
+  }
 
  public onCompanyFiltered(_companyFilteredValue: CompanyFilterArguments): void {
     this.companyFilteredArg = _companyFilteredValue;

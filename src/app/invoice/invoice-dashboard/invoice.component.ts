@@ -189,9 +189,13 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
       invoiceDesc: this._currentInvoiceArgs.invoiceDesc,
     };
     this.invoiceService.getInvoices(searchFields).then(result => {
-      this.Invoices = result;
+       if (result.status === 404) {
+      } else if (result.status === 500) {
+      } else {
+         this.Invoices = result;
       if (this.Invoices[0] && this.Invoices[0].InvoiceCount) {
         this.totalItems = this.Invoices[0].InvoiceCount;
+      }
       }
     });
   }

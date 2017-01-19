@@ -85,6 +85,13 @@ export class CompanyService {
       .catch(error => error);
   }
 
+  public getCompanyListFilteredByFundProperties() {
+    return this.http.get(ApiUrl.baseUrl
+      + 'api/company/getCompanyListFilteredByFundProperties').toPromise()
+      .then(response => response.json() as CompanyModel[])
+      .catch(error => error);
+  }
+
   public getCompanyName(companyId) {
     return this.http.get(ApiUrl.baseUrl
       + 'api/company/name/'

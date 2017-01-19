@@ -21,10 +21,10 @@ export class DashboardService {
       .catch(this.handleError).catch(error => error);
   }
 
-  getInvoices(companyId: number, invoiceState: number): Promise<DashboardModel> {
+  getInvoices(invoiceState: number , companyId: number , userId: number): Promise<DashboardModel> {
     return this
       .http
-      .get(ApiUrl.baseUrl + 'api/dashboard/getDashboard/' + invoiceState + '/' + companyId +'/'+ 0)
+      .get(ApiUrl.baseUrl + 'api/dashboard/getDashboard/' + invoiceState + '/' + companyId + '/' + userId)
       .toPromise()
       .then(response => response.json())
       .catch(this.handleError);

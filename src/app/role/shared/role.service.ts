@@ -67,6 +67,8 @@ export class RoleService {
 
   public saveRole(role): Promise<any> {
     let data = JSON.stringify(role);
+
+        
     return this.http
       .post(ApiUrl.baseUrl
       + 'api/roles/newOrUpdate'

@@ -94,10 +94,19 @@ export class AttachmentEditComponent extends BaseComponent implements CloseGuard
   
 
   private getCompanies() {
-    this.companiesService.getCompanyDDOs(true).then(result => {
+      if (this.attachmentObject.IsGeneralPdf) {
+          this.getCompanyListFilteredByFundProperties();  
+        }else{
+          this.getAllCompanies();  
+          
+        }
+  }
+
+  private getCompanyListFilteredByFundProperties(){
+      this.companiesService.getCompanyListFilteredByFundProperties().then(result => {
       if (result) {
         this.companies = result;
-        let obj = new CompanyData();
+        let obj = { CompanyID: 0, Number: 'All Companies', CompanyName: 'All Companies', Type: 'None', AccountID: 0 };
         this.companies.splice(0, 0, obj);
         this.selectedCompany.selected = obj;
         this.selectedCompanyFilter.selected = obj;
@@ -120,9 +129,41 @@ export class AttachmentEditComponent extends BaseComponent implements CloseGuard
         });
 
       }
-
-    });
+      });
   }
+
+  private getAllCompanies(){
+       this.companiesService.getCompanyDDOs(true).then(result => {
+         if (result) {
+        this.companies = result;
+        let obj = { CompanyID: 0, Number: 'All Companies', CompanyName: 'All Companies', Type: 'None', AccountID: 0 };
+        this.companies.splice(0, 0, obj);
+        this.selectedCompany.selected = obj;
+        this.selectedCompanyFilter.selected = obj;
+
+        let temp = this.companies;
+        this.companies = [];
+
+        temp.map((item: any) => {
+          this.companies.push({
+            label: item.CompanyName,
+            value: item
+          });
+        });
+
+        this.companies.forEach(item => {
+          if (item.value.CompanyID == this.attachmentObject.companyID) {
+            this.selectedCompany.selected = item.value;
+
+          }
+        });
+
+      }
+      });
+  }
+
+
+
 
   private getSelectedCompany(selectedCompany): void {
     this.newCompanyID = selectedCompany.CompanyID;

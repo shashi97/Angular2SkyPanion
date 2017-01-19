@@ -217,7 +217,7 @@ import { PrimeTableComponent } from './prime-table/prime-table.component';
 
 let localStorageServiceConfig = {
   prefix: 'my-app',
-  storageType: 'localStorage'
+  storageType: 'sessionStorage'
 };
 
 

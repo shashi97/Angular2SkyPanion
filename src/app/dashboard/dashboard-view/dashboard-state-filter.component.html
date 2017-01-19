@@ -1,55 +1,47 @@
-              <div class="form-inline" id="invoices_index_filters_form">
-                    <h3 style="display: inline">{{dashboardStatefilterItems.dashboardHeader}}
-                    </h3>
+<div class="form-inline" id="invoices_index_filters_form">
+    <h3 style="display: inline">{{dashboardStatefilterItems.dashboardHeader}}
+    </h3>
 
 
-                    <div class="pull-right">
-                        <div class="form-group" style="display: inline;padding-right:10px">
-                            <sp-company-dropdown
-                                [companyFilteredArg]='companyFilteredArg'
-                                (companyFiltered)="onCompanyFiltered($event)">
-                            </sp-company-dropdown>
+    <div class="pull-right">
+        <div class="form-group" style="display: inline;padding-right:10px">
+            <sp-company-dropdown [companyFilteredArg]='companyFilteredArg' (companyFiltered)="onCompanyFiltered($event)"></sp-company-dropdown>
+        </div>
 
+        <div class="form-group" style="display: inline;padding-right:10px">
+            <sp-user-dropdown [userFilteredArg]="userFilteredArg" (userFiltered)="onUserFiltered($event)"></sp-user-dropdown>
+        </div>
 
-                        </div>
+    
 
-                        <div class="btn-group">
-                            <a class="btn btn-default" 
-                                *ngIf="dashboardPermissions.UserPermissions.IsGlobalReviewer == true 
+    <div class="btn-group">
+        <a class="btn btn-default" *ngIf="dashboardPermissions.UserPermissions.IsGlobalReviewer == true 
                                                                 || dashboardPermissions.UserPermissions.IsSuperUser == true || 
                                                                                 dashboardPermissions.UserCompanyWisePermissions.IsCompReviewer == true"
-                                                                                                    [ngClass]="{'active': dashboardStatefilterItems.relevantInvoiceState == 1}" (click)="onInvoiceStateFiltered(1,false)"
-                                                                                                    ><span class="badge">{{dashboardStatefilterItems.toReviewInvCount}}</span>To Review</a>
+            [ngClass]="{'active': dashboardStatefilterItems.relevantInvoiceState == 1}" (click)="onInvoiceStateFiltered(1,false)"><span class="badge">{{dashboardStatefilterItems.toReviewInvCount}}</span>To Review</a>
 
-                            <a class="btn btn-default" 
-                                 *ngIf="dashboardPermissions.UserPermissions.IsGlobalApprover == true 
+        <a class="btn btn-default" *ngIf="dashboardPermissions.UserPermissions.IsGlobalApprover == true 
                                                                                 || dashboardPermissions.UserPermissions.IsSuperUser == true
                                                                                                      || dashboardPermissions.UserCompanyWisePermissions.IsCompApprover == true"
-                                                                                                            [ngClass]="{'active': dashboardStatefilterItems.relevantInvoiceState == 2 && dashboardStatefilterItems.isApprove == true}" (click)="onInvoiceStateFiltered(2,true)"
-                                                                                                            ><span class="badge">{{dashboardStatefilterItems.toApproveInvCount}}</span>To Approve</a>
+            [ngClass]="{'active': dashboardStatefilterItems.relevantInvoiceState == 2 && dashboardStatefilterItems.isApprove == true}"
+            (click)="onInvoiceStateFiltered(2,true)"><span class="badge">{{dashboardStatefilterItems.toApproveInvCount}}</span>To Approve</a>
 
-                            <a class="btn btn-default"
-                                *ngIf="dashboardPermissions.UserPermissions.IsGlobalOverride == true
+        <a class="btn btn-default" *ngIf="dashboardPermissions.UserPermissions.IsGlobalOverride == true
                                                                          || dashboardPermissions.UserPermissions.IsSuperUser == true|| 
                                                                                     dashboardPermissions.UserCompanyWisePermissions.IsCompOverride == true"
-                                                                                                            [ngClass]="{'active': dashboardStatefilterItems.relevantInvoiceState == 2 && dashboardStatefilterItems.isApprove == false}" (click)="onInvoiceStateFiltered(2,false)"
-                                                                                                            ><span class="badge">{{dashboardStatefilterItems.toOverrideInvCount}}</span>To Override</a>
+            [ngClass]="{'active': dashboardStatefilterItems.relevantInvoiceState == 2 && dashboardStatefilterItems.isApprove == false}"
+            (click)="onInvoiceStateFiltered(2,false)"><span class="badge">{{dashboardStatefilterItems.toOverrideInvCount}}</span>To Override</a>
 
-                            <a class="btn btn-default" 
-                                *ngIf="dashboardPermissions.UserPermissions.IsGlobalBatch == true || 
+        <a class="btn btn-default" *ngIf="dashboardPermissions.UserPermissions.IsGlobalBatch == true || 
                                                                                 dashboardPermissions.UserPermissions.IsSuperUser == true || 
                                                                                                  dashboardPermissions.UserCompanyWisePermissions.IsCompBatch == true"
-                                                                                                            [ngClass]="{'active': dashboardStatefilterItems.relevantInvoiceState == 3}" (click)="onInvoiceStateFiltered(3,false)"
-                                                                                                            ><span class="badge">{{dashboardStatefilterItems.toBatchInvCount}}</span>To Batch</a>
+            [ngClass]="{'active': dashboardStatefilterItems.relevantInvoiceState == 3}" (click)="onInvoiceStateFiltered(3,false)"><span class="badge">{{dashboardStatefilterItems.toBatchInvCount}}</span>To Batch</a>
 
-                            <a class="btn btn-default" 
-                                *ngIf ="dashboardPermissions.UserPermissions.IsGlobalDelete == true 
+        <a class="btn btn-default" *ngIf="dashboardPermissions.UserPermissions.IsGlobalDelete == true 
                                                                 || dashboardPermissions.UserPermissions.IsSuperUser == true ||
                                                                                                      dashboardPermissions.UserCompanyWisePermissions.IsCompDelete == true"
-                                                                                                                [ngClass]="{'active': dashboardStatefilterItems.relevantInvoiceState == 5}" (click)="onInvoiceStateFiltered(5,false)"
-                                                                                                            ><span class="badge">{{dashboardStatefilterItems.toRejectedInvCount}}</span>Rejected</a>
+            [ngClass]="{'active': dashboardStatefilterItems.relevantInvoiceState == 5}" (click)="onInvoiceStateFiltered(5,false)"><span class="badge">{{dashboardStatefilterItems.toRejectedInvCount}}</span>Rejected</a>
 
-                        </div>
-                    </div>
-     </div>
-
+    </div>
+</div>
+</div>

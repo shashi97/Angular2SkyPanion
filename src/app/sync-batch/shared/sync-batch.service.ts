@@ -41,12 +41,12 @@ export class SyncBatchService {
     public getSyncBatches(searchCriteriaSyncBatches) {
         let data = JSON.stringify(searchCriteriaSyncBatches);
 
-        let options = new RequestOptions();
-        options.headers = new Headers();
-        options.headers.append('Content-Type', 'application/json; charset=utf-8');
+        // let options = new RequestOptions();
+        // options.headers = new Headers();
+        // options.headers.append('Content-Type', 'application/json; charset=utf-8');
 
         return this.http
-            .post(ApiUrl.baseUrl + 'api/syncbatches/PostSyncbatchSearch', data, options)
+            .post(ApiUrl.baseUrl + 'api/syncbatches/PostSyncbatchSearch', data)
             .toPromise()
             .then(response => response.json())
             .catch(error => error);
