@@ -25,10 +25,10 @@
       <tbody>
         <tr *ngFor="let item of syncBatchs">
           <td>
-            <a routerLink="account/detail/{{item.AccountName}}">{{item.AccountName}}</a>
+            <a routerLink="account/{{item.AccountID}}">{{item.AccountName}}</a>
           </td>
           <td>
-            <a routerLink="account/detail/{{item.AccountName}}">{{item.UserName}}</a>
+            <a routerLink="user/detail/{{item.UserID}}/-1/-1">{{item.UserName}}</a>
           </td>
           <td>{{item.BatchNumber}}</td>
           <td>{{item.BatchDate}}</td>

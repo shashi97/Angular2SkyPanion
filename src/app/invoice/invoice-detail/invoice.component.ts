@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input ,AfterViewInit , OnChanges} from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,17 +13,18 @@ import { ApiUrl } from '../../config.component';
   templateUrl: './invoice.component.html',
 })
 
-export class InvoiceDetailInvoiceComponent extends BaseComponent implements OnInit {
+export class InvoiceDetailInvoiceComponent extends BaseComponent implements OnInit , AfterViewInit, OnChanges {
 
   @Input() invoiceDetail: InvoiceModel;
   @Input() invoiceArgs: InvoiceArgs;
   private invType;
   private invoiceID;
   private invApprovals: Array<InvApprovals>;
-  private pdfsrc1;
-  private pdfsrc;
   private pageSizeFilter;
   private searchParameters;
+  private pdfsrc1;
+  private pdfsrc;
+  private apiServiceBase;
 
   constructor(
     localStorageService: LocalStorageService,
@@ -42,12 +43,19 @@ export class InvoiceDetailInvoiceComponent extends BaseComponent implements OnIn
       this.invoiceID = +params['InvoiceID']
       this.searchParameters = +params['SearchParameters']
       this.pageSizeFilter = +params['pageSizeFilter']
-      let apiServiceBase = ApiUrl.baseUrl;
-      this.pdfsrc1 = apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber +
-        '/' + this.invoiceDetail.AttachmentName;
-      this.pdfsrc = this.domSanitizer.bypassSecurityTrustResourceUrl(this.pdfsrc1);
+      this.apiServiceBase = ApiUrl.baseUrl;
+
       //this.getInvoiceApprovals();
     });
+  }
+
+  ngAfterViewInit(){
+  }
+
+  ngOnChanges(){
+       this.pdfsrc1 = this.apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber +
+        '/' + this.invoiceDetail.AttachmentName;
+      this.pdfsrc = this.domSanitizer.bypassSecurityTrustResourceUrl(this.pdfsrc1);
   }
 
   private getInvoicePdf(): void {

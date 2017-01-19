@@ -44,7 +44,7 @@
       <tr *ngFor="let item of attachments">
         <td *ngIf="item.Info != 'Rejected'" [ngClass]="{'italic-font': item.Info=='N/A', 'text-success':item.Info=='Processed'}">{{item.Info}}</td>
         <td *ngIf="item.Info == 'Rejected'" [ngClass]="{'text-rejected': item.Info=='Rejected'}"><b>!</b>{{item.Info}}</td>
-        <td *ngIf="item.IsGeneral == false"><a href="#company/{{item.CompanyID}}">{{item.CompanyName}}</a></td>  
+        <td *ngIf="item.IsGeneral == false"><a href="#company/detail/{{item.CompanyID}}/-1/-1">{{item.CompanyName}}</a></td>  
         <td *ngIf="item.IsGeneral == true"><b>{{item.CompanyNameOnly}}</b></td>                                        
         <td>{{item.Name}}</td>
         <td>{{item.Uploaded}}</td>

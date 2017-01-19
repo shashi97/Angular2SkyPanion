@@ -44,6 +44,9 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit , Af
   private userId: number = 0;
   private checkDetails: Array<any> = [];
   private invoiceArgs: InvoiceArgs = new InvoiceArgs();
+    private pdfsrc1;
+  private pdfsrc;
+  private apiServiceBase;
   
   constructor(
     localStorageService: LocalStorageService,
@@ -59,6 +62,8 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit , Af
   }
 
  ngOnInit(): void { 
+     this.apiServiceBase = ApiUrl.baseUrl;
+
       this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
       this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
   }

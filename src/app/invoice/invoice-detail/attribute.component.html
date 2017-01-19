@@ -22,7 +22,7 @@
 
             <dt>Rejected By</dt>
             <dd>
-              <a href="#/user/detail/{{invoiceDetail.RejectedByID}}/25">{{invoiceDetail.RejectedBy}}</a>
+              <a href="#/user/detail/{{invoiceDetail.RejectedByID}}/25/-1">{{invoiceDetail.RejectedBy}}</a>
             </dd>
 
             <dt>Rejection Comment</dt>
@@ -36,7 +36,7 @@
             <dt>Processed by</dt>
             <dd>
               <span [hidden]="invoiceDetail.ProcessedBy != 'None'" class="text-warning italic-font">{{invoiceDetail.ProcessedBy}}</span>
-              <a href="#/user/detail/{{invoiceDetail.ProcessedByID}}/25" [hidden]="invoiceDetail.ProcessedBy == 'None'">{{invoiceDetail.ProcessedBy}}</a>
+              <a href="#/user/detail/{{invoiceDetail.ProcessedByID}}/25/-1" [hidden]="invoiceDetail.ProcessedBy == 'None'">{{invoiceDetail.ProcessedBy}}</a>
             </dd>
 
             <dt>Processed on</dt>

@@ -196,6 +196,9 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
       if (this.Invoices[0] && this.Invoices[0].InvoiceCount) {
         this.totalItems = this.Invoices[0].InvoiceCount;
       }
+      if (this.Invoices.length === 0) {
+       this.totalItems = 0;
+      }
       }
     });
   }
