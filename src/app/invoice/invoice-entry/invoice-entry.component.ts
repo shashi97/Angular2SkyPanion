@@ -1017,8 +1017,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
             }
 
             if ((parseFloat(this.invoiceDetail.InvoiceAmount.toString())) !== (totalDistAmount)) {
-              // this.glAccountObject.glAccountAmount = 
-              // ((parseFloat(this.invoiceDetail.InvoiceAmount)).toFixed(2) - (totalDistAmount).toFixed(2));
+              this.glAccountObject.glAccountAmount =
+                (this.invoiceDetail.InvoiceAmount - totalDistAmount);
             }
           }
 
@@ -1149,13 +1149,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
           this.invoiceService.getNextAttachmentIDs(this.attachmentId).then(result1 => {
             this.invoiceService.saveInvoice(this.invoiceDetail).then(result => {
-              if (result) {
-                // }
-                // else if (result.status == 500) {
-                //   this.displayValue = 'none';
-                //   this.toastr.error('error', result.Message, 'error');
-                // }
-                // else {
+              if (result.status == 404) {
+              } else if (result.status == 500) {
+                this.displayValue = 'none';
+                this.toastr.error('error', "This Attachment has been already processed.", 'error');
+              } else {
 
                 this.displayValue = 'none';
                 this.invoiceAlert = '';

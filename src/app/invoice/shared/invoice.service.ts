@@ -133,7 +133,7 @@ export class InvoiceService {
       .http
       .post(ApiUrl.baseUrl + 'api/invoices/newOrUpdate', data)
       .toPromise()
-      .then(response => response.json() as any)
+      .then(response => response as any)
       .catch(error => error);
   }
 
