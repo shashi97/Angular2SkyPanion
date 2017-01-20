@@ -14,7 +14,7 @@ import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 // import { BSModalContext } from 'angular2-modal/plugins/bootstrap/index';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { FilterPipe } from '../../../shared/pipe/orderby';
-
+import { FocusDirective } from '../../../shared/directive/showOnRowHover';
 
 export class InvoiceEntryPurchaseModalContext extends BSModalContext {
   constructor() {
@@ -27,7 +27,8 @@ export class InvoiceEntryPurchaseModalContext extends BSModalContext {
 @Component({
   selector: 'sp-invoice-entry-purchase',
   templateUrl: 'invoice-entry-purchase.component.html',
-   styleUrls: ['../../../dashboard/css/dashboard-invoices-distribution.css']
+   styleUrls: ['../../../dashboard/css/dashboard-invoices-distribution.css'],
+   providers:[FocusDirective]
 })
 export class InvoiceEntryPurchaseComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoiceEntryPurchaseModalContext>, OnInit {
   // export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
@@ -36,6 +37,7 @@ export class InvoiceEntryPurchaseComponent extends BaseComponent implements Clos
   public wrongAnswer: boolean;
   private POSearchText: string = '';
   private PuchaseOrderID: number = 0;
+   private inputFocused = true;
   // @ViewChild('templateRef') public templateRef: TemplateRef<any>;
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
@@ -47,7 +49,8 @@ export class InvoiceEntryPurchaseComponent extends BaseComponent implements Clos
     this.context = dialog.context;
     //this.dialog.context.dialogClass = 'modals-dialog';
     dialog.setCloseGuard(this);
-    this.getPurchaseOrders()
+    this.inputFocused = true;
+    this.getPurchaseOrders();
 
   }
   ngOnInit() {

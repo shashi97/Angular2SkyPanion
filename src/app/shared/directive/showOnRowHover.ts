@@ -1,4 +1,4 @@
-import { Directive, HostListener, ElementRef, OnInit } from "@angular/core";
+import { Directive,Input,Inject, HostListener, ElementRef, OnInit } from "@angular/core";
 import { OrderByPipe,CurrencyPipe } from '../../shared/pipe/orderby';
 
 @Directive({ selector: '[showOnRowHover]' })
@@ -56,6 +56,18 @@ export class CurrencyFormatterDirective {
 
 
 
+}
+
+@Directive({
+    selector: '[focus]'
+})
+export class FocusDirective {
+    @Input()
+    focus:boolean;
+    constructor(@Inject(ElementRef) private element: ElementRef) {}
+    protected ngOnChanges() {
+        this.element.nativeElement.focus();
+    }
 }
 
 

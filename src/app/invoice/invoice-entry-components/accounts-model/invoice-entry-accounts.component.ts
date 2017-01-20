@@ -12,7 +12,7 @@ import { LedgerAccounts } from '../../../invoice/invoice-entry/shared/invoice-en
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 import { AccountFilterPipe } from '../../../shared/pipe/orderby';
-
+import { FocusDirective } from '../../../shared/directive/showOnRowHover';
 
 export class InvoiceEntryAccountModalContext extends BSModalContext {
   CompanyID
@@ -23,7 +23,8 @@ export class InvoiceEntryAccountModalContext extends BSModalContext {
 
 @Component({
   selector: 'sp-invoice-entry-accounts',
-  templateUrl: 'invoice-entry-accounts.component.html'
+  templateUrl: 'invoice-entry-accounts.component.html',
+  providers:[FocusDirective]
 })
 
 export class InvoiceEntryAccountsComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoiceEntryAccountModalContext>, OnInit {
@@ -32,6 +33,7 @@ export class InvoiceEntryAccountsComponent extends BaseComponent implements Clos
   public wrongAnswer: boolean;
   private LedgerAccountsCount;
   private CompanyID: number = 0;
+   private inputFocused = true;
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private invoiceEntryService: InvoiceEntryService,
@@ -43,6 +45,7 @@ export class InvoiceEntryAccountsComponent extends BaseComponent implements Clos
     this.CompanyID = this.context.CompanyID;
     dialog.setCloseGuard(this);
     this.wrongAnswer = true;
+    this.inputFocused = true;
     this.getLedgerAccounts();
   }
   ngOnInit() {

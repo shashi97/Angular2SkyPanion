@@ -133,11 +133,11 @@ export class InvoiceService {
       .http
       .post(ApiUrl.baseUrl + 'api/invoices/newOrUpdate', data)
       .toPromise()
-      .then(response => response as any)
+      .then(response => response.json() as any)
       .catch(error => error);
   }
 
-  deleteInvoice(invoiceID){
+  deleteInvoice(invoiceID) {
     return this.http
       .get(ApiUrl.baseUrl + "api/invoices/getInvoiceDelete/" + invoiceID)
       .toPromise()
@@ -145,7 +145,7 @@ export class InvoiceService {
       .catch(error => error);
   }
 
-   submitInvoicebatch(invoiceID){
+   submitInvoicebatch(invoiceID) {
     return this.http
       .get(ApiUrl.baseUrl + "api/invoices/getInvoicebatch/" + invoiceID)
       .toPromise()
@@ -153,7 +153,7 @@ export class InvoiceService {
       .catch(error => error);
   }
 
-  rejectInvoice(invoiceID, companyID, invAmount, rejectionComment , documentLockingID){
+  rejectInvoice(invoiceID, companyID, invAmount, rejectionComment , documentLockingID) {
     return this.http
       .get(ApiUrl.baseUrl + "api/invoices/reject/" + invoiceID + "/" + companyID
        + "/" + invAmount + "/" + rejectionComment + "/" + documentLockingID)
@@ -162,7 +162,7 @@ export class InvoiceService {
       .catch(error => error);
   }
 
-   approveInvoice(invoiceID, invoiceAmount, aprovalComment, companyID){
+   approveInvoice(invoiceID, invoiceAmount, aprovalComment, companyID) {
     return this.http
       .get(ApiUrl.baseUrl + "api/dashboard/approveInvoice/" + invoiceID + "/" + invoiceAmount + "/" + aprovalComment + "/" + companyID )
       .toPromise()
@@ -171,7 +171,7 @@ export class InvoiceService {
   }
 
 
-    saveDistributionComment(distributionID , distributionComment){
+    saveDistributionComment(distributionID , distributionComment) {
     return this.http
       .get(ApiUrl.baseUrl + "api/dashboard/distributionComment/" + distributionID + "/" + distributionComment)
       .toPromise()

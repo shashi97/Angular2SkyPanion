@@ -1,4 +1,4 @@
-import { Component, Pipe, OnInit, ViewChildren, QueryList} from '@angular/core';
+import { Component, Pipe,Directive, OnInit, ViewChildren, QueryList} from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -15,7 +15,7 @@ import { DialogRef, ModalComponent, CloseGuard } from 'angular2-modal';
 // import { BSModalContext } from 'angular2-modal/plugins/bootstrap/index';
 import { BSModalContext } from 'angular2-modal/plugins/bootstrap';
 import { VendorFilterPipe } from '../../../shared/pipe/orderby';
-
+import { FocusDirective } from '../../../shared/directive/showOnRowHover';
 
 export class InvoiceEntryVendorModalContext extends BSModalContext {
 	constructor() {
@@ -27,7 +27,8 @@ export class InvoiceEntryVendorModalContext extends BSModalContext {
 
 @Component({
 	selector: 'sp-invoice-entry-vendor',
-	templateUrl: 'invoice-entry-vendor.component.html'
+	templateUrl: 'invoice-entry-vendor.component.html',
+  providers: [FocusDirective]
 })
 export class InvoiceEntryVendorComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoiceEntryVendorModalContext>, OnInit {
 	// export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
@@ -35,6 +36,7 @@ export class InvoiceEntryVendorComponent extends BaseComponent implements CloseG
 	public wrongAnswer: boolean;
 	private CompanyID: number = 0;
 	private vendors: Array<Vendors>;
+   private inputFocused = true;
 	// @ViewChild('templateRef') public templateRef: TemplateRef<any>;
 	constructor(private activatedRoute: ActivatedRoute,
 		private userService: UserService,
@@ -45,6 +47,7 @@ export class InvoiceEntryVendorComponent extends BaseComponent implements CloseG
 		public dialog: DialogRef<InvoiceEntryVendorModalContext>) {
 		super(localStorageService, router);
 		this.context = dialog.context;
+    this.inputFocused = true;
 		dialog.setCloseGuard(this);
 		this.vendors = new Array<Vendors>();
 

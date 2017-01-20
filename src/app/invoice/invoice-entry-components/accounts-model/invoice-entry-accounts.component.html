@@ -8,8 +8,7 @@
         <div class="navbar-search navbar-form search_form" action="#" role="search">
           <div class="form-group">
             <div class="input-group">
-              <input class="modal_search_input form-control" type="text" placeholder="Search" #listFilter (keyup)="0" id="outer3" ledger-search-close
-                exclude-class="excludeddd759" />
+              <input class="modal_search_input form-control" type="text" placeholder="Search" #listFilter (keyup)="0" id="outer3" [focus]="inputFocused" />
               <div class="input-group-addon clear_search_field" (click)="listFilter.value = ''">
                 <i class="fa fa-times-circle-o"></i>
               </div>

@@ -690,7 +690,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
             this.ledgerAccounts.forEach(item => {
               if (item.LedgerAccountName === this.glAccountObject.glAccountNumber) {
                 isMacthed = true;
-                // this.glAccountNumber = item.LedgerAccountName;
+                //  this.glAccountNumber = item.LedgerAccountName;
                 if (this.invoiceDetail.InvoiceAmount === 0 || this.invoiceDetail.InvoiceAmount == null) {
                   this.toastr.error('Invoice Amount can not be Zero');
                   return;
@@ -736,23 +736,23 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
 
 
-    if (this.invoiceDetail.InvoiceDistributions.length === 0) {
-      if (parseFloat(item.DistributionAmount.toString()) > parseFloat(this.invoiceDetail.InvoiceAmount.toString())) {
-        this.toastr.error('Distribution amount can not be greater then Invoice amount ');
-        return;
-      }
-    } else if (this.invoiceDetail.InvoiceDistributions.length > 0) {
-      let totalDistAmount = (item.DistributionAmount.toString());
-      for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-        totalDistAmount = (Number(totalDistAmount)
-          + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount)).toFixed(2);
-      }
+    // if (this.invoiceDetail.InvoiceDistributions.length === 0) {
+    //   if (parseFloat(item.DistributionAmount.toString()) > parseFloat(this.invoiceDetail.InvoiceAmount.toString())) {
+    //     this.toastr.error('Distribution amount can not be greater then Invoice amount ');
+    //     return;
+    //   }
+    // } else if (this.invoiceDetail.InvoiceDistributions.length > 0) {
+    //   let totalDistAmount = (item.DistributionAmount.toString());
+    //   for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
+    //     totalDistAmount = (Number(totalDistAmount)
+    //       + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount)).toFixed(2);
+    //   }
 
-      if (this.invoiceDetail.InvoiceAmount < (Number(totalDistAmount))) {
-        this.toastr.error('Total Distribution amount can not be greater then Invoice amount ');
-        return;
-      }
-    }
+    //   if (this.invoiceDetail.InvoiceAmount < (Number(totalDistAmount))) {
+    //     this.toastr.error('Total Distribution amount can not be greater then Invoice amount ');
+    //     return;
+    //   }
+    // }
     this.invoiceDetail.InvoiceDistributions.splice(1, 0, item);
     this.isAddAccount = false;
     this.glAccountObject = new GlAccountObject();
@@ -886,25 +886,25 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         this.toastr.error(("Invoice", 'This Invoice Number with same vendor and same invoice date is  already exists in this property'));
       } else {
 
-        if (this.AccountNumber != null && this.AccountNumber !== '') {
-          if (this.invoiceDetail.InvoiceDistributions.length > 0) {
-            for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-              if (this.invoiceDetail.InvoiceDistributions[i].AccountNumber === this.AccountNumber) {
-                if (this.invoiceDetail.InvoiceDistributions[i].DistributionID === 0) {
-                  this.invoiceDetail.InvoiceDistributions.splice(i, 1);
-                } else {
-                  this.invoiceService.removeInvoiceDistributions(
-                    this.invoiceDetail.InvoiceDistributions[i].DistributionID,
-                    this.invoiceDetail.InvoiceID).then(res => {
-                      this.invoiceDetail.InvoiceDistributions.splice(i, 1);
-                      this.ProcessVendor(this.invoiceDetail.InvoiceID);
-                      return;
-                    });
-                }
-              }
-            }
-          }
-        }
+        // if (this.AccountNumber != null && this.AccountNumber !== '') {
+        //   if (this.invoiceDetail.InvoiceDistributions.length > 0) {
+        //     for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
+        //       if (this.invoiceDetail.InvoiceDistributions[i].AccountNumber === this.AccountNumber) {
+        //         if (this.invoiceDetail.InvoiceDistributions[i].DistributionID === 0) {
+        //           this.invoiceDetail.InvoiceDistributions.splice(i, 1);
+        //         } else {
+        //           this.invoiceService.removeInvoiceDistributions(
+        //             this.invoiceDetail.InvoiceDistributions[i].DistributionID,
+        //             this.invoiceDetail.InvoiceID).then(res => {
+        //               this.invoiceDetail.InvoiceDistributions.splice(i, 1);
+        //               this.ProcessVendor(this.invoiceDetail.InvoiceID);
+        //               return;
+        //             });
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
         this.ProcessVendor(venID);
       }
     });
@@ -1038,13 +1038,14 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private removeInvoiceDistributions(distID, $index): void {
-    if (distID === 0) {
-      this.invoiceDetail.InvoiceDistributions.splice($index, 1);
-    } else {
-      this.invoiceService.removeInvoiceDistributions(distID, this.invoiceDetail.InvoiceID).then(result => {
-        this.invoiceDetail.InvoiceDistributions.splice($index, 1);
-      });
-    }
+     this.invoiceDetail.InvoiceDistributions.splice($index, 1);
+    // if (distID === 0) {
+    //   this.invoiceDetail.InvoiceDistributions.splice($index, 1);
+    // } else {
+    //   this.invoiceService.removeInvoiceDistributions(distID, this.invoiceDetail.InvoiceID).then(result => {
+    //     this.invoiceDetail.InvoiceDistributions.splice($index, 1);
+    //   });
+    // }
   }
   private checklockingStatusForExit(linkString): void {
     if (this.invoiceDetail.LockedByID == this.user.userId) {
@@ -1152,7 +1153,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
               if (result.status == 404) {
               } else if (result.status == 500) {
                 this.displayValue = 'none';
-                this.toastr.error('error', "This Attachment has been already processed.", 'error');
+                this.toastr.error('error', JSON.parse(result._body).Message, 'error');
               } else {
 
                 this.displayValue = 'none';
