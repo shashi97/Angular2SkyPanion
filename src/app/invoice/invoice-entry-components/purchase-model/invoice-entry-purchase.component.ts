@@ -47,7 +47,7 @@ export class InvoiceEntryPurchaseComponent extends BaseComponent implements Clos
     public dialog: DialogRef<InvoiceEntryPurchaseModalContext>) {
     super(localStorageService, router);
     this.context = dialog.context;
-    //this.dialog.context.dialogClass = 'modals-dialog';
+    this.dialog.context.dialogClass = 'modal-dialogss';
     dialog.setCloseGuard(this);
     this.inputFocused = true;
     this.getPurchaseOrders();
@@ -82,7 +82,9 @@ export class InvoiceEntryPurchaseComponent extends BaseComponent implements Clos
     this.dialog.close(PuchaseOrderID);
     //	this.PuchaseOrderID = PuchaseOrderID;
   }
-
+// $(window).click ():void {
+// //Hide the menus if visible
+// };
   closeModal(): void {
     this.dialog.close();
 

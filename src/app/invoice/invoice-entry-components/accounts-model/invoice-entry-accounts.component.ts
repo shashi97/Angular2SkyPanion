@@ -42,6 +42,7 @@ export class InvoiceEntryAccountsComponent extends BaseComponent implements Clos
     public dialog: DialogRef<InvoiceEntryAccountModalContext>) {
     super(localStorageService, router);
     this.context = dialog.context;
+    this.dialog.context.dialogClass = 'modal-dialogss';
     this.CompanyID = this.context.CompanyID;
     dialog.setCloseGuard(this);
     this.wrongAnswer = true;

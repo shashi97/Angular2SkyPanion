@@ -326,7 +326,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+       context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(AttachmentEditComponent, overlayConfig)

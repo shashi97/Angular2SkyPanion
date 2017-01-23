@@ -54,7 +54,7 @@ declare let jQuery: any;
 @Component({
   selector: 'sp-invoice-entry',
   templateUrl: 'invoice-entry.component.html',
-
+ 
 })
 
 export class InvoiceEntryComponent extends BaseComponent implements OnInit, AfterViewInit {
@@ -251,7 +251,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceRejectModalComponent, overlayConfig)
@@ -277,9 +277,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
-
     const dialog = this.modal.open(InvoiceEntryPurchaseComponent, overlayConfig);
     dialog.then((resultPromise) => {
       return resultPromise.result.then((result) => {
@@ -301,7 +300,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+     context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceEntryNoApproverExistsComponent, overlayConfig);
@@ -324,7 +323,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+     context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceEntryVendorComponent, overlayConfig);
@@ -349,7 +348,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+     context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceEntryAccountsComponent, overlayConfig);
@@ -378,7 +377,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+     context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoicePdfRejectModalComponent, overlayConfig);

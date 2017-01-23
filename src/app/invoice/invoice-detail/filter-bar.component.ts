@@ -100,7 +100,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+       context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceRejectModalComponent, overlayConfig)
@@ -141,7 +141,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+       context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceEntryNoApproverExistsComponent, overlayConfig);
@@ -295,7 +295,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+       context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceApproveModalComponent, overlayConfig)

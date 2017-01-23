@@ -178,7 +178,7 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+       context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceRejectModalComponent, overlayConfig)
@@ -212,7 +212,7 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceApprovalModalComponent, overlayConfig)
@@ -243,7 +243,7 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceDistributionCommentModalComponent, overlayConfig);

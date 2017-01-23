@@ -1,4 +1,4 @@
-import { Component, Pipe,Directive, OnInit, ViewChildren, QueryList} from '@angular/core';
+import { Component, Pipe, Directive, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -18,74 +18,76 @@ import { VendorFilterPipe } from '../../../shared/pipe/orderby';
 import { FocusDirective } from '../../../shared/directive/showOnRowHover';
 
 export class InvoiceEntryVendorModalContext extends BSModalContext {
-	constructor() {
-		super();
-	}
+  constructor() {
+    super();
+  }
 }
 
 
 
 @Component({
-	selector: 'sp-invoice-entry-vendor',
-	templateUrl: 'invoice-entry-vendor.component.html',
-  providers: [FocusDirective]
+  selector: 'sp-invoice-entry-vendor',
+  templateUrl: 'invoice-entry-vendor.component.html',
+  providers: [FocusDirective],
+  // styleUrls: ['../../../invoice/css/model.css']
 })
 export class InvoiceEntryVendorComponent extends BaseComponent implements CloseGuard, ModalComponent<InvoiceEntryVendorModalContext>, OnInit {
-	// export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
-	context: InvoiceEntryVendorModalContext;
-	public wrongAnswer: boolean;
-	private CompanyID: number = 0;
-	private vendors: Array<Vendors>;
-   private inputFocused = true;
-	// @ViewChild('templateRef') public templateRef: TemplateRef<any>;
-	constructor(private activatedRoute: ActivatedRoute,
-		private userService: UserService,
+  // export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
+  context: InvoiceEntryVendorModalContext;
+  public wrongAnswer: boolean;
+  private CompanyID: number = 0;
+  private vendors: Array<Vendors>;
+  private inputFocused = true;
+  // @ViewChild('templateRef') public templateRef: TemplateRef<any>;
+  constructor(private activatedRoute: ActivatedRoute,
+    private userService: UserService,
 
-		private invoiceEntryService: InvoiceEntryService,
-		localStorageService: LocalStorageService,
-		router: Router,
-		public dialog: DialogRef<InvoiceEntryVendorModalContext>) {
-		super(localStorageService, router);
-		this.context = dialog.context;
+    private invoiceEntryService: InvoiceEntryService,
+    localStorageService: LocalStorageService,
+    router: Router,
+    public dialog: DialogRef<InvoiceEntryVendorModalContext>) {
+    super(localStorageService, router);
+    this.context = dialog.context;
+    this.dialog.context.dialogClass = 'modal-dialogss';
     this.inputFocused = true;
-		dialog.setCloseGuard(this);
-		this.vendors = new Array<Vendors>();
+    dialog.setCloseGuard(this);
+    this.vendors = new Array<Vendors>();
 
 
-	}
-	ngOnInit() {
-		this.sessionDetails = this.userService.getSessionDetails();
-		if (this.sessionDetails.userId != null) {
-			this.getVendors();
-			// this.getAccountName();
+  }
+  ngOnInit() {
+    this.sessionDetails = this.userService.getSessionDetails();
+    if (this.sessionDetails.userId != null) {
+      this.getVendors();
+      // this.getAccountName();
 
-		} else {
-			let link = ['/login'];
-			this.router.navigate(link);
-		}
-	}
+    } else {
+      let link = ['/login'];
+      this.router.navigate(link);
+    }
+  }
 
 
-	public getVendors(): void {
-		this.invoiceEntryService
-			.getVendorById(this.CompanyID)
-			.then(result => {
-				if (result) {
-                    this.vendors = result;
+  public getVendors(): void {
+    this.invoiceEntryService
+      .getVendorById(this.CompanyID)
+      .then(result => {
+        if (result) {
+          this.vendors = result;
 
-                }
+        }
 
-			});
+      });
 
-	}
-	GetSelectedVendor(VendorID): void {
-		this.dialog.close(VendorID);
+  }
+  GetSelectedVendor(VendorID): void {
+    this.dialog.close(VendorID);
 
-	}
+  }
 
-	closeModal(): void {
-		this.dialog.close();
-	}
+  closeModal(): void {
+    this.dialog.close();
+  }
 }
 
 
