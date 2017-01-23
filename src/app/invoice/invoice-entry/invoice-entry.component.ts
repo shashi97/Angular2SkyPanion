@@ -1201,6 +1201,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
               }
             });
           });
+        } else {
+          document.body.scrollTop = 0;
         }
       }
     });
