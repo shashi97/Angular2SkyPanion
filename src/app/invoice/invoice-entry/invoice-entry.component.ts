@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, AfterViewInit ,OnChanges} from '@angular/core';
+import { Component, OnInit, ViewContainerRef, AfterViewInit, OnChanges } from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -51,14 +51,14 @@ import { InvoiceRejectModalComponent } from '../../dashboard/invoice-modals/invo
 import { CompanyDropdownComponent, CompanyFilterArguments } from '../../shared/dropdown/company/company-dropdown.component';
 declare let jQuery: any;
 import { FocusMe } from '../../shared/directive/showOnRowHover';
- 
-import { OrderByPipe,CurrencyPipe } from '../../shared/pipe/orderby';
+
+import { OrderByPipe, CurrencyPipe } from '../../shared/pipe/orderby';
 import { CurrencyFormatterDirective } from '../../shared/directive/showOnRowHover';
 @Component({
   selector: 'sp-invoice-entry',
   templateUrl: 'invoice-entry.component.html',
-  providers: [ FocusMe,CurrencyPipe,
-          CurrencyFormatterDirective]
+  providers: [FocusMe, CurrencyPipe,
+    CurrencyFormatterDirective]
   // host: {
   //   '(document:click)': 'this.inputFocused = false',
   // },
@@ -109,7 +109,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private pdfsrc;
   private invoiceAlert;
   private glAccountObject: GlAccountObject;
-  private dueDays:number = 0;
+  private dueDays: number = 0;
   private achAcctName = '';
   private AccountNumber: string = '';
   private invoiceDate: string = '';
@@ -194,25 +194,47 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
   }
 
-
   ngAfterViewInit() {
-    jQuery('#Invoice_date').datepicker({
-      dateFormat: 'mm/dd/yy',
-      onClose: dateText => {
-        this.invoiceDate = dateText;
-      }
+    // jQuery('#Invoice_date').datepicker({
+    //   dateFormat: 'mm/dd/yy',
+    //   onClose: dateText => {
+    //     this.invoiceDate = dateText;
+    //   }
+    // });
+
+    // jQuery('#Due_date').datepicker({
+    //   dateFormat: 'mm/dd/yy',
+    //   onClose: dateText => {
+    //     this.dueDate = dateText;
+    //   }
+    // });
+    // jQuery('#Gl_date').datepicker({
+    //   dateFormat: 'mm/dd/yy',
+    //   onClose: dateText => {
+    //     this.postGlDate = dateText;
+    //   }
+    // });
+    jQuery("#Invoice_date").datepicker();
+    jQuery("#datetimepicker_invoiceDate").click(function () {
+      jQuery("#Invoice_date").datepicker("show");
     });
-    jQuery('#Due_date').datepicker({
-      dateFormat: 'mm/dd/yy',
-      onClose: dateText => {
-        this.dueDate = dateText;
-      }
+    jQuery("#Invoice_date").click(function () {
+      jQuery("#Invoice_date").datepicker("hide");
     });
-    jQuery('#Gl_date').datepicker({
-      dateFormat: 'mm/dd/yy',
-      onClose: dateText => {
-        this.postGlDate = dateText;
-      }
+    jQuery("#Due_date").datepicker();
+    jQuery("#datetimepicker_Duedate").click(function () {
+      jQuery("#Due_date").datepicker("show");
+    });
+    // jQuery("#Due_date").click(function () {
+    //   jQuery("#Due_date").datepicker("hide");
+    // });
+
+    jQuery("#Gl_date").datepicker();
+    jQuery("#datetimepicker_Gldate").click(function () {
+      jQuery("#Gl_date").datepicker("show");
+    });
+    jQuery("#Gl_date").click(function () {
+      jQuery("#Gl_date").datepicker("hide");
     });
   }
 
@@ -308,7 +330,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-     context: builder.isBlocking(false).toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceEntryNoApproverExistsComponent, overlayConfig);
@@ -331,7 +353,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-     context: builder.isBlocking(false).toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceEntryVendorComponent, overlayConfig);
@@ -356,7 +378,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-     context: builder.isBlocking(false).toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceEntryAccountsComponent, overlayConfig);
@@ -385,7 +407,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-     context: builder.isBlocking(false).toJSON()
+      context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoicePdfRejectModalComponent, overlayConfig);
@@ -993,7 +1015,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private addAccount() {
     this.isAddAccount = true;
     this.inputFocusedss = true;
-    setTimeout(() => {this.inputFocusedss = false});
+    setTimeout(() => { this.inputFocusedss = false });
   }
   private checkglAccountNumber(glAccountNumber, $event): void {
     let isMacthed = false;
@@ -1045,7 +1067,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private removeInvoiceDistributions(distID, $index): void {
-     this.invoiceDetail.InvoiceDistributions.splice($index, 1);
+    this.invoiceDetail.InvoiceDistributions.splice($index, 1);
     // if (distID === 0) {
     //   this.invoiceDetail.InvoiceDistributions.splice($index, 1);
     // } else {

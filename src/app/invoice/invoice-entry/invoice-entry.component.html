@@ -123,9 +123,9 @@
                                     Invoice Date
                                 </label>
       <div class="col-md-8 input-group">
-        <div class="input-group date">
-          <input [(ngModel)]="invoiceDate" class="form-control" focus-name="4" tabindex="4" id="Invoice_date" name="btn" #Invoice_date="ngModel" placeholder="Invoice Date From"
-            size="12" type="text" value="" (blur)="setDueDateByInvoiceDate(invoiceDate)">
+        <div class="input-group date" id="datetimepicker_invoiceDate">
+          <input [(ngModel)]="invoiceDate" class="form-control" focus-name="4" tabindex="4" id="Invoice_date"  #Invoice_date="ngModel"  placeholder="Invoice Date From"
+            size="12" type="text"  (blur)="setDueDateByInvoiceDate(invoiceDate)">
           <!--(blur)="setDueDateByInvoiceDate(invoiceDate)"-->
           <span class="input-group-addon">
           <span class="caret" ></span>
@@ -160,9 +160,9 @@
                                     Due Date
                                 </label>
       <div class="col-md-8 input-group ">
-        <div class='input-group date'>
+        <div class='input-group date' id="datetimepicker_Duedate">
           <input [(ngModel)]="dueDate" class="form-control" focus-name="7 " tabindex="7" id="Due_date" #Due_date="ngModel" placeholder="Due Date" size="12" type="text"
-            value="">
+            >
           <!--<input type='text' class="form-control " focus-name="7 " tabindex="7 " placeholder="Click to select date" [(ngModel)]="dueDate "
             date-time-picker accept=" " (blur)="setDueDate() " />-->
           <span class="input-group-addon ">
@@ -288,9 +288,9 @@
                                     Post To GL Date
                                 </label>
       <div class="col-md-8  input-group">
-        <div class='input-group date'>
+        <div class='input-group date' id="datetimepicker_Gldate">
           <input [(ngModel)]="postGlDate" class="form-control" focus-name="13" tabindex="13" id="Gl_date" #Gl_date="ngModel" placeholder="Due Date" size="12" type="text"
-            value="">
+           >
           <!--<input type='text' class="form-control" data-ng-model="postGlDate" placeholder="Click to select date" date-time-picker focus-name="12"
             tabindex="12" ng-blur="setPostToGLDate()" />-->
           <span class="input-group-addon">
