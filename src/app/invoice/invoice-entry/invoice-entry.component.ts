@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, AfterViewInit ,OnChanges} from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -50,11 +50,18 @@ import { InvoiceModelContext } from '../../dashboard/shared/invoice-context.mode
 import { InvoiceRejectModalComponent } from '../../dashboard/invoice-modals/invoice-rejection-modal/invoice-rejection.component';
 import { CompanyDropdownComponent, CompanyFilterArguments } from '../../shared/dropdown/company/company-dropdown.component';
 declare let jQuery: any;
-
+import { FocusMe } from '../../shared/directive/showOnRowHover';
+ 
+import { OrderByPipe,CurrencyPipe } from '../../shared/pipe/orderby';
+import { CurrencyFormatterDirective } from '../../shared/directive/showOnRowHover';
 @Component({
   selector: 'sp-invoice-entry',
   templateUrl: 'invoice-entry.component.html',
- 
+  providers: [ FocusMe,CurrencyPipe,
+          CurrencyFormatterDirective]
+  // host: {
+  //   '(document:click)': 'this.inputFocused = false',
+  // },
 })
 
 export class InvoiceEntryComponent extends BaseComponent implements OnInit, AfterViewInit {
@@ -102,7 +109,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private pdfsrc;
   private invoiceAlert;
   private glAccountObject: GlAccountObject;
-  private dueDays;
+  private dueDays:number = 0;
   private achAcctName = '';
   private AccountNumber: string = '';
   private invoiceDate: string = '';
@@ -125,7 +132,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   };
   private companyTooltip;
   private invoiceBackLink;
-  private fcs_AccountNum;
+  private inputFocusedss = false;
   private fcs_description;
   private invoiceDetail: InvoiceDetail;
   private purchaseOrders: Array<any>;
@@ -154,7 +161,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     overlay.defaultViewContainer = vcRef;
     this.invoiceDetail = new InvoiceDetail();
     this.isAddAccount = true;
-    this.fcs_AccountNum = false;
+    //  this.inputFocusedss = false;
     this.glAccountObject = new GlAccountObject();
     this.companyData = new CompanyData();
     // this.purchaseOrders = new Array<PurchaseOrder>();
@@ -187,21 +194,22 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
   }
 
+
   ngAfterViewInit() {
     jQuery('#Invoice_date').datepicker({
-      dateFormat: 'dd/mm/yy',
+      dateFormat: 'mm/dd/yy',
       onClose: dateText => {
         this.invoiceDate = dateText;
       }
     });
     jQuery('#Due_date').datepicker({
-      dateFormat: 'dd/mm/yy',
+      dateFormat: 'mm/dd/yy',
       onClose: dateText => {
         this.dueDate = dateText;
       }
     });
     jQuery('#Gl_date').datepicker({
-      dateFormat: 'dd/mm/yy',
+      dateFormat: 'mm/dd/yy',
       onClose: dateText => {
         this.postGlDate = dateText;
       }
@@ -984,8 +992,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   private addAccount() {
     this.isAddAccount = true;
-    this.fcs_AccountNum = true;
-
+    this.inputFocusedss = true;
+    setTimeout(() => {this.inputFocusedss = false});
   }
   private checkglAccountNumber(glAccountNumber, $event): void {
     let isMacthed = false;
@@ -1074,7 +1082,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
       let someFormattedDate = mm + '/' + dd + '/' + y;
 
-      if ((moment(someFormattedDate, 'MM/DD/YYYY', true).isValid())) {
+      if ((moment(someFormattedDate, 'MM/DD/YYYY', true))) {
         this.dueDate = someFormattedDate;
       } else {
         this.dueDate = '';
@@ -1275,11 +1283,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
 
     if (this.invoiceDate !== '' && this.invoiceDate != null) {
-      // let isValid = moment(this.invoiceDate, 'MM/DD/YYYY', true).isValid();
-      // if (isValid === false) {
-      //   let obj = { ErrorName: 'Invoice Date format is wrong' };
-      //   this.errors.splice(this.errors.length, 0, obj);
-      // }
+      let isValid = moment(this.invoiceDate, 'MM/DD/YYYY', true).isValid();
+      if (isValid === false) {
+        let obj = { ErrorName: 'Invoice Date format is wrong' };
+        this.errors.splice(this.errors.length, 0, obj);
+      }
     }
 
 
@@ -1292,11 +1300,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
 
     if (this.postGlDate !== '' && this.postGlDate != null) {
-      // let isValid = moment(this.postGlDate, 'MM/DD/YYYY', true).isValid();
-      // if (isValid === false) {
-      //   let obj = { ErrorName: 'postGlDate format is wrong' };
-      //   this.errors.splice(this.errors.length, 0, obj);
-      // }
+      let isValid = moment(this.postGlDate, 'MM/DD/YYYY', true).isValid();
+      if (isValid === false) {
+        let obj = { ErrorName: 'postGlDate format is wrong' };
+        this.errors.splice(this.errors.length, 0, obj);
+      }
     }
 
     if (this.dueDate === '' || this.dueDate == null) {
@@ -1307,11 +1315,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
 
     if (this.dueDate !== '' && this.dueDate != null) {
-      // let isValid = moment(this.dueDate, 'MM/DD/YYYY', true).isValid();
-      // if (isValid === false) {
-      //   let obj = { ErrorName: 'Due Date format is wrong' };
-      //   this.errors.splice(this.errors.length, 0, obj);
-      // }
+      let isValid = moment(this.dueDate, 'MM/DD/YYYY', true).isValid();
+      if (isValid === false) {
+        let obj = { ErrorName: 'Due Date format is wrong' };
+        this.errors.splice(this.errors.length, 0, obj);
+      }
     }
 
 

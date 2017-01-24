@@ -112,7 +112,7 @@ import { LedgerAccountDistributionComponent } from './ledger-account/ledger-acco
 
 import { IniSetupComponent } from './ini-setup/ini-setup.component';
 
-import { ShowOnRowHover ,FocusDirective, CurrencyFormatterDirective} from './shared/directive/showOnRowHover';
+import { ShowOnRowHover ,FocusDirective,FocusMe, CurrencyFormatterDirective} from './shared/directive/showOnRowHover';
 import { LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
 
 import { JobComponent } from './job/job-dashboard/job.component';
@@ -334,6 +334,7 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     InvoiceEntryNoApproverExistsComponent,
     ShowOnRowHover,
     FocusDirective,
+    FocusMe,
     CurrencyFormatterDirective,
     AttachmentEditComponent,
     ResetPasswordComponent,

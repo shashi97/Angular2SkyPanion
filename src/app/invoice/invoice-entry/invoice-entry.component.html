@@ -125,7 +125,7 @@
       <div class="col-md-8 input-group">
         <div class="input-group date">
           <input [(ngModel)]="invoiceDate" class="form-control" focus-name="4" tabindex="4" id="Invoice_date" name="btn" #Invoice_date="ngModel" placeholder="Invoice Date From"
-            size="12" type="text" value="">
+            size="12" type="text" value="" (blur)="setDueDateByInvoiceDate(invoiceDate)">
           <!--(blur)="setDueDateByInvoiceDate(invoiceDate)"-->
           <span class="input-group-addon">
           <span class="caret" ></span>
@@ -142,8 +142,8 @@
           <span class="input-group-addon ">
                                             <i class="fa fa-usd"></i>
                                         </span>
-          <input type="number" [(ngModel)]="invoiceDetail.InvoiceAmount" focus-name="5" tabindex="5 " class="form-control"  placeholder="Enter invoice amount "
-            size="30"  (blur)="processInvAmtToDistribution(invoiceDetail.InvoiceAmount)">
+          <input type="text"  [(ngModel)]="invoiceDetail.InvoiceAmount" focus-name="5" tabindex="5 " class="form-control"  placeholder="Enter invoice amount"
+          (blur)="processInvAmtToDistribution(invoiceDetail.InvoiceAmount)" CurrencyFormatter>
         </div>
       </div>
     </div>
@@ -184,9 +184,7 @@
             <div id="invoices_index_filters_form" *ngIf="isAddAccount">
               <div class="form-group col-md-offset-3 col-md-9" style="margin-left:29% ">
                 <div class="input-group ">
-                  <input type="text " class="form-control ng-pristine ng-untouched ng-valid" focus-name="9" tabindex="9" focus-me="fcs_AccountNum
-              " [(ngModel)]="glAccountObject.glAccountNumber" (blur)="checkglAccountNumber(glAccountObject.glAccountNumber,$event) "
-                    id="accountnumDD ">
+                  <input type="text" class="form-control"  tabindex="9"  [(ngModel)]="glAccountObject.glAccountNumber" (blur)="checkglAccountNumber(glAccountObject.glAccountNumber,$event)">
                   <span class="input-group-addon" (click)="openAccountModal()">
                                                             <span class="caret "></span>
                   </span>

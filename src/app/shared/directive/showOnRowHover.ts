@@ -1,23 +1,23 @@
-import { Directive,Input,Inject, HostListener, ElementRef, OnInit } from "@angular/core";
-import { OrderByPipe,CurrencyPipe } from '../../shared/pipe/orderby';
+import { Directive, Input, Inject, HostListener, OnChanges, ElementRef, Renderer, AfterViewInit, OnInit } from "@angular/core";
+import { OrderByPipe, CurrencyPipe } from '../../shared/pipe/orderby';
 
 @Directive({ selector: '[showOnRowHover]' })
 export class ShowOnRowHover {
-    constructor(el: ElementRef) {
-       el.nativeElement.closed('tr').bind('mouseenter',
-       function() {
-         el.nativeElement.show();
-       });
-        el.nativeElement.closed('tr').bind('mouseleave',
-       function() {
-         el.nativeElement.hide();
-         var contextmenu =  el.nativeElement.find('#contextmenu');
-         contextmenu.click();
-         el.nativeElement.parent().removeClass('open');
-       });
-      // e1.nativeElement.closed('tr')
+  constructor(el: ElementRef) {
+    el.nativeElement.closed('tr').bind('mouseenter',
+      function () {
+        el.nativeElement.show();
+      });
+    el.nativeElement.closed('tr').bind('mouseleave',
+      function () {
+        el.nativeElement.hide();
+        var contextmenu = el.nativeElement.find('#contextmenu');
+        contextmenu.click();
+        el.nativeElement.parent().removeClass('open');
+      });
+    // e1.nativeElement.closed('tr')
 
-}
+  }
 };
 
 
@@ -49,7 +49,7 @@ export class CurrencyFormatterDirective {
     this.el.value = this.currencyPipe.parse(value);
   }
 
-  @HostListener("keyup", ["$event.target.value"]) 
+  @HostListener("keyup", ["$event.target.value"])
   onKeyUp(value) {
     this.el.value = this.currencyPipe.parse(value);
   }
@@ -59,14 +59,34 @@ export class CurrencyFormatterDirective {
 }
 
 @Directive({
-    selector: '[focus]'
+  selector: '[focus]'
 })
-export class FocusDirective {
-    @Input()
-    focus:boolean;
-    constructor(@Inject(ElementRef) private element: ElementRef) {}
-    protected ngOnChanges() {
-        this.element.nativeElement.focus();
+export class FocusDirective implements AfterViewInit {
+  @Input()
+  focus: boolean;
+  constructor(public renderer: Renderer, public elementRef: ElementRef) {}
+
+  ngAfterViewInit() {
+    this.renderer.invokeElementMethod(
+      this.elementRef.nativeElement, 'focus', []);
+  }
+
+}
+
+@Directive({
+  selector: '[focusMe]'
+})
+export class FocusMe {
+    @Input('focusMe') hasFocus: boolean;
+    constructor(private elementRef: ElementRef) {}
+    ngAfterViewInit() {
+      this.elementRef.nativeElement.focus();
+    }
+    ngOnChanges(changes) {
+      //console.log(changes);
+      if(changes.hasFocus && changes.hasFocus.currentValue === true) {
+        this.elementRef.nativeElement.focus();
+      }
     }
 }
 
