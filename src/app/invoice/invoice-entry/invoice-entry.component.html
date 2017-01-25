@@ -4,9 +4,9 @@
     <div class="options">
       <div class="btn-toolbar">
         <button type="button" class="btn btn-default" (click)="checklockingStatusForExit(invoiceBackLink)">
-                        <i class="fa fa-arrow-left"></i>
-                        Back
-                    </button>
+            <i class="fa fa-arrow-left"></i>
+            Back
+            </button>
         <a *ngIf="invoiceDetail.InvoiceStatusID != 5 && invoiceDetail.InvoiceStatusID != 6 && invoiceDetail.InvoiceStatusID != 7"
           class="reject_invoice_link btn btn-danger" data-remote="true" style="color: white!important; margin-top: 0px;" data-toggle="modal"
           data-target="#dgInvcoiceReject" (click)="openRejectInvoiceModal()"><i class="fa fa-remove"></i>Reject Invoice</a>
@@ -18,12 +18,12 @@
     <h1><strong>Proccessing Invoice:</strong>{{invoiceDetail.AttachmentName}}</h1>
     <div class="options">
       <button type="button" class="btn btn-danger" data-toggle="modal" (click)="openInvalidatePdfModal()">
-                    Invalid/Remove
-                </button>
+         Invalid/Remove
+         </button>
       <button type="button" class="btn btn-default" *ngIf="invoiceDetail.LockedByID == user.userId" (click)="checklockingStatusForExit(attachmentBackLink)">
-                    <i class="fa fa-arrow-left"></i>
-                    Back
-                </button>
+         <i class="fa fa-arrow-left"></i>
+         Back
+         </button>
     </div>
   </div>
   <ol class="breadcrumb">
@@ -57,7 +57,7 @@
         <a href="#" [tooltip]="CompaniesTooltip">{{invoiceDetail.CompanyName}}</a>
       </div>
       <div class="col-md-4 input-group" *ngIf="((invoiceDetail.InvoiceStatusID == 5 && sessionDetails.IsSuperUser == true )|| (invoiceDetail.IsGeneralPdf == true && invoiceDetail.InvoiceID ==0))">
-        <div style="padding: 0 !important;margin: 0 !important;" >
+        <div style="padding: 0 !important;margin: 0 !important;">
           <sp-company-dropdown (companyFiltered)="onCompanyFiltered($event)"></sp-company-dropdown>
         </div>
       </div>
@@ -79,28 +79,28 @@
           <input type="text" class="filtered_field form-control" focus-name="2" tabindex="2" [(ngModel)]="poNum" (blur)="checkPONumber(poNum ,$event)"
           />
           <span class="input-group-addon" (click)="openPurchaseModal()" data-toggle="modal ">
-                                            <span class="caret" ></span>
+               <span class="caret" ></span>
           </span>
         </div>
       </div>
     </div>
     <div class="field form-group">
       <label class="control-label col-md-4">
-                                   Vendor
-                                </label>
+         Vendor
+         </label>
       <div class="col-md-8  input-group">
         <div class='input-group'>
-          <input type="text" class="filtered_field form-control" [maxlength]="5" focus-name="3" tabindex="3" style="text-transform:uppercase" [(ngModel)]="vendorKey" (blur)="checkVendorKey(vendorKey ,$event)"
-          />
+          <input type="text" class="filtered_field form-control" [maxlength]="5" focus-name="3" tabindex="3" style="text-transform:uppercase"
+            [(ngModel)]="vendorKey" (blur)="checkVendorKey(vendorKey ,$event)" />
           <span class="input-group-addon" (click)="openVendorModal()" data-toggle="modal ">
-                                            <span class="caret" ></span>
+               <span class="caret" ></span>
           </span>
         </div>
       </div>
     </div>
     <div id="vendor_field_wrap" class="form-group">
       <label id="vendor_field_label" class="control-label col-md-4">
-                                </label>
+         </label>
       <div class="col-md-8 input-group">
         <input id="invoice_vendor_id" name="invoice[vendor_id]" type="hidden" value="15000">
         <div id="vendor_info_wrap" class="panel panel-default">
@@ -112,7 +112,6 @@
             <span *ngIf="invoiceDetail.VendorName!=null" class="text-error" style="font-weight: bold">Ach not configured</span>
             <br>
             <a *ngIf="invoiceDetail.VendorName!=null" href="#/vendor/detail/{{invoiceDetail.VendorID}}/25/-1">
-              <!--<i class="fa fa-list-alt"></i><b>Invoice History</b>-->
             </a>
           </div>
         </div>
@@ -120,31 +119,29 @@
     </div>
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="invoice_InvoiceNumber ">
-                                    Invoice Date
-                                </label>
+         Invoice Date
+         </label>
       <div class="col-md-8 input-group">
         <div class="input-group date" id="datetimepicker_invoiceDate">
-          <input [(ngModel)]="invoiceDate" class="form-control" focus-name="4" tabindex="4" id="Invoice_date"  #Invoice_date="ngModel"  placeholder="Invoice Date From"
-            size="12" type="text"  (blur)="setDueDateByInvoiceDate(invoiceDate)">
-          <!--(blur)="setDueDateByInvoiceDate(invoiceDate)"-->
+          <input type="text" [(ngModel)]="invoiceDate" class="form-control" focus-name="4" tabindex="4" id="Invoice_date" #Invoice_date="ngModel"
+            placeholder="Invoice Date From" size="12">
           <span class="input-group-addon">
-          <span class="caret" ></span>
+               <span class="caret" ></span>
           </span>
         </div>
       </div>
     </div>
-    
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="invoice_Amount ">
-                                    Amount
-                                </label>
+         Amount
+         </label>
       <div class="col-md-8 input-group">
         <div class="input-group">
           <span class="input-group-addon ">
-                                            <i class="fa fa-usd"></i>
-                                        </span>
-          <input type="number" [(ngModel)]="invoiceDetail.InvoiceAmount" focus-name="5" tabindex="5 " class="form-control"  placeholder="Enter invoice amount "
-            size="30"  (blur)="processInvAmtToDistribution(invoiceDetail.InvoiceAmount)" CurrencyFormatter>
+               <i class="fa fa-usd"></i>
+               </span>
+          <input type="text" [(ngModel)]="invoiceDetail.InvoiceAmount" focus-name="5" tabindex="5 " class="form-control" placeholder="Enter invoice amount "
+            size="30" (blur)="processInvAmtToDistribution(invoiceDetail.InvoiceAmount)" CurrencyFormatter>
         </div>
       </div>
     </div>
@@ -152,22 +149,20 @@
       <label class="control-label col-md-4 " for="invoice_Description ">Description</label>
       <div class="col-md-8 input-group ">
         <input [(ngModel)]="invoiceDetail.Description" focus-name="6 " tabindex="6 " class="filtered_field form-control
-                " data-trigger="focus " id="invoice_Description " maxlength="50 " name="invoice[Description] " placeholder="Describe this invoice."
+            " data-trigger="focus " id="invoice_Description " maxlength="50 " name="invoice[Description] " placeholder="Describe this invoice."
           rows="1 " size="50 " title=" " type="text ">
       </div>
     </div>
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="invoice_InvoiceNumber ">
-                                    Due Date
-                                </label>
+         Due Date
+         </label>
       <div class="col-md-8 input-group ">
         <div class='input-group date' id="datetimepicker_Duedate">
-          <input [(ngModel)]="dueDate" class="form-control" focus-name="7 " tabindex="7" id="Due_date" #Due_date="ngModel" placeholder="Due Date" size="12" type="text"
-            value="">
-          <!--<input type='text' class="form-control " focus-name="7 " tabindex="7 " placeholder="Click to select date" [(ngModel)]="dueDate "
-            date-time-picker accept=" " (blur)="setDueDate() " />-->
+          <input [(ngModel)]="dueDate" class="form-control" focus-name="7 " tabindex="7" id="Due_date" #Due_date="ngModel" placeholder="Due Date"
+            size="12" type="text" value="">
           <span class="input-group-addon ">
-                                            <span class="caret "></span>
+               <span class="caret "></span>
           </span>
         </div>
       </div>
@@ -178,36 +173,35 @@
           <!----here new distribution starts--->
           <div id="purchase_order_field_wrap" class="">
             <label id="purchase_order_field_label" class="control-label col-md-12 pull-right">
-                                                <a (click)="addAccount()" focus-name="8" tabindex="8"><i class="fa fa-plus"></i>Add Account</a>
-                                            </label>
+                  <a (click)="addAccount()" focus-name="8" tabindex="8"><i class="fa fa-plus"></i>Add Account</a>
+                  </label>
           </div>
           <div>
             <div id="invoices_index_filters_form" *ngIf="isAddAccount">
-
-              <div class="form-group col-md-offset-3 col-md-9" style="margin-left:29% " *ngIf = "invoiceDetail.IsFund == true">
-                      <p-dropdown [options]="fundCompanies" [(ngModel)]="selectedFundCompany.selected" [filter]="true"  [style]="{'width':'100%'}"
-                              (ngModelChange)="getSelectedFundCompanyDetails(selectedFundCompany.selected.CompanyID , selectedFundCompany.selected.CompanyNumber , selectedFundCompany.selected.CompanyName)"></p-dropdown>
-              </div>                      
-
+              <div class="form-group col-md-offset-3 col-md-9" style="margin-left:29% " *ngIf="invoiceDetail.IsFund == true">
+                <p-dropdown [options]="fundCompanies" [(ngModel)]="selectedFundCompany.selected" [filter]="true" [style]="{'width':'100%'}"
+                  (ngModelChange)="getSelectedFundCompanyDetails(selectedFundCompany.selected.CompanyID , selectedFundCompany.selected.CompanyNumber , selectedFundCompany.selected.CompanyName)"></p-dropdown>
+              </div>
               <div class="form-group col-md-offset-3 col-md-9" style="margin-left:29% ">
                 <div class="input-group ">
                   <input type="text " tabindex="9" class="form-control ng-pristine ng-untouched ng-valid" focus-name="9" tabindex="9" focus-me="fcs_AccountNum
-              " [(ngModel)]="glAccountObject.glAccountNumber" (blur)="checkglAccountNumber(glAccountObject.glAccountNumber,$event) "
+                           " [(ngModel)]="glAccountObject.glAccountNumber" (blur)="checkglAccountNumber(glAccountObject.glAccountNumber,$event) "
                     id="accountnumDD ">
                   <span class="input-group-addon" (click)="openAccountModal()">
-                                                            <span class="caret "></span>
+                           <span class="caret "></span>
                   </span>
                 </div>
               </div>
               <div class="form-group col-md-offset-3 col-md-9 " style="margin-left:29% ">
                 <!--ng-focus="onTextClick($event) "-->
-                <input class="form-control " id="countPerPage " focus-name="10" tabindex="10" [(ngModel)]="glAccountObject.glAccountDescription" focus-me="fcs_description ">
+                <input class="form-control " id="countPerPage " focus-name="10" tabindex="10" [(ngModel)]="glAccountObject.glAccountDescription"
+                  focus-me="fcs_description ">
               </div>
               <div class="form-group col-md-offset-3 col-md-9 " style="margin-left:29% ">
-                <input class="form-control ng-pristine ng-untouched ng-valid" [(ngModel)]="glAccountObject.glAccountAmount" size="10 " type="text " nks-only-number decimal-upto="2 "
-                  focus-name="11" tabindex="11">
+                <input class="form-control ng-pristine ng-untouched ng-valid" [(ngModel)]="glAccountObject.glAccountAmount" size="10 " type="text "
+                  nks-only-number decimal-upto="2 " focus-name="11" tabindex="11">
               </div>
-              <div class="form-group col-md-offset-3 col-md-9 "  style="margin-left:29% ">
+              <div class="form-group col-md-offset-3 col-md-9 " style="margin-left:29% ">
                 <button class="btn btn-primary" focus-name="12" tabindex="12" (click)="addGlAccount()">Add</button>
               </div>
             </div>
@@ -216,8 +210,6 @@
         </div>
       </div>
     </div>
-    <!--<sp-invoice-entry-accounts></sp-invoice-entry-accounts>-->
-    <!--<sp-invoice-entry-distributions></sp-invoice-entry-distributions>-->
     <div id="distributions_panel" class="panel panel-default">
       <div class="panel-heading">
         <h2>Distributions</h2>
@@ -227,7 +219,7 @@
           role="grid" aria-describedby="editable_info">
           <thead>
             <tr role="row">
-                <th *ngIf="invoiceDetail.IsFund == true">Fund</th>
+              <th *ngIf="invoiceDetail.IsFund == true">Fund</th>
               <th>GL Account</th>
               <th>Amount</th>
               <th>Comment</th>
@@ -236,58 +228,53 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of invoiceDetail.InvoiceDistributions">
-             <td class="ledger_account_identifier" *ngIf="item.FundCompanyID > 0">{{item.FundCompanyNumber}}</td>
+              <td class="ledger_account_identifier" *ngIf="item.FundCompanyID > 0">{{item.FundCompanyNumber}}</td>
               <td class="ledger_account_identifier">{{item.AccountTitle}}</td>
               <td class="amount_row">
-                <a href="javascript:void(0)"
-                  [popover]="amountPopover" style="border-bottom-style: dashed; border-width: 1px;">${{item.DistributionAmount}}</a>
-                  <popover-content #amountPopover placement="top">
-                      <div>
-                           <div class="popover-content" style="padding: 0px; margin: 0px">
-                                  <h3 class="popover-title">Enter distribution amount</h3>
-                                <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
-                                    <div class="navbar-inner">
-                                        <div class="navbar-search navbar-form search_form" action="#" role="search">
-                                            <div class="control-group form-group">
-                                                <div class="editable-input" style="position: relative;">
-                                                    <input type="number" class="form-control input-sm" style="padding-right: 24px;"
-                                                         [(ngModel)]="item.DistributionAmount" (keyup.enter) = "amountPopover.hide()" ><span class="editable-clear-x"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                <a href="javascript:void(0)" [popover]="amountPopover" style="border-bottom-style: dashed; border-width: 1px;">${{item.DistributionAmount}}</a>
+                <popover-content #amountPopover placement="top">
+                  <div>
+                    <div class="popover-content" style="padding: 0px; margin: 0px">
+                      <h3 class="popover-title">Enter distribution amount</h3>
+                      <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
+                        <div class="navbar-inner">
+                          <div class="navbar-search navbar-form search_form" action="#" role="search">
+                            <div class="control-group form-group">
+                              <div class="editable-input" style="position: relative;">
+                                <input type="number" class="form-control input-sm" style="padding-right: 24px;" [(ngModel)]="item.DistributionAmount" (keyup.enter)="amountPopover.hide()">
+                                <span
+                                  class="editable-clear-x"></span>
+                              </div>
                             </div>
+                          </div>
+                        </div>
                       </div>
-                  </popover-content>                                             
-
+                    </div>
+                  </div>
+                </popover-content>
               </td>
               <td class="comment_row">
-                <a href="javascript:void(0)" 
-                   [popover]="commentPopover"  style="border-bottom-style: dashed; border-width: 1px;">@<span>{{item.DistributionComment}}</span></a>
-
-                    <popover-content  #commentPopover  placement="top">
-                      <div>
-                           <div class="popover-content" style="padding: 0px; margin: 0px">
-                              <h3 class="popover-title">Enter distribution comment</h3>
-                                <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
-                                    <div class="navbar-inner">
-                                        <div class="navbar-search navbar-form search_form" action="#" role="search">
-                                            <div class="control-group form-group">
-                                                <div class="editable-input" style="position: relative;">
-                                                    <input type="text" class="form-control input-sm" style="padding-right: 24px;"
-                                                         [(ngModel)]="item.DistributionComment" (keyup.enter) = "commentPopover.hide()" ><span class="editable-clear-x"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                <a href="javascript:void(0)" [popover]="commentPopover" style="border-bottom-style: dashed; border-width: 1px;">@<span>{{item.DistributionComment}}</span></a>
+                <popover-content #commentPopover placement="top">
+                  <div>
+                    <div class="popover-content" style="padding: 0px; margin: 0px">
+                      <h3 class="popover-title">Enter distribution comment</h3>
+                      <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
+                        <div class="navbar-inner">
+                          <div class="navbar-search navbar-form search_form" action="#" role="search">
+                            <div class="control-group form-group">
+                              <div class="editable-input" style="position: relative;">
+                                <input type="text" class="form-control input-sm" style="padding-right: 24px;" [(ngModel)]="item.DistributionComment" (keyup.enter)="commentPopover.hide()">
+                                <span
+                                  class="editable-clear-x"></span>
+                              </div>
                             </div>
+                          </div>
+                        </div>
                       </div>
-                  </popover-content>                                               
-
-
-
+                    </div>
+                  </div>
+                </popover-content>
               </td>
               <td>
                 <i class="fa fa-times remove_distribution" (click)="removeInvoiceDistributions(item.DistributionID, $index)"></i>
@@ -299,17 +286,13 @@
     </div>
     <div class="field form-group">
       <label class="control-label col-md-4" for="invoice_InvoiceNumber">
-                                    Post To GL Date
-                                </label>
+         Post To GL Date
+         </label>
       <div class="col-md-8  input-group">
         <div class='input-group date' id="datetimepicker_Gldate">
-          <input [(ngModel)]="postGlDate" class="form-control" focus-name="13" tabindex="13" id="Gl_date" #Gl_date="ngModel" placeholder="Due Date" size="12" type="text"
-            value="">
-          <!--<input type='text' class="form-control" data-ng-model="postGlDate" placeholder="Click to select date" date-time-picker focus-name="12"
-            tabindex="12" ng-blur="setPostToGLDate()" />-->
+          <input [(ngModel)]="postGlDate" class="form-control" focus-name="13" tabindex="13" id="Gl_date" #Gl_date="ngModel" placeholder="Due Date"
+            size="12" type="text" value="">
           <span class="input-group-addon">
-
-                                            <!--<span class="glyphicon glyphicon-calendar"></span>-->
           <span class="caret"></span>
           </span>
         </div>
@@ -321,29 +304,29 @@
         <div class="field" *ngIf="companyData.CashAccount1Description !='Unknown'">
           <div class="col-md-12">
             <label>
-                 <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription1"  *ngIf="IsAcc1show">{{companyData.CashAccount1Description}}
-           </label>
+                  <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription1"  *ngIf="IsAcc1show">{{companyData.CashAccount1Description}}
+                  </label>
           </div>
         </div>
         <div class="field" *ngIf="companyData.CashAccount2Description !='Unknown'">
           <div class="col-md-12">
             <label>
-              <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription2"  *ngIf="IsAcc2show">{{companyData.CashAccount2Description}}
-               </label>
+                  <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription2"  *ngIf="IsAcc2show">{{companyData.CashAccount2Description}}
+                  </label>
           </div>
         </div>
         <div class="field" *ngIf="companyData.CashAccount3Description !='Unknown'">
           <div class="col-md-12">
             <label>
-               <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription3"  *ngIf="IsAcc3show">{{companyData.CashAccount3Description}}
-                </label>
+                  <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription3"  *ngIf="IsAcc3show">{{companyData.CashAccount3Description}}
+                  </label>
           </div>
         </div>
         <div class="field" *ngIf="companyData.CashAccount4Description !='Unknown'">
           <div class="col-md-12">
             <label>
-               <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription4"  *ngIf="IsAcc4show">{{companyData.CashAccount4Description}}
-             </label>
+                  <input type="radio" [(ngModel)]="Accountbind" value="AcDiscription4"  *ngIf="IsAcc4show">{{companyData.CashAccount4Description}}
+                  </label>
           </div>
         </div>
       </div>
@@ -366,8 +349,8 @@
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="job_category_id_Job Category ">Job category</label>
       <div class="col-md-8 input-group ">
-        <p-dropdown [options]="jobCategory" [(ngModel)]="selectedJobCategory.selected" focus-name="14" tabindex="14" [filter]="true" [autoWidth]="true" [style]="{'width':'100%'}"
-          (ngModelChange)="SelectJobCategory(selectedJobCategory.selected.JobCategoryID)"></p-dropdown>
+        <p-dropdown [options]="jobCategory" [(ngModel)]="selectedJobCategory.selected" focus-name="14" tabindex="14" [filter]="true"
+          [autoWidth]="true" [style]="{'width':'100%'}" (ngModelChange)="SelectJobCategory(selectedJobCategory.selected.JobCategoryID)"></p-dropdown>
       </div>
     </div>
     <div class="field form-group ">
@@ -377,33 +360,29 @@
           placeholder="Enter a note for this invoice. " rows="3 "></textarea>
         <span class="text-warning ">**This field is for SkyPanion only.  It will not be synced with Skyline.</span>
       </div>
-    </div><br><br>
+    </div>
+    <br><br>
   </div>
   <div class="col-md-8" id="form_right_wrap" style="width: 65%; float: left;margin-left:15px">
     <input id="invoice_attachment_id" [(ngModel)]="invoiceDetail.attachment_id" type="hidden" value="568">
     <div class="row">
       <iframe id="pdf_frame" height="800" class="col-md-12" [src]="pdfsrc" style="border: 0; position: inherit"></iframe>
-      <!--src="http://localhost/abc/api/getpdf?a=1"-->
     </div>
     <div class="row">
       <div class="col-md-12" style="padding-top:30px" *ngIf="invoiceDetail.InvoiceID != 0">
         <span class="pull-right">
-                                        <div class="checkbox-inline" *ngIf="invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.IsApprovalRequired == true">
-                                            <label>
-                                                <input checked="checked" id="xyz" name="status" type="checkbox" value="5">
-                                                Continue after save&nbsp;
-                                            </label>
-
-                                        </div>
-
-                                        <input class="btn btn-success" id="submit_for_approval" value="Submit for Approval" type="button" (click)="SubmitInvoiceForApproval(invoiceDetail)" *ngIf="(invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.InvoiceStatusID == 1 ||invoiceDetail.InvoiceStatusID == 5)  && invoiceDetail.InvoiceAmount != 0" />
-                                        <input class="btn btn-info" id="expedite_invoice" type="button" value="Expedite" (click)="submitInvoiceExpedite(invoiceDetail)" *ngIf="(invoiceDetail.IsExpeditedable == true || invoiceDetail.InvoiceStatusID ==1 || invoiceDetail.IsSubmitForApprovalRequired == true ||invoiceDetail.InvoiceStatusID == 5)  && invoiceDetail.InvoiceAmount != 0" />
-                                        <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('isSaveAfterEdit','')" *ngIf="invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.IsApprovalRequired == true || invoiceDetail.InvoiceStatusID == 2 || invoiceDetail.InvoiceStatusID == 5" />
-                                        <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('getInvoiceGrid','')" *ngIf="(user.IsSuperUser == true && (invoiceDetail.InvoiceStatusID == 4 ||invoiceDetail.InvoiceStatusID == 6))" />
-
-                                        <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('isSave','saveInvoiceAfterEditFromBatch')" *ngIf="invoiceDetail.IsBatche == true && invoiceDetail.InvoiceStatusID == 3" />
-
-                                    </span>
+               <div class="checkbox-inline" *ngIf="invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.IsApprovalRequired == true">
+                  <label>
+                  <input checked="checked" id="xyz" name="status" type="checkbox" value="5">
+                  Continue after save&nbsp;
+                  </label>
+               </div>
+               <input class="btn btn-success" id="submit_for_approval" value="Submit for Approval" type="button" (click)="SubmitInvoiceForApproval(invoiceDetail)" *ngIf="(invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.InvoiceStatusID == 1 ||invoiceDetail.InvoiceStatusID == 5)  && invoiceDetail.InvoiceAmount != 0" />
+               <input class="btn btn-info" id="expedite_invoice" type="button" value="Expedite" (click)="submitInvoiceExpedite(invoiceDetail)" *ngIf="(invoiceDetail.IsExpeditedable == true || invoiceDetail.InvoiceStatusID ==1 || invoiceDetail.IsSubmitForApprovalRequired == true ||invoiceDetail.InvoiceStatusID == 5)  && invoiceDetail.InvoiceAmount != 0" />
+               <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('isSaveAfterEdit','')" *ngIf="invoiceDetail.IsSubmitForApprovalRequired == true || invoiceDetail.IsApprovalRequired == true || invoiceDetail.InvoiceStatusID == 2 || invoiceDetail.InvoiceStatusID == 5" />
+               <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('getInvoiceGrid','')" *ngIf="(user.IsSuperUser == true && (invoiceDetail.InvoiceStatusID == 4 ||invoiceDetail.InvoiceStatusID == 6))" />
+               <input class="btn btn-default" type="button" value="Save" (click)="saveInvoice('isSave','saveInvoiceAfterEditFromBatch')" *ngIf="invoiceDetail.IsBatche == true && invoiceDetail.InvoiceStatusID == 3" />
+            </span>
         <br class="clearfix">
         <br>
         <br>
@@ -411,9 +390,9 @@
       <div class="col-md-12" *ngIf="invoiceDetail.IsSubmitForApprovalRequired == false && ( invoiceDetail.InvoiceStatusID == null ) && invoiceDetail.InvoiceID == 0">
         <hr>
         <span class="" style="float: right">
-                                        <button class="btn btn-default" focus-name="16" tabindex="16" (click)="saveInvoice('isSave','')">Process</button>
-                                        <button class="btn btn-primary" focus-name="17" tabindex="17" (click)="saveInvoice('isSaveAndContinue' ,'')">Process and Continue</button>
-                                    </span>
+            <button class="btn btn-default" focus-name="16" tabindex="16" (click)="saveInvoice('isSave','')">Process</button>
+            <button class="btn btn-primary" focus-name="17" tabindex="17" (click)="saveInvoice('isSaveAndContinue' ,'')">Process and Continue</button>
+            </span>
         <br class="clearfix">
         <br>
         <br>
@@ -421,4 +400,3 @@
     </div>
   </div>
 </div>
-<!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->
