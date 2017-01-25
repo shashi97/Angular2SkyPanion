@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input ,OnChanges } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { CompanyModel } from '../shared/company.model';
   templateUrl: './company-role.component.html',
 })
 
-export class CompanyRoleComponent extends BaseComponent implements OnInit {
+export class CompanyRoleComponent extends BaseComponent implements OnInit ,OnChanges {
 
   @Input() companyId: number;
   @Input() company: CompanyModel;
@@ -39,9 +39,15 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
     this.roleModel = new RoleModel();
   }
 
-  ngOnInit() {
-    this.getRoles();
-  }
+ngOnInit(){
+   this.getRoles();
+}
+
+ngOnChanges(){
+  this.getCompanyDetails();
+}
+
+
 
   private getRoles(): void {
     this.roleService.getRoles().then(result => {
@@ -59,7 +65,7 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
           { label: item.Name, value: item });
       });
 
-      this.getCompanyDetails();
+    //  this.getCompanyDetails();
       //  }
     }).catch(function (params: any) {
       let message;
@@ -77,9 +83,9 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
 
 
 
-
   private getCompanyDetails(): void {
 
+    if(this.roles != []){
     this.roles.map((item) => {
       if (item.value.RoleID === this.company.view_invoice_role_id) {
         this.selectedViewInvoicesRole = item.value;
@@ -103,6 +109,7 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit {
         this.selectedApproverRole = item.value;
       }
     });
+  }
   }
 
   public updateInvoiceRole(selectedRole: RoleModel, key: string): void {

@@ -25,7 +25,6 @@ export class ResetPasswordComponent implements OnInit {
 
     private getUserDetail(): void {
         let resetPasswordToken = window.location.href.split('?')[1];
-        alert(resetPasswordToken);
         this.resetPasswordService.getUserDetail(resetPasswordToken).then((result) => {
             this.resetPasswordDetail = result;
             if (this.resetPasswordDetail.UserID === 0) {

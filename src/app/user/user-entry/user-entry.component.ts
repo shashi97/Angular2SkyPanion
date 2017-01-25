@@ -331,6 +331,14 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
       let obj = { ErrorName: 'Username cannot be blank' };
       this.errors.splice(this.errors.length, 0, obj);
     }
+
+     if(! (/^[a-z0-9_]+$/i.test(this.userDetail.userName))) {
+                 let obj = {
+                  ErrorName: 'Please remove white spaces in username'
+                };
+                this.errors.splice(this.errors.length, 0, obj);
+            }
+
     if (!this.userDetail.email) {
       let obj = {
         ErrorName: 'Email cannot be blank'
@@ -340,11 +348,10 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
 
     if (this.userDetail.email) {
       if (!this.regexp1.test(this.userDetail.email)) {
-        // alert('Please Enter Reciever Mail Address With Correct Fromat');
-        // messageService.showMsgBox('Invoice', 'Please Enter Reciever Mail Address With Correct Fromat', 'error');
-        this.toastr.error('Please Enter Reciever Mail Address With Correct Fromat', 'Oops!');
-        return false;
-        // }
+         let obj = {
+              ErrorName: 'Please Enter Reciever Mail Address With Correct Fromat'
+            };
+            this.errors.splice(this.errors.length, 0, obj);
       }
     }
 
@@ -385,6 +392,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
       // this.displayValue = 'alert alert-danger';
       this.errorHeader = this.errors.length + ' errors prohibited this ' + this.userDetail.type + ' from being saved:';
       // $(window).scrollTop(0);
+          document.body.scrollTop = 0;
       return;
     }
 

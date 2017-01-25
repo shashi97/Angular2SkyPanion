@@ -17,6 +17,8 @@ export class BaseComponent {
         if (this.router.url === '/') {
           this.disableSideBar = {};
           this.router.navigate(['/company/-1/-1']);
+        }else if (this.router.url === '/login') {
+          this.router.navigate(['/dashboard']);
         }
       } else {
         this.disableMenu = { 'display': 'none' };

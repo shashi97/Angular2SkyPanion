@@ -191,6 +191,10 @@ export class InvoiceDetail {
     LockedBy: string = '';
     type: string = '';
     InvoiceDistributions: Array<InvoiceDistributions> = new Array<InvoiceDistributions>();
+    IsInvoiceApprovalStateResetRequired:boolean= false;
+    IsGeneralPdf:boolean;
+    IsGeneral:boolean;
+
 
 }
 export class InvoiceDistributions {

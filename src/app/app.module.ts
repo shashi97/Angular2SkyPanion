@@ -20,7 +20,8 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { ConfirmService } from './shared/services/otherServices/confirmService';
 
-import { DropdownModule, MultiSelectModule ,DataTableModule as PrimeDataTableModule , SharedModule} from 'primeng/primeng';
+import { DropdownModule, MultiSelectModule ,DataTableModule as PrimeDataTableModule , SharedModule ,CalendarModule} from 'primeng/primeng';
+
 
 /* for pagination */
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -32,6 +33,9 @@ import { ToastModule } from 'ng2-toastr/ng2-toastr';
 
 /* for drag and drop grid rows */
 import { DragulaModule } from 'ng2-dragula/ng2-dragula';
+
+/* for for popver and toolip */
+import { PopoverModule } from 'ngx-popover';
 
 
 
@@ -378,7 +382,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     ModalModule.forRoot(),
     BootstrapModalModule,
     TooltipModule,
-    ToastModule
+    ToastModule,
+    PopoverModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

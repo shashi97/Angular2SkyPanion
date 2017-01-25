@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, AfterViewInit , OnChanges } from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -57,15 +57,20 @@ import { CurrencyFormatterDirective } from '../../shared/directive/showOnRowHove
 @Component({
   selector: 'sp-invoice-entry',
   templateUrl: 'invoice-entry.component.html',
+  styleUrls: ['../invoice-entry/css/invoice-entry.css'],
   providers: [FocusMe, CurrencyPipe,
     CurrencyFormatterDirective]
   // host: {
   //   '(document:click)': 'this.inputFocused = false',
   // },
+ 
 })
 
 export class InvoiceEntryComponent extends BaseComponent implements OnInit, AfterViewInit {
   private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
+  private fundCompanyID: number = 0;
+  private accountCompanyID: number = 0;
+  private fundCompanyNumber: string = '';
   private attachmentId: number = 0;
   private invoiceID: number = 0;
   private InvoiceID: number = 0;
@@ -87,6 +92,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private jobs: Array<any>;
   private invApprovals: InvApprovals;
   private companies: Array<any>;
+  private fundCompanies: Array<any>;  
+  private date: moment.Moment;
   private selectedJob = {
     selected: []
   }
@@ -101,6 +108,11 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     selected: {}
 
   }
+  private selectedFundCompany = {
+    selected: {}
+
+  }
+  private a2eOptions: any;
   private companyData: CompanyData;
   private errors;
   private displayValue: string = '';
@@ -109,7 +121,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private pdfsrc;
   private invoiceAlert;
   private glAccountObject: GlAccountObject;
-  private dueDays: number = 0;
+   private dueDays: number = 0;
   private achAcctName = '';
   private AccountNumber: string = '';
   private invoiceDate: string = '';
@@ -133,8 +145,12 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private companyTooltip;
   private invoiceBackLink;
   private inputFocusedss = false;
+  private fcs_AccountNum;
   private fcs_description;
   private invoiceDetail: InvoiceDetail;
+  private oldInvoiceDistributionsJson : string;
+  private oldInvoiceAmount:number;
+  private oldVendorID:number;
   private purchaseOrders: Array<any>;
   private invoiceNumber;
   private attachmentBackLink;
@@ -161,7 +177,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     overlay.defaultViewContainer = vcRef;
     this.invoiceDetail = new InvoiceDetail();
     this.isAddAccount = true;
-    //  this.inputFocusedss = false;
+    this.fcs_AccountNum = false;
     this.glAccountObject = new GlAccountObject();
     this.companyData = new CompanyData();
     // this.purchaseOrders = new Array<PurchaseOrder>();
@@ -175,6 +191,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.searchParameters = -1;
     this.attachmentBackLink = '/attachmentsList/' + this.pageSizeFilter + '/' + this.searchParameters;
     this.invoiceBackLink = '/invoice/' + this.pageSizeFilter + '/' + this.searchParameters;
+     this.date = moment();
+      this.a2eOptions = {format: 'YYYY/MM/DD HH:mm'};
   }
 
   ngOnInit() {
@@ -194,47 +212,37 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
   }
 
+  
+
+
+   dateClick() {
+    console.log('click click!')
+  }
+
+    dateChange(date) {
+    this.date = date;
+  }
+  
+
+
   ngAfterViewInit() {
-    // jQuery('#Invoice_date').datepicker({
-    //   dateFormat: 'mm/dd/yy',
-    //   onClose: dateText => {
-    //     this.invoiceDate = dateText;
-    //   }
-    // });
-
-    // jQuery('#Due_date').datepicker({
-    //   dateFormat: 'mm/dd/yy',
-    //   onClose: dateText => {
-    //     this.dueDate = dateText;
-    //   }
-    // });
-    // jQuery('#Gl_date').datepicker({
-    //   dateFormat: 'mm/dd/yy',
-    //   onClose: dateText => {
-    //     this.postGlDate = dateText;
-    //   }
-    // });
-    jQuery("#Invoice_date").datepicker();
-    jQuery("#datetimepicker_invoiceDate").click(function () {
-      jQuery("#Invoice_date").datepicker("show");
+    jQuery('#Invoice_date').datepicker({
+      dateFormat: 'dd/mm/yy',
+      onClose: dateText => {
+        this.invoiceDate = dateText;
+      }
     });
-    jQuery("#Invoice_date").click(function () {
-      jQuery("#Invoice_date").datepicker("hide");
+    jQuery('#Due_date').datepicker({
+      dateFormat: 'dd/mm/yy',
+      onClose: dateText => {
+        this.dueDate = dateText;
+      }
     });
-    jQuery("#Due_date").datepicker();
-    jQuery("#datetimepicker_Duedate").click(function () {
-      jQuery("#Due_date").datepicker("show");
-    });
-    // jQuery("#Due_date").click(function () {
-    //   jQuery("#Due_date").datepicker("hide");
-    // });
-
-    jQuery("#Gl_date").datepicker();
-    jQuery("#datetimepicker_Gldate").click(function () {
-      jQuery("#Gl_date").datepicker("show");
-    });
-    jQuery("#Gl_date").click(function () {
-      jQuery("#Gl_date").datepicker("hide");
+    jQuery('#Gl_date').datepicker({
+      dateFormat: 'dd/mm/yy',
+      onClose: dateText => {
+        this.postGlDate = dateText;
+      }
     });
   }
 
@@ -251,14 +259,20 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
     if (companyID != 0 && companyID != this.invoiceDetail.CompanyID) {
       if (confirm("Are you sure you'd like to change property of this invoice?") == true) {
-        this.invoiceService.changeInvoiceProperty(this.invoiceDetail.InvoiceID, this.CompanyID, this.companyNumber, this.invoiceDetail.CompanyNumber, this.invoiceDetail.AttachmentName).then(result => {
+        this.invoiceService.changeInvoiceProperty(this.invoiceDetail.AttachmentID ,this.invoiceDetail.InvoiceID, this.CompanyID, this.companyNumber, this.invoiceDetail.CompanyNumber, this.invoiceDetail.AttachmentName).then(result => {
           if (result.status == 404) {
           }
           else if (result.status == 500) {
           }
           else {
             this.toastr.success("success", "Property changed for this invoice successfully", "success");
-            this.router.navigate(['/invoice/detail/' + this.pageSizeFilter + '/' + this.searchParameters + '/' + this.invoiceDetail.InvoiceID + '/' + this.invoiceDetail.InvoiceNumber + '/' + 0 + '/' + companyID + '/' + null + '/' + null]);
+             if (this.invoiceDetail.IsGeneralPdf == true && this.invoiceDetail.InvoiceID == 0) {
+                            window.location.href = '#/invoices/' + this.pageSizeFilter + '/' + this.searchParameters + '/0/new/' + this.invoiceDetail.AttachmentID;
+                            window.location.reload();
+
+                        } else {
+                            this.router.navigate(['/invoice/detail/' + this.pageSizeFilter + '/' + this.searchParameters + '/' + this.invoiceDetail.InvoiceID + '/' + this.invoiceDetail.InvoiceNumber + '/' + 0 + '/' + companyID + '/' + null + '/' + null]);
+                        }
           }
 
         });
@@ -330,7 +344,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.isBlocking(false).toJSON()
+     context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceEntryNoApproverExistsComponent, overlayConfig);
@@ -353,7 +367,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.isBlocking(false).toJSON()
+     context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceEntryVendorComponent, overlayConfig);
@@ -369,16 +383,22 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   openAccountModal() {
+    if(this.invoiceDetail.IsFund){
+          this.accountCompanyID= this.fundCompanyID
+        }else{
+          this.accountCompanyID =  this.invoiceDetail.CompanyID
+        }
+
     const builder = new BSModalContextBuilder<InvoiceEntryAccountModalContext>(
       {
-        CompanyID: this.invoiceDetail.CompanyID
+        CompanyID: this.accountCompanyID
       } as any,
       undefined,
       InvoiceEntryAccountModalContext
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.isBlocking(false).toJSON()
+     context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoiceEntryAccountsComponent, overlayConfig);
@@ -407,7 +427,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     );
 
     let overlayConfig: OverlayConfig = {
-      context: builder.isBlocking(false).toJSON()
+     context: builder.isBlocking(false).toJSON()
     };
 
     const dialog = this.modal.open(InvoicePdfRejectModalComponent, overlayConfig);
@@ -506,6 +526,15 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
             this.DocumentLockingID = this.invoiceDetail.DocumentLockingID;
             this.DocumentID = this.invoiceDetail.InvoiceID;
           }
+
+          if(this.invoiceDetail.InvoiceDistributions !=undefined && this.invoiceDetail.InvoiceDistributions != []){
+               this.oldInvoiceDistributionsJson = (JSON.stringify(this.invoiceDetail.InvoiceDistributions));
+          }  
+          if(this.invoiceDetail.InvoiceID >0){
+              this.oldInvoiceAmount = this.invoiceDetail.InvoiceAmount;
+              this.oldVendorID = this.invoiceDetail.VendorID;
+          }
+
           this.vendorKey = this.invoiceDetail.VendorKey;
           let apiServiceBase = ApiUrl.baseUrl;
           this.pdfsrc1 = apiServiceBase + 'api/invoices/getPdf/'
@@ -565,12 +594,43 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           } if (this.invoiceDetail.IsFund == false) {
             this.getLedgerAccounts(this.invoiceDetail.CompanyID);
           } else {
-            //$scope.getFundPostCompaniesByCompanyID($scope.invoiceDetail.CompanyID);
+            this.getFundPostCompaniesByCompanyID(this.invoiceDetail.CompanyID);
           }
         }
       });
 
   }
+
+   private getFundPostCompaniesByCompanyID = function (companyId) {
+    
+        this.companiesService.getFundPostCompaniesByCompanyID(companyId).then(result => {
+      if (result) {
+                this.fundCompanies = result;
+                let defaultCompany = { CompanyID: 0, CompanyNumber: 'Select Fund Property',
+                                      CompanyName: 'Select Property', CompanyType: 'None', AccountID: 0 };
+                this.fundCompanies.splice(0, 0, defaultCompany);
+                this.selectedFundCompany.selected = defaultCompany;
+                    this.fundCompanies.map((company: any) => {
+                    company.text = company.CompanyName;
+                  });
+                    let temp = this.fundCompanies;
+                    this.fundCompanies = [];
+                    temp.map((item: any) => {
+                    this.fundCompanies.push(
+                    { label: item.CompanyName, value: item });
+                });
+
+            }
+      this.getCompanyDetail(companyId);
+    });
+    }
+
+      private getSelectedFundCompanyDetails = function (fundCompanyID, companyNumber, companyName) {
+        this.fundCompanyID = fundCompanyID;
+        this.fundCompanyNumber = companyName;
+        this.getLedgerAccounts(fundCompanyID);
+    }
+
 
   private getCompanyDetail(CompanyID): void {
     this.invoiceEntryService
@@ -760,33 +820,22 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       DistributionAmount: parseFloat(this.glAccountObject.glAccountAmount.toString()),
       DistributionComment: this.glAccountObject.glAccountDescription,
       DistAmountPopoverUrl: 'DistAmountPopover.html',
-      DistCommentPopoverUrl: 'DistCommentPopover.html'
+      DistCommentPopoverUrl: 'DistCommentPopover.html',
+      FundCompanyID: this.fundCompanyID,
+      FundCompanyNumber: this.fundCompanyNumber
     }
 
-
-
-    // if (this.invoiceDetail.InvoiceDistributions.length === 0) {
-    //   if (parseFloat(item.DistributionAmount.toString()) > parseFloat(this.invoiceDetail.InvoiceAmount.toString())) {
-    //     this.toastr.error('Distribution amount can not be greater then Invoice amount ');
-    //     return;
-    //   }
-    // } else if (this.invoiceDetail.InvoiceDistributions.length > 0) {
-    //   let totalDistAmount = (item.DistributionAmount.toString());
-    //   for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-    //     totalDistAmount = (Number(totalDistAmount)
-    //       + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount)).toFixed(2);
-    //   }
-
-    //   if (this.invoiceDetail.InvoiceAmount < (Number(totalDistAmount))) {
-    //     this.toastr.error('Total Distribution amount can not be greater then Invoice amount ');
-    //     return;
-    //   }
-    // }
     this.invoiceDetail.InvoiceDistributions.splice(1, 0, item);
     this.isAddAccount = false;
     this.glAccountObject = new GlAccountObject();
-
-
+    this.fundCompanyID = 0;
+    this.fundCompanyNumber = '';
+      if (this.invoiceDetail.IsFund == true) {
+            this.selectedFundCompany.selected = [];
+            var obj = { CompanyID: 0, CompanyNumber: 'Select Fund', CompanyName: 'Select Fund', CompanyType: 'None', AccountID: 0 };
+            this.selectedFundCompany.selected = obj;
+            this.ledgerAccounts = [];
+        }
   }
 
   private processInvAmtToDistribution(amt): void {
@@ -915,25 +964,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         this.toastr.error(("Invoice", 'This Invoice Number with same vendor and same invoice date is  already exists in this property'));
       } else {
 
-        // if (this.AccountNumber != null && this.AccountNumber !== '') {
-        //   if (this.invoiceDetail.InvoiceDistributions.length > 0) {
-        //     for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
-        //       if (this.invoiceDetail.InvoiceDistributions[i].AccountNumber === this.AccountNumber) {
-        //         if (this.invoiceDetail.InvoiceDistributions[i].DistributionID === 0) {
-        //           this.invoiceDetail.InvoiceDistributions.splice(i, 1);
-        //         } else {
-        //           this.invoiceService.removeInvoiceDistributions(
-        //             this.invoiceDetail.InvoiceDistributions[i].DistributionID,
-        //             this.invoiceDetail.InvoiceID).then(res => {
-        //               this.invoiceDetail.InvoiceDistributions.splice(i, 1);
-        //               this.ProcessVendor(this.invoiceDetail.InvoiceID);
-        //               return;
-        //             });
-        //         }
-        //       }
-        //     }
-        //   }
-        // }
         this.ProcessVendor(venID);
       }
     });
@@ -1014,8 +1044,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   private addAccount() {
     this.isAddAccount = true;
-    this.inputFocusedss = true;
-    setTimeout(() => { this.inputFocusedss = false });
+    this.fcs_AccountNum = true;
+	setTimeout(() => { this.inputFocusedss = false });
   }
   private checkglAccountNumber(glAccountNumber, $event): void {
     let isMacthed = false;
@@ -1067,14 +1097,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private removeInvoiceDistributions(distID, $index): void {
-    this.invoiceDetail.InvoiceDistributions.splice($index, 1);
-    // if (distID === 0) {
-    //   this.invoiceDetail.InvoiceDistributions.splice($index, 1);
-    // } else {
-    //   this.invoiceService.removeInvoiceDistributions(distID, this.invoiceDetail.InvoiceID).then(result => {
-    //     this.invoiceDetail.InvoiceDistributions.splice($index, 1);
-    //   });
-    // }
+     this.invoiceDetail.InvoiceDistributions.splice($index, 1);
+ 
   }
   private checklockingStatusForExit(linkString): void {
     if (this.invoiceDetail.LockedByID == this.user.userId) {
@@ -1169,14 +1193,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
             this.invoiceDetail.CashAccountID = this.companyData.cash_account_1_id;
           }
 
-
-          // if (editstate == 'saveInvoiceAfterEditFromBatch') {
-          // 	this.invoiceDetail.InvoiceStatusID = 1;
-          // 	this.invoiceDetail.ExpeditedID = null;
-          // 	this.invoiceDetail.ExpeditedDate = null;
-          // }
-
-
           this.invoiceService.getNextAttachmentIDs(this.attachmentId).then(result1 => {
             this.invoiceService.saveInvoice(this.invoiceDetail).then(result => {
               if (result.status == 404) {
@@ -1239,7 +1255,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private unlockDocument(linkString): void {
-    //this.getCompanies();
     this.documentType = 5;
     this.doctype = 'Attachment';
     this.documentID = 0;
@@ -1305,11 +1320,12 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
 
     if (this.invoiceDate !== '' && this.invoiceDate != null) {
-      let isValid = moment(this.invoiceDate, 'MM/DD/YYYY', true).isValid();
+     let isValid = moment(this.invoiceDate, 'MM/DD/YYYY', true).isValid();
       if (isValid === false) {
-        let obj = { ErrorName: 'Invoice Date format is wrong' };
-        this.errors.splice(this.errors.length, 0, obj);
-      }
+     let obj = {
+        ErrorName: 'Invoice Date is not valid'
+      };
+      this.errors.splice(this.errors.length, 0, obj);
     }
 
 
@@ -1322,7 +1338,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
 
     if (this.postGlDate !== '' && this.postGlDate != null) {
-      let isValid = moment(this.postGlDate, 'MM/DD/YYYY', true).isValid();
+     let isValid = moment(this.postGlDate, 'MM/DD/YYYY', true).isValid();
       if (isValid === false) {
         let obj = { ErrorName: 'postGlDate format is wrong' };
         this.errors.splice(this.errors.length, 0, obj);
@@ -1337,7 +1353,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     }
 
     if (this.dueDate !== '' && this.dueDate != null) {
-      let isValid = moment(this.dueDate, 'MM/DD/YYYY', true).isValid();
+        let isValid = moment(this.dueDate, 'MM/DD/YYYY', true).isValid();
       if (isValid === false) {
         let obj = { ErrorName: 'Due Date format is wrong' };
         this.errors.splice(this.errors.length, 0, obj);
@@ -1370,7 +1386,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           if (this.invoiceDetail.InvoiceDistributions[i].DistributionAmount == 0) {
             this.invoiceDetail.InvoiceDistributions[i].DistributionAmount = 0.00;
           }
-          //totalAmount = (totalAmount + this.invoiceDetail.InvoiceDistributions[i].DistributionAmount);
           totalAmount = (Number(totalAmount) + Number(this.invoiceDetail.InvoiceDistributions[i].DistributionAmount));
         }
       }
@@ -1388,10 +1403,25 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       // $(window).scrollTop(0);
       return;
     }
+
+
+        if(this.invoiceDetail.InvoiceID >0){
+          if(this.oldInvoiceAmount != this.invoiceDetail.InvoiceAmount){
+            this.invoiceDetail.IsInvoiceApprovalStateResetRequired = true;
+          }
+          if(this.oldVendorID != this.invoiceDetail.VendorID){
+            this.invoiceDetail.IsInvoiceApprovalStateResetRequired = true;
+          }
+          if(this.oldInvoiceDistributionsJson != (JSON.stringify(this.invoiceDetail.InvoiceDistributions))){
+             this.invoiceDetail.IsInvoiceApprovalStateResetRequired = true;
+          }
+
+      }
+
+  }
   }
 
   private SubmitInvoiceForApproval(invoice): void {
-
     if (this.invApprovals != undefined && this.invApprovals.InvoiceApprovals != undefined && this.invApprovals.InvoiceApprovals.length > 0) {
       this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID).then(result => {
         if (result.IsLocked == 0) {
@@ -1448,13 +1478,42 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   private getInvoiceApprovals(invoiceID, InvoiceAmount, CompanyID) {
-
     this.invoiceService.getInvoiceApprovals(invoiceID, InvoiceAmount, CompanyID).then(result => {
       if (result) {
         this.invApprovals = result;
       }
+
+      if(this.invoiceDetail.IsFund){
+        this.getCompanyListFilteredByFundProperties();
+      }
     });
   }
+
+  private getCompanyListFilteredByFundProperties(){
+   
+     this.companiesService.getCompanyListFilteredByFundProperties(this.invoiceDetail.CompanyID) .then(result => {
+        if (result) {
+                this.companies = result;
+                let defaultCompany = { CompanyID: 0, CompanyNumber: 'Select Property', CompanyName: 'Select Property', CompanyType: 'None', AccountID: 0 };
+
+                this.selectedCompany.selected = defaultCompany;
+                this.companies.splice(0, 0, defaultCompany);
+
+                  this.companies.map((company: any) => {
+                  company.text = company.CompanyName;
+                  });
+                    let temp = this.companies;
+                    this.companies = [];
+                    temp.map((item: any) => {
+                    this.companies.push(
+                    { label: item.CompanyName, value: item });
+                });
+
+            }
+    });
+  }
+
+
 
   private submitInvoiceExpedite(invoice): void {
     this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID).then(result => {
@@ -1488,8 +1547,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
                     } else {
                       this.unlockDocument('/dashboard');
                     }
-
-                    //this.unlockDocument('/dashboard');
                   }
                 });
               }

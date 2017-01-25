@@ -59,7 +59,7 @@ export class UserFilterComponent extends BaseComponent implements OnInit, OnChan
       } else if (result.status === 500) {
       } else {
         this.roles = result;
-        let obj = { RoleID: 0, Name: 'Any', Description: 'Any' }
+        let obj = { RoleID: 0, Name: 'All user roles', Description: 'All user roles' }
         this.roles.splice(0, 0, obj);
 
         this.roles.forEach(item => {
@@ -74,7 +74,7 @@ export class UserFilterComponent extends BaseComponent implements OnInit, OnChan
   }
 
   private getUserType() {
-    let item = [{ Id: 'Any', Name: 'Any' }, { Id: 'PortalMember', Name: 'Portal::Member' }];
+    let item = [{ Id: 'All user types', Name: 'All user types' }, { Id: 'PortalMember', Name: 'Portal::Member' }];
     for (let i = 0; i < 2; i++) {
       this.userTypes.splice(i, 0, item[i]);
     }

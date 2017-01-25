@@ -42,6 +42,6 @@ export class attachmentdata{
     fileName:string = '';
     companyNumber:number = 0;
     IsGeneralPdf:boolean;
-    
+    IsFund:boolean;
 }
 

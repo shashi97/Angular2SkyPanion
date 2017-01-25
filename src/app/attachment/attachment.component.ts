@@ -293,7 +293,8 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
           companyID: row.CompanyID,
           companyNumber: row.CompanyNumber,
           rejectionMemo: row.RejectionMemo,
-          IsGeneralPdf :row.IsGeneralPdf
+          IsGeneralPdf :row.IsGeneralPdf,
+          IsFund:row.IsFund
         };
 
 

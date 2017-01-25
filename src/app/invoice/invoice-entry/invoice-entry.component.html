@@ -51,13 +51,13 @@
         <div [innerHTML]=companyTooltip>
         </div>
       </tooltip-content>
-      <label class="control-label col-md-4" for="invoice_company_id">{{invoiceDetail.type}}</label>
-      <div class="col-md-4" style="padding-top: 6px">
+      <label class="control-label col-md-4" for="invoice_company_id"><span *ngIf="invoiceDetail.IsGeneral == false">{{invoiceDetail.type}}</span></label>
+      <div class="col-md-3" style="padding-top: 6px" *ngIf="invoiceDetail.IsGeneral == false">
         <i [ngClass]="{'fa fa-book': invoiceDetail.type=='Skypanion::Fund', 'fa fa-building': invoiceDetail.type=='Skypanion::Property'}"></i>
         <a href="#" [tooltip]="CompaniesTooltip">{{invoiceDetail.CompanyName}}</a>
       </div>
-      <div class="col-md-4 input-group">
-        <div style="padding: 0 !important;margin: 0 !important;" *ngIf="invoiceDetail.InvoiceStatusID == 5 && user.IsSuperUser == true">
+      <div class="col-md-4 input-group" *ngIf="((invoiceDetail.InvoiceStatusID == 5 && sessionDetails.IsSuperUser == true )|| (invoiceDetail.IsGeneralPdf == true && invoiceDetail.InvoiceID ==0))">
+        <div style="padding: 0 !important;margin: 0 !important;" >
           <sp-company-dropdown (companyFiltered)="onCompanyFiltered($event)"></sp-company-dropdown>
         </div>
       </div>
@@ -133,6 +133,7 @@
         </div>
       </div>
     </div>
+    
     <div class="field form-group ">
       <label class="control-label col-md-4 " for="invoice_Amount ">
                                     Amount
@@ -142,8 +143,8 @@
           <span class="input-group-addon ">
                                             <i class="fa fa-usd"></i>
                                         </span>
-          <input type="text"  [(ngModel)]="invoiceDetail.InvoiceAmount" focus-name="5" tabindex="5 " class="form-control"  placeholder="Enter invoice amount"
-          (blur)="processInvAmtToDistribution(invoiceDetail.InvoiceAmount)" CurrencyFormatter>
+          <input type="number" [(ngModel)]="invoiceDetail.InvoiceAmount" focus-name="5" tabindex="5 " class="form-control"  placeholder="Enter invoice amount "
+            size="30"  (blur)="processInvAmtToDistribution(invoiceDetail.InvoiceAmount)" CurrencyFormatter>
         </div>
       </div>
     </div>
@@ -162,7 +163,7 @@
       <div class="col-md-8 input-group ">
         <div class='input-group date' id="datetimepicker_Duedate">
           <input [(ngModel)]="dueDate" class="form-control" focus-name="7 " tabindex="7" id="Due_date" #Due_date="ngModel" placeholder="Due Date" size="12" type="text"
-            >
+            value="">
           <!--<input type='text' class="form-control " focus-name="7 " tabindex="7 " placeholder="Click to select date" [(ngModel)]="dueDate "
             date-time-picker accept=" " (blur)="setDueDate() " />-->
           <span class="input-group-addon ">
@@ -182,9 +183,17 @@
           </div>
           <div>
             <div id="invoices_index_filters_form" *ngIf="isAddAccount">
+
+              <div class="form-group col-md-offset-3 col-md-9" style="margin-left:29% " *ngIf = "invoiceDetail.IsFund == true">
+                      <p-dropdown [options]="fundCompanies" [(ngModel)]="selectedFundCompany.selected" [filter]="true"  [style]="{'width':'100%'}"
+                              (ngModelChange)="getSelectedFundCompanyDetails(selectedFundCompany.selected.CompanyID , selectedFundCompany.selected.CompanyNumber , selectedFundCompany.selected.CompanyName)"></p-dropdown>
+              </div>                      
+
               <div class="form-group col-md-offset-3 col-md-9" style="margin-left:29% ">
                 <div class="input-group ">
-                  <input type="text" class="form-control"  tabindex="9"  [(ngModel)]="glAccountObject.glAccountNumber" (blur)="checkglAccountNumber(glAccountObject.glAccountNumber,$event)">
+                  <input type="text " tabindex="9" class="form-control ng-pristine ng-untouched ng-valid" focus-name="9" tabindex="9" focus-me="fcs_AccountNum
+              " [(ngModel)]="glAccountObject.glAccountNumber" (blur)="checkglAccountNumber(glAccountObject.glAccountNumber,$event) "
+                    id="accountnumDD ">
                   <span class="input-group-addon" (click)="openAccountModal()">
                                                             <span class="caret "></span>
                   </span>
@@ -218,6 +227,7 @@
           role="grid" aria-describedby="editable_info">
           <thead>
             <tr role="row">
+                <th *ngIf="invoiceDetail.IsFund == true">Fund</th>
               <th>GL Account</th>
               <th>Amount</th>
               <th>Comment</th>
@@ -226,54 +236,58 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of invoiceDetail.InvoiceDistributions">
+             <td class="ledger_account_identifier" *ngIf="item.FundCompanyID > 0">{{item.FundCompanyNumber}}</td>
               <td class="ledger_account_identifier">{{item.AccountTitle}}</td>
               <td class="amount_row">
-                <a href="javascript:void(0)" uib-popover-template="DistAmountPopoverUrl" popover-placement="top" popover-is-open="item.isAmtOpen"
-                  (click)="openPopover($index, 'amount')" style="border-bottom-style: dashed; border-width: 1px;">{{item.DistributionAmount}}</a>
-                <script id="DistAmountPopover.html" type="text/ng-template">
+                <a href="javascript:void(0)"
+                  [popover]="amountPopover" style="border-bottom-style: dashed; border-width: 1px;">${{item.DistributionAmount}}</a>
+                  <popover-content #amountPopover placement="top">
+                      <div>
+                           <div class="popover-content" style="padding: 0px; margin: 0px">
+                                  <h3 class="popover-title">Enter distribution amount</h3>
+                                <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
+                                    <div class="navbar-inner">
+                                        <div class="navbar-search navbar-form search_form" action="#" role="search">
+                                            <div class="control-group form-group">
+                                                <div class="editable-input" style="position: relative;">
+                                                    <input type="number" class="form-control input-sm" style="padding-right: 24px;"
+                                                         [(ngModel)]="item.DistributionAmount" (keyup.enter) = "amountPopover.hide()" ><span class="editable-clear-x"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                  </popover-content>                                             
 
-                                                                <div class="popover-list" style="min-width:200px;max-width:200px;" left="60">
-                                                                    <div class="popover-content" style="padding: 0px; margin: 0px">
-                                                                        <h3 class="popover-title">Enter distribution amount</h3>
-                                                                        <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
-                                                                            <div class="navbar-inner">
-                                                                                <div class="navbar-search navbar-form search_form" action="#" role="search">
-                                                                                    <div class="control-group form-group">
-                                                                                        <div class="editable-input" style="position: relative;">
-                                                                                            <input type="text" class="form-control input-sm" style="padding-right: 24px;"
-                                                                                                   [(ngModel)]="item.DistributionAmount" dist-close exclude-class="{{$index+255}}" index-no="A{{$index}}" valid-number decimal-upto="2"><span class="editable-clear-x"></span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </script>
               </td>
               <td class="comment_row">
-                <a href="javascript:void(0)" uib-popover-template="DistCommentPopoverUrl" popover-placement="top" popover-is-open="item.isComOpen"
-                  (click)="openPopover($index, 'comment')" style="border-bottom-style: dashed; border-width: 1px;"><span>{{item.DistributionComment}}</span></a>
-                <script id="DistCommentPopover.html" type="text/ng-template">
+                <a href="javascript:void(0)" 
+                   [popover]="commentPopover"  style="border-bottom-style: dashed; border-width: 1px;">@<span>{{item.DistributionComment}}</span></a>
 
-                                                                <div class="popover-list" id="divDistCommentPopover" style="min-width:200px;max-width:200px;" left="130">
-                                                                    <div class="popover-content" style="padding: 0px; margin: 0px">
-                                                                        <h3 class="popover-title">Enter distribution comment</h3>
-                                                                        <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
-                                                                            <div class="navbar-inner">
-                                                                                <div class="navbar-search navbar-form search_form" action="#" role="search">
-                                                                                    <div class="control-group form-group">
-                                                                                        <div class="editable-input" style="position: relative;">
-                                                                                            <input type="text" class="form-control input-sm" style="padding-right: 24px;" [(ngModel)]="item.DistributionComment" dist-closemm exclude-class="{{$index+741}}" index-no="B{{$index}}" /><span class="editable-clear-x"></span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                    <popover-content  #commentPopover  placement="top">
+                      <div>
+                           <div class="popover-content" style="padding: 0px; margin: 0px">
+                              <h3 class="popover-title">Enter distribution comment</h3>
+                                <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
+                                    <div class="navbar-inner">
+                                        <div class="navbar-search navbar-form search_form" action="#" role="search">
+                                            <div class="control-group form-group">
+                                                <div class="editable-input" style="position: relative;">
+                                                    <input type="text" class="form-control input-sm" style="padding-right: 24px;"
+                                                         [(ngModel)]="item.DistributionComment" (keyup.enter) = "commentPopover.hide()" ><span class="editable-clear-x"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                      </div>
+                  </popover-content>                                               
 
-                                                            </script>
+
+
               </td>
               <td>
                 <i class="fa fa-times remove_distribution" (click)="removeInvoiceDistributions(item.DistributionID, $index)"></i>
@@ -290,7 +304,7 @@
       <div class="col-md-8  input-group">
         <div class='input-group date' id="datetimepicker_Gldate">
           <input [(ngModel)]="postGlDate" class="form-control" focus-name="13" tabindex="13" id="Gl_date" #Gl_date="ngModel" placeholder="Due Date" size="12" type="text"
-           >
+            value="">
           <!--<input type='text' class="form-control" data-ng-model="postGlDate" placeholder="Click to select date" date-time-picker focus-name="12"
             tabindex="12" ng-blur="setPostToGLDate()" />-->
           <span class="input-group-addon">

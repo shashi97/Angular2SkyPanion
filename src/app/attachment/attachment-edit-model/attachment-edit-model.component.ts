@@ -32,7 +32,8 @@ export class AttachmentEditModalContext extends BSModalContext {
   selector: 'sp-attachment-edit-model',
   templateUrl: 'attachment-edit-model.component.html'
 })
-export class AttachmentEditComponent extends BaseComponent implements CloseGuard, ModalComponent<AttachmentEditModalContext>, OnInit , AfterViewInit {
+export class AttachmentEditComponent extends BaseComponent
+ implements CloseGuard, ModalComponent<AttachmentEditModalContext>, OnInit , OnChanges ,AfterViewInit {
   // export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
   context: AttachmentEditModalContext;
   public wrongAnswer: boolean;
@@ -72,12 +73,18 @@ export class AttachmentEditComponent extends BaseComponent implements CloseGuard
   ngOnInit() {
   
   }
+  ngOnChanges(){
+  //       setTimeout(() => {
+  //     this.loadModal();
+  //  }, 1);
+  }
+  
 
   
-  ngAfterViewInit(){
+   ngAfterViewInit(){
          setTimeout(() => {
       this.loadModal();
-    }, 1);
+    }, 2000);
   }
 
   private loadModal(){
@@ -94,7 +101,7 @@ export class AttachmentEditComponent extends BaseComponent implements CloseGuard
   
 
   private getCompanies() {
-      if (this.attachmentObject.IsGeneralPdf) {
+      if (this.attachmentObject.IsFund) {
           this.getCompanyListFilteredByFundProperties();  
         }else{
           this.getAllCompanies();  
@@ -103,7 +110,7 @@ export class AttachmentEditComponent extends BaseComponent implements CloseGuard
   }
 
   private getCompanyListFilteredByFundProperties(){
-      this.companiesService.getCompanyListFilteredByFundProperties().then(result => {
+      this.companiesService.getCompanyListFilteredByFundProperties(this.attachmentObject.companyID).then(result => {
       if (result) {
         this.companies = result;
         let obj = { CompanyID: 0, Number: 'All Companies', CompanyName: 'All Companies', Type: 'None', AccountID: 0 };
@@ -133,7 +140,7 @@ export class AttachmentEditComponent extends BaseComponent implements CloseGuard
   }
 
   private getAllCompanies(){
-       this.companiesService.getCompanyDDOs(true).then(result => {
+       this.companiesService.getCompanyDDOs(false).then(result => {
          if (result) {
         this.companies = result;
         let obj = { CompanyID: 0, Number: 'All Companies', CompanyName: 'All Companies', Type: 'None', AccountID: 0 };

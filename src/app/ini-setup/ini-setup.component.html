@@ -89,14 +89,14 @@
 
                                                 <dt>Upload Interval</dt>
                                                 <dd>
-                                                    <input class="form-control" type="number" nks-only-number decimal-upto="2" [(ngModel)]="iniSetupModel.uploadInterval" style="width: 200px"
-                                                    />
+                                                    <input class="form-control" type="text" nks-only-number decimal-upto="2" [(ngModel)]="iniSetupModel.uploadInterval" style="width: 200px"
+                                                    CurrencyFormatter/>
                                                 </dd>
 
                                                 <dt>Download Interval</dt>
                                                 <dd>
-                                                    <input class="form-control col-md-4" type="number" nks-only-number decimal-upto="2" [(ngModel)]="iniSetupModel.downloadInterval"
-                                                        style="width: 200px" />
+                                                    <input class="form-control col-md-4" type="text" nks-only-number decimal-upto="2" [(ngModel)]="iniSetupModel.downloadInterval"
+                                                       CurrencyFormatter style="width: 200px" />
                                                 </dd>
 
                                                 <dt>PDF Store Location</dt>
@@ -104,7 +104,7 @@
                                                     <input class="form-control" type="text" [(ngModel)]="iniSetupModel.PdfStoreLocation" />
                                                 </dd>
 
-                                                <dt>PDF Process Location</dt>
+                                                <dt>PDF Process Location</dt>   
                                                 <dd>
                                                     <input class="form-control" type="text" [(ngModel)]="iniSetupModel.PdfProcessLocation" />
                                                 </dd>

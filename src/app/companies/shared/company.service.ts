@@ -85,9 +85,9 @@ export class CompanyService {
       .catch(error => error);
   }
 
-  public getCompanyListFilteredByFundProperties() {
+  public getCompanyListFilteredByFundProperties(companyID) {
     return this.http.get(ApiUrl.baseUrl
-      + 'api/company/getCompanyListFilteredByFundProperties').toPromise()
+      + 'api/company/getCompanyListFilteredByFundProperties/'+ companyID).toPromise()
       .then(response => response.json() as CompanyModel[])
       .catch(error => error);
   }
@@ -103,6 +103,13 @@ export class CompanyService {
       )
       .catch(error => error);
   }
+
+   public getFundPostCompaniesByCompanyID = function (companyID) {
+          return this.http.get(ApiUrl.baseUrl
+           + "api/company/getFundPostCompanies/" + companyID).toPromise()
+          .then(response => response.json() as CompanyModel[])
+          .catch(error => error);
+        }
 
   public handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

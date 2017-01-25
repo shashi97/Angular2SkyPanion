@@ -15,9 +15,12 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { RoleModel } from '../role/shared/role.model';
 import {PubSubService} from '../interceptor/pub-service';
 import { LoadingSpinnerComponent} from '../shared/loading-spinner/loading-spinner.component';
+import { OrderByPipe, CurrencyPipe } from '../shared/pipe/orderby';
+import { CurrencyFormatterDirective } from '../shared/directive/showOnRowHover';
 @Component({
   selector: 'sp-ini-setup',
   templateUrl: './ini-setup.component.html',
+    providers: [CurrencyPipe,CurrencyFormatterDirective]
 })
 
 export class IniSetupComponent extends BaseComponent implements OnInit , AfterViewInit {
@@ -98,7 +101,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit , AfterVi
   private getRoles(): void {
     this.roleService.getRoles().then(result => {
       this.roles = result;
-      let obj = { RoleID: 0, AccountID: 0, Name: 'All', Description: 'All' };
+      let obj = { RoleID: 0, AccountID: 0, Name: 'All roles', Description: 'All roles' };
       this.roles.splice(0, 0, obj);
       let temp = this.roles;
       this.roles = [];
