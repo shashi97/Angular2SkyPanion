@@ -1,7 +1,5 @@
 
 import { Component, OnInit, ViewContainerRef, AfterViewInit , OnChanges ,ViewChild,OnDestroy } from '@angular/core';
-import { Component, OnInit, ViewContainerRef, AfterViewInit, OnChanges } from '@angular/core';
->>>>>>> da451a891212d192005bf4aa9f13032d85732dc7
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -1755,6 +1753,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
 }
+
+
 
 
 
