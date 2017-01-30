@@ -5,15 +5,15 @@ import { Router } from '@angular/router';
 import { UserFilterArguments } from '../../shared/dropdown/user/user-dropdown.component';
 
 import * as moment from 'moment/moment';
-
-
 declare let jQuery: any;
 
 export class SyncBatchFilteredArgs {
   syncFromDate: string = '';
   syncToDate: string = '';
-  batchNumber: string =null;
+  batchNumber: string ='';
   userId: number = -1;
+  datefURL: Date;
+  datetURL: Date;
 }
 
 @Component({
@@ -56,9 +56,22 @@ export class SyncBatchFilterComponent extends BaseComponent implements OnInit, O
   private searchUrl(): void {
     let dateFrom = jQuery('#syncFromDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
     this.syncBatchFilteredValue.syncFromDate = dateFrom.val();
+
+    if(this.syncBatchFilteredValue.syncFromDate !==  undefined && this.syncBatchFilteredValue.syncFromDate !==  ''){
+      this.syncBatchFilteredValue.datefURL = moment(dateFrom.val(), 'MM/DD/YYYY').toDate();
+    }
+
     let dateTo = jQuery('#syncToDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
     this.syncBatchFilteredValue.syncToDate = dateTo.val();
+
+     if(this.syncBatchFilteredValue.syncToDate !==  undefined && this.syncBatchFilteredValue.syncToDate !==  ''){
+       this.syncBatchFilteredValue.datetURL = moment(dateTo.val(), 'MM/DD/YYYY').toDate();
+    }
+
     this.syncBatchFilteredValue.userId = this.userFilteredArg.UserID;
+    if(this.syncBatchFilteredValue.batchNumber === ''){
+      this.syncBatchFilteredValue.batchNumber = null;
+    }
     this.filteredsyncBatch.emit(this.syncBatchFilteredValue);
   }
 

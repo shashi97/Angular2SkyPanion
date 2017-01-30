@@ -84,6 +84,7 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
     public pubsub: PubSubService,
     router: Router, public modal: Modal) {
     super(localStorageService, router);
+    overlay.defaultViewContainer = vcRef;
     this.attachments = new Array<AttachmentObject>();
     this.account = new AccountModel();
     this.searchParameters = null;
@@ -151,7 +152,8 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
     this.getAttachments();
 
   }
-  private getAttachments(): void {
+  private getAttachments() {
+  return new Promise((resolve, reject) => {
     this.attachmentService
       .getAttachments(this.filteredValue.companyId, this.status, this.currentPageFiltered.pageNo, this.currentPageFiltered.pageSizeFilter)
       .then(result => {
@@ -163,9 +165,8 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
             this.AttachmentCount = this.attachments[0].AttachmentCount;
           }
         }
-
       });
-
+  });
   }
 
   private GetAttachmentDetails(AttachmentID): void {
@@ -316,21 +317,16 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
     const builder = new BSModalContextBuilder<AttachmentEditModalContext>(
       {
         Row: row
-        // doctype: this.doctype,
-        // DocumentID: this.DocumentID,
-        // attachmentId: this.attachmentId,
-        // pageSizeFilter: this.pageSizeFilter,
-        // searchParameters: this.searchParameters
       } as any,
       undefined,
       AttachmentEditModalContext
     );
 
     let overlayConfig: OverlayConfig = {
-       context: builder.isBlocking(false).toJSON()
+        context: builder.isBlocking(false).toJSON()
     };
 
-    const dialog = this.modal.open(AttachmentEditComponent, overlayConfig)
+    const dialog = this.modal.open(AttachmentEditComponent, overlayConfig);
     dialog.then((resultPromise) => {
       return resultPromise.result.then((result) => {
         // alert(result.status);

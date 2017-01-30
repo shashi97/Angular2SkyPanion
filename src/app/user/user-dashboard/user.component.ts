@@ -121,10 +121,10 @@ export class UserComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private getUsers(): void {
+  private getUsers() {
 
     this.location.replaceState('user/' + this.searchString);
-
+    return new Promise((resolve, reject) => {
     this.userService.getUsers(
       this.filteredValue.userTypeId,
       this.filteredValue.roleId,
@@ -144,7 +144,7 @@ export class UserComponent extends BaseComponent implements OnInit {
             this.totalItems = 0;
           }
         }
-
+      });
       });
   }
 

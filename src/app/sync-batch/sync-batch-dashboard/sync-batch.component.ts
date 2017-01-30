@@ -14,6 +14,7 @@ import { UserService } from '../../user/shared/user.service';
 import { SyncBatchService } from '../shared/sync-batch.service';
 import {PubSubService} from '../../interceptor/pub-service';
 import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
+import * as moment from 'moment/moment';
 
 @Component({
   selector: 'sp-sync-batch',
@@ -30,6 +31,8 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
   private syncBatchs: Array<SyncBatchModel>;
   private _currentSyncBatchArgs: SyncBatchFilteredArgs = new SyncBatchFilteredArgs();
   private pageName: string = 'Invoice';
+  private datefURL:string= '';
+  private datetURL:string = '';
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -61,9 +64,17 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
 
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
+     if(this.syncBatchFilteredValue.datefURL !== undefined && this.syncBatchFilteredValue.datefURL !== null){
+       this.datefURL =  this.syncBatchFilteredValue.datefURL.toDateString();
+      }
+
+      if(this.syncBatchFilteredValue.datetURL !== undefined && this.syncBatchFilteredValue.datetURL !== null){
+       this.datetURL =  this.syncBatchFilteredValue.datetURL.toDateString();
+      }
+
     this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
-      + this.syncBatchFilteredValue.syncFromDate + ','
-      + this.syncBatchFilteredValue.syncToDate + ','
+    + this.datefURL + ','
+      + this.datetURL + ','
       + this.syncBatchFilteredValue.batchNumber + ','
       + this.syncBatchFilteredValue.userId;
     this.getSyncBatches();
@@ -75,9 +86,19 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
 
   private set syncBatchFilteredValue(newValue: SyncBatchFilteredArgs) {
     this._currentSyncBatchArgs = newValue;
+
+ if(this.syncBatchFilteredValue.datefURL !== undefined && this.syncBatchFilteredValue.datefURL !== null){
+       this.datefURL =  encodeURIComponent(this.syncBatchFilteredValue.datefURL.toDateString())
+      }
+
+      if(this.syncBatchFilteredValue.datetURL !== undefined && this.syncBatchFilteredValue.datetURL !== null){
+       this.datetURL =  encodeURIComponent(this.syncBatchFilteredValue.datetURL.toDateString())
+      }
+
+
     this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
-      + this.syncBatchFilteredValue.syncFromDate + ','
-      + this.syncBatchFilteredValue.syncToDate + ','
+     + this.datefURL + ','
+      + this.datetURL + ','
       + this.syncBatchFilteredValue.batchNumber + ','
       + this.syncBatchFilteredValue.userId;
     this.getSyncBatches();
@@ -92,9 +113,22 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
 
       if (searchParameters !== '-1') {
         let parameterArray: Array<string> = searchParameters.split(',');
-        this.syncBatchFilteredValue.syncFromDate = parameterArray[0];
-        this.syncBatchFilteredValue.syncToDate = parameterArray[1];
-        this.syncBatchFilteredValue.batchNumber = parameterArray[2];
+
+        if (parameterArray[0] !== undefined && parameterArray[0] !== '') {
+             this.syncBatchFilteredValue.syncFromDate = moment(decodeURIComponent(parameterArray[0])).format('MM/DD/YYYY');
+             this.syncBatchFilteredValue.datefURL = moment(parameterArray[0], 'MM/DD/YYYY').toDate();
+        }
+
+         if (parameterArray[1] !== undefined && parameterArray[1] !== '') {
+             this.syncBatchFilteredValue.syncToDate = moment(decodeURIComponent(parameterArray[1])).format('MM/DD/YYYY');
+             this.syncBatchFilteredValue.datetURL = moment((parameterArray[1]), 'MM/DD/YYYY').toDate();
+        }
+
+        if (parameterArray[2] !== undefined && parameterArray[2] !== 'null'){
+           this.syncBatchFilteredValue.batchNumber = parameterArray[2];
+        }else{
+          this.syncBatchFilteredValue.batchNumber = '';
+        }
         this.syncBatchFilteredValue.userId = Number(parameterArray[3]);
       }
 
@@ -103,8 +137,8 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
       }
 
       this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
-        + this.syncBatchFilteredValue.syncFromDate + ','
-        + this.syncBatchFilteredValue.syncToDate + ','
+        + encodeURIComponent(this.syncBatchFilteredValue.syncFromDate) + ','
+        + encodeURIComponent(this.syncBatchFilteredValue.syncToDate) + ','
         + this.syncBatchFilteredValue.batchNumber + ','
         + this.syncBatchFilteredValue.userId;
 
@@ -126,7 +160,7 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
   getSyncBatches() {
 
     this.location.replaceState('syncBatch/' + this.searchString);
-
+    return new Promise((resolve, reject) => {
     let searchCriteriaSyncBatches = {
       syncFromDate: this._currentSyncBatchArgs.syncFromDate,
       syncToDate: this._currentSyncBatchArgs.syncToDate,
@@ -146,6 +180,7 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
         this.totalItems = this.syncBatchs[0].SyncBatchCount;
       }
     });
+   });
   }
 
   public onCurrentPageChanged(newValue: CurrentPageArguments) {
@@ -154,6 +189,17 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
 
   public onfilteredsyncBatch(filteredValue: SyncBatchFilteredArgs): void {
     this.syncBatchFilteredValue = filteredValue;
+  }
+
+  public getSyncBatchDetails(item) {
+     let link = [];
+        if (this.user) {
+          link = ['/syncBatch/detail/' + item.SyncBatcheID + '/' +  this.searchString];
+        } else {
+          link = ['/login'];
+        }
+        this.router.navigate(link);
+
   }
 
 }

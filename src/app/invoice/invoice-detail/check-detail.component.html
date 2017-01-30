@@ -15,6 +15,7 @@
             <tr>
               <th>Check Number</th>
               <th>Check Date</th>
+               <th>Paid Amount</th>
               <!--<th>Invoice Amount</th>-->
             </tr>
           </thead>
@@ -26,6 +27,7 @@
               <td>
                 {{check.CheckDate}}
               </td>
+                <td>${{check.PaidAmount}} </td>
               <!--<td>${{check.InvoiceAmount  | number: 2}} </td>-->
             </tr>
           </tbody>

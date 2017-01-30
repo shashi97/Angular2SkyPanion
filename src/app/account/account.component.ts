@@ -42,7 +42,7 @@ export class AccountComponent extends BaseComponent implements OnInit {
   }
 
   getAccount() {
-
+ return new Promise((resolve, reject) => {
     this.accountService.getAccount(this.accountId).then(result => {
       if (result.status === 404) {
          this.toastr.error('There is no data avability', 'Oops!');
@@ -51,5 +51,6 @@ export class AccountComponent extends BaseComponent implements OnInit {
         this.account = result;
       }
     });
+  });
   }
 }

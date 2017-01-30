@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, ViewContainerRef,AfterViewInit } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,7 +26,7 @@ import { InvoiceApproveModalComponent } from '../../invoice/invoice-detail/inval
   templateUrl: './filter-bar.component.html',
 })
 
-export class InvoiceDetailFilterComponent extends BaseComponent implements OnInit {
+export class InvoiceDetailFilterComponent extends BaseComponent implements OnInit , AfterViewInit {
   @Input() invoices: Array<DashboardInvoiceModel>;
   @Input() invoiceDetail: InvoiceModel;
   private searchParameters;
@@ -56,14 +56,19 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
     private toastr: ToastsManager
   ) {
     super(localStorageService, router);
+    overlay.defaultViewContainer = vcRef;
     this.searchParameters = -1;
     this.invSearchObject = new invSearchObject();
 
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      //this.attachmentId = +params['attachmentId']; // (+) converts string 'id' to a number
+   
+  }
+
+ ngAfterViewInit(){
+      setTimeout(() => {
+       this.activatedRoute.params.subscribe(params => {
       this.invSearchObject.invoiceID = +params['InvoiceID'];
       this.invSearchObject.companyID = +params['company'];
       this.invSearchObject.invoiceNumber = params['invoiceNumber'];
@@ -73,6 +78,7 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
       this.getInvoiceID();
       this.getInvoiceApprovals();
     });
+    }, 500);
   }
 
   private getInvoiceID(): void {
@@ -219,6 +225,15 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
 
     // only make let to avoid error Please give the exact value when you call the service    
    
+    if (this.invoiceDetail.InvoiceID == 0) {
+      this.docType = 5;
+      this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
+      this.DocumentID = this.invoiceDetail.AttachmentID;
+    } else {
+      this.docType = 10;
+      this.DocumentLockingID = this.invoiceDetail.DocumentLockingID
+      this.DocumentID = this.invoiceDetail.InvoiceID;
+    }
 
     this.masterService.checkLockedDocumentState(this.DocumentLockingID, this.docType, this.DocumentID)
       .then(result => {

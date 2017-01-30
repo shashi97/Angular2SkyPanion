@@ -43,7 +43,7 @@ export class UserDropdownComponent extends BaseComponent implements OnInit, OnCh
   private getSkypanionsUsers() {
     return this.userService.getUserDDOs().then(result => {
       this.users = result;
-      let obj = { UserID: 0, username: 'None', ImagePathName: 'None' };
+      let obj = { UserID: 0, username: 'All users', ImagePathName: 'All users' };
       this.users.splice(0, 0, obj);
     });
   }

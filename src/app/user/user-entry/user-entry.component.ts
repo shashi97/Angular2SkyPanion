@@ -147,7 +147,8 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
     this.getUserById();
   }
 
-  private getUserById(): void {
+  private getUserById() {
+    return new Promise((resolve, reject) => {
     this.userService.getUserById(this.userId).then(result => {
 
       if (result.status === 404) {
@@ -201,6 +202,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
         this.roles = tempRoles;
         this.changeTime(true, this.userDetail.digestStart, this.userDetail.digestEnd);
       }
+    });
     });
   }
 
@@ -480,7 +482,7 @@ export class UserEntryComponent extends BaseComponent implements OnInit, DoCheck
 
     setTimeout(() => {
       this.userDetail.imageSource = imageUrl;
-    }, 10);
+    }, 100);
 
   }
 

@@ -21,7 +21,10 @@ import { InvoiceApprovalModalComponent } from '../../dashboard/invoice-modals/in
 import { InvoiceDistributionCommentModalComponent } from '../../dashboard/invoice-modals/invoice-distribution-comment-model/invoice-distribution-comment.component';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { PagingFilterArgumentsModel } from '../../shared/models/pagination-filter.model';
-
+import {
+  InvoiceEntryNoApproverExistsModalContext,
+  InvoiceEntryNoApproverExistsComponent
+} from '../../invoice/invoice-entry-components/noApproverExists-model/invoice-entry-noApproverExists.component';
 @Component({
   selector: 'sp-dashboard-invoice',
   templateUrl: './dashboard-invoices.component.html',
@@ -45,6 +48,7 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
     public toastr: ToastsManager
   ) {
     super(localStorageService, router);
+    overlay.defaultViewContainer = vcRef;
     this.paginationFilter = new PagingFilterArgumentsModel();
     this.searchParamsValue = -1;
     console.log(this.invoices);
@@ -72,6 +76,29 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
         });
       }
     });
+  }
+    openNoApproverExistsModal() {
+    const builder = new BSModalContextBuilder<InvoiceEntryNoApproverExistsModalContext>(
+      { num1: 2, num2: 3 } as any,
+      undefined,
+      InvoiceEntryNoApproverExistsModalContext
+    );
+
+    let overlayConfig: OverlayConfig = {
+       context: builder.isBlocking(false).toJSON()
+    };
+
+    const dialog = this.modal.open(InvoiceEntryNoApproverExistsComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
+        if (result != null) {
+          //this.GetSelectedPurchaseOrder(result);
+        }
+      }, () => console.log(' Error In Purchase modal '));
+    });
+
+
   }
 
   private getInvoiceDetailsByID(invoice: DashboardInvoiceModel): void {
@@ -158,7 +185,7 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
           }
         });
       } else {
-        this.toastr.error('There are no approvers for this invoice', 'Oops!');
+        this.openNoApproverExistsModal();
       }
     })
   }

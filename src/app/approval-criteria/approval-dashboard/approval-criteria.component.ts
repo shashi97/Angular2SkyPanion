@@ -139,9 +139,10 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit ,
     });
   }
 
-  private getApprovalCriteria(approvalType): void {
+  private getApprovalCriteria(approvalType) {
     this._filteredValue.type = approvalType;
     this.approvals = [];
+    return new Promise((resolve, reject) => {
     this.approvalCriteriaService.getApprovalCriteria(
       approvalType,
       this.companyId,
@@ -155,6 +156,7 @@ export class ApprovalCriteriaComponent extends BaseComponent implements OnInit ,
           this.totalItems = this.approvals[0].ApprovalCount;
         }
       });
+  });
   }
 
   private deleteApprovalCriteria(approvalCriteriaID): void {

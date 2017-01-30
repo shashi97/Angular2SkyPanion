@@ -6,12 +6,16 @@ export class BaseComponent {
   sessionDetails: any;
   disableMenu: Object = { 'display': 'block' };
   disableSideBar: Object = { 'display': '' };
+  dashboardState:any;
 
   constructor(protected localStorageService: LocalStorageService,
     protected router: Router) {
 
     let token = this.localStorageService.get('authorization');
+
+
     if (token) {
+      this.dashboardState = this.localStorageService.get('dashboardStateData');
       this.user = this.localStorageService.get('sessionData');
       if (this.user) {
         if (this.router.url === '/') {

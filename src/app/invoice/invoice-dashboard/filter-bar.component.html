@@ -3,11 +3,11 @@
   <div class="options">
     <div class="form-inline" id="invoices_index_filters_form">
       <div class="form-group">
-        <input class="form-control" id="invoice_FromDate" [(ngModel)]="invFromDate" date-picker placeholder="Invoice Date From" size="12"
+        <input class="form-control" id="invoice_FromDate" [(ngModel)]="invoiceFilteredValue.invFromDate" date-picker placeholder="Invoice Date From" size="12"
           type="text" value="" />
       </div>
       <div class="form-group">
-        <input class="form-control" id="invToDate" [(ngModel)]="invToDate" date-picker placeholder="Invoice Date To" size="12" type="text"
+        <input class="form-control" id="invToDate" [(ngModel)]="invoiceFilteredValue.invToDate" date-picker placeholder="Invoice Date To" size="12" type="text"
           value="" />
       </div>
       <div class="form-group">

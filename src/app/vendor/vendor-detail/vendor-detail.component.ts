@@ -90,7 +90,8 @@ export class VendorDetailComponent extends BaseComponent implements OnInit , Aft
     this.getVendorDetail();
   }
 
-  private getVendorDetail(): void {
+  private getVendorDetail() {
+    return new Promise((resolve, reject) => {
     this.vendorService.getVendorDetail(this.vendorId, this._filteredValue.companyId, 1, 25).then((result) => {
       this.vendorDetail = result;
       this.totalItems = 0;
@@ -100,6 +101,7 @@ export class VendorDetailComponent extends BaseComponent implements OnInit , Aft
       if (this.vendorDetail.glAccount.AccountTitle == undefined || this.vendorDetail.glAccount.AccountTitle === '' || this.vendorDetail.glAccount.AccountTitle == null) {
         this.vendorDetail.glAccount.AccountTitle = 'Unknown';
       }
+      });
     });
   }
 

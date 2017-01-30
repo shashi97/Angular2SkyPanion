@@ -65,9 +65,11 @@ export class CompanyDetailComponent extends BaseComponent implements OnInit, Aft
     this.getComapnyDetail();
   }
 
-  private getComapnyDetail(): void {
+  private getComapnyDetail() {
+     return new Promise((resolve, reject) => {
     this.companyService.getCompanyDetail(this.companyId).then(result => {
       this.company = result;
+      });
     });
   }
 }

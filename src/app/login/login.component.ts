@@ -86,6 +86,10 @@ export class LoginComponent extends BaseComponent implements OnInit {
           IsResetPasswordRequired: JSON.parse(response.IsResetPasswordRequired)
         });
 
+        this.localStorageService.set('dashboardStateData' ,{ 
+          companyId: 0
+        });
+
       if (isResetPasswordRequired) {
 
         let link = ['/resetpassword'];

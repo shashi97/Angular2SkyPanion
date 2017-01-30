@@ -40,7 +40,7 @@ export class CompanyPathDropdownComponent extends BaseComponent implements OnIni
     }
 
     public getSkyPanionType(): any {
-        let item = [{ ID: 'all', Name: 'All' }, { ID: 'Fund', Name: 'Fund' }, { ID: 'Property', Name: 'Property' }];
+        let item = [{ ID: 'all', Name: 'All types' }, { ID: 'Fund', Name: 'Fund' }, { ID: 'Property', Name: 'Property' }];
         for (let i = 0; i < 3; i++) {
             this.skyPanionTypeList.splice(i, 0, item[i]);
         }

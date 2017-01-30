@@ -1,4 +1,4 @@
-import { Component, Pipe, OnChanges, OnInit, ViewChildren, QueryList , AfterViewInit } from '@angular/core';
+import { Component, Pipe, OnChanges, OnInit, ViewChildren, QueryList , AfterViewInit , DoCheck , AfterContentInit} from '@angular/core';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
@@ -19,6 +19,8 @@ import { FilterPipe } from '../../shared/pipe/orderby';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { CompanyService } from '../../companies/shared/company.service';
 import { CompanyData } from '../../companies/shared/company.model';
+import {PubSubService} from '../../interceptor/pub-service';
+
 export class AttachmentEditModalContext extends BSModalContext {
   Row;
   constructor() {
@@ -26,14 +28,12 @@ export class AttachmentEditModalContext extends BSModalContext {
   }
 }
 
-
-
 @Component({
   selector: 'sp-attachment-edit-model',
   templateUrl: 'attachment-edit-model.component.html'
 })
 export class AttachmentEditComponent extends BaseComponent
- implements CloseGuard, ModalComponent<AttachmentEditModalContext>, OnInit , OnChanges ,AfterViewInit {
+ implements CloseGuard, ModalComponent<AttachmentEditModalContext>, OnInit , OnChanges ,AfterViewInit , DoCheck , AfterContentInit{
   // export class InvoiceEntryPurchaseComponent extends BaseComponent implements OnInit {
   context: AttachmentEditModalContext;
   public wrongAnswer: boolean;
@@ -41,6 +41,7 @@ export class AttachmentEditComponent extends BaseComponent
   private vendors: Array<Vendors>;
   private companies: Array<any>;
   private attachmentObject: attachmentdata;
+   private showLoader:boolean;
   private selectedCompany = {
     selected: {}
   }
@@ -60,19 +61,23 @@ export class AttachmentEditComponent extends BaseComponent
     router: Router,
     public toastr: ToastsManager,
     private companiesService: CompanyService,
-    public dialog: DialogRef<AttachmentEditModalContext>) {
+    public dialog: DialogRef<AttachmentEditModalContext>,
+    public pubsub: PubSubService) {
     super(localStorageService, router);
+      this.dialog.context.dialogClass = 'modal-dialogss';
     this.context = dialog.context;
     this.attachmentObject = this.context.Row;
     dialog.setCloseGuard(this);
     this.vendors = new Array<Vendors>();
-
-
+    //this.dialog.context.dialogClass = 'modal-centered';
+    
   }
 
   ngOnInit() {
-  
+  this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+  this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
   }
+
   ngOnChanges(){
   //       setTimeout(() => {
   //     this.loadModal();
@@ -84,7 +89,15 @@ export class AttachmentEditComponent extends BaseComponent
    ngAfterViewInit(){
          setTimeout(() => {
       this.loadModal();
-    }, 2000);
+    }, 500);
+  }
+
+  ngDoCheck(){
+    // this.loadModal();
+  }
+
+  ngAfterContentInit(){
+     //this.loadModal();
   }
 
   private loadModal(){
@@ -102,10 +115,9 @@ export class AttachmentEditComponent extends BaseComponent
 
   private getCompanies() {
       if (this.attachmentObject.IsFund) {
-          this.getCompanyListFilteredByFundProperties();  
-        }else{
-          this.getAllCompanies();  
-          
+          this.getCompanyListFilteredByFundProperties();
+        }else {
+          this.getAllCompanies();
         }
   }
 

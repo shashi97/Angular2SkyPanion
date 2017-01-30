@@ -31,6 +31,7 @@ export class WaitingInvoiceComponent extends BaseComponent implements OnInit {
         private syncBatchEntryService: SyncBatchService
     ) {
         super(localStorageService, router);
+        overlay.defaultViewContainer = vcRef;
         this.syncBatch = new SyncBatchModel();
         // overlay.defaultViewContainer = vcRef;
     }

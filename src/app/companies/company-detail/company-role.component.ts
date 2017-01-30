@@ -1,4 +1,4 @@
-import { Component, OnInit, Input ,OnChanges } from '@angular/core';
+import { Component, OnInit, Input ,OnChanges,AfterViewInit } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -6,6 +6,8 @@ import { RoleModel } from '../../role/shared/role.model';
 import { RoleService } from '../../role/shared/role.service';
 import { CompanyService } from '../shared/company.service';
 import { CompanyModel } from '../shared/company.model';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import {PubSubService} from '../../interceptor/pub-service';
 
 
 @Component({
@@ -13,11 +15,12 @@ import { CompanyModel } from '../shared/company.model';
   templateUrl: './company-role.component.html',
 })
 
-export class CompanyRoleComponent extends BaseComponent implements OnInit ,OnChanges {
+export class CompanyRoleComponent extends BaseComponent implements OnInit ,OnChanges ,AfterViewInit{
 
   @Input() companyId: number;
   @Input() company: CompanyModel;
   private roleModel: RoleModel;
+  private showLoader:boolean;
   private value: any = {};
   private roles: Array<any> = [];
   public selectedViewInvoicesRole: RoleModel;
@@ -32,7 +35,9 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit ,OnCha
     localStorageService: LocalStorageService,
     router: Router,
     private roleService: RoleService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    public toastr: ToastsManager,
+    public pubsub: PubSubService
   ) {
     super(localStorageService, router);
     this.roles = new Array<any>();
@@ -40,8 +45,15 @@ export class CompanyRoleComponent extends BaseComponent implements OnInit ,OnCha
   }
 
 ngOnInit(){
-   this.getRoles();
+  this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
+  this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
 }
+
+ngAfterViewInit(){
+this.getRoles();
+}
+
+
 
 ngOnChanges(){
   this.getCompanyDetails();
@@ -52,7 +64,7 @@ ngOnChanges(){
   private getRoles(): void {
     this.roleService.getRoles().then(result => {
       this.roles = result;
-      let defaultRole = { RoleID: 0, AccountID: 0, Name: 'None', Description: 'None' };
+      let defaultRole = { RoleID: 0, AccountID: 0, Name: 'All Roles', Description: 'All Roles' };
       this.roles.splice(0, 0, defaultRole);
       this.roles.map((role: any) => {
         role.text = role.Name;
@@ -114,6 +126,7 @@ ngOnChanges(){
 
   public updateInvoiceRole(selectedRole: RoleModel, key: string): void {
     this.companyService.updateCompanyInvoiceRole(selectedRole.RoleID, key, this.companyId).then((result) => {
+         this.toastr.success("success", "Property changed for this invoice successfully", "success");
     });
   }
 

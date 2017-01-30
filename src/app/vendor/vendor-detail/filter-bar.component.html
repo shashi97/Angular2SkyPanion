@@ -4,24 +4,12 @@
     <div class="options">
         <div class="form-inline" id="invoices_index_filters_form">
 
-            <!--<div class="filter_field_wrap  form-group">
-                <div class="btn-group">
-                    <a class="btn btn-default" href="#companies">NoneNoneNone</a>
-                    <a data-toggle="dropdown" class="btn btn-default dropdown-toggle" href="#" aria-expanded="false">
-                        <span class="caret"></span>
-                    </a>
-                    <ul role="menu" class="dropdown-menu" data-target="#sync_state_field">
-                        <li *ngFor="let company of companies">
-                            <a role="menuitem">{{company.CompanyName}}</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>-->
-            
+          <div class="filter_field_wrap form-group" style="padding-top:7px">
             <sp-company-dropdown 
              [companyFilteredArg]='companyFilteredArg'
              (companyFiltered)="onCompanyFiltered($event)"
             ></sp-company-dropdown>
+            </div>
 
             <div class="filter_field_wrap form-group">
                 <button class="btn btn-primary" name="commit" type="button" (click)="searchByCompany()">

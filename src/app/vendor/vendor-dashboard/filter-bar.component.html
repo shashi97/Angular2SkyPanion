@@ -2,11 +2,13 @@
   <h1>All Vendor</h1>
   <div class="options">
     <div class="btn-toolbar form-inline">
-
+      
+      <div class="filter_field_wrap form-group" style="padding-top:7px">
       <sp-company-dropdown
         [companyFilteredArg]='companyFilteredArg'
         (companyFiltered)="onCompanyFiltered($event)">
       </sp-company-dropdown>
+      </div>
 
       <div class="filter_field_wrap form-group">
         <input class="form-control" id="name" name="name" placeholder="Vendor Name" type="text" [(ngModel)]="filteredValue.vendorName">

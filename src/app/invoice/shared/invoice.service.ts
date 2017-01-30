@@ -46,11 +46,11 @@ export class InvoiceService {
       .catch(error => error);
   }
 
-   public getInvoicesForApprovalByUserID(userID) {
+   public getInvoicesForApprovalByUserID(userID):Promise<any> {
     return this.http
       .get(ApiUrl.baseUrl + 'api/invoices/invoicesForApproval/' + userID )
       .toPromise()
-      .then(response => response)
+      .then(response => response.json() as any)
       .catch(error => error);
   }
 

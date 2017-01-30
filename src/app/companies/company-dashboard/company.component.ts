@@ -133,9 +133,8 @@ export class CompanyComponent extends BaseComponent implements OnInit, AfterView
 
 
   private getCompanies() {
-
     this.location.replaceState('company/' + this.searchString);
-
+    return new Promise((resolve, reject) => {
     this.companyService
       .getCompanies(
       this.filteredValue.syncId,
@@ -191,6 +190,7 @@ export class CompanyComponent extends BaseComponent implements OnInit, AfterView
           });
         }
       });
+    });
   }
 
   private activateDeactiveCompany(companyName: string, CompanyId: number, Active: boolean): void {

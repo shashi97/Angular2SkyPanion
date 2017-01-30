@@ -20,7 +20,7 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
 import { ConfirmService } from './shared/services/otherServices/confirmService';
 
-import { DropdownModule, MultiSelectModule ,DataTableModule as PrimeDataTableModule , SharedModule ,CalendarModule} from 'primeng/primeng';
+import { DropdownModule, MultiSelectModule, DataTableModule as PrimeDataTableModule, SharedModule, CalendarModule} from 'primeng/primeng';
 
 
 /* for pagination */
@@ -71,7 +71,7 @@ import { SyncBatchService } from './sync-batch/shared/sync-batch.service';
 import { InvoiceEntryService } from './invoice/invoice-entry/shared/invoice-entry.service';
 
 /*pipes */
-import { OrderByPipe, FilterPipe , CurrencyPipe , VendorFilterPipe , AccountFilterPipe } from './shared/pipe/orderby';
+import { OrderByPipe, FilterPipe, CurrencyPipe, VendorFilterPipe, AccountFilterPipe } from './shared/pipe/orderby';
 
 
 import { Modal } from 'angular2-modal';
@@ -116,7 +116,7 @@ import { LedgerAccountDistributionComponent } from './ledger-account/ledger-acco
 
 import { IniSetupComponent } from './ini-setup/ini-setup.component';
 
-import { ShowOnRowHover ,FocusDirective,FocusMe, CurrencyFormatterDirective} from './shared/directive/showOnRowHover';
+import { ShowOnRowHover, FocusDirective, FocusMe, CurrencyFormatterDirective} from './shared/directive/showOnRowHover';
 import { LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
 
 import { JobComponent } from './job/job-dashboard/job.component';
@@ -163,9 +163,10 @@ import { InvoicePdfRejectModalComponent } from './invoice/invoice-entry-componen
 import { InvoiceApproveModalComponent } from './invoice/invoice-detail/invalid-approve-modal.component';
 import { InvoiceRejectModalComponent } from './dashboard/invoice-modals/invoice-rejection-modal/invoice-rejection.component';
 import { InvoiceEntryNoApproverExistsComponent } from './invoice/invoice-entry-components/noApproverExists-model/invoice-entry-noApproverExists.component';
+import { InvoiceEntryUnlockNotificationContext } from './invoice/invoice-entry-components/invoiceUnlockedNotifciation-model/invoice-entry-unlockNotification.component';
 import { InvoiceApprovalModalComponent } from './dashboard/invoice-modals/invoice-approval-modal/invoice-approval.component';
 import { InvoiceDistributionCommentModalComponent } from
-  './dashboard/invoice-modals/invoice-distribution-comment-model/invoice-distribution-comment.component';
+'./dashboard/invoice-modals/invoice-distribution-comment-model/invoice-distribution-comment.component';
 
 import { PageHeaderTitleComponent } from './shared/others/page-header/page-header.component';
 import { AttachmentComponent } from './attachment/attachment.component';
@@ -184,14 +185,14 @@ import { DashboardInvoicesComponent } from './dashboard/dashboard-view/dashboard
 import { InvoiceEntryComponent } from './invoice/invoice-entry/invoice-entry.component';
 
 import { InvoiceEntryAccountsComponent }
-  from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
+from './invoice/invoice-entry-components/accounts-model/invoice-entry-accounts.component';
 
 import { InvoiceEntryDistributionsComponent }
-  from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
+from './invoice/invoice-entry-components/distributions-model/invoice-entry-distributions.component';
 import { AttachmentEditComponent } from './attachment/attachment-edit-model/attachment-edit-model.component';
 
 import { InvoiceEntryPurchaseComponent } from './invoice/invoice-entry-components/purchase-model/invoice-entry-purchase.component';
-
+import { logoutComponent } from './shared/logout-modal/logout-modal.component';
 
 
 /* for sync batch entry */
@@ -217,6 +218,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 
 import { PrimeTableComponent } from './prime-table/prime-table.component';
 
+import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
+import {MomentModule} from 'angular2-moment';
+
 
 
 let localStorageServiceConfig = {
@@ -225,7 +229,7 @@ let localStorageServiceConfig = {
 };
 
 
-export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: RequestOptions){
+export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: RequestOptions) {
   let service = new InterceptorService(xhrBackend, requestOptions);
   // Add interceptors here with service.addInterceptor(interceptor)
   return service;
@@ -336,6 +340,7 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     InvoiceApprovalModalComponent,
     InvoiceDistributionCommentModalComponent,
     InvoiceEntryNoApproverExistsComponent,
+    InvoiceEntryUnlockNotificationContext,
     ShowOnRowHover,
     FocusDirective,
     FocusMe,
@@ -346,7 +351,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     PageHeaderTitleComponent,
     LoadingSpinnerComponent,
     InvoiceApproveModalComponent,
-    PrimeTableComponent
+    PrimeTableComponent,
+    logoutComponent
   ],
   entryComponents: [
     SetupModalComponent,
@@ -360,10 +366,12 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     InvoiceDistributionCommentModalComponent,
     AttachmentEditComponent,
     InvoiceEntryNoApproverExistsComponent,
+    InvoiceEntryUnlockNotificationContext,
     InvoicePdfRejectModalComponent,
-    InvoiceApproveModalComponent
+    InvoiceApproveModalComponent,
+    logoutComponent
   ],
-  
+
   imports: [
     UiSwitchModule,
     BrowserModule,
@@ -383,20 +391,22 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     BootstrapModalModule,
     TooltipModule,
     ToastModule,
-    PopoverModule
+    PopoverModule,
+    Ng2Bs3ModalModule,
+    MomentModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-     {
+    {
       provide: InterceptorService,
       useFactory: interceptorFactory,
       deps: [XHRBackend, RequestOptions]
-      },
-      {
-       provide:Http, 
-        useFactory:
-         (backend: XHRBackend, defaultOptions: RequestOptions, pubsub: PubSubService) => new CustomHttp(backend, defaultOptions, pubsub),
-        deps: [XHRBackend, RequestOptions, PubSubService]
+    },
+    {
+      provide: Http,
+      useFactory:
+      (backend: XHRBackend, defaultOptions: RequestOptions, pubsub: PubSubService) => new CustomHttp(backend, defaultOptions, pubsub),
+      deps: [XHRBackend, RequestOptions, PubSubService]
     },
     PubSubService,
     RoleService,
@@ -424,14 +434,14 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
       useFactory: (xhrBackend: XHRBackend,
         requestOptions: RequestOptions,
         router: Router,
-		 pubsub: PubSubService,
+        pubsub: PubSubService,
         localStorageService: LocalStorageService) => new HttpInterceptor(xhrBackend,
           requestOptions,
           router,
-		   pubsub,
+          pubsub,
           localStorageService),
 
-       deps: [XHRBackend, RequestOptions, Router,PubSubService, LocalStorageService],
+      deps: [XHRBackend, RequestOptions, Router, PubSubService, LocalStorageService],
     },
     {
       provide: LOCAL_STORAGE_SERVICE_CONFIG, useValue: localStorageServiceConfig

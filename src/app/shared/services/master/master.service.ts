@@ -40,4 +40,13 @@ export class MasterService {
 
   }
 
+  public confirmLock (documentLockingID, documentType ,attachemntID){
+     return this.http
+      .get(ApiUrl.baseUrl + "api/invoices/getLockConfirmation/" + documentLockingID + "/" + documentType + "/" + attachemntID)
+      .toPromise()
+      .then(response => response.json())
+  }
+
+
+
 }

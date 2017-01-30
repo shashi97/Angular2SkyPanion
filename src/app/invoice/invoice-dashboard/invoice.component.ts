@@ -20,6 +20,8 @@ import { CurrentPageArguments } from '../../pagination/pagination.component';
 import {PubSubService} from '../../interceptor/pub-service';
 import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
 
+import * as moment from 'moment/moment';
+
 @Component({
   selector: 'sp-invoice',
   templateUrl: './invoice.component.html',
@@ -47,6 +49,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
   private Invoices: Array<InvoiceModel> = [];
   private isAllInvoiceSelected: boolean;
   private SelectInoivcesSpan: string = '';
+  private datefURL:string= '';
+  private datetURL:string = '';
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -64,17 +68,15 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
     this.pageSizeFilter = 25;
     this.searchParameters = -1;
     this.isAllInvoiceSelected = false;
-    this.SelectInoivcesSpan = "Select All"
+    this.SelectInoivcesSpan = 'Select All';
   }
 
- 
  ngOnInit(): void {
-   
       this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
       this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
   }
 
-   ngAfterViewInit(){
+   ngAfterViewInit() {
       if (this.user) {
       this.getParameterValues();
     } else {
@@ -87,9 +89,18 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
   }
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
+
+     if(this.invoiceFilteredValue.datefURL !== undefined && this.invoiceFilteredValue.datefURL !== null){
+       this.datefURL =  this.invoiceFilteredValue.datefURL.toDateString();
+      }
+
+      if(this.invoiceFilteredValue.datetURL !== undefined && this.invoiceFilteredValue.datetURL !== null){
+       this.datetURL =  this.invoiceFilteredValue.datetURL.toDateString();
+      }
+    
     this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
-      + this.invoiceFilteredValue.invFromDate + ','
-      + this.invoiceFilteredValue.invToDate + ','
+      + this.datefURL + ','
+      + this.datetURL + ','
       + this.invoiceFilteredValue.invoiceDesc + ','
       + this.invoiceFilteredValue.invoiceNumber + ','
       + this.invoiceFilteredValue.companyId + ','
@@ -105,10 +116,17 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
 
   private set invoiceFilteredValue(newValue: InvoiceFilteredArgs) {
     this._currentInvoiceArgs = newValue;
+     if(this.invoiceFilteredValue.datefURL !== undefined && this.invoiceFilteredValue.datefURL !== null){
+       this.datefURL =  encodeURIComponent(this.invoiceFilteredValue.datefURL.toDateString())
+      }
+
+      if(this.invoiceFilteredValue.datetURL !== undefined && this.invoiceFilteredValue.datetURL !== null){
+       this.datetURL =  encodeURIComponent(this.invoiceFilteredValue.datetURL.toDateString())
+      }
 
     this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
-      + this.invoiceFilteredValue.invFromDate + ','
-      + this.invoiceFilteredValue.invToDate + ','
+      + this.datefURL + ','
+      + this.datetURL  + ','
       + this.invoiceFilteredValue.invoiceDesc + ','
       + this.invoiceFilteredValue.invoiceNumber + ','
       + this.invoiceFilteredValue.companyId + ','
@@ -128,8 +146,17 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
 
       if (searchParameters !== '-1') {
         let parameterArray: Array<string> = parameterValue.searchParameters.split(',');
-        this.invoiceFilteredValue.invFromDate = parameterArray[0];
-        this.invoiceFilteredValue.invToDate = parameterArray[1];
+
+         if (parameterArray[0] !== undefined && parameterArray[0] !== '') {
+             this.invoiceFilteredValue.invFromDate = moment(decodeURIComponent(parameterArray[0])).format('MM/DD/YYYY');
+             this.invoiceFilteredValue.datefURL = moment(parameterArray[0], 'MM/DD/YYYY').toDate();
+        }
+
+          if (parameterArray[1] !== undefined && parameterArray[1] !== '') {
+             this.invoiceFilteredValue.invToDate = moment(decodeURIComponent(parameterArray[1])).format('MM/DD/YYYY');
+             this.invoiceFilteredValue.datetURL = moment((parameterArray[1]), 'MM/DD/YYYY').toDate();
+        }
+
         this.invoiceFilteredValue.invoiceDesc = parameterArray[2];
         this.invoiceFilteredValue.invoiceNumber = parameterArray[3];
         this.invoiceFilteredValue.companyId = Number(parameterArray[4]);
@@ -143,8 +170,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
       }
 
       this.searchString = this.currentPageFiltered.pageSizeFilter + '/'
-        + this.invoiceFilteredValue.invFromDate + ','
-        + this.invoiceFilteredValue.invToDate + ','
+        + encodeURIComponent(this.invoiceFilteredValue.invFromDate) + ','
+        + encodeURIComponent(this.invoiceFilteredValue.invToDate) + ','
         + this.invoiceFilteredValue.invoiceDesc + ','
         + this.invoiceFilteredValue.invoiceNumber + ','
         + this.invoiceFilteredValue.companyId + ','
@@ -158,10 +185,11 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
 
   private showInvoiceDetail(invoiceID): void {
 
-    if (this.invoiceNumber == "" || this.invoiceNumber == "null" || this.invoiceNumber == undefined) {
+    if (this.invoiceNumber === '' || this.invoiceNumber === 'null' || this.invoiceNumber === undefined) {
       this.invoiceNumber = null;
     }
-    this.router.navigate(['/invoice/detail/' + this.pageSizeFilter + "/" + this.searchParameters + '/' + invoiceID + '/' + this.invoiceNumber + '/' + this.vendorID + '/' + this.companyID + '/' + this.statusID + '/' + this.userID]);
+    this.router.navigate(['/invoice/detail/'  + this.searchString + '/' + invoiceID + '/' 
+                    + this.invoiceNumber + '/' + this.vendorID + '/' + this.companyID + '/' + this.statusID + '/' + this.userID]);
   }
   private getAccountName(): void {
     this.accountService.getAccountName().then(result => {
@@ -175,7 +203,9 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
   }
 
   getInvoices() {
-    //this.location.replaceState('invoiceList/' + this.searchString);
+
+     this.location.replaceState('invoice/' + this.searchString);
+
     let searchFields = {
       invoiceNumber: this._currentInvoiceArgs.invoiceNumber,
       vendorId: this._currentInvoiceArgs.vendorId,
@@ -184,10 +214,11 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
       userId: this._currentInvoiceArgs.userId,
       currentPage: this._currentPage.pageNo,
       pageSize: this._currentPage.pageSizeFilter,
-      invFromDate: this._currentInvoiceArgs.invToDate,
+      invFromDate: this._currentInvoiceArgs.invFromDate,
       invToDate: this._currentInvoiceArgs.invToDate,
       invoiceDesc: this._currentInvoiceArgs.invoiceDesc,
     };
+    return new Promise((resolve, reject) => {
     this.invoiceService.getInvoices(searchFields).then(result => {
        if (result.status === 404) {
       } else if (result.status === 500) {
@@ -200,6 +231,7 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
        this.totalItems = 0;
       }
       }
+      });
     });
   }
 
@@ -264,5 +296,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
   public onFilteredInvoice(filteredValue: InvoiceFilteredArgs): void {
     this.invoiceFilteredValue = filteredValue;
   }
+
+
+  
 
 }

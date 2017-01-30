@@ -117,20 +117,19 @@ export class InvoiceApproveModalComponent extends BaseComponent implements Close
           else {
             this.toastr.success("Success", "Invoice approved successfully", "success");
             this.invoiceService.getInvoicesForApprovalByUserID(this.user.userId).then(result => {
-              if (result.status == 404) {
+              if (result.status === 404) {
                 this.ApprovalObject.StateUrl = '/dashboard';
                 this.ApprovalObject.InvoiceID = this.invoiceID;
                 this.dialog.close(this.ApprovalObject);
-              } else if (result.status == 500) {
+              } else if (result.status === 500) {
                 this.ApprovalObject.StateUrl = '/dashboard';
                 this.ApprovalObject.InvoiceID = this.invoiceID;
                 this.dialog.close(this.ApprovalObject);
               } else {
-                if (result.data != "") {
-                  this.ApprovalObject.StateUrl = '/invoice/detail/' + parseInt(result.data.InvoiceID);
+                if (result.InvoiceID !== undefined ) {
+                  this.ApprovalObject.StateUrl = '/invoice/detail/' + parseInt(result.InvoiceID);
                   this.ApprovalObject.InvoiceID = this.invoiceID;
                   this.dialog.close(this.ApprovalObject);
-                  //$location.path('/invoicesDetails/' + parseInt(result.data.InvoiceID));
                 } else {
                   this.ApprovalObject.StateUrl = '/dashboard';
                   this.ApprovalObject.InvoiceID = this.invoiceID;

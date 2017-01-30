@@ -1,9 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { BaseComponent } from './base.component';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { UserService } from './user/shared/user.service';
 import { AuthService } from './shared/services/otherServices/auth.service';
+
+import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
+import { Overlay, OverlayConfig } from 'angular2-modal';
+import {
+  logoutModalContext,
+  logoutComponent
+} from './shared/logout-modal/logout-modal.component';
 
 @Component({
   selector: 'sp-app',
@@ -17,7 +24,8 @@ export class AppComponent extends BaseComponent implements OnInit {
     localStorageService: LocalStorageService,
     router: Router,
     private userService: UserService,
-
+    overlay: Overlay, vcRef: ViewContainerRef,
+    public modal: Modal,
     private authService: AuthService
   ) {
     super(localStorageService, router);
@@ -33,15 +41,36 @@ export class AppComponent extends BaseComponent implements OnInit {
     }
     this.router.navigate(link);
   }
+  openlogoutModal() {
+    const builder = new BSModalContextBuilder<logoutModalContext>(
+      { num1: 2, num2: 3 } as any,
+      undefined,
+      logoutModalContext
+    );
+
+    let overlayConfig: OverlayConfig = {
+      context: builder.isBlocking(false).toJSON()
+    };
+
+    const dialog = this.modal.open(logoutComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
+        if (result === "logout") {
+          this.logOut();
+        }
+      }, () => console.log(' user canceled logout modal '));
+    });
+
+
+  }
 
   private logOut() {
-    if (confirm('Are you sure you would like to log out of SkyPanion?') === true) {
-      this.localStorageService.remove('authorization');
-      this.localStorageService.remove('sessionData');
-      this.disableMenu = { 'display': 'none' };
-      this.disableSideBar = { 'display': 'none' };
-      let link = ['/login'];
-      this.router.navigate(link);
-    }
+    this.localStorageService.remove('authorization');
+    this.localStorageService.remove('sessionData');
+    this.disableMenu = { 'display': 'none' };
+    this.disableSideBar = { 'display': 'none' };
+    let link = ['/login'];
+    this.router.navigate(link);
   }
 }

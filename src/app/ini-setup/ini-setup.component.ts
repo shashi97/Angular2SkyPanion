@@ -53,6 +53,7 @@ export class IniSetupComponent extends BaseComponent implements OnInit , AfterVi
     public cdr: ChangeDetectorRef
   ) {
     super(localStorageService, router);
+    overlay.defaultViewContainer = vcRef;
      this.cdr = cdr;
     this.iniSetupModel = new IniSetupModel();
   }

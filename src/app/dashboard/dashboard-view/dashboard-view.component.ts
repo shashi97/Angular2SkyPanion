@@ -75,7 +75,9 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
                     this.dashboardPermissions.UserPermissions.IsSuperUser = this.sessionDetails.IsSuperUser;
                     if (this.sessionDetails.userId != null) {
                         this._filteredValue.userId = this.sessionDetails.userId;
-                        this.getInvoices();
+                         this.dashboardState = this.userService.getDashboardState();
+                         this._filteredValue.companyId = this.dashboardState.companyId;
+                            this.getInvoices();
                     } else {
                         let link = ['/login'];
                         this.router.navigate(link);
@@ -84,7 +86,8 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
             });
     }
 
-    private getInvoices(): void {
+    private getInvoices() {
+        return new Promise((resolve, reject) => {
           this.dashboardService
             .getInvoices(
             null,
@@ -95,8 +98,9 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
                 this.dashboardData = result;
                 this.invoices = result.invoiceObjects;
                 this.getInvoicesByState(this._filteredValue);
-           }
+        }
       });
+    });
     }
 
     private get filteredValue(): InvoiceStateFilterArguments {

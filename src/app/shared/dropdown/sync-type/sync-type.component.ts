@@ -40,7 +40,7 @@ export class SyncTypeDropdownComponent extends BaseComponent implements OnInit, 
     }
 
     private getSyncList() {
-        let item = [{ ID: 'all', Name: 'All' }, { ID: 'true', Name: 'Sync Enabled' }, { ID: 'false', Name: 'Sync Disabled' }];
+        let item = [{ ID: 'all', Name: 'All types' }, { ID: 'true', Name: 'Sync Enabled' }, { ID: 'false', Name: 'Sync Disabled' }];
         for (let i = 0; i < 3; i++) {
             this.syncList.splice(i, 0, item[i]);
 

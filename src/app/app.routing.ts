@@ -73,7 +73,7 @@ const APP_ROUTES: Routes = [
 
   { path: 'invoice/:pageSizeFilter/:searchParameters', component: InvoiceComponent },
   { path: 'invoice/detail/:id', component: InvoiceDetailComponent },
-  { path: 'invoice/detail/:pageSizeFilter/:SearchParameters/:InvoiceID/:invoiceNumber/:vendor/:company/:status/:user', component: InvoiceDetailComponent },
+  { path: 'invoice/detail/:pageSizeFilter/:searchParameters/:InvoiceID/:invoiceNumber/:vendor/:company/:status/:user', component: InvoiceDetailComponent },
 
   { path: 'purchaseOrder/:pageSizeFilter/:searchParameters', component: PurchaseOrderComponent },
   { path: 'purchaseOrderDetail/:id', component: PurchaseOrderDetailComponent },
@@ -83,9 +83,9 @@ const APP_ROUTES: Routes = [
   { path: 'approval/:id', component: ApprovalCriteriaComponent },
 
   // { path: 'attachment', component: AttachmentComponent },
-  { path: 'attachmentsList/:pageSizeFilter/:SearchParameters', component: AttachmentComponent },
-  { path: 'invoices/:pageSizeFilter/:SearchParameters/:InvoiceID/new/:attachmentId', component: InvoiceEntryComponent },
-  { path: 'invoices/:SearchParameters/:InvoiceID/edit', component: InvoiceEntryComponent }, 
+  { path: 'attachmentsList/:pageSizeFilter/:searchParameters', component: AttachmentComponent },
+  { path: 'invoices/:pageSizeFilter/:searchParameters/:InvoiceID/new/:attachmentId', component: InvoiceEntryComponent },
+  { path: 'invoices/:searchParameters/:InvoiceID/edit', component: InvoiceEntryComponent }, 
 
   { path: 'syncBatch/:pageSizeFilter/:searchParameters', component: SyncBatchComponent },
   { path: 'syncBatch/detail/:id/:pageSizeFilter/:searchParameters', component: SyncBatchDetailComponent },

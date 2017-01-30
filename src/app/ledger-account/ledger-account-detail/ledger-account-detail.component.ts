@@ -61,7 +61,8 @@ export class LedgerAccountDetailComponent extends BaseComponent implements OnIni
     });
   }
 
-  private getledgerAccountsDetail(): void {
+  private getledgerAccountsDetail() {
+    return new Promise((resolve, reject) => {
     this.ledgerAccountService.getledgerAccountsDetail(this.id, this.companyId).then(result => {
       if (result.status === 404) {
         this.ledgerAccountDetail = new LedgerAccountModel();
@@ -69,6 +70,7 @@ export class LedgerAccountDetailComponent extends BaseComponent implements OnIni
         this.ledgerAccountDetail = result;
         this.getledgerAccountDistribution(this.id);
       }
+     });
     });
   }
 

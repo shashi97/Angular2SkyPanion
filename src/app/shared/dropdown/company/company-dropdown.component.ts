@@ -54,7 +54,7 @@ export class CompanyDropdownComponent extends BaseComponent implements OnInit, O
       this.companies = result;
       // let temp = this.companies;
       let defaultRole = {
-        CompanyID: 0, CompanyName: 'All Companies', Number: '', Type: '', account_id: 8
+        CompanyID: 0, CompanyName: 'All Companies', Number: 'All Companies', Type: 'All Companies', account_id: 8
       };
       this.companies.splice(0, 0, defaultRole);
 

@@ -34,6 +34,7 @@ export class ApprovalFilterComponent extends BaseComponent implements OnInit {
     public modal: Modal
   ) {
     super(localStorageService, router);
+     overlay.defaultViewContainer = vcRef;
   }
 
   ngOnInit() {

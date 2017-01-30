@@ -125,7 +125,7 @@
       <div class="col-md-8 input-group">
         <div class="input-group date" id="datetimepicker_invoiceDate">
           <input [(ngModel)]="invoiceDate" class="form-control" focus-name="4" tabindex="4" id="Invoice_date"  #Invoice_date="ngModel"  placeholder="Invoice Date From"
-            size="12" type="text"  (blur)="setDueDateByInvoiceDate(invoiceDate)">
+            size="12" type="text">
           <!--(blur)="setDueDateByInvoiceDate(invoiceDate)"-->
           <span class="input-group-addon">
           <span class="caret" ></span>
@@ -143,7 +143,7 @@
           <span class="input-group-addon ">
                                             <i class="fa fa-usd"></i>
                                         </span>
-          <input type="number" [(ngModel)]="invoiceDetail.InvoiceAmount" focus-name="5" tabindex="5 " class="form-control"  placeholder="Enter invoice amount "
+          <input type="text" [(ngModel)]="invoiceDetail.InvoiceAmount" focus-name="5" tabindex="5 " class="form-control"  placeholder="Enter invoice amount "
             size="30"  (blur)="processInvAmtToDistribution(invoiceDetail.InvoiceAmount)" CurrencyFormatter>
         </div>
       </div>
@@ -250,8 +250,8 @@
                                         <div class="navbar-search navbar-form search_form" action="#" role="search">
                                             <div class="control-group form-group">
                                                 <div class="editable-input" style="position: relative;">
-                                                    <input type="number" class="form-control input-sm" style="padding-right: 24px;"
-                                                         [(ngModel)]="item.DistributionAmount" (keyup.enter) = "amountPopover.hide()" ><span class="editable-clear-x"></span>
+                                                    <input type="text" class="form-control input-sm" style="padding-right: 24px;"
+                                                         [(ngModel)]="item.DistributionAmount" (keyup.enter) = "amountPopover.hide()" CurrencyFormatter><span class="editable-clear-x"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -381,7 +381,7 @@
   </div>
   <div class="col-md-8" id="form_right_wrap" style="width: 65%; float: left;margin-left:15px">
     <input id="invoice_attachment_id" [(ngModel)]="invoiceDetail.attachment_id" type="hidden" value="568">
-    <div class="row">
+    <div class="row" *ngIf ="pdfsrc">
       <iframe id="pdf_frame" height="800" class="col-md-12" [src]="pdfsrc" style="border: 0; position: inherit"></iframe>
       <!--src="http://localhost/abc/api/getpdf?a=1"-->
     </div>
@@ -422,3 +422,6 @@
   </div>
 </div>
 <!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->
+
+
+<sp-loading-spinner [showLoader] = 'showLoader' ></sp-loading-spinner>

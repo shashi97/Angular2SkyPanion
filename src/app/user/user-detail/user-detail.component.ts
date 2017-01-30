@@ -55,7 +55,7 @@ export class UserDetailComponent extends BaseComponent implements OnInit {
 
   private getUserById() {
     this.location.replaceState('user/detail/' + this.searchString);
-
+    return new Promise((resolve, reject) => {
     this.userService.getUserById(this.userId).then(result => {
       if (result.status === 404) {
       } else if (result.status === 500) {
@@ -63,6 +63,7 @@ export class UserDetailComponent extends BaseComponent implements OnInit {
         this.userDetail = result;
       }
     });
+   });
   }
 
 }

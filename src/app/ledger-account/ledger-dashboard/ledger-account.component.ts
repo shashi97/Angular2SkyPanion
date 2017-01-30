@@ -133,10 +133,9 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit ,Aft
     });
   }
 
-  private getLedgerAccounts(): void {
-
+  private getLedgerAccounts() {
     this.location.replaceState('ledgerAccount/' + this.searchString);
-
+    return new Promise((resolve, reject) => {
     this.ledgerAccountService.getLedgerAccounts(
       this.filteredValue.accountNumberSearch,
       this.filteredValue.accountTitleSearch,
@@ -155,9 +154,8 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit ,Aft
             }
           }
         }
-        // var instanseId = paginationService.getLastInstanceId();
-        // paginationService.setCurrentPage(instanseId, this.currentPage);
       });
+    });
   }
 
 

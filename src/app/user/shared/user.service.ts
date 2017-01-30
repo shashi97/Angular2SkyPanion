@@ -12,6 +12,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
 export class UserService {
 
   sessionData: Object;
+  dashboardStateData: Object;
   constructor(private http: Http,
     public localStorageService: LocalStorageService) {
     this.sessionData = {
@@ -22,6 +23,9 @@ export class UserService {
       userName: '',
       AccountID: 0,
       userId: 0
+    };
+    this.dashboardStateData={
+        companyId:0
     };
   }
 
@@ -40,6 +44,11 @@ export class UserService {
   public getSessionDetails(): Object {
     this.sessionData = this.localStorageService.get('sessionData');
     return this.sessionData;
+  }
+
+   public getDashboardState(): Object {
+    this.dashboardStateData = this.localStorageService.get('dashboardStateData');
+    return this.dashboardStateData;
   }
 
   public updateUserDetail(userName: string) {

@@ -144,7 +144,7 @@ export class VendorComponent extends BaseComponent implements OnInit , AfterView
   private getVendors() {
 
     this.location.replaceState('vendor/' + this.searchString);
-
+    return new Promise((resolve, reject) => {
     this.vendorSevice
       .getVendors(
       this.ledgerAccountId,
@@ -162,9 +162,8 @@ export class VendorComponent extends BaseComponent implements OnInit , AfterView
             this.totalItems = 0;
           }
         }
-        // var instanseId = paginationService.getLastInstanceId();
-        // paginationService.setCurrentPage(instanseId, $scope.currentPage);
       });
+    });
   }
 
   // private searchUrl(): void {

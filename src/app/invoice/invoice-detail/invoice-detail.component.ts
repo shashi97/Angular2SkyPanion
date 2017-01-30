@@ -18,6 +18,9 @@ import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spi
 import { UserService } from '../../user/shared/user.service';
 import { InvoiceService } from '../shared/invoice.service';
 
+import { OrderByPipe, CurrencyPipe } from '../../shared/pipe/orderby';
+import { Location } from '@angular/common';
+
 export class InvoiceArgs {
   invType: string = 'pdf';
   invoiceId: number = 0;
@@ -27,6 +30,7 @@ export class InvoiceArgs {
 @Component({
   selector: 'sp-invoice-detail',
   templateUrl: './invoice-detail.component.html',
+   providers: [CurrencyPipe]
 })
 
 export class InvoiceDetailComponent extends BaseComponent implements OnInit , AfterViewInit {
@@ -42,6 +46,7 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit , Af
   private companyId: number = 0;
   private statusId: number = 0;
   private userId: number = 0;
+  private searchString: string = '';
   private checkDetails: Array<any> = [];
   private invoiceArgs: InvoiceArgs = new InvoiceArgs();
   
@@ -53,7 +58,8 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit , Af
     private userService: UserService,
     private domSanitizer: DomSanitizer,
     private activatedRoute: ActivatedRoute,
-    public pubsub: PubSubService) {
+    public pubsub: PubSubService,
+    private location: Location) {
     super(localStorageService, router);
     this.invoiceDetail = new InvoiceModel();
   }
@@ -79,6 +85,9 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit , Af
     this.activatedRoute.params.subscribe(params => {
       this.invoiceId = +params['InvoiceID'];
       this.invoiceArgs.invoiceId = this.invoiceId;
+      let pageSizeFilter = params['pageSizeFilter'];
+      let searchParameters = params['searchParameters'];
+       this.searchString = pageSizeFilter + '/' + searchParameters;
       this.getUserDetails();
     });
   }
@@ -111,8 +120,11 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit , Af
     });
   }
 
-  private getInvoiceDetail(): void {
+  private getInvoiceDetail() {
+
+    this.location.replaceState('invoice/detail/' + this.searchString);
     let roleExistCount: number = 0;
+    return new Promise((resolve, reject) => {
     this.invoiceService.getInvoiceDetail(this.invoiceId, 0).then(result => {
       this.invoiceDetail = result;
       if (this.invoiceDetail.InvoiceID === 0) {
@@ -120,16 +132,13 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit , Af
       } else {
         this.invoiceDetail.docType = 10;
       }
-      
 
       if (this.invoiceDetail.InvoiceStatusID == 0) {
         this.invoiceArgs.invType = 'duplicates';
       }
 
       this.companiesService.getCompanyDetail(this.invoiceDetail.CompanyID).then(response => {
-
         this.companyDetail = response;
-
         let link = ['/company'];
         if (this.user.IsSuperUser === false && this.companyDetail.view_invoice_role_id !== 0) {
           if (this.userDetail.selectedRoles.length > 0) {
@@ -146,7 +155,8 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit , Af
           }
         }
 
-        let invSearchData = { invoiceNumber: this.invoiceDetail.InvoiceNumber, CompanyId: this.invoiceDetail.CompanyID };
+        let invSearchData = {invoiceID :this.invoiceDetail.InvoiceID, invoiceNumber: this.invoiceDetail.InvoiceNumber,
+                              voucherLastKey:'', CompanyID: this.invoiceDetail.CompanyID };
 
         this.invoiceService.getInvoicesCheckDetailsByInvoiceNumber(invSearchData).then(res => {
           if (res.status === 404) {
@@ -157,5 +167,6 @@ export class InvoiceDetailComponent extends BaseComponent implements OnInit , Af
         });
       });
     });
+   });
   }
 }

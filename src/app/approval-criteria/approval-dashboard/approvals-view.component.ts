@@ -49,6 +49,7 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
 
   ) {
     super(localStorageService, router);
+    overlay.defaultViewContainer = vcRef;
     dragulaService.drag.subscribe((value) => {
       console.log(`drag: ${value[0]}`);
       this.onDrag(value.slice(1));

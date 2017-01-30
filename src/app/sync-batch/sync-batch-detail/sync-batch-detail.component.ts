@@ -72,9 +72,8 @@ export class SyncBatchDetailComponent extends BaseComponent implements OnInit {
   }
 
   getSyncBatcheDetail() {
-
-    this.location.replaceState('syncBatch/detail/' + this.searchString);
-
+   this.location.replaceState('syncBatch/detail/' + this.searchString);
+   return new Promise((resolve, reject) => {
     this.syncBatchService.getSyncBatcheDetail(this.syncBatcheId).then(result => {
       if (result.status === 404) {
         // messageService.showMsgBox("Sync Batche Detail", "Invalid sync batche.", "error");
@@ -87,6 +86,6 @@ export class SyncBatchDetailComponent extends BaseComponent implements OnInit {
         }
       }
     });
+   });
   }
-
 }

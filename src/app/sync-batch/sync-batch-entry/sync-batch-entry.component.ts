@@ -135,7 +135,7 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
     this.getSyncBatcheInvoices();
   }
 
-  private getSyncBatcheInvoices(): void {
+  private getSyncBatcheInvoices() {
 
     this.location.replaceState('syncBatchNew/' + this.searchString);
     // this.companies.map((item) => {
@@ -157,6 +157,7 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
       userID: this.filteredValue.userId
     };
 
+    return new Promise((resolve, reject) => {
     this.syncBatchEntryService.getSyncBatcheInvoices(searchFields).then((result) => {
       if (result.status === 404) {
         //  $location.path('/syncbatches');
@@ -167,6 +168,7 @@ export class SyncBatchEntryComponent extends BaseComponent implements OnInit {
           this.totalItems = this.syncBatcheInvoices.length;
         }
       }
+    });
     });
   }
 

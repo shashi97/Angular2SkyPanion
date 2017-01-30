@@ -7,18 +7,21 @@ import { CompanyDropdownComponent, CompanyFilterArguments } from '../../shared/d
 import { VendorDropdownComponent, VendorFilterArguments } from '../../shared/dropdown/vendor/vendor-dropdown.component';
 import { UserDropdownComponent } from '../../shared/dropdown/user/user-dropdown.component';
 import { UserFilterArguments } from '../../shared/dropdown/user/user-dropdown.component';
+import * as moment from 'moment';
 
 declare let jQuery: any;
 
 export class InvoiceFilteredArgs {
   invFromDate: string = '';
-  invToDate: string = '';
+  invToDate : string = '';
   invoiceDesc: string = '';
   invoiceNumber: string = '';
   companyId: number = 0;
   vendorId: number = 0;
   statusId: number = -1;
   userId: number = -1;
+  datefURL: Date = null;
+  datetURL: Date= null;
 }
 
 @Component({
@@ -80,8 +83,8 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit, OnC
   }
 
   ngOnInit() {
-    jQuery('#invoice_FromDate').datepicker();
-    jQuery('#invToDate').datepicker();
+    jQuery('#invoice_FromDate').datepicker().datepicker({ dateFormat: 'MM/DD/YYYY' });
+    jQuery('#invToDate').datepicker().datepicker({ dateFormat: 'MM/DD/YYYY' });
   }
 ngOnChanges() {
     this.companyFilteredArg.companyId = this.invoiceFilteredValue.companyId;
@@ -93,11 +96,22 @@ ngOnChanges() {
       }
     });
   }
+  
   private searchUrl(): void {
     let dateFrom = jQuery('#invoice_FromDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
-    this.invoiceFilteredValue.invFromDate = dateFrom.val();
+    this.invoiceFilteredValue.invFromDate =  dateFrom.val();
+
+    if(this.invoiceFilteredValue.invFromDate !==  undefined && this.invoiceFilteredValue.invFromDate !==  ''){
+      this.invoiceFilteredValue.datefURL = moment(dateFrom.val(), 'MM/DD/YYYY').toDate();
+    }
+
     let dateTo = jQuery('#invToDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
     this.invoiceFilteredValue.invToDate = dateTo.val();
+
+        if(this.invoiceFilteredValue.invToDate !==  undefined && this.invoiceFilteredValue.invToDate !==  ''){
+       this.invoiceFilteredValue.datetURL = moment(dateTo.val(), 'MM/DD/YYYY').toDate();
+    }
+
     this.invoiceFilteredValue.vendorId = this.vendorFilteredArg.vendorId;
     this.invoiceFilteredValue.companyId = this.companyFilteredArg.companyId;
     this.invoiceFilteredValue.userId = this.userFilteredArg.UserID;
