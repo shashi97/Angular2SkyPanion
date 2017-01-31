@@ -26,17 +26,19 @@ export class SyncBatchFilterComponent extends BaseComponent implements OnInit, O
   @Input() syncBatchFilteredValue: SyncBatchFilteredArgs = new SyncBatchFilteredArgs();
   @Output() filteredsyncBatch: EventEmitter<SyncBatchFilteredArgs> = new EventEmitter<SyncBatchFilteredArgs>();
   private _userFilteredValue: UserFilterArguments = new UserFilterArguments();
+  private dateFormat:any;
 
   constructor(
     localStorageService: LocalStorageService,
     router: Router
   ) {
     super(localStorageService, router);
+    this.dateFormat = { format: 'MM/DD/YYYY' };
   }
 
   ngOnInit() {
-    jQuery('#syncFromDate').datepicker();
-    jQuery('#syncToDate').datepicker();
+    // jQuery('#syncFromDate').datepicker();
+    // jQuery('#syncToDate').datepicker();
   }
 
   ngOnChanges() {
@@ -54,18 +56,18 @@ export class SyncBatchFilterComponent extends BaseComponent implements OnInit, O
   }
 
   private searchUrl(): void {
-    let dateFrom = jQuery('#syncFromDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
-    this.syncBatchFilteredValue.syncFromDate = dateFrom.val();
+    // let dateFrom = jQuery('#syncFromDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
+    // this.syncBatchFilteredValue.syncFromDate = dateFrom.val();
 
     if(this.syncBatchFilteredValue.syncFromDate !==  undefined && this.syncBatchFilteredValue.syncFromDate !==  ''){
-      this.syncBatchFilteredValue.datefURL = moment(dateFrom.val(), 'MM/DD/YYYY').toDate();
+      this.syncBatchFilteredValue.datefURL = moment(this.syncBatchFilteredValue.syncFromDate, 'MM/DD/YYYY').toDate();
     }
 
-    let dateTo = jQuery('#syncToDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
-    this.syncBatchFilteredValue.syncToDate = dateTo.val();
+    // let dateTo = jQuery('#syncToDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
+    // this.syncBatchFilteredValue.syncToDate = dateTo.val();
 
      if(this.syncBatchFilteredValue.syncToDate !==  undefined && this.syncBatchFilteredValue.syncToDate !==  ''){
-       this.syncBatchFilteredValue.datetURL = moment(dateTo.val(), 'MM/DD/YYYY').toDate();
+       this.syncBatchFilteredValue.datetURL = moment(this.syncBatchFilteredValue.syncToDate, 'MM/DD/YYYY').toDate();
     }
 
     this.syncBatchFilteredValue.userId = this.userFilteredArg.UserID;
@@ -76,8 +78,8 @@ export class SyncBatchFilterComponent extends BaseComponent implements OnInit, O
   }
 
   private searchUrlReset(): void {
-    jQuery('#syncFromDate').val('');
-    jQuery('#syncToDate').val('');
+    // jQuery('#syncFromDate').val('');
+    // jQuery('#syncToDate').val('');
     this.syncBatchFilteredValue = new SyncBatchFilteredArgs();
     this.userFilteredArg = new UserFilterArguments();
     this.filteredsyncBatch.emit(this.syncBatchFilteredValue);

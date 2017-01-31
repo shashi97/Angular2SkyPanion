@@ -38,6 +38,7 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit, OnC
   private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
   private _vendorFilteredValue: VendorFilterArguments = new VendorFilterArguments();
   private _userFilteredValue: UserFilterArguments = new UserFilterArguments();
+  private dateFormat:any;
 
   private status: Array<any> =
   [{ statusId: null, StatusName: 'None' },
@@ -80,11 +81,12 @@ export class InvoiceFilterComponent extends BaseComponent implements OnInit, OnC
     router: Router
   ) {
     super(localStorageService, router);
+    this.dateFormat = { format: 'MM/DD/YYYY' };
   }
 
   ngOnInit() {
-    jQuery('#invoice_FromDate').datepicker().datepicker({ dateFormat: 'MM/DD/YYYY' });
-    jQuery('#invToDate').datepicker().datepicker({ dateFormat: 'MM/DD/YYYY' });
+    // jQuery('#invoice_FromDate').datepicker().datepicker({ dateFormat: 'MM/DD/YYYY' });
+    // jQuery('#invToDate').datepicker().datepicker({ dateFormat: 'MM/DD/YYYY' });
   }
 ngOnChanges() {
     this.companyFilteredArg.companyId = this.invoiceFilteredValue.companyId;
@@ -98,18 +100,18 @@ ngOnChanges() {
   }
   
   private searchUrl(): void {
-    let dateFrom = jQuery('#invoice_FromDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
-    this.invoiceFilteredValue.invFromDate =  dateFrom.val();
+    // let dateFrom = jQuery('#invoice_FromDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
+    // this.invoiceFilteredValue.invFromDate =  dateFrom.val();
 
     if(this.invoiceFilteredValue.invFromDate !==  undefined && this.invoiceFilteredValue.invFromDate !==  ''){
-      this.invoiceFilteredValue.datefURL = moment(dateFrom.val(), 'MM/DD/YYYY').toDate();
+      this.invoiceFilteredValue.datefURL = moment(this.invoiceFilteredValue.invFromDate, 'MM/DD/YYYY').toDate();
     }
 
-    let dateTo = jQuery('#invToDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
-    this.invoiceFilteredValue.invToDate = dateTo.val();
+    // let dateTo = jQuery('#invToDate').datepicker({ dateFormat: 'MM/DD/YYYY' });
+    // this.invoiceFilteredValue.invToDate = dateTo.val();
 
         if(this.invoiceFilteredValue.invToDate !==  undefined && this.invoiceFilteredValue.invToDate !==  ''){
-       this.invoiceFilteredValue.datetURL = moment(dateTo.val(), 'MM/DD/YYYY').toDate();
+       this.invoiceFilteredValue.datetURL = moment(this.invoiceFilteredValue.invToDate, 'MM/DD/YYYY').toDate();
     }
 
     this.invoiceFilteredValue.vendorId = this.vendorFilteredArg.vendorId;
@@ -120,8 +122,8 @@ ngOnChanges() {
 
   private searchUrlReset(): void {
     this.invoiceFilteredValue = new InvoiceFilteredArgs();
-    jQuery('#invoice_FromDate').val('');
-    jQuery('#invToDate').val('');
+    // jQuery('#invoice_FromDate').val('');
+    // jQuery('#invToDate').val('');
     this.statusName = 'Invoice Status';
     this.vendorFilteredArg = new VendorFilterArguments();
     this.companyFilteredArg = new CompanyFilterArguments();

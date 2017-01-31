@@ -3,13 +3,28 @@
   <div class="options">
     <div class="form-inline" id="invoices_index_filters_form">
       <div class="form-group">
-        <input class="form-control" id="syncFromDate" [(ngModel)]="syncBatchFilteredValue.syncFromDate" date-picker placeholder="Sync Batch Date From"
-          size="25" type="text" value="" />
+        <!--<input class="form-control" id="syncFromDate" [(ngModel)]="syncBatchFilteredValue.syncFromDate" date-picker placeholder="Sync Batch Date From"
+          size="25" type="text" value="" />-->
+           <div class='input-group date' id="datetimepicker_FromDate">
+          <input  datetimepicker [options]="dateFormat" [(ngModel)]="syncBatchFilteredValue.syncFromDate" [value]="syncBatchFilteredValue.syncFromDate"
+           class="form-control"  id="syncFromDate"  placeholder="Sync Batch Date From"/>
+             <span class="input-group-addon ">
+               <span class="caret "></span>
+          </span>
+        </div>
       </div>
 
       <div class="form-group">
-        <input class="form-control" id="syncToDate" [(ngModel)]="syncBatchFilteredValue.syncToDate" date-picker placeholder="Sync Batch Date To" size="25"
-          type="text" value="" />
+        <!--<input class="form-control" id="syncToDate" [(ngModel)]="syncBatchFilteredValue.syncToDate" date-picker placeholder="Sync Batch Date To" size="25"
+          type="text" value="" />-->
+          <div class='input-group date' id="datetimepicker_ToDate">
+          <input  datetimepicker [options]="dateFormat" [(ngModel)]="syncBatchFilteredValue.syncToDate" [value]="syncBatchFilteredValue.syncToDate"
+           class="form-control"  id="syncToDate"  placeholder="Sync Batch Date To"/>
+            <span class="input-group-addon ">
+               <span class="caret "></span>
+          </span>
+        </div>
+
       </div>
 
       <div class="form-group">

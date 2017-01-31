@@ -221,7 +221,7 @@ import { PrimeTableComponent } from './prime-table/prime-table.component';
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import {MomentModule} from 'angular2-moment';
 
-
+import { DateTimePickerDirective } from './shared/directive/date-picker.directive';
 
 let localStorageServiceConfig = {
   prefix: 'my-app',
@@ -239,6 +239,7 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
 @NgModule({
 
   declarations: [
+    DateTimePickerDirective,
     OrderByPipe,
     CurrencyPipe,
     AppComponent,

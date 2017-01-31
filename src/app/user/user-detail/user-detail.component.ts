@@ -54,7 +54,7 @@ export class UserDetailComponent extends BaseComponent implements OnInit {
   }
 
   private getUserById() {
-    this.location.replaceState('user/detail/' + this.searchString);
+    // this.location.replaceState('user/detail/' + this.searchString);
     return new Promise((resolve, reject) => {
     this.userService.getUserById(this.userId).then(result => {
       if (result.status === 404) {

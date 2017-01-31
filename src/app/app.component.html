@@ -93,12 +93,12 @@
             <i class="pull-right fa fa-pencil"></i>
           </a>
         </li>
-        <li *ngIf="user">
+        <!--<li *ngIf="user">
           <a *ngIf="user.IsSuperUser == true" href="#/account/{{user.AccountID}}">
             <span class="pull-left">Account Settings</span>
             <i class="pull-right fa fa-cogs"></i>
           </a>
-        </li>
+        </li>-->
         <li class="divider"></li>
         <li>
           <a (click)="openlogoutModal()">

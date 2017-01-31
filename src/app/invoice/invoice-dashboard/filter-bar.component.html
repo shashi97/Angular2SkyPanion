@@ -3,12 +3,26 @@
   <div class="options">
     <div class="form-inline" id="invoices_index_filters_form">
       <div class="form-group">
-        <input class="form-control" id="invoice_FromDate" [(ngModel)]="invoiceFilteredValue.invFromDate" date-picker placeholder="Invoice Date From" size="12"
-          type="text" value="" />
+        <!--<input class="form-control" id="invoice_FromDate" [(ngModel)]="invoiceFilteredValue.invFromDate" date-picker placeholder="Invoice Date From" size="12"
+          type="text" value="" />-->
+           <div class='input-group date' id="datetimepicker_FromDate">
+          <input  datetimepicker [options]="dateFormat" [(ngModel)]="invoiceFilteredValue.invFromDate" [value]="invoiceFilteredValue.invFromDate"
+           class="form-control"  id="from_date"  placeholder="Date From"/>
+            <span class="input-group-addon ">
+               <span class="caret "></span>
+          </span>
+        </div>
       </div>
       <div class="form-group">
-        <input class="form-control" id="invToDate" [(ngModel)]="invoiceFilteredValue.invToDate" date-picker placeholder="Invoice Date To" size="12" type="text"
-          value="" />
+        <!--<input class="form-control" id="invToDate" [(ngModel)]="invoiceFilteredValue.invToDate" date-picker placeholder="Invoice Date To" size="12" type="text"
+          value="" />-->
+            <div class='input-group date' id="datetimepicker_ToDate">
+           <input  datetimepicker [options]="dateFormat" [(ngModel)]="invoiceFilteredValue.invToDate" [value]="invoiceFilteredValue.invToDate"
+           class="form-control"  id="to_date"  placeholder="Date To"/>
+            <span class="input-group-addon ">
+               <span class="caret "></span>
+          </span>
+        </div>
       </div>
       <div class="form-group">
         <input class="form-control" id="invoice_desc" name="invoice_desc" placeholder="Enter invoice description" type="text" [(ngModel)]="invoiceFilteredValue.invoiceDesc"

@@ -126,7 +126,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     selected: {}
 
   }
-  private a2eOptions: any;
   private companyData: CompanyData;
   private errors;
   private displayValue: string = '';
@@ -175,6 +174,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private ledgerAccounts: Array<any>;
   private paymentMethods: Array<any>;
   private showLoader:boolean;
+  private dateFormat:any;
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private domSanitizer: DomSanitizer,
@@ -190,6 +190,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     public pubsub: PubSubService
   ) {
     super(localStorageService, router);
+    this.dateFormat = { format: 'MM/DD/YYYY' };
     overlay.defaultViewContainer = vcRef;
     this.invoiceDetail = new InvoiceDetail();
     this.isAddAccount = true;
@@ -207,51 +208,46 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.searchParameters = -1;
     this.attachmentBackLink = '/attachmentsList/' + this.pageSizeFilter + '/' + this.searchParameters;
     this.invoiceBackLink = '/invoice/' + this.pageSizeFilter + '/' + this.searchParameters;
-     this.date = moment();
-      this.a2eOptions = {format: 'YYYY/MM/DD'};
-    this.date = moment();
-    this.a2eOptions = { format: 'YYYY/MM/DD HH:mm' };
   }
 
   ngOnInit() {
-
       this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
       this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
 
-      jQuery("#Invoice_date").datepicker({
-      format: "mm/dd/yyyy",
-      autoclose: true,
-      onSelect: dateText => {
-        this.invoiceDate = dateText;
-         this.setDueDateByInvoiceDate();
-      }
-    });
-    jQuery("#datetimepicker_invoiceDate").click(function () {
-      jQuery("#Invoice_date").datepicker("show")
-    });
+    //   jQuery("#Invoice_date").datepicker({
+    //   format: "mm/dd/yyyy",
+    //   autoclose: true,
+    //   onSelect: dateText => {
+    //     this.invoiceDate = dateText;
+    //      this.setDueDateByInvoiceDate();
+    //   }
+    // });
+    // jQuery("#datetimepicker_invoiceDate").click(function () {
+    //   jQuery("#Invoice_date").datepicker("show")
+    // });
    
-    jQuery("#Due_date").datepicker({
-      format: "mm/dd/yyyy",
-      autoclose: true,
-      onSelect: dateText => {
-        this.dueDate = dateText;
+    // jQuery("#Due_date").datepicker({
+    //   format: "mm/dd/yyyy",
+    //   autoclose: true,
+    //   onSelect: dateText => {
+    //     this.dueDate = dateText;
        
-      }
-    });
-    jQuery("#datetimepicker_Duedate").click(function () {
-      jQuery("#Due_date").datepicker("show");
-    });
+    //   }
+    // });
+    // jQuery("#datetimepicker_Duedate").click(function () {
+    //   jQuery("#Due_date").datepicker("show");
+    // });
 
-    jQuery("#Gl_date").datepicker({
-      format: "mm/dd/yyyy",
-      autoclose: true,
-      onSelect: dateText => {
-        this.postGlDate = dateText;
-      }
-    });
-    jQuery("#datetimepicker_Gldate").click(function () {
-      jQuery("#Gl_date").datepicker("show");
-    });
+    // jQuery("#Gl_date").datepicker({
+    //   format: "mm/dd/yyyy",
+    //   autoclose: true,
+    //   onSelect: dateText => {
+    //     this.postGlDate = dateText;
+    //   }
+    // });
+    // jQuery("#datetimepicker_Gldate").click(function () {
+    //   jQuery("#Gl_date").datepicker("show");
+    // });
 
   }
 
@@ -302,41 +298,41 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     //     this.postGlDate = dateText;
     //   }
     // });
-    jQuery("#Invoice_date").datepicker({
-      format: "mm/dd/yyyy",
-      autoclose: true,
-      onSelect: dateText => {
-        this.invoiceDate = dateText;
-         this.setDueDateByInvoiceDate();
-      }
-    });
-    jQuery("#datetimepicker_invoiceDate").click(function () {
-      jQuery("#Invoice_date").datepicker("show");
-    });
+  //   jQuery("#Invoice_date").datepicker({
+  //     format: "mm/dd/yyyy",
+  //     autoclose: true,
+  //     onSelect: dateText => {
+  //       this.invoiceDate = dateText;
+  //        this.setDueDateByInvoiceDate();
+  //     }
+  //   });
+  //   jQuery("#datetimepicker_invoiceDate").click(function () {
+  //     jQuery("#Invoice_date").datepicker("show");
+  //   });
    
-    jQuery("#Due_date").datepicker({
-      format: "mm/dd/yyyy",
-      autoclose: true,
-      onSelect: dateText => {
-        this.dueDate = dateText;
+  //   jQuery("#Due_date").datepicker({
+  //     format: "mm/dd/yyyy",
+  //     autoclose: true,
+  //     onSelect: dateText => {
+  //       this.dueDate = dateText;
        
-      }
-    });
-    jQuery("#datetimepicker_Duedate").click(function () {
-      jQuery("#Due_date").datepicker("show");
-    });
+  //     }
+  //   });
+  //   jQuery("#datetimepicker_Duedate").click(function () {
+  //     jQuery("#Due_date").datepicker("show");
+  //   });
 
-    jQuery("#Gl_date").datepicker({
-      format: "mm/dd/yyyy",
-      autoclose: true,
-      onSelect: dateText => {
-        this.postGlDate = dateText;
-      }
-    });
-    jQuery("#datetimepicker_Gldate").click(function () {
-      jQuery("#Gl_date").datepicker("show");
-    });
-  }
+  //   jQuery("#Gl_date").datepicker({
+  //     format: "mm/dd/yyyy",
+  //     autoclose: true,
+  //     onSelect: dateText => {
+  //       this.postGlDate = dateText;
+  //     }
+  //   });
+  //   jQuery("#datetimepicker_Gldate").click(function () {
+  //     jQuery("#Gl_date").datepicker("show");
+  //   });
+    }
 
   public onCompanyFiltered(filteredValue: CompanyFilterArguments): void {
     this.CompanyID = filteredValue.companyId;
@@ -351,7 +347,8 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
     if (companyID != 0 && companyID != this.invoiceDetail.CompanyID) {
       if (confirm("Are you sure you'd like to change property of this invoice?") == true) {
-        this.invoiceService.changeInvoiceProperty(this.invoiceDetail.AttachmentID, this.invoiceDetail.InvoiceID, this.CompanyID, this.companyNumber, this.invoiceDetail.CompanyNumber, this.invoiceDetail.AttachmentName).then(result => {
+        this.invoiceService.changeInvoiceProperty(this.invoiceDetail.AttachmentID, this.invoiceDetail.InvoiceID, 
+                      this.CompanyID, this.companyNumber, this.invoiceDetail.CompanyNumber, this.invoiceDetail.AttachmentName).then(result => {
           if (result.status == 404) {
           }
           else if (result.status == 500) {

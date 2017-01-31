@@ -47,14 +47,14 @@
       </div>
     </div>
     <div class="col-md-12 field form-group">
-      <tooltip-content #CompaniesTooltip>
-        <div [innerHTML]=companyTooltip>
-        </div>
-      </tooltip-content>
-      <label class="control-label col-md-4" for="invoice_company_id"><span *ngIf="invoiceDetail.IsGeneral == false">{{invoiceDetail.type}}</span></label>
-      <div class="col-md-3" style="padding-top: 6px" *ngIf="invoiceDetail.IsGeneral == false">
+      <label class="control-label col-md-4" for="invoice_company_id">{{invoiceDetail.type}}</label>
+      <div class="col-md-4" style="padding-top: 6px" *ngIf="invoiceDetail.IsGeneral == false">
+        <tooltip-content #CompaniesTooltip>
+          <div [innerHTML]=companyTooltip>
+          </div>
+        </tooltip-content>
         <i [ngClass]="{'fa fa-book': invoiceDetail.type=='Skypanion::Fund', 'fa fa-building': invoiceDetail.type=='Skypanion::Property'}"></i>
-        <a href="#" [tooltip]="CompaniesTooltip">{{invoiceDetail.CompanyName}}</a>
+        <a href="#" [tooltip]="CompaniesTooltip" [tooltipDisabled]="false" [tooltipAnimation]="false" tooltipPlacement="top">{{invoiceDetail.CompanyName}}</a>
       </div>
       <div class="col-md-4 input-group" *ngIf="((invoiceDetail.InvoiceStatusID == 5 && sessionDetails.IsSuperUser == true )|| (invoiceDetail.IsGeneralPdf == true && invoiceDetail.InvoiceID ==0))">
         <div style="padding: 0 !important;margin: 0 !important;">
@@ -123,11 +123,10 @@
          </label>
       <div class="col-md-8 input-group">
         <div class="input-group date" id="datetimepicker_invoiceDate">
-          <input [(ngModel)]="invoiceDate" class="form-control" focus-name="4" tabindex="4" id="Invoice_date"  #Invoice_date="ngModel"  placeholder="Invoice Date From"
-            size="12" type="text">
-          <!--(blur)="setDueDateByInvoiceDate(invoiceDate)"-->
-          <input type="text" [(ngModel)]="invoiceDate" class="form-control" focus-name="4" tabindex="4" id="Invoice_date" #Invoice_date="ngModel"
-            placeholder="Invoice Date From" size="12">
+          <input class="form-control" focus-name="4" tabindex="4" datetimepicker [options]="dateFormat" [(ngModel)]="invoiceDate" (ngModelChange)="setDueDateByInvoiceDate(invoiceDate)"
+          />
+          <!--<input type="text" [(ngModel)]="invoiceDate" class="form-control" focus-name="4" tabindex="4" id="Invoice_date" #Invoice_date="ngModel"
+            placeholder="Invoice Date From" size="12">-->
           <span class="input-group-addon">
                <span class="caret" ></span>
           </span>
@@ -141,11 +140,6 @@
       <div class="col-md-8 input-group">
         <div class="input-group">
           <span class="input-group-addon ">
-
-              <i class="fa fa-usd"></i>
-          </span>
-          <input type="text" [(ngModel)]="invoiceDetail.InvoiceAmount" focus-name="5" tabindex="5 " class="form-control"  placeholder="Enter invoice amount "
-            size="30"  (blur)="processInvAmtToDistribution(invoiceDetail.InvoiceAmount)" CurrencyFormatter>
                <i class="fa fa-usd"></i>
                </span>
           <input type="text" [(ngModel)]="invoiceDetail.InvoiceAmount" focus-name="5" tabindex="5 " class="form-control" placeholder="Enter invoice amount "
@@ -167,8 +161,8 @@
          </label>
       <div class="col-md-8 input-group ">
         <div class='input-group date' id="datetimepicker_Duedate">
-          <input [(ngModel)]="dueDate" class="form-control" focus-name="7 " tabindex="7" id="Due_date" #Due_date="ngModel" placeholder="Due Date"
-            size="12" type="text" value="">
+          <input datetimepicker [options]="dateFormat" [(ngModel)]="dueDate" [value]="dueDate" class="form-control" focus-name="7 "
+            tabindex="7" id="Due_date" placeholder="Due Date" />
           <span class="input-group-addon ">
                <span class="caret "></span>
           </span>
@@ -239,24 +233,6 @@
               <td class="ledger_account_identifier" *ngIf="item.FundCompanyID > 0">{{item.FundCompanyNumber}}</td>
               <td class="ledger_account_identifier">{{item.AccountTitle}}</td>
               <td class="amount_row">
-                <a href="javascript:void(0)"
-                  [popover]="amountPopover" style="border-bottom-style: dashed; border-width: 1px;">${{item.DistributionAmount}}</a>
-                  <popover-content #amountPopover placement="top">
-                      <div>
-                           <div class="popover-content" style="padding: 0px; margin: 0px">
-                                  <h3 class="popover-title">Enter distribution amount</h3>
-                                <div class="navbar navbar-primary navbar-static-top popover_search_wrap">
-                                    <div class="navbar-inner">
-                                        <div class="navbar-search navbar-form search_form" action="#" role="search">
-                                            <div class="control-group form-group">
-                                                <div class="editable-input" style="position: relative;">
-                                                    <input type="text" class="form-control input-sm" style="padding-right: 24px;"
-                                                         [(ngModel)]="item.DistributionAmount" (keyup.enter) = "amountPopover.hide()" CurrencyFormatter><span class="editable-clear-x"></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                 <a href="javascript:void(0)" [popover]="amountPopover" style="border-bottom-style: dashed; border-width: 1px;">${{item.DistributionAmount}}</a>
                 <popover-content #amountPopover placement="top">
                   <div>
@@ -267,9 +243,9 @@
                           <div class="navbar-search navbar-form search_form" action="#" role="search">
                             <div class="control-group form-group">
                               <div class="editable-input" style="position: relative;">
-                                <input type="number" class="form-control input-sm" style="padding-right: 24px;" [(ngModel)]="item.DistributionAmount" (keyup.enter)="amountPopover.hide()">
-                                <span
-                                  class="editable-clear-x"></span>
+                                <input type="number" class="form-control input-sm" style="padding-right: 24px;" [(ngModel)]="item.DistributionAmount" (keyup.enter)="amountPopover.hide()"
+                                  CurrencyFormatter>
+                                <span class="editable-clear-x"></span>
                               </div>
                             </div>
                           </div>
@@ -291,8 +267,7 @@
                             <div class="control-group form-group">
                               <div class="editable-input" style="position: relative;">
                                 <input type="text" class="form-control input-sm" style="padding-right: 24px;" [(ngModel)]="item.DistributionComment" (keyup.enter)="commentPopover.hide()">
-                                <span
-                                  class="editable-clear-x"></span>
+                                <span class="editable-clear-x"></span>
                               </div>
                             </div>
                           </div>
@@ -316,8 +291,8 @@
          </label>
       <div class="col-md-8  input-group">
         <div class='input-group date' id="datetimepicker_Gldate">
-          <input [(ngModel)]="postGlDate" class="form-control" focus-name="13" tabindex="13" id="Gl_date" #Gl_date="ngModel" placeholder="Due Date"
-            size="12" type="text" value="">
+          <input [(ngModel)]="postGlDate" datetimepicker [options]="dateFormat" [value]="postGlDate" class="form-control" focus-name="13"
+            tabindex="13" id="Gl_date" placeholder="Due Date" />
           <span class="input-group-addon">
           <span class="caret"></span>
           </span>
@@ -391,7 +366,7 @@
   </div>
   <div class="col-md-8" id="form_right_wrap" style="width: 65%; float: left;margin-left:15px">
     <input id="invoice_attachment_id" [(ngModel)]="invoiceDetail.attachment_id" type="hidden" value="568">
-    <div class="row" *ngIf ="pdfsrc">
+    <div class="row" *ngIf="pdfsrc">
       <iframe id="pdf_frame" height="800" class="col-md-12" [src]="pdfsrc" style="border: 0; position: inherit"></iframe>
     </div>
     <div class="row">
@@ -426,6 +401,5 @@
     </div>
   </div>
 </div>
-<!--<sp-pagination [dataSource]='vendors' [totalItems]='totalItems' (currentPageChanged)='onCurrentPageChanged($event)' [currentPageFiltered]='currentPageFiltered'></sp-pagination>-->
 
-<sp-loading-spinner [showLoader] = 'showLoader' ></sp-loading-spinner>
+<sp-loading-spinner [showLoader]='showLoader'></sp-loading-spinner>
