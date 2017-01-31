@@ -7,6 +7,8 @@ export class BaseComponent {
   disableMenu: Object = { 'display': 'block' };
   disableSideBar: Object = { 'display': '' };
   dashboardState:any;
+  currentDashboardTabState:string= '';
+  prevoiusRouteState: any;
 
   constructor(protected localStorageService: LocalStorageService,
     protected router: Router) {
@@ -16,6 +18,7 @@ export class BaseComponent {
 
     if (token) {
       this.dashboardState = this.localStorageService.get('dashboardStateData');
+      this.prevoiusRouteState = this.localStorageService.get('routeData');
       this.user = this.localStorageService.get('sessionData');
       if (this.user) {
         if (this.router.url === '/') {

@@ -140,6 +140,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private invoiceDate: string = '';
   private dueDate: string = '';
   private postGlDate: string = '';
+  private dashboardBackLink:string = '';
   private poNum;
   private doctype;
   private documentID;
@@ -208,6 +209,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.searchParameters = -1;
     this.attachmentBackLink = '/attachmentsList/' + this.pageSizeFilter + '/' + this.searchParameters;
     this.invoiceBackLink = '/invoice/' + this.pageSizeFilter + '/' + this.searchParameters;
+    this.dashboardBackLink = '/dashboard';
   }
 
   ngOnInit() {
@@ -1254,15 +1256,25 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.invoiceDetail.InvoiceDistributions.splice($index, 1);
 
   }
-  private checklockingStatusForExit(linkString): void {
-    if (this.invoiceDetail.LockedByID == this.user.userId) {
-      this.unlockDocument(linkString);
+
+  private checklockingStatusForExit(invoiceID): void {
+    let route;
+      this.prevoiusRouteState = this.localStorageService.get('routeData');
+    if (invoiceID > 0) {
+    if (this.prevoiusRouteState.prevoiusRoute === 'dashboard') {
+        route = this.dashboardBackLink;
+          } else if (this.prevoiusRouteState.prevoiusRoute === 'invoices') {
+        route  = this.invoiceBackLink;
+        }
     } else {
-      this.router.navigate([linkString]);
+        route = this.attachmentBackLink;
     }
 
-
-    // test
+    if (this.invoiceDetail.LockedByID === this.user.userId) {
+        this.unlockDocument(route);
+    } else {
+        this.router.navigate([route]);
+    }
   }
 
   private setDueDateByInvoiceDate(): void {
@@ -1365,7 +1377,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
                     || result1 === '0'
                     || result1 === 'null') {
                     this.toastr.success('Invoice saved successfully');
-                    this.unlockDocument('/attachmentsList/' + this.pageSizeFilter + '/-1');
+                    this.unlockDocument('/dashboard');
                   } else {
                     this.toastr.success('Invoice saved successfully');
 

@@ -87,7 +87,13 @@ export class LoginComponent extends BaseComponent implements OnInit {
         });
 
         this.localStorageService.set('dashboardStateData' ,{ 
-          companyId: 0
+          companyId: 0,
+          currentDashboardTabState: 1
+          , isTabApproveInvoice: false
+        });
+
+         this.localStorageService.set('routeData' ,{ 
+          prevoiusRoute: 'login',
         });
 
       if (isResetPasswordRequired) {

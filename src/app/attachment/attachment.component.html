@@ -51,11 +51,20 @@
         <td>{{item.LockedBy}}</td>
         <td><a *ngIf="item.IsLocked == true && sessionDetails.IsSuperUser ==true" (click)="unlockDocumentByAdmin(item.AttachmentID)">unlock</a></td>
         <td>
-          <a *ngIf="item.ViewInvoiceLink =='View Invoice'" (click)="GetInvoiceDetails(item.AttachedTo_id,item.IsLocked)"><i class="glyphicon glyphicon-chevron-right"></i>{{item.ViewInvoiceLink}}</a>
-          <a *ngIf="item.ViewInvoiceLink =='Delete'" (click)="deleteAttachement(item.AttachmentID)"><i class="glyphicon glyphicon-chevron-right"></i>{{item.ViewInvoiceLink}}</a>
-          <a style="margin-left:10px;" *ngIf="item.ViewInvoiceLink =='Delete'  && sessionDetails.IsSuperUser == true" (click)="openEditDialog(item)"><i class="glyphicon glyphicon-chevron-right"></i>Edit</a>
-          <a *ngIf="item.ViewInvoiceLink =='Process' && item.IsProcessLinkDisbale == true" (click)="GetAttachmentDetails(item.AttachmentID)"><i class="glyphicon glyphicon-chevron-right"></i>{{item.ViewInvoiceLink}}</a>
-          <p *ngIf="item.ViewInvoiceLink =='Process' && item.IsProcessLinkDisbale == false">{{item.ViewInvoiceLink}}</p>
+          <a *ngIf="item.ViewInvoiceLink =='View Invoice'" (click)="GetInvoiceDetails(item.AttachedTo_id,item.IsLocked)">
+            <!--<i class="glyphicon glyphicon-chevron-right"></i>-->
+            {{item.ViewInvoiceLink}}</a>
+          <a *ngIf="item.ViewInvoiceLink =='Delete'" (click)="deleteAttachement(item.AttachmentID)">
+            <!--<i class="glyphicon glyphicon-chevron-right"></i>-->
+            {{item.ViewInvoiceLink}}</a>
+          <a style="margin-left:10px;" *ngIf="item.ViewInvoiceLink =='Delete'  && sessionDetails.IsSuperUser == true" (click)="openEditDialog(item)">
+            <!--<i class="glyphicon glyphicon-chevron-right"></i>-->
+            Edit</a>
+          <a *ngIf="item.ViewInvoiceLink =='Process' && item.IsProcessLinkDisbale == true" (click)="GetAttachmentDetails(item.AttachmentID)">
+            <!--<i class="glyphicon glyphicon-chevron-right"></i>-->
+            {{item.ViewInvoiceLink}}</a>
+          <p *ngIf="item.ViewInvoiceLink =='Process' && item.IsProcessLinkDisbale == false">
+            {{item.ViewInvoiceLink}}</p>
         </td>
       </tr>
     </tbody>

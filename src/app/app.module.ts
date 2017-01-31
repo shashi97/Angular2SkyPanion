@@ -220,7 +220,7 @@ import { PrimeTableComponent } from './prime-table/prime-table.component';
 
 import { Ng2Bs3ModalModule } from 'ng2-bs3-modal/ng2-bs3-modal';
 import {MomentModule} from 'angular2-moment';
-
+import { confirmationModalComponent } from './shared/confirmation-modal/confirmation-modal.component';
 import { DateTimePickerDirective } from './shared/directive/date-picker.directive';
 
 let localStorageServiceConfig = {
@@ -353,7 +353,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     LoadingSpinnerComponent,
     InvoiceApproveModalComponent,
     PrimeTableComponent,
-    logoutComponent
+    logoutComponent,
+    confirmationModalComponent
   ],
   entryComponents: [
     SetupModalComponent,
@@ -370,7 +371,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     InvoiceEntryUnlockNotificationContext,
     InvoicePdfRejectModalComponent,
     InvoiceApproveModalComponent,
-    logoutComponent
+    logoutComponent,
+    confirmationModalComponent
   ],
 
   imports: [

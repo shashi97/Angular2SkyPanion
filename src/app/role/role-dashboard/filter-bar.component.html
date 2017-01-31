@@ -4,19 +4,23 @@
         <div class="options">
             <div class="btn-toolbar form-inline">
 
-                <div class="form-group">
+              <div class="filter_field_wrap form-group">
                     <input class="form-control" id="roleName" placeholder="Role" size="15" type="text" [(ngModel)]="rolefilteredValue.roleName" />
                 </div>
 
+                <div class="filter_field_wrap form-group">
                 <button class="btn btn-primary" name="commit" type="button" (click)="searchURL()">
                     <i class="fa fa-search" aria-hidden="true"></i>
                     Filter
                 </button>
+                </div>
 
+				<div class="filter_field_wrap form-group">
                 <button class="btn btn-warning" (click)="searchURLReset()">
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                     Reset
                 </button>
             </div>
         </div>
+    </div>
     </div>

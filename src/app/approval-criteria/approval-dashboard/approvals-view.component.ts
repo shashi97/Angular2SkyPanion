@@ -13,7 +13,10 @@ import { DragulaService } from 'ng2-dragula/ng2-dragula';
 
 import {PubSubService} from '../../interceptor/pub-service';
 import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
-
+import {
+  confirmationModalContext,
+  confirmationModalComponent
+} from '../../shared/confirmation-modal/confirmation-modal.component';
 
 import 'jquery';
 declare let jQuery: any;
@@ -34,6 +37,7 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
   @Input() cmpName: string;
   private approvalListForUpdate: Array<any> = [];
   private newWeightCount: number = 0;
+  private header:string =""
 
   constructor(
     localStorageService: LocalStorageService,
@@ -105,10 +109,32 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
     });
   }
 
+    deleteApprovalModal(ApprovalCriteriaID) {
+      this.header = "Are you sure you'd like to destroy this approval criteria?";
+    const builder = new BSModalContextBuilder<confirmationModalContext>(
+      { header: this.header } as any,
+      undefined,
+      confirmationModalContext
+    );
+
+    let overlayConfig: OverlayConfig = {
+      context: builder.isBlocking(false).toJSON()
+    };
+
+    const dialog = this.modal.open(confirmationModalComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
+        if (result === "true") {
+          this.deleteApprovalCriteria(ApprovalCriteriaID);
+        }
+      }, () => console.log(' user canceled logout modal '));
+    });
+
+
+  }
 
   private deleteApprovalCriteria(ApprovalCriteriaID): void {
-    let message = 'Are you sure you' + 'd like to destroy this approval criteria?';
-    if (this.confirmService.confermMessage(message)) {
       this.approvalCriteriaService.deleteApprovalCriteria(ApprovalCriteriaID).then((result) => {
         if (result.status === 404 || result.status === 500) {
           this.toastr.error(result.data.ExceptionMessage, 'Oops!');
@@ -119,7 +145,6 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
           // messageService.showMsgBox("Success", "Role successfully deleted.", "success");
         }
       });
-    }
   }
 
   private sortApprovalCriteriaList(): void {

@@ -35,7 +35,7 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
     private dashboardData: DashboardModel;
     private invoices: DashboardInvoiceModel[];
     private companyId: number = 0;
-    private invoiceState: number = 0;
+    private invoiceState: number = 1;
     private totalItems: number = 0;
     private invoiceForValidApprovalCount = 0;
     private showLoader:boolean;
@@ -55,7 +55,7 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
     ) {
         super(localStorageService, router);
         this.companyId = 0;
-        this.invoiceState = 5;
+        this.invoiceState = 1;
         this.totalItems = 0;
         this.invoiceForValidApprovalCount = 0;
         this.getSessionDetails();
@@ -77,6 +77,8 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
                         this._filteredValue.userId = this.sessionDetails.userId;
                          this.dashboardState = this.userService.getDashboardState();
                          this._filteredValue.companyId = this.dashboardState.companyId;
+                         this._filteredValue.invoiceState = this.dashboardState.currentDashboardTabState;
+                          this._filteredValue.isTabApproveInvoice = this.dashboardState.isTabApproveInvoice;
                             this.getInvoices();
                     } else {
                         let link = ['/login'];
@@ -109,6 +111,7 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
 
     private set filteredValue(newValue: InvoiceStateFilterArguments) {
         this._filteredValue = newValue;
+
         if (this._filteredValue.isCompanyFilter == true) {
             this.getInvoices();
         } else {

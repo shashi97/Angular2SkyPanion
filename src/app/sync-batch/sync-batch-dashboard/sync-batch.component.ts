@@ -64,6 +64,8 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
 
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
+     this.datefURL = '';
+     this.datetURL = '';
      if(this.syncBatchFilteredValue.datefURL !== undefined && this.syncBatchFilteredValue.datefURL !== null){
        this.datefURL =  this.syncBatchFilteredValue.datefURL.toDateString();
       }
@@ -85,9 +87,11 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
   }
 
   private set syncBatchFilteredValue(newValue: SyncBatchFilteredArgs) {
+    this.datefURL = '';
+    this.datetURL = '';
     this._currentSyncBatchArgs = newValue;
 
- if(this.syncBatchFilteredValue.datefURL !== undefined && this.syncBatchFilteredValue.datefURL !== null){
+   if(this.syncBatchFilteredValue.datefURL !== undefined && this.syncBatchFilteredValue.datefURL !== null){
        this.datefURL =  encodeURIComponent(this.syncBatchFilteredValue.datefURL.toDateString())
       }
 

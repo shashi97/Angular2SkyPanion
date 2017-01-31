@@ -42,6 +42,13 @@
             <dt>Processed on</dt>
             <dd ng-class="{'text-warning': invoiceDetail.ProcessedOn=='Not Applicable', 'italic-font': invoiceDetail.ProcessedOn=='Not Applicable'}">{{invoiceDetail.ProcessedOn}}</dd>
 
+             <dt>Expedited By</dt>
+            <dd>
+              <span [hidden]="invoiceDetail.ExpeditedBy != 'None'" class="text-warning italic-font">{{invoiceDetail.ExpeditedBy}}</span>
+              <a href="#/user/detail/{{invoiceDetail.ExpeditedID}}/25/-1" [hidden]="invoiceDetail.ExpeditedBy == 'None'">{{invoiceDetail.ExpeditedBy}}</a>
+            </dd>
+
+
             <hr>
           </div>
           <dt>Company</dt>

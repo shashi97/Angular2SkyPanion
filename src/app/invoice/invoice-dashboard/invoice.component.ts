@@ -89,7 +89,8 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
   }
   private set currentPageFiltered(newValue: CurrentPageArguments) {
     this._currentPage = newValue;
-
+     this.datefURL = '';
+      this.datetURL = '';
      if(this.invoiceFilteredValue.datefURL !== undefined && this.invoiceFilteredValue.datefURL !== null){
        this.datefURL =  this.invoiceFilteredValue.datefURL.toDateString();
       }
@@ -116,7 +117,9 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
 
   private set invoiceFilteredValue(newValue: InvoiceFilteredArgs) {
     this._currentInvoiceArgs = newValue;
-     if(this.invoiceFilteredValue.datefURL !== undefined && this.invoiceFilteredValue.datefURL !== null){
+    this.datefURL = '';
+    this.datetURL = '';
+     if (this.invoiceFilteredValue.datefURL !== undefined && this.invoiceFilteredValue.datefURL !== null){
        this.datefURL =  encodeURIComponent(this.invoiceFilteredValue.datefURL.toDateString())
       }
 

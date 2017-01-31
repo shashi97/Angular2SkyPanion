@@ -19,7 +19,12 @@ import { CurrentPageArguments } from '../../pagination/pagination.component';
 import { ConfirmService } from '../../shared/services/otherServices/confirmService';
 import {PubSubService} from '../../interceptor/pub-service';
 import { LoadingSpinnerComponent} from '../../shared/loading-spinner/loading-spinner.component';
-
+import {
+  confirmationModalContext,
+  confirmationModalComponent
+} from '../../shared/confirmation-modal/confirmation-modal.component';
+import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
+import { Overlay, OverlayConfig } from 'angular2-modal';
 
 @Component({
   selector: 'sp-user',
@@ -32,6 +37,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   private searchString: string = '';
   private account: Object;
   private totalItems: number = 0;
+   private header: string = "";
   private users: Array<UserModel> = [];
 
   private _filteredValue: UserFilterArguments = new UserFilterArguments();
@@ -41,6 +47,7 @@ export class UserComponent extends BaseComponent implements OnInit {
     private accountService: AccountService,
     localStorageService: LocalStorageService,
     router: Router,
+     overlay: Overlay, public modal: Modal,
     private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private location: Location,
@@ -156,29 +163,53 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.currentPageFiltered = newValue;
   }
 
-  public checkUserExistInInvoiceApproval(userID, UserName, DisableLink): void {
+ public checkUserExistInInvoiceApproval(userID, UserName, DisableLink): void {
     if (DisableLink === 'Disable') {
       this.userService.checkUserExistInInvoiceApproval(userID).then((result) => {
-        let message;
         if (Number(result) > 0) {
-          message = 'Are you Sure you' + 'd like to Disable Portal::Member:' + UserName + ' ?' + '\\n' +
-            'WARNING:' + UserName + 's Approval is still needed on ' + result.data + ' invoices.';
+          this.header = 'Are you Sure you' + 'd like to Disable Portal::Member:' + UserName + ' ?' + '\\n' +
+            'WARNING:' + UserName + 's Approval is still needed on ' + result + ' invoices.';
           //  r = this.confirmService.confermMessage(message);
         } else {
-          message = 'Are you Sure you' + 'd like to Disable Portal::Member:' + UserName + ' ?';
+          this.header = 'Are you Sure you' + 'd like to Disable Portal::Member:' + UserName + ' ?';
           // r = this.confirmService.confermMessage(message);
         }
-        if (this.confirmService.confermMessage(message)) {
-          this.disableUser(userID);
-        }
+         this.ChangeStateConfirmationModal(userID);
+        // if (this.confirmService.confermMessage(message)) {
+        //   this.disableUser(userID);
+        // }
 
       });
     } else {
-      let message = 'Are you Sure you' + 'd like to enable Portal::Member:' + UserName + ' ?';
-      if (this.confirmService.confermMessage(message)) {
-        this.disableUser(userID);
-      }
+      this.header = 'Are you Sure you' + 'd like to enable Portal::Member:' + UserName + ' ?';
+      this.ChangeStateConfirmationModal(userID);
+      // if (this.confirmService.confermMessage(message)) {
+      //   this.disableUser(userID);
+      // }
     }
+  }
+     ChangeStateConfirmationModal(userID) {
+    const builder = new BSModalContextBuilder<confirmationModalContext>(
+      { header: this.header } as any,
+      undefined,
+      confirmationModalContext
+    );
+
+    let overlayConfig: OverlayConfig = {
+      context: builder.isBlocking(false).toJSON()
+    };
+
+    const dialog = this.modal.open(confirmationModalComponent, overlayConfig);
+    dialog.then((resultPromise) => {
+      return resultPromise.result.then((result) => {
+        // alert(result.status);
+        if (result === "true") {
+          this.disableUser(userID);
+        }
+      }, () => console.log(' user canceled logout modal '));
+    });
+
+
   }
 
   public disableUser(userID): void {

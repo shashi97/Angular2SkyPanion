@@ -102,6 +102,9 @@ export class DashboardInvoicesComponent extends BaseComponent implements OnInit 
   }
 
   private getInvoiceDetailsByID(invoice: DashboardInvoiceModel): void {
+     this.localStorageService.set('routeData' ,{ 
+          prevoiusRoute: 'dashboard',
+        });
     this.masterService.checkDocumentLocking(invoice.InvoiceID, 10).then(result => {
       if (result.IsLocked == 0) {
         this.toastr.error('This Invoice is locked by ' + result.LockBy, 'Oops!');

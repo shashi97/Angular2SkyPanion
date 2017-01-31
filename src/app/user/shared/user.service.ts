@@ -13,6 +13,7 @@ export class UserService {
 
   sessionData: Object;
   dashboardStateData: Object;
+  prevoiusRouteState: Object;
   constructor(private http: Http,
     public localStorageService: LocalStorageService) {
     this.sessionData = {
@@ -25,7 +26,12 @@ export class UserService {
       userId: 0
     };
     this.dashboardStateData={
-        companyId:0
+        companyId:0,
+        currentDashboardTabState:1,
+        isTabApproveInvoice:false
+    };
+    this.prevoiusRouteState={
+        prevoiusRoute:'dashboard'
     };
   }
 
@@ -49,6 +55,11 @@ export class UserService {
    public getDashboardState(): Object {
     this.dashboardStateData = this.localStorageService.get('dashboardStateData');
     return this.dashboardStateData;
+  }
+
+   public getRouteData(): Object {
+    this.prevoiusRouteState = this.localStorageService.get('routeData');
+    return this.prevoiusRouteState;
   }
 
   public updateUserDetail(userName: string) {

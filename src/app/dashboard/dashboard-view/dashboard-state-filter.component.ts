@@ -89,7 +89,9 @@ export class DashboardStateFilterComponent extends BaseComponent implements OnIn
     this.filteredValue.isCompanyFilter = true;
     this.filteredValue.companyId  =_companyFilteredValue.companyId;
     this.localStorageService.set('dashboardStateData', {
-          companyId: _companyFilteredValue.companyId
+          companyId: _companyFilteredValue.companyId,
+          currentDashboardTabState:this.filteredValue.invoiceState,
+          isTabApproveInvoice:this.filteredValue.isTabApproveInvoice
         });
     this.filtered.emit(this.filteredValue);
 
@@ -99,7 +101,11 @@ export class DashboardStateFilterComponent extends BaseComponent implements OnIn
     this.filteredValue.invoiceState  =invoiceState;
     this.filteredValue.isCompanyFilter = false;
     this.filteredValue.isTabApproveInvoice = isTabApproveInvoice;
+    this.localStorageService.set('dashboardStateData', {
+          companyId: this.companyFilteredArg.companyId,
+          currentDashboardTabState:this.filteredValue.invoiceState,
+          isTabApproveInvoice:this.filteredValue.isTabApproveInvoice
+        });
     this.filtered.emit(this.filteredValue);
   }
-
 }
