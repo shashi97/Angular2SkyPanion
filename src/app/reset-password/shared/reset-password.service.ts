@@ -27,7 +27,7 @@ export class ResetPasswordService {
         return this.http
             .post(ApiUrl.baseUrl
             + 'api/resetpassword'
-            + resetPassword, options)
+             ,resetPassword, options)
             .toPromise()
             .then(response => response)
             .catch(error => error);

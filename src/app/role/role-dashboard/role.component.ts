@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewContainerRef } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -48,10 +48,12 @@ export class RoleComponent extends BaseComponent implements OnInit {
     private confirmService: ConfirmService,
     public toastr: ToastsManager,
     public location: Location,
-    public pubsub: PubSubService
+    public pubsub: PubSubService,
+    vcRef: ViewContainerRef
   ) {
     super(localStorageService, router);
     this.roles = new Array<RoleModel>();
+    overlay.defaultViewContainer = vcRef;
     this.getSessionDetails();
   }
   ngOnInit(): void {

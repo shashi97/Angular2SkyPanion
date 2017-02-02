@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit , ViewContainerRef } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -54,15 +54,16 @@ export class CompanyComponent extends BaseComponent implements OnInit, AfterView
     public accountService: AccountService,
     private route: ActivatedRoute,
     private location: Location,
-    public pubsub: PubSubService
+    public pubsub: PubSubService,
+    public vcRef: ViewContainerRef
   ) {
     super(localStorageService, router);
     this.skyPanionTypeList = new Array<any>();
     this.companies = new Array<CompanyModel>();
+    overlay.defaultViewContainer = vcRef;
   }
 
   ngOnInit(): void {
-
     this.pubsub.beforeRequest.subscribe(data => this.showLoader = true);
     this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
   }

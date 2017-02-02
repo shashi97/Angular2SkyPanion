@@ -2,7 +2,7 @@
   <div class="page-heading" [hidden]="InvoiceID==0">
     <h1><strong>Editing:</strong> {{invoiceDetail.VendorKey}} - {{invoiceNumber}}</h1>
     <div class="options">
-      <div class="btn-toolbar">
+      <div class="form-inline" id="filter_form">
         <button type="button" class="btn btn-default" (click)="checklockingStatusForExit(invoiceDetail.InvoiceID)">
             <i class="fa fa-arrow-left"></i>
             Back
@@ -17,6 +17,7 @@
   <div class="page-heading" *ngIf="InvoiceID==0">
     <h1><strong>Proccessing Invoice:</strong>{{invoiceDetail.AttachmentName}}</h1>
     <div class="options">
+      <div class="form-inline" id="filter_form">
       <button type="button" class="btn btn-danger" data-toggle="modal" (click)="openInvalidatePdfModal()">
          Invalid/Remove
          </button>
@@ -24,6 +25,7 @@
          <i class="fa fa-arrow-left"></i>
          Back
          </button>
+    </div>
     </div>
   </div>
   <ol class="breadcrumb">

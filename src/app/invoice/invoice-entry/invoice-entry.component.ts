@@ -1206,6 +1206,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   private checkglAccountNumber(glAccountNumber, $event): void {
     let isMacthed = false;
     // this.fcs_AccountNum = true;
+    if(this.ledgerAccounts !== undefined && this.ledgerAccounts !== []){
     if (this.ledgerAccounts.length > 0 && (glAccountNumber != null && glAccountNumber !== '')) {
       this.ledgerAccounts.forEach(item => {
         if (item.LedgerAccountValue === glAccountNumber) {
@@ -1250,6 +1251,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       }
 
     }
+   }
   }
 
   private removeInvoiceDistributions(distID, $index): void {

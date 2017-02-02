@@ -13,11 +13,14 @@
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
       "prefix": "app",
-      "mobile": false,
       "styles": [
-        "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css"
+         "../node_modules/ng2-toastr/bundles/ng2-toastr.min.css",
+         "../src/assets/ion-slider/css/ion.rangeSlider.css",
+         "../src/assets/ion-slider/css/ion.rangeSlider.skinFlat.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../src/assets/demo/demo-switcher.js"
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",

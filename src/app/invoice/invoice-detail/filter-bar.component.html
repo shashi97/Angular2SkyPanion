@@ -1,20 +1,22 @@
 <div class="page-heading">
   <h1>{{invoiceDetail.InvoiceNumber}}</h1>
   <div class="options">
-    <div class="btn-toolbar">
-      <div class="invoice_state_message">
-        <h4 class="text-danger" *ngIf="invoiceDetail.InvoiceStatusID == 5">Rejected by <a href="#user/detail/{{invoiceDetail.RejectedByID}}/-1">{{invoiceDetail.RejectedBy}}</a></h4>
-        <h4 class="text-info" *ngIf="invoiceDetail.InvoiceStatusID == 4">Waiting for upload to Skyline</h4>
-        <h4 class="text-warning" *ngIf="invoiceDetail.InvoiceState == 2">Waiting for approval by <a href="#user/detail/{{invoiceDetail.ApproverID}}/-1">{{invoiceDetail.ApproverName}}</a></h4>
+    <div class="form-inline" id="filter_form">
+      <div class="filter_field_wrap form-group">
+        <div class="invoice_state_message">
+          <h4 class="text-danger" *ngIf="invoiceDetail.InvoiceStatusID == 5">Rejected by <a href="#user/detail/{{invoiceDetail.RejectedByID}}/-1">{{invoiceDetail.RejectedBy}}</a></h4>
+          <h4 class="text-info" *ngIf="invoiceDetail.InvoiceStatusID == 4">Waiting for upload to Skyline</h4>
+          <h4 class="text-warning" *ngIf="invoiceDetail.InvoiceState == 2">Waiting for approval by <a href="#user/detail/{{invoiceDetail.ApproverID}}/-1">{{invoiceDetail.ApproverName}}</a></h4>
+        </div>
       </div>
 
 
-      <a (click)="getInvoiceDetailsByID()" *ngIf="( invoiceDetail.InvoiceStatusID == null 
+      <button (click)="getInvoiceDetailsByID()" *ngIf="( invoiceDetail.InvoiceStatusID == null 
       || invoiceDetail.InvoiceStatusID == 1 
       ||invoiceDetail.InvoiceStatusID == 5 
       ||invoiceDetail.InvoiceStatusID == 2 
       ||(user.IsSuperUser == true && (invoiceDetail.InvoiceStatusID == 4 || invoiceDetail.InvoiceStatusID == 6)))"
-       class="edit_invoice_link btn btn-default remote_href" style="margin-top: 0px;"><i class="fa fa-edit"></i>Edit</a>
+       class="edit_invoice_link btn btn-default remote_href" style="margin-top: 0px;"><i class="fa fa-edit"></i>Edit</button>
 
       <!--&& invoiceDetail.InvoiceAmount > 0-->
       <a *ngIf="invoiceDetail.IsSubmitForApprovalRequired == true && invoiceDetail.InvoiceAmount != 0" style="color: white!important; margin-top: 0px;"
@@ -44,6 +46,6 @@
         <a (click)="getNextInvoice(invoiceIDs.NextInvoiceID)" [ngClass]="{disabled : InvoiceIDs == '' || invoiceIDs.NextInvoiceID == invoiceDetail.InvoiceID || invoiceIDs.NextInvoiceID == null}"
           class="btn btn-default aTooltip" data-html="true"><i class="fa fa-arrow-right"></i></a>
       </div>
+     </div>
     </div>
   </div>
-</div>

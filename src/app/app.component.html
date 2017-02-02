@@ -1,3 +1,4 @@
+
 <div id="headerbar">
   <div class="container-fluid">
     <div class="row">
@@ -146,7 +147,7 @@
                     <li *ngIf="user.IsSuperUser"><a routerLink="ledgerAccount/-1/-1">Ledger Accounts</a></li>
                     <li *ngIf="user.IsSuperUser"><a routerLink="achSetup/0/-1">Ach Setups</a></li>
                     <li *ngIf="user.IsSuperUser"><a routerLink="approval/0">Approval Criteria</a></li>
-                    <!--<li *ngIf="user.IsSuperUser"><a routerLink="primeTable">Prime Table</a></li>-->
+                    <!--<li *ngIf="user.IsSuperUser"><a href="#!/view1">Prime Table</a></li>-->
                   </ul>
                 </li>
                 <li><a routerLink="attachmentsList/-1/-1"><i class="fa fa-inbox"></i><span>Pending Invoices</span></a></li>
@@ -187,6 +188,7 @@
           <div>
             <span defaultOverlayTarget></span>
             <router-outlet></router-outlet>
+             <!--<div ng-view></div>-->
           </div>
         </div>
       </div>

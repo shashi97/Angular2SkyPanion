@@ -63,12 +63,7 @@
                          </div>
 
                            <div *ngIf="dashboardPermissions"> 
-                            <div class="alert alert-info" *ngIf="dashboardPermissions.UserPermissions.IsGlobalReviewer == false &&
-                                                                    dashboardPermissions.UserPermissions.IsGlobalOverride == false &&
-                                                                    dashboardPermissions.UserPermissions.IsGlobalBatch == false &&
-                                                                    dashboardPermissions.UserPermissions.IsGlobalDelete == false &&
-                                                                    dashboardPermissions.UserPermissions.IsGlobalApprover == false &&
-                                                                    sessionDetails.IsSuperUser == false">
+                            <div class="alert alert-info" *ngIf="_filteredValue && _filteredValue.invoiceState == 0">
                             There are no permission to access for this user !
                         </div>
                         </div>

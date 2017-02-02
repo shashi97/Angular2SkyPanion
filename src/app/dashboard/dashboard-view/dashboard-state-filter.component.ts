@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter,AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter,AfterViewInit , OnChanges } from '@angular/core';
 import { BaseComponent } from '../../base.component';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
@@ -28,7 +28,7 @@ export class InvoiceStateFilterArguments {
 })
 
 
-export class DashboardStateFilterComponent extends BaseComponent implements OnInit , AfterViewInit{
+export class DashboardStateFilterComponent extends BaseComponent implements OnInit , AfterViewInit , OnChanges{
     private showLoader = false;
    @Input() dashboardPermissions : DashboardPermissionModel;
    @Input() dashboardStatefilterItems: DashboardStateModel;
@@ -53,8 +53,14 @@ export class DashboardStateFilterComponent extends BaseComponent implements OnIn
       this.pubsub.afterRequest.subscribe(data => this.showLoader = false);
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
+  // this.dashboardState = this.userService.getDashboardState();
+  //  this.sessionDetails = this.userService.getSessionDetails();
+  }
+
+  ngOnChanges() {
   this.dashboardState = this.userService.getDashboardState();
+   this.sessionDetails = this.userService.getSessionDetails();
   }
  
 
@@ -70,6 +76,8 @@ export class DashboardStateFilterComponent extends BaseComponent implements OnIn
   }
 
   private get userFilteredArg(): UserFilterArguments {
+    this._userFilteredValue.UserID = this.sessionDetails.userId;
+    this._userFilteredValue.userName = this.sessionDetails.userName;
     return this._userFilteredValue;
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { BaseComponent } from '../../base.component';
@@ -52,9 +52,11 @@ export class UserComponent extends BaseComponent implements OnInit {
     private userService: UserService,
     private location: Location,
     private confirmService: ConfirmService,
-    public pubsub: PubSubService
+    public pubsub: PubSubService,
+    public vcRef: ViewContainerRef
   ) {
     super(localStorageService, router);
+    overlay.defaultViewContainer = vcRef;
   }
 
   ngOnInit() {

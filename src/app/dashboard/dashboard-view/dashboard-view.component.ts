@@ -79,6 +79,22 @@ export class DashboardViewComponent extends BaseComponent implements OnInit, Int
                          this._filteredValue.companyId = this.dashboardState.companyId;
                          this._filteredValue.invoiceState = this.dashboardState.currentDashboardTabState;
                           this._filteredValue.isTabApproveInvoice = this.dashboardState.isTabApproveInvoice;
+
+                    if ((this.dashboardPermissions.UserPermissions.IsGlobalPdfScan == false && this.dashboardPermissions.UserCompanyWisePermissions.IsCompPdfScan == false)
+                       && (this.dashboardPermissions.UserPermissions.IsGlobalReviewer == false && this.dashboardPermissions.UserCompanyWisePermissions.IsCompReviewer == false)
+                    && (this.dashboardPermissions.UserPermissions.IsGlobalApprover == false && this.dashboardPermissions.UserCompanyWisePermissions.IsCompApprover == false)
+                      && (this.dashboardPermissions.UserPermissions.IsGlobalBatch == false && this.dashboardPermissions.UserCompanyWisePermissions.IsCompBatch == false)
+                    && (this.dashboardPermissions.UserPermissions.IsGlobalDelete == false && this.dashboardPermissions.UserCompanyWisePermissions.IsCompDelete == false)
+                    && (this.dashboardPermissions.UserPermissions.IsGlobalOverride == false && this.dashboardPermissions.UserCompanyWisePermissions.IsCompOverride == false)
+                     && this.dashboardPermissions.UserPermissions.IsSuperUser == false
+                          ) {
+                                 this.localStorageService.set('dashboardStateData' ,{ 
+                                                        companyId: 0,
+                                                        currentDashboardTabState: 0
+                                                        , isTabApproveInvoice: false
+                                                        });
+                                      this._filteredValue.invoiceState = 0;                      
+                              }
                             this.getInvoices();
                     } else {
                         let link = ['/login'];
