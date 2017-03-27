@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import {PubSubService} from '../interceptor/pub-service';
+import { Cookie } from 'ng2-cookies';
+
 
 @Component({
   selector: 'sp-login',
@@ -95,6 +97,9 @@ export class LoginComponent extends BaseComponent implements OnInit {
          this.localStorageService.set('routeData' ,{ 
           prevoiusRoute: 'login',
         });
+
+        Cookie.set('Authorization', response.access_token ,   0,  "/" );
+        
 
       if (isResetPasswordRequired) {
 

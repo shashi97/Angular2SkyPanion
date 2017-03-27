@@ -184,10 +184,14 @@ private requestOptions(options?: RequestOptionsArgs): RequestOptionsArgs {
     if (options.headers == null) {
       options.headers = new Headers();
     }
+    options.headers.delete('Cookie');
+   // options.headers.delete('Cookie');
+   // options.headers.append('Authorization', this.authorization);
     this.authorization = this.localStorageService.get('authorization');
     if (this.authorization) {
       options.headers.append('Authorization', this.authorization);
     }
+    
     return options;
   }
 }

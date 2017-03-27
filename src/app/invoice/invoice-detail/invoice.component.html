@@ -18,7 +18,7 @@
                             </span>
     <div class="clearfix"></div>
     <br>
-    <div class="row" *ngIf="invoiceArgs.invType == 'pdf' && invoiceDetail.InvoiceStatusID!=0">
+    <div class="row" *ngIf="pdfsrc && invoiceArgs.invType == 'pdf' && invoiceDetail.InvoiceStatusID!=0">
       <iframe id="pdf_frame" height="725" class="col-md-12" [src]="pdfsrc" style="border: 0;position: inherit"></iframe>
     </div>
     <div class="invoice_relation_wrap" *ngIf="invoiceArgs.invType == 'approvals'">

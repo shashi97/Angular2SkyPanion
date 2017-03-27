@@ -51,6 +51,10 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
   private SelectInoivcesSpan: string = '';
   private datefURL:string= '';
   private datetURL:string = '';
+   private sorting: any = {
+    column: 'InvoiceStatus', //to match the variable of one of the columns
+    descending: true
+  };
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -298,6 +302,24 @@ export class InvoiceComponent extends BaseComponent implements OnInit , AfterVie
 
   public onFilteredInvoice(filteredValue: InvoiceFilteredArgs): void {
     this.invoiceFilteredValue = filteredValue;
+  }
+
+  convertSorting() {
+    return this.sorting.descending ? '-' + this.sorting.column : this.sorting.column;
+  }
+
+  selectedClass(columnName) {
+    return columnName == this.sorting.column ? 'sort-' + this.sorting.descending : false;
+  }
+
+  changeSorting(columnName): void {
+    var sort = this.sorting;
+    if (sort.column == columnName) {
+      sort.descending = !sort.descending;
+    } else {
+      sort.column = columnName;
+      sort.descending = false;
+    }
   }
 
 

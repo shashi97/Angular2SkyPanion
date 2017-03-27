@@ -210,6 +210,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
     this.attachmentBackLink = '/attachmentsList/' + this.pageSizeFilter + '/' + this.searchParameters;
     this.invoiceBackLink = '/invoice/' + this.pageSizeFilter + '/' + this.searchParameters;
     this.dashboardBackLink = '/dashboard';
+    this.ledgerAccounts = [];
   }
 
   ngOnInit() {
@@ -254,7 +255,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
   }
 
   dateClick() {
-    console.log('click click!')
+    console.log('click click!');
   }
 
   dateChange(date) {
@@ -922,16 +923,16 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   }
 
-  private addGlAccount(): void {
+  private addGlAccount() : void {
     let isMacthed = false;
-    // this.glAccountObject = new GlAccountObject();
-    this.invoiceEntryService
-      .getLedgerAccountDDOsAccountTypeWise(this.invoiceDetail.CompanyID)
-      .then(result => {
-        if (result.status == 404 || result.status == 500) {
-        } else {
-          this.ledgerAccounts = result;
-          if (this.ledgerAccounts != null && this.ledgerAccounts.length > 0) {
+    // this.invoiceEntryService
+    //   .getLedgerAccountDDOsAccountTypeWise(this.invoiceDetail.CompanyID)
+    //   .then(result => {
+    //     if (result.status == 404 || result.status == 500) {
+    //     } else {
+    //       this.ledgerAccounts = result;
+          if (this.ledgerAccounts !== undefined &&  this.ledgerAccounts != null && this.ledgerAccounts.length > 0
+                && (this.glAccountObject.glAccountNumber !== undefined && this.glAccountObject.glAccountNumber !== '' && this.glAccountObject.glAccountNumber !== null)) {
             this.ledgerAccounts.forEach(item => {
               if (item.LedgerAccountName === this.glAccountObject.glAccountNumber) {
                 isMacthed = true;
@@ -956,9 +957,9 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
             }
 
           }
-        }
+      //   }
 
-      });
+      // });
 
 
   }
@@ -1281,7 +1282,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
   private setDueDateByInvoiceDate(): void {
 
-    if (this.invoiceDate !== '' && (moment(this.invoiceDate, 'MM/DD/YY', true))) {
+    if (this.invoiceDate !== '' && (moment(this.invoiceDate, 'MM/DD/YY', true).isValid() || moment(this.invoiceDate, 'MM/DD/YYYY', true).isValid())) { 
 
       this.invoiceDate = moment(this.invoiceDate).format('MM/DD/YYYY');
       let date = new Date(this.invoiceDate);
@@ -1296,18 +1297,20 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
       let someFormattedDate = mm + '/' + dd + '/' + y;
 
-      if ((moment(someFormattedDate, 'MM/DD/YYYY', true))) {
+      if ((moment(someFormattedDate, 'MM/DD/YYYY', true).isValid() || moment(someFormattedDate, 'M/D/YYYY', true).isValid())) {
         this.dueDate = someFormattedDate;
       } else {
-        this.dueDate = '';
-        this.invoiceDate = '';
-        this.postGlDate = '';
+        this.dueDate = '01/01/2001';
+        this.invoiceDate = '01/01/2001';
+        this.postGlDate = '01/01/2001';
+        this.toastr.error('Date not is in correct format');
       }
       this.checkInvoiceNumberExists(null);
     } else {
-      this.dueDate = '';
-      this.invoiceDate = '';
-      this.postGlDate = '';
+      this.dueDate = '01/01/2001';
+      this.invoiceDate = '01/01/2001';
+      this.postGlDate = '01/01/2001';
+       this.toastr.error('Date not is in correct format');
     }
   }
 
@@ -1512,6 +1515,7 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
         let obj = { ErrorName: 'postGlDate format is wrong' };
         this.errors.splice(this.errors.length, 0, obj);
       }
+    }
 
 
       if (this.postGlDate === '' || this.postGlDate == null) {
@@ -1522,12 +1526,13 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
       }
 
 
-      if (this.postGlDate !== '' && this.postGlDate != null) {
-        let isValid = moment(this.postGlDate, 'MM/DD/YYYY', true).isValid();
-        if (isValid === false) {
-          let obj = { ErrorName: 'postGlDate format is wrong' };
-          this.errors.splice(this.errors.length, 0, obj);
-        }
+      if(this.invoiceDetail.InvoiceAmount === undefined ||  this.invoiceDetail.InvoiceAmount === 0
+                     || this.invoiceDetail.InvoiceAmount === 0.00){
+                     let obj = {
+                    ErrorName: 'Invoice amount cant not be zero'
+                  };
+                  this.errors.splice(this.errors.length, 0, obj);    
+
       }
 
       if (this.dueDate === '' || this.dueDate == null) {
@@ -1535,14 +1540,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           ErrorName: 'DueDate cant be blank'
         };
         this.errors.splice(this.errors.length, 0, obj);
-      }
-
-      if (this.dueDate !== '' && this.dueDate != null) {
-        // let isValid = moment(this.dueDate, 'MM/DD/YYYY', true).isValid();
-        // if (isValid == false) {
-        //   let obj = { ErrorName: 'Due Date format is wrong' };
-        //   this.errors.splice(this.errors.length, 0, obj);
-        // }
       }
 
 
@@ -1554,6 +1551,14 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
           this.errors.splice(this.errors.length, 0, obj);
         }
       }
+
+      if(this.invoiceDetail !== undefined  && this.invoiceDetail.InvoiceDistributions !== undefined &&
+              this.invoiceDetail.InvoiceDistributions.length !== undefined && this.invoiceDetail.InvoiceDistributions.length === 0 ){
+                  let obj = {
+                      ErrorName: 'Invoice distribution list can not be blank'
+                    };
+                    this.errors.splice(this.errors.length, 0, obj);
+              }
 
       for (let i = 0; i < this.invoiceDetail.InvoiceDistributions.length; i++) {
         if (this.invoiceDetail.InvoiceDistributions[i].DistributionAmount === 0
@@ -1614,7 +1619,6 @@ export class InvoiceEntryComponent extends BaseComponent implements OnInit, Afte
 
       }
 
-    }
   }
  
 

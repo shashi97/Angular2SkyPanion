@@ -10,28 +10,28 @@
   <div class="container-fluid">
     <div class="col-md-12">
       <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
-      <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+      <table id="account_distributions_table" class="table table-hover table-striped table-sortable table table-striped table-bordered table-hover" cellspacing="0" width="100%">
        
         <thead>
           <tr>
-            <th style="width: 15%">Account</th>
-            <th style="width: 15%">Ach Key</th>
-            <th style="width: 15%">ImmedorigName</th>
-            <th style="width: 15%">ImmedorigNum</th>
-            <th style="width: 15%">ImmeddestName</th>
-            <th style="width: 15%">ImmeddestNum</th>
-            <th style="width: 15%"></th>
+            <th style="width: 15%" [class]="selectedClass('Description')" (click)="changeSorting('Description')">Account</th>
+            <th style="width: 15%" [class]="selectedClass('AchKey')" (click)="changeSorting('AchKey')">Ach Key</th>
+            <th style="width: 15%" [class]="selectedClass('ImmedDestName')" (click)="changeSorting('ImmedDestName')">ImmedorigName</th>
+            <th style="width: 15%" [class]="selectedClass('ImmedDestNum')" (click)="changeSorting('ImmedDestNum')">ImmedorigNum</th>
+            <th style="width: 15%" [class]="selectedClass('ImmedOrigName')" (click)="changeSorting('ImmedOrigName')">ImmeddestName</th>
+            <th style="width: 15%" [class]="selectedClass('ImmedOrigNum')" (click)="changeSorting('ImmedOrigNum')">ImmeddestNum</th>
+            <th style="width: 15%" ></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of achSetups">
+          <tr *ngFor="let item of achSetups  | OrderByTable : convertSorting()">
             <td>{{item.Description}}</td>
             <td>{{item.AchKey}}</td>
             <td>{{item.ImmedDestName}}</td>
             <td>{{item.ImmedDestNum}}</td>
             <td>{{item.ImmedOrigName}}</td>
             <td>{{item.ImmedOrigNum}}</td>
-            <td><a routerLink="/achSetup/detail/{{item.id}}/{{currentPageFiltered.pageSizeFilter}}">Details</a></td>
+            <td><a routerLink="/achSetup/detail/{{item.id}}/{{currentPageFiltered.pageSizeFilter}}" >Details</a></td>
           </tr>
         </tbody>
 

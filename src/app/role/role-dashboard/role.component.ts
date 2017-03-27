@@ -27,6 +27,10 @@ import { Overlay, OverlayConfig } from 'angular2-modal';
 
 })
 export class RoleComponent extends BaseComponent implements OnInit {
+  private sorting: any = {
+    column: 'Name', //to match the variable of one of the columns
+    descending: false
+  };
 
   private showLoader: boolean;
   private account: Object;
@@ -208,6 +212,25 @@ export class RoleComponent extends BaseComponent implements OnInit {
 
   public onRoleFiltered(filteredValue: RoleFilterArgument): void {
     this.rolefilteredValue = filteredValue;
+  }
+
+
+  convertSorting() {
+    return this.sorting.descending ? '-' + this.sorting.column : this.sorting.column;
+  }
+
+  selectedClass(columnName) {
+    return columnName == this.sorting.column ? 'sort-' + this.sorting.descending : false;
+  }
+
+  changeSorting(columnName): void {
+    var sort = this.sorting;
+    if (sort.column == columnName) {
+      sort.descending = !sort.descending;
+    } else {
+      sort.column = columnName;
+      sort.descending = false;
+    }
   }
 
 }

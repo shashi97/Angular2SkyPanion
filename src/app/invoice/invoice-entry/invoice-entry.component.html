@@ -125,7 +125,7 @@
          </label>
       <div class="col-md-8 input-group">
         <div class="input-group date" id="datetimepicker_invoiceDate">
-          <input class="form-control" focus-name="4" tabindex="4" datetimepicker [options]="dateFormat" [(ngModel)]="invoiceDate" [value]="invoiceDate"  (ngModelChange)="setDueDateByInvoiceDate(invoiceDate)"
+          <input class="form-control" focus-name="4" tabindex="4" datetimepicker [options]="dateFormat" [(ngModel)]="invoiceDate" [value]="invoiceDate"  (blur)="setDueDateByInvoiceDate(invoiceDate)"
           />
           <!--<input type="text" [(ngModel)]="invoiceDate" class="form-control" focus-name="4" tabindex="4" id="Invoice_date" #Invoice_date="ngModel"
             placeholder="Invoice Date From" size="12">-->

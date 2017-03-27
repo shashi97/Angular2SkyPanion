@@ -8,17 +8,17 @@
   <div class="container-fluid">
     <div class="col-md-12">
       <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
-      <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+      <table id="account_distributions_table" class="table table-hover table-striped table-sortable table table-striped table-bordered table-hover" cellspacing="0" width="100%">
         <thead>
           <tr>
-            <th style="width: 25%">Account Number</th>
-            <th style="width: 40%">Account Title</th>
+            <th style="width: 25%" [class]="selectedClass('AccountNumber')" (click)="changeSorting('AccountNumber')">Account Number</th>
+            <th style="width: 40%" [class]="selectedClass('AccountTitle')" (click)="changeSorting('AccountTitle')">Account Title</th>
             <th style="width: 20%"># of invoices</th>
             <th style="width: 15%"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of ledgerAccounts">
+          <tr *ngFor="let item of ledgerAccounts  | OrderByTable : convertSorting()">
             <td>{{item.AccountNumber}}</td>
             <td>{{item.AccountTitle}}</td>
             <td>{{item.invCount}}</td>

@@ -22,6 +22,7 @@ import * as moment from 'moment/moment';
 })
 
 export class SyncBatchComponent extends BaseComponent implements OnInit {
+
   private showLoader:boolean;
   private searchString: string = '';
   private totalItems: number = 0;
@@ -33,6 +34,11 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
   private pageName: string = 'Invoice';
   private datefURL:string= '';
   private datetURL:string = '';
+
+  private sorting: any = {
+    column: 'AccountName', //to match the variable of one of the columns
+    descending: false
+  };
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -204,6 +210,25 @@ export class SyncBatchComponent extends BaseComponent implements OnInit {
         }
         this.router.navigate(link);
 
+ }
+
+  convertSorting() {
+    return this.sorting.descending ? '-' + this.sorting.column : this.sorting.column;
   }
+
+  selectedClass(columnName) {
+    return columnName == this.sorting.column ? 'sort-' + this.sorting.descending : false;
+  }
+
+  changeSorting(columnName): void {
+    var sort = this.sorting;
+    if (sort.column == columnName) {
+      sort.descending = !sort.descending;
+    } else {
+      sort.column = columnName;
+      sort.descending = false;
+    }
+  }
+  
 
 }

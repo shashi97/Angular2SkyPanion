@@ -10,19 +10,19 @@
   <div class="container-fluid">
     <div class="col-md-12">
       <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
-      <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+      <table id="account_distributions_table" class="table table-hover table-striped table-sortable table table-striped table-bordered table-hover" cellspacing="0" width="100%">
         <thead>
           <tr>
-            <th style="width: 15%">Username</th>
-            <th style="width: 15%">Name</th>
-            <th style="width: 20%">Email</th>
-            <th style="width: 10%">Role(s)</th>
-            <th style="width: 20%">Approver For</th>
+            <th style="width: 15%" [class]="selectedClass('UserName')" (click)="changeSorting('UserName')">Username</th>
+            <th style="width: 15%" [class]="selectedClass('Name')" (click)="changeSorting('Name')">Name</th>
+            <th style="width: 20%" [class]="selectedClass('Email')" (click)="changeSorting('Email')">Email</th>
+            <th style="width: 10%" [class]="selectedClass('Roles')" (click)="changeSorting('Roles')">Role(s)</th>
+            <th style="width: 20%" [class]="selectedClass('Approvers')" (click)="changeSorting('Approvers')">Approver For</th>
             <th style="width: 20%"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of users">
+          <tr *ngFor="let item of users  | OrderByTable : convertSorting()">
 
 
             <td>

@@ -8,6 +8,7 @@ import { routing } from './app.routing';
 import { Angular2DataTableModule } from 'angular2-data-table';
 import { Http, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
+
 import { HttpInterceptor } from './shared/httpInterceptor';
 import { XHRBackend } from '@angular/http';
 
@@ -18,6 +19,9 @@ import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
 import { PaginationComponent } from './pagination/pagination.component';
 
 import { LocalStorageService, LOCAL_STORAGE_SERVICE_CONFIG } from 'angular-2-local-storage';
+
+import { Cookie } from 'ng2-cookies/ng2-cookies';
+
 import { ConfirmService } from './shared/services/otherServices/confirmService';
 
 import { DropdownModule, MultiSelectModule, DataTableModule as PrimeDataTableModule, SharedModule, CalendarModule} from 'primeng/primeng';
@@ -71,7 +75,7 @@ import { SyncBatchService } from './sync-batch/shared/sync-batch.service';
 import { InvoiceEntryService } from './invoice/invoice-entry/shared/invoice-entry.service';
 
 /*pipes */
-import { OrderByPipe, FilterPipe, CurrencyPipe, VendorFilterPipe, AccountFilterPipe } from './shared/pipe/orderby';
+import { OrderByPipe, FilterPipe, CurrencyPipe, VendorFilterPipe, AccountFilterPipe , OrderByTable } from './shared/pipe/orderby';
 
 
 import { Modal } from 'angular2-modal';
@@ -354,7 +358,8 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     InvoiceApproveModalComponent,
     PrimeTableComponent,
     logoutComponent,
-    confirmationModalComponent
+    confirmationModalComponent,
+    OrderByTable
   ],
   entryComponents: [
     SetupModalComponent,
@@ -423,6 +428,7 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
     MasterService,
     UserService,
     LocalStorageService,
+    Cookie,
     AuthService,
     ConfirmService,
     AchSetupService,
@@ -443,6 +449,7 @@ export function interceptorFactory(xhrBackend: XHRBackend, requestOptions: Reque
           router,
           pubsub,
           localStorageService),
+
 
       deps: [XHRBackend, RequestOptions, Router, PubSubService, LocalStorageService],
     },

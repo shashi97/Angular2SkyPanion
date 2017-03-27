@@ -7,7 +7,7 @@
     {
       "root": "src",
       "outDir": "dist",
-      "assets": "assets",
+     "assets":  "assets",
       "index": "index.html",
       "main": "main.ts",
       "test": "test.ts",
@@ -19,7 +19,6 @@
          "../src/assets/ion-slider/css/ion.rangeSlider.skinFlat.css"
       ],
       "scripts": [
-        "../src/assets/demo/demo-switcher.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

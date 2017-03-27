@@ -36,7 +36,10 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit ,Aft
   private _filteredValue: LedgerFilterArguments = new LedgerFilterArguments();
 
   private ledgerAccounts: Array<LedgerAccountModel>;
-
+  private sorting: any = {
+    column: 'AccountNumber', //to match the variable of one of the columns
+    descending: false
+  };
   constructor(
     localStorageService: LocalStorageService,
     router: Router,
@@ -161,6 +164,24 @@ export class LedgerAccountComponent extends BaseComponent implements OnInit ,Aft
 
   public onFiltered(filteredValue: LedgerFilterArguments): void {
     this.filteredValue = filteredValue;
+  }
+
+   convertSorting() {
+    return this.sorting.descending ? '-' + this.sorting.column : this.sorting.column;
+  }
+
+  selectedClass(columnName) {
+    return columnName == this.sorting.column ? 'sort-' + this.sorting.descending : false;
+  }
+
+  changeSorting(columnName): void {
+    var sort = this.sorting;
+    if (sort.column == columnName) {
+      sort.descending = !sort.descending;
+    } else {
+      sort.column = columnName;
+      sort.descending = false;
+    }
   }
 
 }

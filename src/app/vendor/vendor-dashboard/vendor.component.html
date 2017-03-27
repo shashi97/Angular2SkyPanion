@@ -7,19 +7,19 @@
   <div class="container-fluid">
     <div class="col-md-12">
       <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
-      <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+      <table id="account_distributions_table" class="table table-hover table-striped table-sortable table table-striped table-bordered table-hover" cellspacing="0" width="100%">
         <thead>
           <tr>
-            <th style="width: 15%">Vendor Key</th>
-            <th style="width: 20%">Name</th>
-            <th style="width: 15%">Account Number</th>
-            <th style="width: 20%">Company Name</th>
-            <th style="width: 15%">Phone #</th>
+            <th style="width: 15%" [class]="selectedClass('VendorKey')" (click)="changeSorting('VendorKey')">Vendor Key</th>
+            <th style="width: 20%" [class]="selectedClass('VendorName')" (click)="changeSorting('VendorName')">Name</th>
+            <th style="width: 15%" [class]="selectedClass('AccountNumber')" (click)="changeSorting('AccountNumber')">Account Number</th>
+            <th style="width: 20%" [class]="selectedClass('CompanyName')" (click)="changeSorting('CompanyName')">Company Name</th>
+            <th style="width: 15%" [class]="selectedClass('PhoneNumber')" (click)="changeSorting('PhoneNumber')">Phone #</th>
             <th style="width: 15%"></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of vendors">
+          <tr *ngFor="let item of vendors  | OrderByTable : convertSorting()">
             <td>{{item.VendorKey}}</td>
             <td>{{item.VendorName}}</td>
             <td>{{item.AccountNumber}}</td>

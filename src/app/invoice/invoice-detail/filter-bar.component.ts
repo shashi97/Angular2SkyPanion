@@ -131,6 +131,9 @@ export class InvoiceDetailFilterComponent extends BaseComponent implements OnIni
         this.toastr.error('This Invoice is locked by' + result.LockBy, 'Oops!');
         return;
       } else {
+          this.localStorageService.set('routeData' ,{ 
+          prevoiusRoute: 'invoices',
+        });
         this.router.navigate(['/invoices/' + this.searchParameters + '/' + this.invoiceDetail.InvoiceID
           + '/edit'], { queryParams: { status: this.invoiceDetail.InvoiceStatusID, amount: this.invoiceDetail.InvoiceAmount } });
         // $location.path('/invoices/'+$scope.searchParameters +'/'+ parseInt($scope.invoiceDetail.InvoiceID) 

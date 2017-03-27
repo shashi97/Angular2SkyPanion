@@ -28,7 +28,12 @@ declare let jQuery: any;
 })
 
 export class ApprovalsViewComponent extends BaseComponent implements OnInit {
- private showLoader:boolean;
+    
+  private sorting: any = {
+    column: 'CompanyName', //to match the variable of one of the columns
+    descending: false
+  };
+  private showLoader:boolean;
   @Input() approvals: Array<ApprovalCriteriaModel>;
   @Input() companyId: number;
   @Input() approvers: Array<any>;
@@ -163,4 +168,24 @@ export class ApprovalsViewComponent extends BaseComponent implements OnInit {
       });
     }
   }
+
+  convertSorting() {
+    return this.sorting.descending ? '-' + this.sorting.column : this.sorting.column;
+  }
+
+  selectedClass(columnName) {
+    return columnName == this.sorting.column ? 'sort-' + this.sorting.descending : false;
+  }
+
+  changeSorting(columnName): void {
+    var sort = this.sorting;
+    if (sort.column == columnName) {
+      sort.descending = !sort.descending;
+    } else {
+      sort.column = columnName;
+      sort.descending = false;
+    }
+  }
+
+  
 }

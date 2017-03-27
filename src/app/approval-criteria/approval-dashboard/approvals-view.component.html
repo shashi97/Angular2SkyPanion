@@ -1,18 +1,18 @@
 
-<table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="example" class="table table-hover table-striped table-sortable table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 
   <thead>
     <tr>
-      <th [hidden]="CompanyId==0">Company</th>
-      <th>Approver</th>
-      <th>Type</th>
-      <th>Criteria</th>
+      <th [hidden]="CompanyId==0" [class]="selectedClass('CompanyName')" (click)="changeSorting('CompanyName')">Company</th>
+      <th [class]="selectedClass('UserName')" (click)="changeSorting('UserName')">Approver</th>
+      <th [class]="selectedClass('ApprovalType')" (click)="changeSorting('ApprovalType')">Type</th>
+      <th [class]="selectedClass('ApprovalCriteria')" (click)="changeSorting('ApprovalCriteria')">Criteria</th>
       <th>Options</th>
     </tr>
   </thead>
 
   <tbody  [dragula]='"evented-bag"' [dragulaModel]='approvals'>
-    <tr *ngFor="let approval of approvals" current-page="currentPage" total-items="totalItems" class="Skypanion::Property_row">
+    <tr *ngFor="let approval of approvals   | OrderByTable : convertSorting()" current-page="currentPage" total-items="totalItems" class="Skypanion::Property_row">
       <td [hidden]="CompanyId==0"><a href="#company/detail/{{approval.CompanyID}}/-1/-1">{{approval.CompanyName}}</a></td>
       <td><a href="#user/detail/{{approval.UserID}}/-1/-1">{{approval.UserName}}</a></td>
       <td>{{approval.ApprovalType}}</td>

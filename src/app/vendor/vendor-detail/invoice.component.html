@@ -10,18 +10,18 @@
   </span>-->
 
   <br class="clear_both">
-  <table id="vendor_invoices_table" class="table table-striped table-bordered table-hover">
+  <table id="vendor_invoices_table" class="table table-hover table-striped table-sortable table table-striped table-bordered table-hover" >
     <thead>
       <tr>
-        <th>Invoice #</th>
-        <th>Voucher #</th>
-        <th>Company</th>
-        <th>Amount</th>
+        <th [class]="selectedClass('InvoiceNumber')" (click)="changeSorting('InvoiceNumber')">Invoice #</th>
+        <th [class]="selectedClass('VoucherNumber')" (click)="changeSorting('VoucherNumber')">Voucher #</th>
+        <th [class]="selectedClass('CompanyName')" (click)="changeSorting('CompanyName')">Company</th>
+        <th [class]="selectedClass('Amount')" (click)="changeSorting('Amount')">Amount</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let vDetail of vendorDetail.VendorInvoices" current-page="currentPage" total-items="totalItems">
+      <tr *ngFor="let vDetail of vendorDetail.VendorInvoices  | OrderByTable : convertSorting() " current-page="currentPage" total-items="totalItems">
         <td><a routerLink="/invoice/detail/25/-1/{{vDetail.InvoiceID}}/null/0/0/-1/-1">{{vDetail.InvoiceNumber}}</a></td>
         <td>{{vDetail.VoucherNumber}}</td>
         <td><a routerLink="/company/detail/{{vDetail.CompanyID}}/-1/-1">{{vDetail.CompanyName}}</a></td>

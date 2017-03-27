@@ -52,10 +52,12 @@ export class InvoiceDetailInvoiceComponent extends BaseComponent implements OnIn
   ngAfterViewInit(){
   }
 
-  ngOnChanges(){
-       this.pdfsrc1 = this.apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber +
-        '/' + this.invoiceDetail.AttachmentName;
-      this.pdfsrc = this.domSanitizer.bypassSecurityTrustResourceUrl(this.pdfsrc1);
+  ngOnChanges() {
+    return new Promise((resolve, reject) => {
+        this.pdfsrc1 = this.apiServiceBase + 'api/invoices/getPdf/' + this.invoiceDetail.CompanyNumber +
+          '/' + this.invoiceDetail.AttachmentName;
+        this.pdfsrc = this.domSanitizer.bypassSecurityTrustResourceUrl(this.pdfsrc1);
+    });
   }
 
   private getInvoicePdf(): void {

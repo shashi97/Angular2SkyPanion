@@ -29,7 +29,10 @@ export class JobComponent extends BaseComponent implements OnInit , AfterViewIni
   private jobs: Array<JobModel>;
   private job: JobModel;
   private totalItems: number;
-
+  private sorting: any = {
+    column: 'Number', //to match the variable of one of the columns
+    descending: false
+  };
 
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
 
@@ -62,6 +65,24 @@ export class JobComponent extends BaseComponent implements OnInit , AfterViewIni
     } else {
       let link = ['/login'];
       this.router.navigate(link);
+    }
+  }
+
+   convertSorting() {
+    return this.sorting.descending ? '-' + this.sorting.column : this.sorting.column;
+  }
+
+  selectedClass(columnName) {
+    return columnName == this.sorting.column ? 'sort-' + this.sorting.descending : false;
+  }
+
+  changeSorting(columnName): void {
+    var sort = this.sorting;
+    if (sort.column == columnName) {
+      sort.descending = !sort.descending;
+    } else {
+      sort.column = columnName;
+      sort.descending = false;
     }
   }
 

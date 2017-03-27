@@ -10,12 +10,12 @@
 
     <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
 
-    <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+    <table id="account_distributions_table" class="table table-hover table-striped table-sortable table table-striped table-bordered table-hover" cellspacing="0" width="100%">
       <thead>
         <tr>
           <th style="width: 15%">Account</th>
-          <th style="width: 15%">creater</th>
-          <th style="width: 15%">Batch Number</th>
+          <th style="width: 15%" >creater</th>
+          <th style="width: 15%" >Batch Number</th>
           <th style="width: 15%">Synced on</th>
           <th style="width: 15%">Synced</th>
           <th style="width: 15%"># of invoice</th>
@@ -54,4 +54,4 @@
 
 </div>
 
- <sp-loading-spinner [showLoader] = 'showLoader' ></sp-loading-spinner>
+<sp-loading-spinner [showLoader] = 'showLoader' ></sp-loading-spinner>

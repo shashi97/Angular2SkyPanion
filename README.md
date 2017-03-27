@@ -1,18 +1,23 @@
-gitURL- https://github.com/conqsys/angular2-skyPanion
+Skypanion Angular 2
+_______________________________________
 
-install node 6 and above
-install npm 3 and above
-install git
+How to setup
+using Angular cli
+angular2
+sql server 
+.net core 
+bootstrap
+es5
 
 
-go to the directory path and run npm install
+for developers
+_______________________________________
+ng serve (will run on port 4200)
+ng build --dev  
+ng build --prod     
 
-if nodeModule is install successfully then 
-run npm start
-
-
-open browser paste
-
-localhost:4200
-
+.net core
+______________  
+copy the dist folder content into wwwroot folder of .net core app
+then .net core will serve it.
 

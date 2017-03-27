@@ -8,19 +8,19 @@
   <div class="container-fluid">
     <div class="col-md-12">
       <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>
-      <table id="account_distributions_table" class="table table-striped table-bordered table-hover" [mfData]=" purchaseOrders"
+      <table id="account_distributions_table" class="table table-hover table-striped table-sortable table table-striped table-bordered table-hover" [mfData]=" purchaseOrders"
         #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
         <thead>
           <tr>
-            <th style="width: 25%">Number</th>
-            <th style="width: 40%">Description</th>
-            <th style="width: 25%">Requested By</th>
-            <th style="width: 10%"></th>
+            <th style="width: 25%" [class]="selectedClass('VendorName')" (click)="changeSorting('VendorName')">Number</th>
+            <th style="width: 40%" [class]="selectedClass('InvoiceDescription')" (click)="changeSorting('InvoiceDescription')">Description</th>
+            <th style="width: 25%" [class]="selectedClass('RequestedBy')" (click)="changeSorting('RequestedBy')">Requested By</th>
+            <th style="width: 10%" ></th>
 
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of purchaseOrders">
+          <tr *ngFor="let item of purchaseOrders  | OrderByTable : convertSorting()">
             <td>
               <div>
                 <a href="#/vendor/detail/{{item.VendorID}}/-1/-1">

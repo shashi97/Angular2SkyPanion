@@ -52,6 +52,10 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
   private _companyFilteredValue: CompanyFilterArguments = new CompanyFilterArguments();
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private attachments: Array<AttachmentObject>;
+  private sorting: any = {
+    column: 'AttachmentID', //to match the variable of one of the columns
+    descending: false
+  };
   private account: AccountModel;
   private pageName: string = 'attachments';
   private companyID: number = 0;
@@ -337,23 +341,23 @@ export class AttachmentComponent extends BaseComponent implements OnInit, OnChan
     });
   }
 
-  // const dialog = this.modal.open(SyncModelComponent, overlayConfig);
-  //     dialog.then((resultPromise) => {
-  //             return resultPromise.result.then((result) => {
-  //             // alert(result.status);
-  //                if (result.status === true) {
-  //                     this.invoceRemoved.emit(result);
-  //                 }
-  //             }, () => console.log(' Error In invoice modal '));
-  //         });
-  //         // return this.modal.open(SyncModelComponent, overlayConfig)
-  //         //     .catch(err => alert('ERROR'))
-  //         //     .then(dialog => dialog.result)
-  //         //     .then(result => {
-  //         //         if (result.status === true) {
-  //         //             this.invoceRemoved.emit(result);
-  //         //         }
-  //         //     });
+ convertSorting() {
+    return this.sorting.descending ? '-' + this.sorting.column : this.sorting.column;
+  }
+
+  selectedClass(columnName) {
+    return columnName == this.sorting.column ? 'sort-' + this.sorting.descending : false;
+  }
+
+  changeSorting(columnName): void {
+    var sort = this.sorting;
+    if (sort.column == columnName) {
+      sort.descending = !sort.descending;
+    } else {
+      sort.column = columnName;
+      sort.descending = false;
+    }
+  }
 
 }
 

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { UserService } from './user/shared/user.service';
 import { AuthService } from './shared/services/otherServices/auth.service';
-
+import { Cookie } from 'ng2-cookies';
 import { Modal, BSModalContextBuilder } from 'angular2-modal/plugins/bootstrap';
 import { Overlay, OverlayConfig } from 'angular2-modal';
 import {
@@ -70,6 +70,7 @@ export class AppComponent extends BaseComponent implements OnInit {
     this.localStorageService.remove('sessionData');
     this.disableMenu = { 'display': 'none' };
     this.disableSideBar = { 'display': 'none' };
+    Cookie.delete('Authorization');
     let link = ['/login'];
     this.router.navigate(link);
   }

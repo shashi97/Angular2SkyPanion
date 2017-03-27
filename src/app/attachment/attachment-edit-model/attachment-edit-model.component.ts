@@ -78,7 +78,6 @@ export class AttachmentEditComponent extends BaseComponent
     this.vendors = new Array<Vendors>();
     this.header = "Are you sure you'd like to change state of this attachment?"
     //this.dialog.context.dialogClass = 'modal-centered';
-
   }
 
   ngOnInit() {

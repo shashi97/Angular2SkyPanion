@@ -33,7 +33,10 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit , Af
   private _currentPage: CurrentPageArguments = new CurrentPageArguments();
   private companyId: number = 0;
   private searchString: string = '';
-
+  private sorting: any = {
+    column: 'VendorName', //to match the variable of one of the columns
+    descending: false
+  };
 
   constructor(
     private accountService: AccountService,
@@ -131,4 +134,26 @@ export class PurchaseOrderComponent extends BaseComponent implements OnInit , Af
         }
       });
   }
+
+
+  convertSorting() {
+    return this.sorting.descending ? '-' + this.sorting.column : this.sorting.column;
+  }
+
+  selectedClass(columnName) {
+    return columnName == this.sorting.column ? 'sort-' + this.sorting.descending : false;
+  }
+
+  changeSorting(columnName): void {
+    var sort = this.sorting;
+    if (sort.column == columnName) {
+      sort.descending = !sort.descending;
+    } else {
+      sort.column = columnName;
+      sort.descending = false;
+    }
+  }
+
+
+
 }

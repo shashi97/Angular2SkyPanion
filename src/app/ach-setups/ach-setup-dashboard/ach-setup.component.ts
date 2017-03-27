@@ -20,7 +20,10 @@ import { AchSetupModel } from '../shared/ach-setup.model';
 })
 
 export class AchSetupComponent extends BaseComponent implements OnInit {
-
+  private sorting: any = {
+    column: 'Description', //to match the variable of one of the columns
+    descending: false
+  };
   private account: Object;
   private companyId: number = 0;
   private totalItems: number = 0;
@@ -106,5 +109,23 @@ export class AchSetupComponent extends BaseComponent implements OnInit {
 
   public onCurrentPageChanged(newValue: CurrentPageArguments): void {
     this.currentPageFiltered = newValue;
+  }
+
+   convertSorting() {
+    return this.sorting.descending ? '-' + this.sorting.column : this.sorting.column;
+  }
+
+  selectedClass(columnName) {
+    return columnName == this.sorting.column ? 'sort-' + this.sorting.descending : false;
+  }
+
+  changeSorting(columnName): void {
+    var sort = this.sorting;
+    if (sort.column == columnName) {
+      sort.descending = !sort.descending;
+    } else {
+      sort.column = columnName;
+      sort.descending = false;
+    }
   }
 }

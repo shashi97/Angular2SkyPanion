@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit , ViewContainerRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewContainerRef } from '@angular/core';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -43,7 +43,10 @@ export class CompanyComponent extends BaseComponent implements OnInit, AfterView
   private _filteredValue: CompanyFilterArguments = new CompanyFilterArguments();
 
   private skyPanionTypeList: Array<any> = [];
-
+  private sorting: any = {
+    column: 'Name', //to match the variable of one of the columns
+    descending: false
+  };
   constructor(
     private companyService: CompanyService,
     private userService: UserService,
@@ -75,6 +78,25 @@ export class CompanyComponent extends BaseComponent implements OnInit, AfterView
       let link = ['/login'];
       this.router.navigate(link);
     }
+  }
+
+
+  selectedClass(columnName) {
+    return columnName == this.sorting.column ? 'sort-' + this.sorting.descending : false;
+  }
+
+  changeSorting(columnName): void {
+    var sort = this.sorting;
+    if (sort.column == columnName) {
+      sort.descending = !sort.descending;
+    } else {
+      sort.column = columnName;
+      sort.descending = false;
+    }
+  }
+
+  convertSorting() {
+    return this.sorting.descending ? '-' + this.sorting.column : this.sorting.column;
   }
 
 

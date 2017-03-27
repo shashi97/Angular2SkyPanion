@@ -1,8 +1,9 @@
-// import * as $ from 'jquery';
+//  import * as $ from 'jquery';
+
 import * as moment from 'moment';
+
 import {SetOptions} from 'eonasdan-bootstrap-datetimepicker';
-	
-declare var $:any;
+declare var $: any;
 import {
     Directive,
     ElementRef,
@@ -46,8 +47,7 @@ export class DateTimePickerDirective implements OnInit, OnChanges , ControlValue
     }
 
     ngOnInit(): void {
-       
-         this.dpElement.datetimepicker(this.options);
+        this.dpElement.datetimepicker(this.options);
         this.dpElement.data('DateTimePicker').date(this.ngModel);
 
         this.dpElement.on('dp.change', (e) => {

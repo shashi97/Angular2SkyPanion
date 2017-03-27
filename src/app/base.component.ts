@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
 
+
 export class BaseComponent {
   user: any;
   sessionDetails: any;
@@ -11,7 +12,8 @@ export class BaseComponent {
   prevoiusRouteState: any;
 
   constructor(protected localStorageService: LocalStorageService,
-    protected router: Router) {
+    protected router: Router
+    ) {
 
     let token = this.localStorageService.get('authorization');
 

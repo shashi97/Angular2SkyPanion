@@ -25,23 +25,22 @@
     <li class="active">Uploaded PDFs</li>
   </ol>
   <sp-pager [pageName]='pageName' [totalItems]='AttachmentCount' [currentPageFiltered]='currentPageFiltered'></sp-pager>
-  <!--<sp-vendor-filter-bar (filtered)="onFiltered($event)" [filteredValue]="filteredValue"></sp-vendor-filter-bar>-->
-  <!--<sp-crumb-bar *ngIf="account" [pageDetail]="account"></sp-crumb-bar>
-    <sp-pager [pageName]='pageName' [totalItems]='totalItems' [currentPageFiltered]='currentPageFiltered'></sp-pager>-->
-  <table id="account_distributions_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+  <table id="account_distributions_table" class="table table-hover table-striped table-sortable table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
       <tr>
-        <th style="width: 12%">Info</th>
-        <th style="width: 22%">Fund/Property</th>
-        <th style="width: 22%">Name</th>
-        <th style="width: 14%">Uploaded</th>
-        <th style="width: 10%">Locked By</th>
+        <th style="width: 12%" [class]="selectedClass('AttachmentID')" (click)="changeSorting('AttachmentID')" [hidden]="true"></th>
+        <th style="width: 12%" [class]="selectedClass('Info')" (click)="changeSorting('Info')">Info</th>
+        <th style="width: 22%" [class]="selectedClass('CompanyName')" (click)="changeSorting('CompanyName')">Fund/Property</th>
+        <th style="width: 22%" [class]="selectedClass('Name')" (click)="changeSorting('Name')">Name</th>
+        <th style="width: 14%" [class]="selectedClass('Uploaded')" (click)="changeSorting('Uploaded')" >Uploaded</th>
+        <th style="width: 10%" [class]="selectedClass('LockedBy')" (click)="changeSorting('LockedBy')">LockedBy</th>
         <th style="width: 10%"></th>
         <th style="width: 10%"></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of attachments">
+      <tr *ngFor="let item of attachments  | OrderByTable : convertSorting()">
+         <td [hidden]="true">{{item.AttachmentID}}</td>
         <td *ngIf="item.Info != 'Rejected'" [ngClass]="{'italic-font': item.Info=='N/A', 'text-success':item.Info=='Processed'}">{{item.Info}}</td>
         <td *ngIf="item.Info == 'Rejected'" [ngClass]="{'text-rejected': item.Info=='Rejected'}"><b>!</b>{{item.Info}}</td>
         <td *ngIf="item.IsGeneral == false"><a href="#company/detail/{{item.CompanyID}}/-1/-1">{{item.CompanyName}}</a></td>  

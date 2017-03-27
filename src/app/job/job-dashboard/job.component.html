@@ -26,20 +26,20 @@
       <br>
       <br>
 
-      <table id="account_distributions_table" class="table table-striped table-bordered table-hover" [mfData]=" jobs" #mf="mfDataTable"
+      <table id="account_distributions_table" class="table table-hover table-striped table-sortable table table-striped table-bordered table-hover" [mfData]=" jobs" #mf="mfDataTable"
         [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
         <thead>
           <tr>
-            <th style="width: 20%">Number</th>
-            <th style="width: 20%">Company</th>
-            <th style="width: 30%">Description</th>
-            <th style="width: 20%">Talent Id</th>
+            <th style="width: 20%" [class]="selectedClass('Number')" (click)="changeSorting('Number')">Number</th>
+            <th style="width: 20%" [class]="selectedClass('CompanyName')" (click)="changeSorting('CompanyName')">Company</th>
+            <th style="width: 30%" [class]="selectedClass('Description')" (click)="changeSorting('Description')">Description</th>
+            <th style="width: 20%" [class]="selectedClass('TenantId')" (click)="changeSorting('TenantId')">Talent Id</th>
             <th style="width: 10%"></th>
 
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of jobs">
+          <tr *ngFor="let item of jobs  | OrderByTable : convertSorting()" >
             <td>{{item.Number}}</td>
             <td><a href="#/company/detail/{{item.CompanyID}}/-1/-1">{{item.CompanyName}}</a></td>
             <td>{{item.Description}}</td>
